@@ -56,8 +56,8 @@ jobs:
           if [ git rev-parse ${PARENT2} 2>/dev/null -eq 0 ]
           then
             # PARENT2 is an actual commit
-            echo "The head of the incoming PR is $(PARENT2)"
-            echo "INCOMING_PR_HEAD_COMMIT=$(PARENT2)" >> ${GITHUB_ENV}
+            echo "The head of the incoming PR is ${PARENT2}"
+            echo "INCOMING_PR_HEAD_COMMIT=${PARENT2}" >> ${GITHUB_ENV}
           fi
 
       - name: Set up Crane volume and define env variables
@@ -158,17 +158,27 @@ jobs:
           tags: |
             type=sha,format=long,prefix=sha-,suffix=-${{ env.SUFFIX }}
 
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Actually re-tag the container
         shell: bash
         run: |
           echo "${{ steps.meta.outputs.tags }}" | while read new_tag
           do
-            docker run \
-              --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
-              --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
-              --rm \
-              gcr.io/go-containerregistry/crane:latest \
-              cp "${FULL_IMAGE_NAME}:${OLD_TAG}" ${new_tag}
+            docker pull "${FULL_IMAGE_NAME}:${OLD_TAG}"
+            docker tag "${FULL_IMAGE_NAME}:${OLD_TAG}" ${new_tag}
+            docker push ${new_tag}
+            # docker run \
+            #   --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
+            #   --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
+            #   --rm \
+            #   gcr.io/go-containerregistry/crane:latest \
+            #   cp "${FULL_IMAGE_NAME}:${OLD_TAG}" ${new_tag}
           done
 
       - name: Cleanup!
