@@ -306,7 +306,7 @@ jobs:
           # push the created docker image when it's the tip of a PR
           # this container is THE artifact, and we will re-tag it
           # once the PR has been accepted
-          push: ${{ (github.repository == 'Kristof-Mattei/rust-integrity-playground') && (github.event_name == 'pull_request')  }}
+          push: ${{ (github.repository == 'kristof-mattei/rust-integrity-playground') && (github.event_name == 'pull_request')  }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=local,src=/tmp/.buildx-cache
