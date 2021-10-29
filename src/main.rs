@@ -31,6 +31,10 @@ fn bar() -> &'static str {
     "Bar"
 }
 
+fn quz() -> &'static str {
+    "Quz"
+}
+
 // async fn something_to_await(_: PathBuf) {
 //     println!("{}", foo());
 //     println!("{}", bar());
@@ -67,12 +71,13 @@ fn bar() -> &'static str {
 fn main() {
     println!("{}", foo());
     println!("{}", bar());
+    println!("{}", quz());
     todo!("TODO");
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{bar, foo};
+    use super::{bar, foo, quz};
 
     #[test]
     fn assert_foo() {
@@ -82,5 +87,15 @@ mod tests {
     #[test]
     fn assert_bar() {
         assert_eq!(bar(), "Bar");
+    }
+
+    #[test]
+    fn assert_quz() {
+        assert_eq!(quz(), "Quz");
+    }
+
+    #[test]
+    fn assert_combined() {
+        assert_eq!(format!("{}-{}-{}", foo(), bar(), quz()), "Foo-Bar-Quz");
     }
 }
