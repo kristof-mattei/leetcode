@@ -1,0 +1,178 @@
+name: Retag containers after new push / PR
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+concurrency:
+  group: "${{ github.workflow }} @ ${{ github.event.before }}"
+
+on:
+  # Triggers the workflow pushes to main. They can be either direct pushes, or PRs being merged
+  push:
+    branches: [main]
+
+  # note how we're not doing
+  # pull_request_target, as it isn't what we need.
+  # we need the push event to make it show up nicely in the UI
+  # this however brings a whole new slew of problems, like how do we identify the
+  # incoming PR's artifacts?
+  # well, we set a tag on that PR's artifact, in the form of
+  # pr-{head_of_pr}-{pr_head_of_main}
+  # when with git rev-parse HEAD^2 we can find the incoming PR's head
+  # Problem solved
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  retag-containers:
+    name: Retag the containers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Find out if current commit is a merge
+        shell: bash
+        run: |
+          # a commit always has a parent, but if it has 2, the commit is a merge
+          # so lets see if we have one
+          PARENT2=$(git rev-parse "HEAD^2" --quiet --verify 2>/dev/null) || true
+
+          # now notice how we did --quiet and --verify and || true
+          # the command would normally return 128 and dump a bunch of stuff to the console
+          # we're just making it quiet and return 0, regardless
+          # if it didn't find a second parent, the contents of `PARENT2` are HEAD^2 (literally)
+          # so now we try and find that object again, this time only swallowing stderr, but retaining the errorcode
+          # for the if part
+          # if the contents of PARENT2 was is valid sha, then it'll return 0, if not (i.e. HEAD^2) it'll fail, so no incoming merge :)
+
+          if [ git rev-parse ${PARENT2} 2>/dev/null -eq 0 ]
+          then
+            # PARENT2 is an actual commit
+            echo "The head of the incoming PR is $(PARENT2)"
+            echo "INCOMING_PR_HEAD_COMMIT=$(PARENT2)" >> ${GITHUB_ENV}
+          fi
+
+      - name: Set up Crane volume and define env variables
+        shell: bash
+        run: |
+
+          # for security purposes let's create a volume for .docker in crane
+          CRANE_DOCKER_CONFIG_VOLUME="crane_docker_config"
+
+          CRANE_DOCKER_CONFIG_LOCATION="/.docker_config"
+
+          # this volume will hold the the docker.json
+          docker volume create ${CRANE_DOCKER_CONFIG_VOLUME};
+
+          # generalize the mount config, which we'll export later too
+          CRANE_DOCKER_CONFIG_VOLUME_MOUNT="type=volume,src=${CRANE_DOCKER_CONFIG_VOLUME},dst=${CRANE_DOCKER_CONFIG_LOCATION}"
+
+          # prepare the volume so that crane can write to is
+          # note that the ${} passed in via sh are rendered before we run the container
+          # so it just gets an actual string
+          docker run \
+            --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
+            --rm \
+            alpine:latest \
+            sh -c "chmod 700 ${CRANE_DOCKER_CONFIG_LOCATION} && chown 65532:65532 ${CRANE_DOCKER_CONFIG_LOCATION}"
+
+          # export the variables for future operations
+          echo "CRANE_DOCKER_CONFIG_VOLUME=${CRANE_DOCKER_CONFIG_VOLUME}" >> ${GITHUB_ENV}
+          echo "CRANE_DOCKER_CONFIG_LOCATION=${CRANE_DOCKER_CONFIG_LOCATION}" >> ${GITHUB_ENV}
+          echo "CRANE_DOCKER_CONFIG_VOLUME_MOUNT=${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" >> ${GITHUB_ENV}
+
+      - name: Set full image name
+        shell: bash
+        run: |
+
+          echo "FULL_IMAGE_NAME=${REGISTRY,,}/${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+
+      - name: Crane login
+        shell: bash
+        run: |
+
+          docker run \
+            --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
+            --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
+            --rm \
+            gcr.io/go-containerregistry/crane:latest \
+            auth login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Find all tags for ${{ env.FULL_IMAGE_NAME }}
+        shell: bash
+        run: |
+
+          docker run \
+            --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
+            --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
+            --rm \
+            gcr.io/go-containerregistry/crane:latest \
+            ls ${FULL_IMAGE_NAME} >> existing_tags
+
+          echo "These are the existing tags on ${FULL_IMAGE_NAME}:"
+          cat existing_tags
+
+      - name: Check if the incoming PR has a Docker container, which will be our old tag, if not, or if it's just a push, find the appropriate old tag
+        env:
+          PR_TAG: "pr-${{ github.event.before }}-${{ env.INCOMING_PR_HEAD_COMMIT }}"
+        shell: bash
+        run: |
+          # search for the tag, there can only be zero or one match
+          # we need the || true because otherwise grep returns exit code 1 and github actions then dies
+          pr_tag_found=$(cat existing_tags | grep -c "^${PR_TAG}\$") || true
+
+          if [ $pr_tag_found -eq 1 ]
+          then
+            echo "Incoming PR produced a Docker image"
+
+            echo "OLD_TAG=${PR_TAG}" >> ${GITHUB_ENV}
+            echo "SUFFIX=actual" >> ${GITHUB_ENV}
+          else
+            # If we don't have an old tag, then the incoming PR didn't produce a container.
+            # In which case we're going to find the container referenced to the base commit, and add our current sha as a tag to it
+
+            echo "Incoming PR produced nothing, or there was just a push to main"
+
+            # so we find the last commit that github processed before this one
+            # which will have gone through the same retagging process
+            # and use that sha as our key to find the Docker container related to that commit
+            old_tag=$(cat existing_tags | grep "^sha-${{ github.event.before }}-.*\$") # .* is actual or retag
+
+            echo "OLD_TAG=${old_tag}" >> ${GITHUB_ENV}
+            echo "SUFFIX=retag" >> ${GITHUB_ENV}
+          fi
+
+      - name: Set the new TAGs
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
+          tags: |
+            type=sha,format=long,prefix=sha-,suffix=-${{ env.SUFFIX }}
+
+      - name: Actually re-tag the container
+        shell: bash
+        run: |
+          echo "${{ steps.meta.outputs.tags }}" | while read new_tag
+          do
+            docker run \
+              --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
+              --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
+              --rm \
+              gcr.io/go-containerregistry/crane:latest \
+              cp "${FULL_IMAGE_NAME}:${OLD_TAG}" ${new_tag}
+          done
+
+      - name: Cleanup!
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          docker volume rm ${{ env.CRANE_DOCKER_CONFIG_VOLUME }}

@@ -1,0 +1,40 @@
+{
+  "name": "rust-integrity-playground",
+  "version": "0.0.0-development",
+  "description": "It's written in Rust!",
+  "main": "src/main.rs",
+  "scripts": {
+    "build": "cargo build",
+    "prepare": "husky install",
+    "prettier": "prettier -w \"**/*.{yml,yaml}\""
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kristof-Mattei/rust-integrity-playground.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kristof-Mattei/rust-integrity-playground/issues"
+  },
+  "homepage": "https://github.com/Kristof-Mattei/rust-integrity-playground#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^13.2.0",
+    "@semantic-release-plus/docker": "^3.0.1",
+    "@semantic-release/changelog": "^6.0.0",
+    "conventional-changelog-conventionalcommits": "^4.6.1",
+    "husky": "^7.0.0",
+    "prettier": "^2.4.1",
+    "semantic-release": "^18.0.0",
+    "semantic-release-plus": "^19.0.0",
+    "semver": "^7.3.5"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "dependencies": {}
+}

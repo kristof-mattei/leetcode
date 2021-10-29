@@ -1,0 +1,61 @@
+name: Release
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+on:
+  workflow_dispatch: # releasing is manual as we don't want to release every time
+    branches: [main]
+
+permissions:
+  contents: write # to write tags
+  packages: write # to write tags to docker containers
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Only on main
+        if: ${{ github.ref != 'refs/heads/main' }}
+        shell: bash
+        run: |
+          echo "Only to be executed on main"
+          exit 1
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.TOKEN_TO_TRIGGER_SUBSEQUENT_WORKFLOWS }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "lts/*"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        env:
+          CACHE_NAME: npm-cache-dependencies
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ env.CACHE_NAME }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.CACHE_NAME }}-
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          npm ci
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_TO_TRIGGER_SUBSEQUENT_WORKFLOWS }}
+        shell: bash
+        run: |
+          npx --no-install semantic-release-plus

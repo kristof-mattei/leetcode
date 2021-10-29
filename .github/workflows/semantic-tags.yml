@@ -1,0 +1,226 @@
+name: Semantic tags
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  move-git-tags:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "lts/*"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        env:
+          CACHE_NAME: npm-cache-dependencies
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ env.CACHE_NAME }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.CACHE_NAME }}-
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          npm ci
+
+      - name: Split the incoming tag into major, minor and patch
+        uses: actions/github-script@v5
+        env:
+          # because in the JS github variable ref_name isn't there
+          TAGNAME: ${{ github.ref_name }}
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const semver = require("semver");
+
+            // parse our version
+            let parsed = semver.parse(process.env.TAGNAME);
+
+            core.exportVariable("MAJOR", parsed.major);
+            core.exportVariable("MINOR", parsed.minor);
+            core.exportVariable("PATCH", parsed.patch);
+
+      - name: Install debug dependencies
+        shell: bash
+        run: |
+          # see https://github.com/actions/toolkit/blob/e2eeb0a784f4067a75f0c6cd2cc9703f3cbc7744/packages/core/src/core.ts#L227
+          if [ ${RUNNER_DEBUG} -eq 1 ]
+          then
+            npm install serialize-error
+          fi
+
+      - name: Move v${{ env.MAJOR }} and v${{ env.MAJOR }}.${{ env.MINOR }} tags
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { serializeError } = core.isDebug() ? require("serialize-error") : { serializeError: () => {} };
+
+            const tagsToMove = [
+                // already covered by semantic-release, it is what triggers this WF
+                // `v${process.env.MAJOR}.${process.env.MINOR}.${process.env.PATCH}`,
+                `v${process.env.MAJOR}.${process.env.MINOR}`,
+                // only do major if we're off v0, as v0 is the semver exception
+                ...(0 !== process.env.MAJOR ? [`v${process.env.MAJOR}`] : [])
+            ];
+
+            core.info(`Trying to move the following tags: ${tagsToMove.join(", ")} by deleting and re-creating.`);
+
+            async function move(tag) {
+                const ref = {
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    ref: `tags/${tag}`
+                };
+
+                try {
+                    await github.rest.git.deleteRef({
+                        ...ref,
+                    });
+
+                    core.info(`Deleted ${tag}.`);
+                } catch (e) {
+                    core.info(`The tag ${tag} doesn't exist yet, that's OK, it happens on new versions.`);
+                    core.debug(serializeError(e));
+                }
+
+                try {
+                    await github.rest.git.createRef({
+                        ...ref,
+                        // to delete a tag with deleteRef the format of the ref is tags/{tag}
+                        // to create a tag with createRef the format of the ref is /refs/tags/{tag}
+                        // # confused
+                        ref: `refs/${ref.ref}`,
+                        sha: context.sha
+                    });
+
+                    core.info(`Created ${tag} on ${context.sha}.`);
+
+                } catch (e) {
+                    core.setFailed(`Failed to create tag ${tag}.`);
+                    core.debug(serializeError(e));
+                }
+            }
+
+            await Promise.all(tagsToMove.map(move));
+
+            core.info("All done!");
+
+  retag-containers:
+    name: Retag the containers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Crane volume and define env variables
+        shell: bash
+        run: |
+
+          # for security purposes let's create a volume for .docker in crane
+          CRANE_DOCKER_CONFIG_VOLUME="crane_docker_config"
+
+          CRANE_DOCKER_CONFIG_LOCATION="/.docker_config"
+
+          # this volume will hold the the docker.json
+          docker volume create ${CRANE_DOCKER_CONFIG_VOLUME};
+
+          # generalize the mount config, which we'll export later too
+          CRANE_DOCKER_CONFIG_VOLUME_MOUNT="type=volume,src=${CRANE_DOCKER_CONFIG_VOLUME},dst=${CRANE_DOCKER_CONFIG_LOCATION}"
+
+          # prepare the volume so that crane can write to is
+          # note that the ${} passed in via sh are rendered before we run the container
+          # so it just gets an actual string
+          docker run \
+            --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
+            --rm \
+            alpine:latest \
+            sh -c "chmod 700 ${CRANE_DOCKER_CONFIG_LOCATION} && chown 65532:65532 ${CRANE_DOCKER_CONFIG_LOCATION}"
+
+          # export the variables for future operations
+          echo "CRANE_DOCKER_CONFIG_VOLUME=${CRANE_DOCKER_CONFIG_VOLUME}" >> ${GITHUB_ENV}
+          echo "CRANE_DOCKER_CONFIG_LOCATION=${CRANE_DOCKER_CONFIG_LOCATION}" >> ${GITHUB_ENV}
+          echo "CRANE_DOCKER_CONFIG_VOLUME_MOUNT=${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" >> ${GITHUB_ENV}
+
+      - name: Set full image name
+        shell: bash
+        run: |
+
+          echo "FULL_IMAGE_NAME=${REGISTRY,,}/${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+
+      - name: Crane login
+        shell: bash
+        run: |
+
+          docker run \
+            --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
+            --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
+            --rm \
+            gcr.io/go-containerregistry/crane:latest \
+            auth login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Find all tags for ${{ env.FULL_IMAGE_NAME }}
+        shell: bash
+        run: |
+
+          docker run \
+            --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
+            --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
+            --rm \
+            gcr.io/go-containerregistry/crane:latest \
+            ls ${FULL_IMAGE_NAME} >> existing_tags
+
+          echo "These are the existing tags on ${FULL_IMAGE_NAME}:"
+          cat existing_tags
+
+      - name: Check if the incoming PR has a Docker container, which will be our old tag
+        shell: bash
+        run: |
+          old_tag=$(cat existing_tags | grep "^sha-${{ github.sha }}-.*\$") # .* is actual or retag
+
+          echo "OLD_TAG=${old_tag}" >> ${GITHUB_ENV}
+
+      - name: Set the new TAGs
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
+          tags: |
+            type=semver,pattern=v{{version}}
+            type=semver,pattern=v{{major}}.{{minor}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.0.') }}
+            type=semver,pattern=v{{major}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }}
+
+      - name: Actually re-tag the container
+        shell: bash
+        run: |
+          echo "${{ steps.meta.outputs.tags }}" | while read new_tag
+          do
+            docker run \
+              --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
+              --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
+              --rm \
+              gcr.io/go-containerregistry/crane:latest \
+              cp "${FULL_IMAGE_NAME}:${OLD_TAG}" ${new_tag}
+          done
+
+      - name: Cleanup!
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          docker volume rm ${{ env.CRANE_DOCKER_CONFIG_VOLUME }}
