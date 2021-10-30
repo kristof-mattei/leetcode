@@ -135,13 +135,6 @@ jobs:
           tags: |
             type=sha,format=long,prefix=sha-,suffix=-${{ env.SUFFIX }}
 
-      - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Actually re-tag the container
         shell: bash
         run: |
