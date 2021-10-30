@@ -72,7 +72,7 @@ jobs:
             const tc = require("@actions/tool-cache");
             const urlToCraneTar = "https://github.com/google/go-containerregistry/releases/download/v0.6.0/go-containerregistry_Linux_x86_64.tar.gz";
             const craneTarPath = await tc.downloadTool(urlToCraneTar);
-            const craneExtractedFolder = await tc.extractTar(craneTarPath, ["--extract", "--gzip"]);
+            const craneExtractedFolder = await tc.extractTar(craneTarPath, null, ["--extract", "--gzip"]);
             core.addPath(craneExtractedFolder);
 
       - name: Log into registry ${{ env.REGISTRY }}

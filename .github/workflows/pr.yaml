@@ -187,7 +187,7 @@ jobs:
             const tc = require("@actions/tool-cache");
             const urlToGrcovTar = "https://github.com/mozilla/grcov/releases/download/v0.8.2/grcov-linux-x86_64.tar.bz2";
             const grcovTarPath = await tc.downloadTool(urlToGrcovTar);
-            const craneExtractedFolder = await tc.extractTar(grcovTarPath, ["--extract"]); // no z, or gzip, as it's a bz2
+            const craneExtractedFolder = await tc.extractTar(grcovTarPath, null, ["--extract"]); // no z, or gzip, as it's a bz2
             core.addPath(craneExtractedFolder);
 
       - name: Generate test result and coverage report
