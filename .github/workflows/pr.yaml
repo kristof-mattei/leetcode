@@ -175,9 +175,24 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
+      - name: Set up NPM to install package to set up crane toolchain
+        shell: bash
+        run: |
+          npm install @actions/tool-cache
+
+      - name: Download crane tar, extract, and add folder to path.
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const tc = require("@actions/tool-cache");
+            const urlToGrcovTar = "https://github.com/mozilla/grcov/releases/download/v0.8.2/grcov-linux-x86_64.tar.bz2";
+            const grcovTarPath = await tc.downloadTool(urlToGrcovTar);
+            const craneExtractedFolder = await tc.extractTar(grcovTarPath);
+            core.addPath(craneExtractedFolder);
+
       - name: Generate test result and coverage report
         run: |
-          cargo install cargo2junit grcov;
+          cargo install cargo2junit;
           cargo test ${CARGO_OPTIONS} -- -Z unstable-options --format json | cargo2junit > results.xml;
           zip -0 ccov.zip `find . \( -name "${PROJECT_NAME_UNDERSCORE}*.gc*" \) -print`;
           grcov ccov.zip -s . -t lcov --llvm --ignore-not-existing --ignore "/*" --ignore "tests/*" -o lcov.info;
