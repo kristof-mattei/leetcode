@@ -129,34 +129,27 @@ jobs:
     name: Retag the containers
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Crane volume and define env variables
+      - name: Set up NPM to install package to set up crane toolchain
         shell: bash
         run: |
+          npm install @actions/tool-cache
 
-          # for security purposes let's create a volume for .docker in crane
-          CRANE_DOCKER_CONFIG_VOLUME="crane_docker_config"
+      - name: Download crane tar, extract, and add folder to path.
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const tc = require("@actions/tool-cache");
+            const urlToCraneTar = "https://github.com/google/go-containerregistry/releases/download/v0.6.0/go-containerregistry_Linux_x86_64.tar.gz";
+            const craneTarPath = await tc.downloadTool(urlToCraneTar);
+            const craneExtractedFolder = await tc.extractTar(craneTarPath, null, ["--extract", "--gzip"]);
+            core.addPath(craneExtractedFolder);
 
-          CRANE_DOCKER_CONFIG_LOCATION="/.docker_config"
-
-          # this volume will hold the the docker.json
-          docker volume create ${CRANE_DOCKER_CONFIG_VOLUME};
-
-          # generalize the mount config, which we'll export later too
-          CRANE_DOCKER_CONFIG_VOLUME_MOUNT="type=volume,src=${CRANE_DOCKER_CONFIG_VOLUME},dst=${CRANE_DOCKER_CONFIG_LOCATION}"
-
-          # prepare the volume so that crane can write to is
-          # note that the ${} passed in via sh are rendered before we run the container
-          # so it just gets an actual string
-          docker run \
-            --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
-            --rm \
-            alpine:latest \
-            sh -c "chmod 700 ${CRANE_DOCKER_CONFIG_LOCATION} && chown 65532:65532 ${CRANE_DOCKER_CONFIG_LOCATION}"
-
-          # export the variables for future operations
-          echo "CRANE_DOCKER_CONFIG_VOLUME=${CRANE_DOCKER_CONFIG_VOLUME}" >> ${GITHUB_ENV}
-          echo "CRANE_DOCKER_CONFIG_LOCATION=${CRANE_DOCKER_CONFIG_LOCATION}" >> ${GITHUB_ENV}
-          echo "CRANE_DOCKER_CONFIG_VOLUME_MOUNT=${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" >> ${GITHUB_ENV}
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set full image name
         shell: bash
@@ -164,27 +157,11 @@ jobs:
 
           echo "FULL_IMAGE_NAME=${REGISTRY,,}/${IMAGE_NAME,,}" >> ${GITHUB_ENV}
 
-      - name: Crane login
-        shell: bash
-        run: |
-
-          docker run \
-            --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
-            --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
-            --rm \
-            gcr.io/go-containerregistry/crane:latest \
-            auth login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-
       - name: Find all tags for ${{ env.FULL_IMAGE_NAME }}
         shell: bash
         run: |
 
-          docker run \
-            --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
-            --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
-            --rm \
-            gcr.io/go-containerregistry/crane:latest \
-            ls ${FULL_IMAGE_NAME} >> existing_tags
+          crane ls ${FULL_IMAGE_NAME} >> existing_tags
 
           echo "These are the existing tags on ${FULL_IMAGE_NAME}:"
           cat existing_tags
@@ -211,16 +188,5 @@ jobs:
         run: |
           echo "${{ steps.meta.outputs.tags }}" | while read new_tag
           do
-            docker run \
-              --env DOCKER_CONFIG=${CRANE_DOCKER_CONFIG_LOCATION} \
-              --mount "${CRANE_DOCKER_CONFIG_VOLUME_MOUNT}" \
-              --rm \
-              gcr.io/go-containerregistry/crane:latest \
-              cp "${FULL_IMAGE_NAME}:${OLD_TAG}" ${new_tag}
+            crane cp "${FULL_IMAGE_NAME}:${OLD_TAG}" ${new_tag}
           done
-
-      - name: Cleanup!
-        if: ${{ always() }}
-        shell: bash
-        run: |
-          docker volume rm ${{ env.CRANE_DOCKER_CONFIG_VOLUME }}
