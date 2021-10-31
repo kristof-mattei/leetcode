@@ -20,15 +20,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
         with:
           node-version: "lts/*"
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353
         env:
           CACHE_NAME: npm-cache-dependencies
         with:
@@ -43,7 +43,7 @@ jobs:
           npm ci
 
       - name: Split the incoming tag into major, minor and patch
-        uses: actions/github-script@v5
+        uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
         env:
           # because in the JS github variable ref_name isn't there
           TAGNAME: ${{ github.ref_name }}
@@ -69,7 +69,7 @@ jobs:
           fi
 
       - name: Move v${{ env.MAJOR }} and v${{ env.MAJOR }}.${{ env.MINOR }} tags
-        uses: actions/github-script@v5
+        uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -135,7 +135,7 @@ jobs:
           npm install @actions/tool-cache
 
       - name: Download crane tar, extract, and add folder to path.
-        uses: actions/github-script@v5
+        uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
         with:
           script: |
             const tc = require("@actions/tool-cache");
@@ -145,7 +145,7 @@ jobs:
             core.addPath(craneExtractedFolder);
 
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@v1
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -175,7 +175,7 @@ jobs:
 
       - name: Set the new TAGs
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@548e2346a9987b56d8a4104fe776321ff8e23440
         with:
           images: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
           tags: |
