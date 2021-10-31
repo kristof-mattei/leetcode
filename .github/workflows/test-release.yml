@@ -8,10 +8,14 @@ env:
 
 on:
   workflow_dispatch: # releasing is manual as we don't want to release every time
-    branches: [main]
+    inputs:
+      name:
+        description: World?
+        required: false
+        default: "Hello World!"
 
 permissions:
-  contents: read
+  contents: write 
   issues: read
   pull-requests: read
 
@@ -53,4 +57,4 @@ jobs:
       - name: Release
         shell: bash
         run: |
-          npx --no-install semantic-release-plus --dry-run
+          npx --no-install semantic-release-plus --dry-run --skip-tags
