@@ -41,10 +41,11 @@ jobs:
       - name: Find out if current commit is a merge
         shell: bash
         run: |
+          EXIT_CODE=0
           # a commit always has a parent, but if it has 2, the commit is a merge
           # so lets see if we have one
           # since we're listening to the push event we have to do this manually
-          PARENT2=$(git rev-parse "HEAD^2" --quiet) || EXIT_CODE=$?
+          PARENT2=$(git rev-parse "HEAD^2" --quiet 2>/dev/null) || EXIT_CODE=$?
 
           if [ ${EXIT_CODE} -eq 0 ]
           then
