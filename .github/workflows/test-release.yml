@@ -15,7 +15,7 @@ on:
         default: "Hello World!"
 
 permissions:
-  contents: write 
+  contents: write
   issues: read
   pull-requests: read
 
@@ -56,5 +56,7 @@ jobs:
 
       - name: Release
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_TO_TRIGGER_SUBSEQUENT_WORKFLOWS }}
         run: |
-          npx --no-install semantic-release-plus --dry-run --skip-tags
+          npx --no-install semantic-release-plus --dry-run
