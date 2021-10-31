@@ -126,7 +126,10 @@ jobs:
         uses: docker/metadata-action@548e2346a9987b56d8a4104fe776321ff8e23440
         with:
           images: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
+          flavor: |
+            latest=false
           tags: |
+            type=edge,branch=main
             type=sha,format=long,prefix=sha-,suffix=-${{ env.SUFFIX }}
 
       - name: Actually re-tag the container

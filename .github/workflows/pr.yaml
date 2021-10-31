@@ -290,8 +290,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=pr,suffix=-latest
-            type=ref,event=pr,suffix=-run-id-${{ github.run_id }}
-            type=ref,event=pr,suffix=-run-number-${{ github.run_number }}
             type=raw,value=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
           labels: |
             org.opencontainers.image.version=pr-${{ github.event.number }}
