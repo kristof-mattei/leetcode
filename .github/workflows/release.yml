@@ -6,6 +6,10 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
+concurrency:
+  group: "${{ github.workflow }}"
+  cancel-in-progress: true # only last step is important, which runs or doesn't
+
 on:
   workflow_dispatch: # releasing is manual as we don't want to release every time
     branches: [main]
