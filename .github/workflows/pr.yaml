@@ -270,11 +270,6 @@ jobs:
 
   docker-build:
     name: Build docker container and store in artifact
-    needs:
-      - cargo-build
-      - cargo-fmt
-      - cargo-test-and-report
-      - cargo-clippy-and-report
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
