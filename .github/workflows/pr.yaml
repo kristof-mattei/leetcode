@@ -362,5 +362,5 @@ jobs:
       - name: Load image from artifact
         run: |
           docker load --input ${{ env.DOCKER_IMAGE_TAR_LOCATION }}
-          docker image ls -a
+
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} --all-tags
