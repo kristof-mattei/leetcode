@@ -6,6 +6,10 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
+concurrency:
+  group: "${{ github.workflow }}"
+  cancel-in-progress: false # last one must win in case of multiple releases
+
 on:
   push:
     tags:

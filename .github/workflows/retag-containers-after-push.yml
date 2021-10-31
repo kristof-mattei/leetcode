@@ -7,7 +7,8 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 concurrency:
-  group: "${{ github.workflow }} @ ${{ github.event.before }}"
+  group: "${{ github.workflow }}" # last one must win
+  cancel-in-progress: false # no we need them
 
 on:
   # Triggers the workflow pushes to main. They can be either direct pushes, or PRs being merged

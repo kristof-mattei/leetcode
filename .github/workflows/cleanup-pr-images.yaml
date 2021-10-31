@@ -27,15 +27,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  changes:
-    name: Detect changes
+  cleanup:
+    name: Cleanup
     runs-on: ubuntu-latest
-    outputs:
-      # code: ${{ steps.filter.outputs.code }}
-      code: "true"
+    if: ${{ github.event.pull_request.merged == false }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
+      - name: Void
+        shell: bash
+        run: |
+          echo "TODO put code here that cleans up images tagged pr-${{ github.event.number }}-latest"
 
       # TODO clean up all tags related to pr-${{ github.event.number }}
 
