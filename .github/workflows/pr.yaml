@@ -264,8 +264,8 @@ jobs:
           args: --all-targets --all-features -- -D warnings
           name: Clippy report
 
-  publish:
-    name: Build docker container and publish
+  build-docker:
+    name: Build docker container and store in artifact
     needs:
       - cargo-build
       - cargo-fmt
@@ -279,13 +279,6 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
-
-      - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
 
       # TODO validate no changes between github.event.pull_request.head.sha and the actual current sha (representing the hypothetical merge)
 
@@ -315,18 +308,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
-      - name: Build and push Docker image
+      - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
-          # push the created docker image when it's the tip of a PR
-          # this container is THE artifact, and we will re-tag it
+          # this container is THE PR's artifact, and we will re-tag it
           # once the PR has been accepted
-          push: ${{ (github.repository == 'kristof-mattei/rust-integrity-playground') && (github.event_name == 'pull_request')  }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+          outputs: type=docker,dest=/tmp/image.tar
+          # TODO fix name ^^^^^^^^^^^^^
 
         # Temp fix
         # https://github.com/docker/build-push-action/issues/252
@@ -335,3 +328,42 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: image # TODO maybe fix name?
+          path: /tmp/myImage.tar # TODO FIX NAME
+
+  publish-docker-container:
+    name: Pulls docker container from artifacts and publishes it
+    runs-on: ubuntu-latest
+    needs:
+      - cargo-build
+      - cargo-fmt
+      - cargo-test-and-report
+      - cargo-clippy-and-report
+      - build-docker
+    if: ${{ (github.repository == 'kristof-mattei/rust-integrity-playground') && (github.event_name == 'pull_request')  }}
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: image # TODO this is the name of the artifact, not the file inside
+          path: /tmp
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Load image # TODO myImage is not the right name here
+        run: |
+          docker load --input /tmp/myImage.tar
+          docker image ls -a
+          docker push ${{ env.IMAGE_NAME }} --all-tags
