@@ -88,7 +88,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Build
-        uses: actions/actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
+        uses: actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
         with:
           command: build
           args: --verbose
@@ -132,7 +132,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Fmt
-        uses: actions/actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
+        uses: actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
         with:
           command: fmt
           args: --all -- --check
@@ -257,7 +257,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Clippy
-        uses: actions/actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
+        uses: actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
         with:
           command: clippy
           args: --all-targets --all-features -- -D warnings
