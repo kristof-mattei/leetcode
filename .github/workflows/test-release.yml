@@ -53,4 +53,4 @@ jobs:
       - name: Release
         shell: bash
         run: |
-          npx --no-install semantic-release-plus --dry-run
+          npx --no-install semantic-release-plus --dry-run --skip-tags
