@@ -43,13 +43,16 @@ jobs:
         run: |
           # a commit always has a parent, but if it has 2, the commit is a merge
           # so lets see if we have one
+          # since we're listening to the push event we have to do this manually
           PARENT2=$(git rev-parse "HEAD^2" --quiet) || EXIT_CODE=$?
 
           if [ ${EXIT_CODE} -eq 0 ]
           then
-              echo "The head of the incoming PR is ${PARENT2}"
+            echo "The head of the incoming PR is ${PARENT2}"
+            echo "INCOMING_PR_HEAD_COMMIT=${PARENT2}" >> ${GITHUB_ENV}
+
           else
-              echo "The incoming push isn't a merge, ergo it's not a PR"
+            echo "The incoming push isn't a merge, ergo it's not a PR"
           fi
 
       - name: Set up NPM to install package to set up crane toolchain
