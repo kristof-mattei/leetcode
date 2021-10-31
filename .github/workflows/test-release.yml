@@ -57,6 +57,11 @@ jobs:
       - name: Release
         shell: bash
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_TO_TRIGGER_SUBSEQUENT_WORKFLOWS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npx --no-install semantic-release-plus --dry-run
+
+      - name: CHANGELOG
+        shell: bash
+        run: |
+          cat CHANGELOG.md
