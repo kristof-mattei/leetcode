@@ -64,4 +64,9 @@ jobs:
       - name: CHANGELOG
         shell: bash
         run: |
+          ls
+
+      - name: CHANGELOG
+        shell: bash
+        run: |
           cat CHANGELOG.md
