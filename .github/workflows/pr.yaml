@@ -38,12 +38,12 @@ jobs:
       code: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
         with:
           submodules: true
 
       - name: Check if we actually made changes
-        uses: ./.github/actions/dorny/paths-filter # since this is a submodule, it depends on which version is pinned
+        uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721
         id: filter
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -58,19 +58,19 @@ jobs:
       (needs.changes.outputs.code == 'true')
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
         with:
           submodules: true
 
       - name: Set up toolchain
-        uses: ./.github/actions/actions-rs/toolchain # since this is a submodule, it depends on which version is pinned
+        uses: actions-rs/toolchain@b2417cde72dcf67f306c0ae8e0828a81bf0b189f
         with:
           profile: minimal
           toolchain: 1.56.0
           override: true
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -88,7 +88,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Build
-        uses: ./.github/actions/actions-rs/cargo
+        uses: actions/actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
         with:
           command: build
           args: --verbose
@@ -101,12 +101,12 @@ jobs:
     if: |
       (needs.changes.outputs.code == 'true')
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
         with:
           submodules: true
 
       - name: Set up toolchain
-        uses: ./.github/actions/actions-rs/toolchain # since this is a submodule, it depends on which version is pinned
+        uses: actions-rs/toolchain@b2417cde72dcf67f306c0ae8e0828a81bf0b189f
         with:
           profile: minimal
           toolchain: 1.56.0
@@ -114,7 +114,7 @@ jobs:
           components: rustfmt
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -132,7 +132,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Fmt
-        uses: ./.github/actions/actions-rs/cargo
+        uses: actions/actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
         with:
           command: fmt
           args: --all -- --check
@@ -150,19 +150,19 @@ jobs:
     if: |
       (needs.changes.outputs.code == 'true')
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
         with:
           submodules: true
 
       - name: Set up toolchain
-        uses: ./.github/actions/actions-rs/toolchain
+        uses: actions-rs/toolchain@b2417cde72dcf67f306c0ae8e0828a81bf0b189f
         with:
           profile: minimal
           toolchain: nightly
           override: true
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -185,7 +185,7 @@ jobs:
           npm install @actions/tool-cache
 
       - name: Download crane tar, extract, and add folder to path.
-        uses: actions/github-script@v5
+        uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
         with:
           script: |
             const tc = require("@actions/tool-cache");
@@ -203,7 +203,7 @@ jobs:
 
       - name: Upload test results
         if: ${{ always() }}
-        uses: ./.github/actions/EnricoMi/publish-unit-test-result-action/composite
+        uses: EnricoMi/publish-unit-test-result-action@823e195704e47d447e7e8cc801f02ab5d7ba2541
         with:
           check_name: Test Results
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -211,7 +211,7 @@ jobs:
 
       - name: Upload to CodeCov
         if: ${{ always() }}
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@f32b3a3741e1053eb607407145bc9619351dc93b
         with:
           # # required for private repositories:
           # token: ${{ secrets.CODECOV_TOKEN }}
@@ -226,12 +226,12 @@ jobs:
     if: |
       (needs.changes.outputs.code == 'true')
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
         with:
           submodules: true
 
       - name: Set up toolchain
-        uses: ./.github/actions/actions-rs/toolchain
+        uses: actions-rs/toolchain@b2417cde72dcf67f306c0ae8e0828a81bf0b189f
         with:
           profile: minimal
           toolchain: 1.56.0
@@ -239,7 +239,7 @@ jobs:
           components: clippy
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -257,12 +257,12 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Clippy
-        uses: ./.github/actions/actions-rs/cargo
+        uses: actions/actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
         with:
           command: clippy
           args: --all-targets --all-features -- -D warnings
 
-      - uses: actions-rs/clippy-check@v1
+      - uses: actions-rs/clippy-check@b5b5f21f4797c02da247df37026fcd0a5024aa4d
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --all-targets --all-features -- -D warnings
@@ -278,11 +278,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@94ab11c41e45d028884a99163086648e898eed25
 
       # TODO validate no changes between github.event.pull_request.head.sha and the actual current sha (representing the hypothetical merge)
 
@@ -290,7 +290,7 @@ jobs:
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@548e2346a9987b56d8a4104fe776321ff8e23440
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
@@ -303,7 +303,7 @@ jobs:
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
 
       - name: Cache Docker layers
-        uses: actions/cache@v2
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353
         env:
           CACHE_NAME: docker-cache-dependencies
         with:
@@ -313,7 +313,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Build Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@a66e35b9cbcf4ad0ea91ffcaf7bbad63ad9e0229
         with:
           context: .
           # this container is THE PR's artifact, and we will re-tag it
@@ -333,7 +333,7 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@27121b0bdffd731efa15d66772be8dc71245d074
         with:
           name: ${{ env.DOCKER_IMAGE_ARTIFACT_NAME }}
           path: ${{ env.DOCKER_IMAGE_TAR_LOCATION }}
@@ -350,16 +350,16 @@ jobs:
     if: ${{ (github.repository == 'kristof-mattei/rust-integrity-playground') && (github.event_name == 'pull_request')  }}
     steps:
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@94ab11c41e45d028884a99163086648e898eed25
 
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v23be87be14a055c47b01d3bd88f8fe02320a9bb60
         with:
           name: ${{ env.DOCKER_IMAGE_ARTIFACT_NAME }}
           path: ${{ env.DOCKER_IMAGE_OUTPUT_LOCATION }}
 
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@v1
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
