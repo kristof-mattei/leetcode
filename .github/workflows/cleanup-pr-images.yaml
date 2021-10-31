@@ -35,6 +35,8 @@ jobs:
       code: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
 
       # TODO clean up all tags related to pr-${{ github.event.number }}
+
+      # but we cannot delete labels from ghcr.io. # sad
