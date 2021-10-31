@@ -1,0 +1,56 @@
+name: Test Release (do a dry run)
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+on:
+  workflow_dispatch: # releasing is manual as we don't want to release every time
+    branches: [main]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Only on main
+        if: ${{ github.ref != 'refs/heads/main' }}
+        shell: bash
+        run: |
+          echo "Only to be executed on main"
+          exit 1
+
+      - name: Checkout
+        uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
+
+      - name: Setup Node.js
+        uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
+        with:
+          node-version: "lts/*"
+
+      - name: Cache dependencies
+        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353
+        env:
+          CACHE_NAME: npm-cache-dependencies
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ env.CACHE_NAME }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.CACHE_NAME }}-
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          npm ci
+
+      - name: Release
+        shell: bash
+        run: |
+          npx --no-install semantic-release-plus --dry-run

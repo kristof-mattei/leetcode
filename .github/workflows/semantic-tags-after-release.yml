@@ -1,4 +1,4 @@
-name: Semantic tags
+name: Update semantic tags on repo & image after release
 
 env:
   # Use docker.io for Docker Hub if empty
