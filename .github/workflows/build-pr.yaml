@@ -279,8 +279,12 @@ jobs:
           name: Clippy report
 
   docker-build:
-    name: Build docker container and store in artifact
+    name: Build docker container
     runs-on: ubuntu-latest
+    needs:
+      - changes
+    if: |
+      (needs.changes.outputs.code == 'true')
     steps:
       - name: Checkout
         uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
@@ -341,8 +345,8 @@ jobs:
           name: ${{ env.DOCKER_IMAGE_ARTIFACT_NAME }}
           path: ${{ env.DOCKER_IMAGE_TAR_LOCATION }}
 
-  publish-docker-container:
-    name: Pull docker container from artifacts and publishes it
+  docker-publish:
+    name: Publish Docker container
     runs-on: ubuntu-latest
     needs:
       - cargo-build
