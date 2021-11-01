@@ -63,7 +63,7 @@ jobs:
           submodules: true
 
       - name: Set up toolchain
-        uses: actions-rs/toolchain@b2417cde72dcf67f306c0ae8e0828a81bf0b189f
+        uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
         with:
           profile: minimal
           toolchain: 1.56.0
@@ -88,7 +88,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Build
-        uses: actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
+        uses: actions-rs/cargo@844f36862e911db73fe0815f00a4a2602c279505
         with:
           command: build
           args: --verbose
@@ -106,7 +106,7 @@ jobs:
           submodules: true
 
       - name: Set up toolchain
-        uses: actions-rs/toolchain@b2417cde72dcf67f306c0ae8e0828a81bf0b189f
+        uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
         with:
           profile: minimal
           toolchain: 1.56.0
@@ -132,7 +132,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Fmt
-        uses: actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
+        uses: actions-rs/cargo@844f36862e911db73fe0815f00a4a2602c279505
         with:
           command: fmt
           args: --all -- --check
@@ -150,7 +150,7 @@ jobs:
           submodules: true
 
       - name: Set up toolchain
-        uses: actions-rs/toolchain@b2417cde72dcf67f306c0ae8e0828a81bf0b189f
+        uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
         with:
           profile: minimal
           toolchain: nightly
@@ -241,7 +241,7 @@ jobs:
           submodules: true
 
       - name: Set up toolchain
-        uses: actions-rs/toolchain@b2417cde72dcf67f306c0ae8e0828a81bf0b189f
+        uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
         with:
           profile: minimal
           toolchain: 1.56.0
@@ -267,7 +267,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Clippy
-        uses: actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b
+        uses: actions-rs/cargo@844f36862e911db73fe0815f00a4a2602c279505
         with:
           command: clippy
           args: --all-targets --all-features -- -D warnings
