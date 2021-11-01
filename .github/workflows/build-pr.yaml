@@ -207,6 +207,8 @@ jobs:
 
       - name: Run tarpaulin
         run: |
+          mkdir reports
+
           cargo tarpaulin --output-dir reports --out Lcov -- -Z unstable-options --format json | cargo2junit > reports/result.xml
 
       - name: Upload test results
