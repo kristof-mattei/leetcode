@@ -178,6 +178,11 @@ jobs:
         run: |
           cargo install cargo2junit;
 
+      - name: Set up NPM to install package to set up crane toolchain
+        shell: bash
+        run: |
+          npm install @actions/tool-cache
+
       - name: Download tarpulin tar, extract, and add folder to path.
         uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
         with:
