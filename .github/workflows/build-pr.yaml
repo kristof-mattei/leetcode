@@ -194,7 +194,6 @@ jobs:
                 repo: "tarpaulin"
             });
 
-
             const asset = release.data.assets.find(asset => {
                 return asset["content_type"] === "application/gzip" && asset.name === `cargo-tarpaulin-${release.data.tag_name}-travis.tar.gz`;
             });

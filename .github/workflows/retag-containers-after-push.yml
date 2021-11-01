@@ -73,7 +73,6 @@ jobs:
                 repo: "go-containerregistry"
             });
 
-
             const asset = release.data.assets.find(asset => {
                 return asset["content_type"] === "application/gzip" && asset.name === "go-containerregistry_Linux_x86_64.tar.gz";
             });
