@@ -189,7 +189,7 @@ jobs:
           script: |
             const tc = require("@actions/tool-cache");
 
-            const release = await github.repos.getLatestRelease({
+            const release = await github.rest.repos.getLatestRelease({
                 owner: "xd009642",
                 repo: "tarpaulin"
             });
