@@ -139,11 +139,6 @@ jobs:
 
   cargo-test-and-report:
     name: Cargo test and report
-    env:
-      PROJECT_NAME_UNDERSCORE: rust_integrity_playground
-      CARGO_INCREMENTAL: 0
-      RUSTFLAGS: -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests -Zprofile
-      RUSTDOCFLAGS: "-Cpanic=abort"
     runs-on: ubuntu-latest
     needs:
       - changes
@@ -179,27 +174,36 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
-      - name: Set up NPM to install package to set up crane toolchain
-        shell: bash
+      - name: Install cargo2junit for formatting
         run: |
-          npm install @actions/tool-cache
+          cargo install cargo2junit;
 
-      - name: Download crane tar, extract, and add folder to path.
+      - name: Download tarpulin tar, extract, and add folder to path.
         uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
         with:
           script: |
             const tc = require("@actions/tool-cache");
-            const urlToGrcovTar = "https://github.com/mozilla/grcov/releases/download/v0.8.2/grcov-linux-x86_64.tar.bz2";
-            const grcovTarPath = await tc.downloadTool(urlToGrcovTar);
-            const craneExtractedFolder = await tc.extractTar(grcovTarPath, null, ["--extract"]); // no z, or gzip, as it's a bz2
-            core.addPath(craneExtractedFolder);
 
-      - name: Generate test result and coverage report
+            const release = await octokit.rest.repos.getLatestRelease({
+                owner: "xd009642",
+                repo: "tarpaulin"
+            });
+
+
+            const asset = release.data.assets.find(asset => {
+                return asset["content_type"] === "application/gzip" && asset.name === `cargo-tarpaulin-${release.data.tag_name}-travis.tar.gz`;
+            });
+
+            const urlToTarpualinTar = assert.browser_download_url;
+
+            const tarpaulinTarPath = await tc.downloadTool(urlToTarpualinTar);
+            const tarpaulinExtractedFolder = await tc.extractTar(tarpaulinTarPath, null, ["--extract", "--gzip"]);
+
+            core.addPath(tarpaulinExtractedFolder);
+
+      - name: Run tarpaulin
         run: |
-          cargo install cargo2junit;
-          cargo test ${CARGO_OPTIONS} -- -Z unstable-options --format json | cargo2junit > results.xml;
-          zip -0 ccov.zip `find . \( -name "${PROJECT_NAME_UNDERSCORE}*.gc*" \) -print`;
-          grcov ccov.zip -s . -t lcov --llvm --ignore-not-existing --ignore "/*" --ignore "tests/*" -o lcov.info;
+          cargo tarpaulin --output-dir reports --out Lcov -- -Z unstable-options --format json | cargo2junit > reports/result.xml
 
       - name: Upload test results
         if: ${{ always() }}
@@ -207,7 +211,7 @@ jobs:
         with:
           check_name: Test Results
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          files: ./results.xml
+          files: reports/result.xml
 
       - name: Upload to CodeCov
         if: ${{ always() }}
@@ -215,7 +219,7 @@ jobs:
         with:
           # # required for private repositories:
           # token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./lcov.info
+          directory: reports
           fail_ci_if_error: true
 
   cargo-clippy-and-report:
