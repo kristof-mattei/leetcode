@@ -178,7 +178,7 @@ jobs:
         run: |
           cargo install cargo2junit;
 
-      - name: Set up NPM to install package to set up crane toolchain
+      - name: Set up NPM to install package to set up tarpaulin toolchain
         shell: bash
         run: |
           npm install @actions/tool-cache
@@ -198,7 +198,7 @@ jobs:
                 return asset["content_type"] === "application/gzip" && asset.name === `cargo-tarpaulin-${release.data.tag_name}-travis.tar.gz`;
             });
 
-            const urlToTarpualinTar = assert.browser_download_url;
+            const urlToTarpualinTar = asset.browser_download_url;
 
             const tarpaulinTarPath = await tc.downloadTool(urlToTarpualinTar);
             const tarpaulinExtractedFolder = await tc.extractTar(tarpaulinTarPath, null, ["--extract", "--gzip"]);
