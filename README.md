@@ -1,14 +1,14 @@
-# Rust-integrity-playground
+# Rust end-to-end application
 It's written in Rust!
 
-I hope my Rust doesn't get rusty...
+This is a framework for building Rust applications in combination with building Docker containers and never rebuilding code on release, instead we promote existing code.
 
-## TODO:
-Figure out how to deal with PRs pushing too many docker containers.
-
-* [x] Every PR created and every new commit pushed to an existing PR will produce a new Docker container. => many containers.
-  * [x] If you push 10 commits to an existing PR only the top one will produce a Docker container, so that is not a concern.
-* Should we remove old containers when the new one gets build for a PR?
-  * Should we remove the container if a PR gets closed?
-* Do we want to store them in the artifacts of a build? If so, how do we deal with PR deployments?
-* How do we deal with older containers on `main`? Leave? Purge? ...
+## TODO and done
+* [x] Figure out how to deal with PRs pushing too many docker containers<br /> 
+  > We only build containers on the tip of the PR, so even if you're pushing 10 commits, we'll only build one. 
+* [ ] Remove old containers when the new one gets build for a PR?<br />
+  Or rely on a general weekly untagged cleanup? 
+* [ ] Remove PR containers when PR closed<br />
+  > API currently unavailable
+* [x] How do we deal with older containers on `main`?<br />
+  > We move tags, so we'll need to wait for the API to clean up untagged versions
