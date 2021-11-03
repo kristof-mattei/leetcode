@@ -354,7 +354,7 @@ jobs:
       - cargo-test-and-report
       - cargo-clippy-and-report
       - docker-build
-    if: ${{ (github.repository == 'kristof-mattei/rust-integrity-playground') && (github.event_name == 'pull_request') }}
+    if: ${{ (github.repository == 'kristof-mattei/rust-end-to-end-application') && (github.event_name == 'pull_request') }}
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@94ab11c41e45d028884a99163086648e898eed25

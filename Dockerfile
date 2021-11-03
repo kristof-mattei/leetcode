@@ -19,19 +19,19 @@ RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/
 # This allows us to copy in the source in a different layer which in turn allows us to leverage Docker's layer caching
 # That means that if our dependencies don't change rebuilding is much faster
 WORKDIR /build
-RUN cargo new rust-integrity-playground
-WORKDIR /build/rust-integrity-playground
+RUN cargo new rust-end-to-end-application
+WORKDIR /build/rust-end-to-end-application
 COPY Cargo.toml Cargo.lock ./
-RUN --mount=type=cache,target=/build/rust-integrity-playground/target \
+RUN --mount=type=cache,target=/build/rust-end-to-end-application/target \
     cargo build --release --target ${TARGET}
 
 # now we copy in the source which is more prone to changes and build it
 COPY src ./src
 # --release not needed, it is implied with install
-RUN --mount=type=cache,target=/build/rust-integrity-playground/target \
+RUN --mount=type=cache,target=/build/rust-end-to-end-application/target \
     cargo install --path . --target ${TARGET} --root /output
 
 FROM alpine:3.14.2
 WORKDIR /app
-COPY --from=builder /output/bin/rust-integrity-playground /app
-ENTRYPOINT ["/app/rust-integrity-playground"]
+COPY --from=builder /output/bin/rust-end-to-end-application /app
+ENTRYPOINT ["/app/rust-end-to-end-application"]

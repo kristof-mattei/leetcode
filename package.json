@@ -1,5 +1,5 @@
 {
-  "name": "rust-integrity-playground",
+  "name": "rust-end-to-end-application",
   "version": "0.0.0-development",
   "description": "It's written in Rust!",
   "main": "src/main.rs",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kristof-mattei/rust-integrity-playground.git"
+    "url": "https://github.com/kristof-mattei/rust-end-to-end-application.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kristof-mattei/rust-integrity-playground/issues"
+    "url": "https://github.com/kristof-mattei/rust-end-to-end-application/issues"
   },
-  "homepage": "https://github.com/kristof-mattei/rust-integrity-playground#readme",
+  "homepage": "https://github.com/kristof-mattei/rust-end-to-end-application#readme",
   "devDependencies": {
     "@commitlint/cli": "^13.2.1",
     "@commitlint/config-conventional": "^13.2.0",

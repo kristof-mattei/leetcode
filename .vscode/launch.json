@@ -7,15 +7,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'rust-integrity-playground'",
+            "name": "Debug executable 'rust-end-to-end-application'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=rust-integrity-playground",
-                    "--package=rust-integrity-playground"
+                    "--bin=rust-end-to-end-application",
+                    "--package=rust-end-to-end-application"
                 ],
                 "filter": {
-                    "name": "rust-integrity-playground",
+                    "name": "rust-end-to-end-application",
                     "kind": "bin"
                 }
             },
@@ -23,22 +23,22 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "RUST_LOG": "rust_integrity_playground=trace"
+                "RUST_LOG": "rust_end_to_end_application=trace"
             }
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'rust-integrity-playground'",
+            "name": "Debug unit tests in executable 'rust-end-to-end-application'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=rust-integrity-playground",
-                    "--package=rust-integrity-playground"
+                    "--bin=rust-end-to-end-application",
+                    "--package=rust-end-to-end-application"
                 ],
                 "filter": {
-                    "name": "rust-integrity-playground",
+                    "name": "rust-end-to-end-application",
                     "kind": "bin"
                 }
             },
