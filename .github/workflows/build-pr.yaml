@@ -66,7 +66,7 @@ jobs:
         uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
         with:
           profile: minimal
-          toolchain: 1.56.0
+          toolchain: 1.56.1
           override: true
 
       - name: Cache dependencies
@@ -109,7 +109,7 @@ jobs:
         uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
         with:
           profile: minimal
-          toolchain: 1.56.0
+          toolchain: 1.56.1
           override: true
           components: rustfmt
 
@@ -244,7 +244,7 @@ jobs:
         uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
         with:
           profile: minimal
-          toolchain: 1.56.0
+          toolchain: 1.56.1
           override: true
           components: clippy
 
