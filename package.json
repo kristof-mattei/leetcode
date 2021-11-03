@@ -4,7 +4,6 @@
   "description": "It's written in Rust!",
   "main": "src/main.rs",
   "scripts": {
-    "build": "cargo build",
     "prepare": "is-ci || husky install",
     "prettier": "prettier -w \"**/*.{yml,yaml}\""
   },
