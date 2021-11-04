@@ -1,0 +1,5 @@
+---
+extends:
+  - .releaserc.base.yaml
+plugins:
+  - "@semantic-release/github"

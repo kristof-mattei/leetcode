@@ -1,0 +1,6 @@
+---
+extends:
+  - .releaserc.base.yaml
+plugins:
+  - "@semantic-release/exec"
+  - "prepareCmd": "./update-version.sh ${nextRelease.version}"
