@@ -30,21 +30,13 @@ jobs:
         uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
         with:
           node-version: "lts/*"
-
-      - name: Cache dependencies
-        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353
-        env:
-          CACHE_NAME: npm-cache-dependencies
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-${{ env.CACHE_NAME }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.CACHE_NAME }}-
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
 
       - name: Install dependencies
         shell: bash
         run: |
-          npm ci
+          npm ci --ignore-scripts
 
       - name: Split the incoming tag into major, minor and patch
         uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
@@ -62,15 +54,6 @@ jobs:
             core.exportVariable("MAJOR", parsed.major);
             core.exportVariable("MINOR", parsed.minor);
             core.exportVariable("PATCH", parsed.patch);
-
-      - name: Install debug dependencies
-        shell: bash
-        run: |
-          # see https://github.com/actions/toolkit/blob/e2eeb0a784f4067a75f0c6cd2cc9703f3cbc7744/packages/core/src/core.ts#L227
-          if [ ${RUNNER_DEBUG} -eq 1 ]
-          then
-            npm install serialize-error
-          fi
 
       - name: Move v${{ env.MAJOR }} and v${{ env.MAJOR }}.${{ env.MINOR }} tags
         uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
@@ -133,10 +116,17 @@ jobs:
     name: Retag the containers
     runs-on: ubuntu-latest
     steps:
-      - name: Set up NPM to install package to set up crane toolchain
+      - name: Setup Node.js
+        uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: Install dependencies
         shell: bash
         run: |
-          npm install @actions/tool-cache
+          npm ci --ignore-scripts
 
       - name: Download crane tar, extract, and add folder to path.
         uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667

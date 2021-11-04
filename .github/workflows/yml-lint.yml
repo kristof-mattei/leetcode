@@ -28,21 +28,13 @@ jobs:
         uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
         with:
           node-version: "lts/*"
-
-      - name: Cache dependencies
-        uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353
-        env:
-          CACHE_NAME: npm-cache-dependencies
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-${{ env.CACHE_NAME }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.CACHE_NAME }}-
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
 
       - name: Install dependencies
         shell: bash
         run: |
-          npm ci
+          npm ci --ignore-scripts
 
       - name: Run linter
         run: npx --no-install prettier -c "**/*.{yml,yaml}"

@@ -153,7 +153,7 @@ jobs:
         uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
         with:
           profile: minimal
-          toolchain: nightly
+          toolchain: 1.56.1
           override: true
 
       - name: Cache dependencies
@@ -178,10 +178,17 @@ jobs:
         run: |
           cargo install cargo2junit;
 
-      - name: Set up NPM to install package to set up tarpaulin toolchain
+      - name: Setup Node.js
+        uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: Install dependencies
         shell: bash
         run: |
-          npm install @actions/tool-cache
+          npm ci --ignore-scripts
 
       - name: Download tarpulin tar, extract, and add folder to path.
         uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667

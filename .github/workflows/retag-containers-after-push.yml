@@ -57,10 +57,17 @@ jobs:
             echo "The incoming push isn't a merge, ergo it's not a PR"
           fi
 
-      - name: Set up NPM to install package to set up crane toolchain
+      - name: Setup Node.js
+        uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: Install dependencies
         shell: bash
         run: |
-          npm install @actions/tool-cache
+          npm ci --ignore-scripts
 
       - name: Download crane tar, extract, and add folder to path.
         uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
