@@ -49,14 +49,43 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           filters: .github/file-filters.yml
 
+  calculate-version:
+    name: Calculate version
+    runs-on: ubuntu-latest
+    needs:
+      - changes
+    outputs:
+      version: ${{ steps.version.outputs.NEXTVERSION }}
+    if: |
+      (needs.changes.outputs.code == 'true')
+    steps:
+      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+        with:
+          submodules: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: Install dependencies
+        id: version
+        shell: bash
+        run: |
+          npm ci --ignore-scripts
+
+          # this dumps the next version in NEXTVERSION
+          npx --no-install semantic-release -e ./.releaserc.prepare.js --branches ${{ github.head_ref }}
+
+          echo '::set-output name=NEXTVERSION::$(cat NEXTVERSION)'
+
   cargo-build:
     name: Cargo build
     runs-on: ubuntu-latest
     needs:
       - changes
-    if: |
-      (needs.changes.outputs.code == 'true')
-
     steps:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
         with:
@@ -98,8 +127,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - changes
-    if: |
-      (needs.changes.outputs.code == 'true')
     steps:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
         with:
@@ -142,8 +169,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - changes
-    if: |
-      (needs.changes.outputs.code == 'true')
     steps:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
         with:
@@ -240,8 +265,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - changes
-    if: |
-      (needs.changes.outputs.code == 'true')
     steps:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
         with:
@@ -289,12 +312,15 @@ jobs:
     name: Build docker container
     runs-on: ubuntu-latest
     needs:
-      - changes
-    if: |
-      (needs.changes.outputs.code == 'true')
+      - calculate-version
     steps:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+
+      - name: Set the Cargo.toml version before we copy in the data into the docker container
+        shell: bash
+        run: |
+          ./update-version.sh ${{ needs.calculate-version.outputs.version) }}
 
       - name: Set up Docker Buildx
         id: buildx

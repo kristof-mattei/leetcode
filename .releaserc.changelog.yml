@@ -1,7 +1,0 @@
----
-extends:
-  - .releaserc.base.yaml
-plugins:
-  - - "@semantic-release/changelog"
-    - changelogTitle: Changelog
-      changelogFile: "CHANGELOG.md"

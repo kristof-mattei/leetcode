@@ -1,5 +1,6 @@
 [package]
 name = "rust-end-to-end-application"
+# don't change this, it's updated before an actual build by update-version.sh
 version = "0.0.0-development"
 edition = "2021"
 rust-version = "1.56.1"

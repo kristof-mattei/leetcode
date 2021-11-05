@@ -1,6 +1,8 @@
 #!/bin/bash
 
-APPLICATION=$1
-VERSION=$2
+# remove me when https://github.com/rust-lang/cargo/pull/7649 lands in stable
+VERSION=$1
 
-sed -i -z "s/name = \"${APPLICATION}\"\nversion = \"[0-9]*\.[0-9]*\.[0-9]*\"/name = \"${APPLICATION}\"\nversion = \"${VERSION}\"/" Cargo.toml
+echo "Setting Cargo.toml's version to '${VERSION}', it will not be committed, but it will ensure the version of the build is correct, should we choose to release it."
+
+sed -i -z "s/\"0.0.0-development\"/\"${VERSION}\"/" Cargo.toml
