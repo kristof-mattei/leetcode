@@ -54,4 +54,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_TO_TRIGGER_SUBSEQUENT_WORKFLOWS }}
         shell: bash
         run: |
-          npx --no-install semantic-release-plus -e ./.releaserc.publish.js
+          # TODO this release file produces a
+          # changelog
+          # we want to commit that and defer the release to THAT commit sha
+          npm run release

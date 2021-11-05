@@ -2,8 +2,7 @@ const base = require("./.releaserc.base.js");
 
 const { plugins: pluginsExtracted, rest } = base;
 
-module.exports =
-{
+module.exports = {
   "plugins": [
     ...pluginsExtracted,
     [

@@ -51,14 +51,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx --no-install semantic-release-plus -e ./.releaserc.changelog.js --branches ${{ github.head_ref }} --dry-run
-
-      - name: CHANGELOG
-        shell: bash
-        run: |
-          ls
-
-      - name: CHANGELOG
-        shell: bash
-        run: |
-          cat CHANGELOG.md
+          echo "::group::Release dry run output"
+          npm run release -- --dry-run
+          echo "::endgroup::"
