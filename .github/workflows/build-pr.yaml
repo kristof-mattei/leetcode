@@ -59,9 +59,8 @@ jobs:
     if: |
       (needs.changes.outputs.code == 'true')
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
-        with:
-          submodules: true
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Setup Node.js
         uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
@@ -77,7 +76,7 @@ jobs:
           npm ci --ignore-scripts
 
           # this dumps the next version in NEXTVERSION
-          npx --no-install semantic-release-plus -e ./.releaserc.prepare.js --branches ${{ github.head_ref }} --dry-run
+          npx --no-install semantic-release-plus -e ./.releaserc.nextversion.js --branches ${{ github.head_ref }} --dry-run
 
           echo '::set-output name=NEXTVERSION::$(cat NEXTVERSION)'
 
