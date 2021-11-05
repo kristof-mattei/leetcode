@@ -38,8 +38,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
-        with:
-          submodules: true
 
       - name: Check if we actually made changes
         uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721
@@ -103,8 +101,6 @@ jobs:
       - changes
     steps:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
-        with:
-          submodules: true
 
       - name: Set up toolchain
         uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
@@ -146,8 +142,6 @@ jobs:
       (needs.changes.outputs.code == 'true')
     steps:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
-        with:
-          submodules: true
 
       - name: Set up toolchain
         uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
@@ -190,8 +184,6 @@ jobs:
       (needs.changes.outputs.code == 'true')
     steps:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
-        with:
-          submodules: true
 
       - name: Set up toolchain
         uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
@@ -288,8 +280,6 @@ jobs:
       (needs.changes.outputs.code == 'true')
     steps:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
-        with:
-          submodules: true
 
       - name: Set up toolchain
         uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
@@ -341,7 +331,7 @@ jobs:
       - name: Set the Cargo.toml version before we copy in the data into the docker container
         shell: bash
         run: |
-          ./update-version.sh ${{ needs.calculate-version.outputs.version }}
+          ./.github/scripts/update-version.sh ${{ needs.calculate-version.outputs.version }}
 
       - name: Set up Docker Buildx
         id: buildx
