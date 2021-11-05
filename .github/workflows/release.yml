@@ -54,4 +54,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_TO_TRIGGER_SUBSEQUENT_WORKFLOWS }}
         shell: bash
         run: |
-          npx --no-install semantic-release -e ./.releaserc.publish.js
+          npx --no-install semantic-release-plus -e ./.releaserc.publish.js

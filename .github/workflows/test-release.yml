@@ -51,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx --no-install semantic-release -e ./.releaserc.changelog.js --branches ${{ github.head_ref }}
+          npx --no-install semantic-release-plus -e ./.releaserc.changelog.js --branches ${{ github.head_ref }} --dry-run
 
       - name: CHANGELOG
         shell: bash
