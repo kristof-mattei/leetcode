@@ -1,6 +1,6 @@
 const base = require("./.releaserc.base.js");
 
-const { plugins: pluginsExtracted, rest } = base;
+const { plugins: pluginsExtracted, ...rest } = base;
 
 module.exports = {
   "plugins": [
