@@ -76,7 +76,7 @@ jobs:
           npm ci --ignore-scripts
 
           # this dumps the next version in NEXTVERSION
-          npx --no-install semantic-release-plus -e ./.releaserc.nextversion.js --branches ${{ github.head_ref }} --dry-run --no-ci
+          npx --no-install semantic-release-plus -e ./.releaserc.nextversion.js --branches ${{ github.ref }} --dry-run --no-ci
 
           echo '::set-output name=NEXTVERSION::$(cat NEXTVERSION)'
 
