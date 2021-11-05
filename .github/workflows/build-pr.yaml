@@ -89,8 +89,9 @@ jobs:
           # a PR, but we just want to calculate a version number, nothing more
           # so we bypass it all
           export GITHUB_EVENT_NAME=""
+          export GITHUB_REF="${{ github.head_ref }}"
 
-          npx --no-install semantic-release-plus -e ./.releaserc.nextversion.js --branches '${{ github.head_ref }}' --dry-run
+          npm run dumb-version-number -- --branches '${{ github.head_ref }}'
 
           echo "::set-output name=nextversion::$(cat NEXTVERSION)"
 

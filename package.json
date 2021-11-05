@@ -5,7 +5,8 @@
   "main": "src/main.rs",
   "scripts": {
     "prepare": "is-ci || husky install",
-    "prettier": "prettier -w \"**/*.{yml,yaml}\""
+    "prettier": "prettier -w \"**/*.{yml,yaml}\"",
+    "dump-version-number": "semantic-release-plus -e ./.releaserc.nextversion.js --dry-run"
   },
   "engines": {
     "node": ">=16.0.0"
