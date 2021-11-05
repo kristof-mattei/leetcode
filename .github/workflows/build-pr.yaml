@@ -326,7 +326,7 @@ jobs:
       - name: Set the Cargo.toml version before we copy in the data into the docker container
         shell: bash
         run: |
-          ./update-version.sh ${{ needs.calculate-version.outputs.version) }}
+          ./update-version.sh ${{ needs.calculate-version.outputs.version }}
 
       - name: Set up Docker Buildx
         id: buildx
