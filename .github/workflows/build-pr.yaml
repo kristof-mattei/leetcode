@@ -58,6 +58,8 @@ jobs:
       version: ${{ steps.version.outputs.nextversion }}
     if: |
       (needs.changes.outputs.code == 'true')
+    permissions:
+      contents: write # for the dry run
     steps:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
