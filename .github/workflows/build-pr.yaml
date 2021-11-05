@@ -55,12 +55,18 @@ jobs:
     needs:
       - changes
     outputs:
-      version: ${{ steps.version.outputs.NEXTVERSION }}
+      version: ${{ steps.version.outputs.nextversion }}
     if: |
       (needs.changes.outputs.code == 'true')
     steps:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+        with:
+          # we cannot use the actual merge as it is not a real commit yet
+          # so we get the tip of the PR
+          # and we protect ourselves from other changes by enforcing
+          # the branch to be up to date with main before merging
+          ref: ${{ github.head_ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c
@@ -75,10 +81,14 @@ jobs:
         run: |
           npm ci --ignore-scripts
 
-          # this dumps the next version in NEXTVERSION
-          npx --no-install semantic-release-plus -e ./.releaserc.nextversion.js --branches '${{ github.ref }}' --dry-run --no-ci
+      - name: Calculate next version
+        id: version
+        shell: bash
+        run: |
 
-          echo '::set-output name=NEXTVERSION::$(cat NEXTVERSION)'
+          npx --no-install semantic-release-plus -e ./.releaserc.nextversion.js --branches '${{ github.head_ref }}' --dry-run --no-ci
+
+          echo "::set-output name=nextversion::$(cat NEXTVERSION)"
 
   cargo-build:
     name: Cargo build
