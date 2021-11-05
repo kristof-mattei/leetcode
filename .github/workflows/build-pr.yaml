@@ -85,7 +85,12 @@ jobs:
         shell: bash
         run: |
 
-          npx --no-install semantic-release-plus -e ./.releaserc.nextversion.js --branches '${{ github.head_ref }}' --dry-run --no-ci
+          # semantic-release uses this to determine if we're on
+          # a PR, but we just want to calculate a version number, nothing more
+          # so we bypass it all
+          export GITHUB_EVENT_NAME=""
+
+          npx --no-install semantic-release-plus -e ./.releaserc.nextversion.js --branches '${{ github.head_ref }}' --dry-run
 
           echo "::set-output name=nextversion::$(cat NEXTVERSION)"
 
