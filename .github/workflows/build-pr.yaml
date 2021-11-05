@@ -422,7 +422,9 @@ jobs:
         run: |
           docker load --input ${{ env.DOCKER_IMAGE_TAR_LOCATION }}
 
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} --all-tags
+      - name: Push image with all tags
+        run: |
+          docker push ${REGISTRY,,}/${IMAGE_NAME,,} --all-tags
 
   # human
   after-all:
