@@ -76,7 +76,6 @@ jobs:
           cache-dependency-path: "**/package-lock.json"
 
       - name: Install dependencies
-        id: version
         shell: bash
         run: |
           npm ci --ignore-scripts
