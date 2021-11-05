@@ -91,7 +91,7 @@ jobs:
           export GITHUB_EVENT_NAME=""
           export GITHUB_REF="${{ github.head_ref }}"
 
-          npm run dump-version-number -- --branches '${{ github.head_ref }}'
+          npm run dump-version-number -- --branches '${{ github.head_ref }}' --skip-tags
 
           echo "::set-output name=nextversion::$(cat NEXTVERSION)"
 
