@@ -34,8 +34,7 @@ jobs:
     name: Detect changes
     runs-on: ubuntu-latest
     outputs:
-      # code: ${{ steps.filter.outputs.code }}
-      code: "true"
+      code: ${{ steps.filter.outputs.code }}
     steps:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
