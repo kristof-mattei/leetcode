@@ -117,13 +117,10 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/.crates.toml
-            ~/.cargo/.crates2.json
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target
+            ${{ env.CACHE_NAME }}/registry/index/
+            ${{ env.CACHE_NAME }}/registry/cache/
+            ${{ env.CACHE_NAME }}/git/
+            ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargobuild
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
@@ -159,13 +156,10 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/.crates.toml
-            ~/.cargo/.crates2.json
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target
+            ${{ env.CACHE_NAME }}/registry/index/
+            ${{ env.CACHE_NAME }}/registry/cache/
+            ${{ env.CACHE_NAME }}/git/
+            ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargofmt
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
@@ -200,13 +194,10 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/.crates.toml
-            ~/.cargo/.crates2.json
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target
+            ${{ env.CACHE_NAME }}/registry/index/
+            ${{ env.CACHE_NAME }}/registry/cache/
+            ${{ env.CACHE_NAME }}/git/
+            ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargotest
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
@@ -297,13 +288,10 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/.crates.toml
-            ~/.cargo/.crates2.json
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target
+            ${{ env.CACHE_NAME }}/registry/index/
+            ${{ env.CACHE_NAME }}/registry/cache/
+            ${{ env.CACHE_NAME }}/git/
+            ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargoclippy
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
