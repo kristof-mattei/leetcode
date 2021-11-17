@@ -407,8 +407,8 @@ jobs:
           docker push ${REGISTRY,,}/${IMAGE_NAME,,} --all-tags
 
   # human
-  after-all:
-    name: Final step
+  all-done:
+    name: All done
     # this is the job that should be marked as required on GitHub. It's the only one that'll reliably trigger
     # when any upstream fails: success
     # when all upstream skips: pass
