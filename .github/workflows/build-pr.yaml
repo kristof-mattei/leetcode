@@ -117,9 +117,7 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/
+            ~/.cargo/
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargobuild
           restore-keys: |
@@ -156,9 +154,7 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/
+            ~/.cargo/
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargofmt
           restore-keys: |
@@ -194,9 +190,7 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/
+            ~/.cargo/
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargotest
           restore-keys: |
@@ -288,9 +282,7 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/
+            ~/.cargo/
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargoclippy
           restore-keys: |
