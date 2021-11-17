@@ -1,9 +1,7 @@
 code:
-  - "src/*"
-  - "src/**/*"
+  - "src/**"
   - "TAG"
   - "*.toml"
   - Dockerfile
-  - "tests/*"
-  - "tests/**/*"
-  - ".github/*"
+  - "tests/**"
+  - ".github/**"
