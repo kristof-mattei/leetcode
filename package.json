@@ -24,7 +24,7 @@
   "homepage": "https://github.com/kristof-mattei/rust-end-to-end-application#readme",
   "devDependencies": {
     "@actions/tool-cache": "^1.7.1",
-    "@commitlint/cli": "^14.1.0",
+    "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^14.1.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/exec": "^6.0.2",
