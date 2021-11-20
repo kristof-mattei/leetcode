@@ -238,8 +238,8 @@ jobs:
       - name: Run tarpaulin
         run: |
           mkdir reports
-
-          cargo tarpaulin --output-dir reports --out Lcov -- -Z unstable-options --format json | cargo2junit > reports/result.xml
+          # --all-targets omitted
+          cargo tarpaulin --output-dir reports --out Lcov --workspace --all-features -- -Z unstable-options --format json | cargo2junit > reports/result.xml
 
       - name: Upload test results
         if: ${{ always() }}
@@ -292,7 +292,7 @@ jobs:
       - uses: actions-rs/clippy-check@b5b5f21f4797c02da247df37026fcd0a5024aa4d
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-targets --all-features -- --deny warnings
+          args: --workspace --all-targets --all-features -- --deny warnings
           name: Clippy report
 
   docker-build:
