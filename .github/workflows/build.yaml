@@ -268,7 +268,7 @@ jobs:
     needs:
       - changes
     if: |
-      (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
+      (needs.changes.outputs.code == 'true')
     steps:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
@@ -298,6 +298,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --workspace --all-targets --all-features -- --deny clippy::all --warn clippy::pedantic --warn clippy::cargo
           name: Clippy report
+
+      # TODO upload clippy report for progress
 
   docker-build:
     name: Build docker container
