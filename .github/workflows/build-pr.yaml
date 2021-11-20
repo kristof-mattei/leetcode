@@ -292,7 +292,7 @@ jobs:
       - uses: actions-rs/clippy-check@b5b5f21f4797c02da247df37026fcd0a5024aa4d
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: --workspace --all-targets --all-features -- --deny warnings
+          args: --workspace --all-targets --all-features -- --deny clippy::all --warn clippy::pedantic --warn clippy::cargo
           name: Clippy report
 
   docker-build:
