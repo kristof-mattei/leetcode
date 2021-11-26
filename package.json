@@ -31,7 +31,7 @@
     "conventional-changelog-conventionalcommits": "^4.6.1",
     "husky": "^7.0.4",
     "is-ci": "^3.0.1",
-    "prettier": "^2.4.1",
+    "prettier": "^2.5.0",
     "semantic-release": "^18.0.0",
     "semver": "^7.3.5",
     "serialize-error": "^8.1.0"
