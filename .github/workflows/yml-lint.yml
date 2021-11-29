@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@04c56d2f954f1e4c69436aa54cfef261a018f458
         with:
-          node-version: "lts/*"
+          node-version-file: ".nvmrc"
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
 
