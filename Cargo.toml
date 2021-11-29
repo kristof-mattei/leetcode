@@ -6,6 +6,10 @@ edition = "2021"
 rust-version = "1.56.1"
 authors = ["Kristof Mattei"]
 description = "Rust end-to-end application"
+license-file = "LICENSE"
+categories = ["starter", "end-to-end"]
+keywords = ["integrity", "end-to-end", "starter", "docker", "release"]
+repository = "https://github.com/kristof-mattei/rust-end-to-end-application"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
