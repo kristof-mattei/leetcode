@@ -241,12 +241,10 @@ jobs:
 
       - name: Run tarpaulin
         run: |
-          mkdir reports
-          # --all-targets omitted
-          cargo tarpaulin --output-dir reports --out Lcov --workspace --all-features -- -Z unstable-options --format json | cargo2junit > reports/result.xml
+          cargo tarpaulin --run-types AllTargets --output-dir reports --out Lcov --workspace --all-features -- -Z unstable-options --format json | cargo2junit > reports/result.xml;
+        continue-on-error: true
 
       - name: Upload test results
-        if: ${{ always() }}
         uses: EnricoMi/publish-unit-test-result-action@8c0ddccd03f69215064876293657094714331b04
         with:
           check_name: Test Results
@@ -254,7 +252,6 @@ jobs:
           files: reports/result.xml
 
       - name: Upload to CodeCov
-        if: ${{ always() }}
         uses: codecov/codecov-action@f32b3a3741e1053eb607407145bc9619351dc93b
         with:
           # # required for private repositories:
