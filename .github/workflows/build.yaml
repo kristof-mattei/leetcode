@@ -121,7 +121,7 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/
+            ~/.cargo
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargobuild
           restore-keys: |
@@ -135,7 +135,7 @@ jobs:
           args: --verbose
 
   cargo-fmt:
-    name: Check formatting
+    name: Cargo fmt
     runs-on: ubuntu-latest
     needs:
       - changes
@@ -158,7 +158,7 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/
+            ~/.cargo
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargofmt
           restore-keys: |
@@ -172,7 +172,7 @@ jobs:
           args: --all -- --check
 
   cargo-test-and-report:
-    name: Cargo test and report
+    name: Cargo test (and report)
     runs-on: ubuntu-latest
     needs:
       - changes
@@ -194,50 +194,20 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/
+            ~/.cargo
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargotest
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
+      - name: Install tarpaulin for coverage checking
+        run: |
+          cargo install cargo-tarpaulin;
+
       - name: Install cargo2junit for formatting
         run: |
           cargo install cargo2junit;
-
-      - name: Setup Node.js
-        uses: actions/setup-node@04c56d2f954f1e4c69436aa54cfef261a018f458
-        with:
-          node-version-file: ".nvmrc"
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-
-      - name: Install dependencies
-        shell: bash
-        run: |
-          npm ci --ignore-scripts
-
-      - name: Download tarpulin tar, extract, and add folder to path
-        uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
-        with:
-          script: |
-            const tc = require("@actions/tool-cache");
-
-            const release = await github.rest.repos.getLatestRelease({
-                owner: "xd009642",
-                repo: "tarpaulin"
-            });
-
-            const asset = release.data.assets.find(asset => {
-                return asset["content_type"] === "application/gzip" && asset.name === `cargo-tarpaulin-${release.data.tag_name}-travis.tar.gz`;
-            });
-
-            const urlToTarpualinTar = asset.browser_download_url;
-
-            const tarpaulinTarPath = await tc.downloadTool(urlToTarpualinTar);
-            const tarpaulinExtractedFolder = await tc.extractTar(tarpaulinTarPath, null, ["--extract", "--gzip"]);
-
-            core.addPath(tarpaulinExtractedFolder);
 
       - name: Run tarpaulin
         run: |
@@ -260,7 +230,7 @@ jobs:
           fail_ci_if_error: true
 
   cargo-clippy-and-report:
-    name: Run Clippy
+    name: Cargo clippy (and report)
     runs-on: ubuntu-latest
     needs:
       - changes
@@ -283,7 +253,7 @@ jobs:
           CACHE_NAME: cargo-cache-dependencies
         with:
           path: |
-            ~/.cargo/
+            ~/.cargo
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargoclippy
           restore-keys: |
