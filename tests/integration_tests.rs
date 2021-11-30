@@ -8,6 +8,6 @@ fn assert_world_ok() {
 #[test]
 fn assert_world_ok2() {
     let cls1 = || false;
-    let cls2 = || false;
+    let cls2 = || true;
     assert_eq!(cls1(), cls2());
 }
