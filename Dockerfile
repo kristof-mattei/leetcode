@@ -1,4 +1,4 @@
-FROM rust:1.56.1 as builder
+FROM rust:1.57.0 as builder
 
 ENV TARGET=x86_64-unknown-linux-musl
 RUN rustup target add ${TARGET}
@@ -10,9 +10,9 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloa
 RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
     apt-get update && \
     apt-get --no-install-recommends install -y \
-        build-essential \
-        musl-dev \
-        musl-tools
+    build-essential \
+    musl-dev \
+    musl-tools
 
 # The following block
 # creates an empty app, and we copy in Cargo.toml and Cargo.lock as they represent our dependencies
