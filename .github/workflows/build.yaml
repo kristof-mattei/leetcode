@@ -109,10 +109,12 @@ jobs:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Set up toolchain
-        uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
-        with:
-          profile: minimal
-          toolchain: 1.57.0
+        shell: bash
+        run: |
+          curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none
+
+          # invoking this actually sets up the toolchain as per rust-toolchain.toml
+          cargo --version
 
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
@@ -144,10 +146,12 @@ jobs:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Set up toolchain
-        uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
-        with:
-          profile: minimal
-          toolchain: 1.57.0
+        shell: bash
+        run: |
+          curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none
+
+          # invoking this actually sets up the toolchain as per rust-toolchain.toml
+          cargo --version
 
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
@@ -179,10 +183,12 @@ jobs:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Set up toolchain
-        uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
-        with:
-          profile: minimal
-          toolchain: 1.57.0
+        shell: bash
+        run: |
+          curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none
+
+          # invoking this actually sets up the toolchain as per rust-toolchain.toml
+          cargo --version
 
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
@@ -236,10 +242,12 @@ jobs:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Set up toolchain
-        uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af
-        with:
-          profile: minimal
-          toolchain: 1.57.0
+        shell: bash
+        run: |
+          curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none
+
+          # invoking this actually sets up the toolchain as per rust-toolchain.toml
+          cargo --version
 
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
