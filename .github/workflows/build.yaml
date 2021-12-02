@@ -379,8 +379,8 @@ jobs:
     needs:
       - calculate-version
       - cargo-build
-      - cargo-test
       - cargo-fmt
+      - cargo-clippy-and-report
       - cargo-test-and-report
       - docker-build
       - docker-publish
