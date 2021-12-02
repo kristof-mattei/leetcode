@@ -148,7 +148,6 @@ jobs:
         with:
           profile: minimal
           toolchain: 1.57.0
-          components: rustfmt
 
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
@@ -241,7 +240,6 @@ jobs:
         with:
           profile: minimal
           toolchain: 1.57.0
-          components: clippy
 
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
