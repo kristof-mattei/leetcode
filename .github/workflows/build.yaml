@@ -377,6 +377,12 @@ jobs:
     # combination of upstream skip and success: success
     runs-on: ubuntu-latest
     needs:
+      - calculate-version
+      - cargo-build
+      - cargo-test
+      - cargo-fmt
+      - cargo-test-and-report
+      - docker-build
       - docker-publish
     if: ${{ !failure() }}
     steps:
