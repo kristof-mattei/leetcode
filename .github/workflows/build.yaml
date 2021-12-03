@@ -213,7 +213,7 @@ jobs:
 
       - name: Run tarpaulin
         run: |
-          cargo tarpaulin --run-types AllTargets --output-dir reports --out Lcov --workspace --all-features -- -Z unstable-options --format json --report-time | cargo2junit > reports/result.xml;
+          cargo tarpaulin --run-types AllTargets --output-dir reports --out Lcov --workspace --no-fail-fast --all-features -- -Z unstable-options --format json --report-time | cargo2junit > reports/result.xml;
         continue-on-error: true
 
       - name: Upload test results
