@@ -5,3 +5,5 @@ code:
   - Dockerfile
   - "tests/**"
   - ".github/**"
+  - "package.json"
+  - "package-lock.json"
