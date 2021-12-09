@@ -205,11 +205,11 @@ jobs:
 
       - name: Install tarpaulin for coverage checking
         run: |
-          cargo install cargo-tarpaulin;
+          cargo install --locked cargo-tarpaulin;
 
       - name: Install cargo2junit for formatting
         run: |
-          cargo install cargo2junit;
+          cargo install --locked cargo2junit;
 
       - name: Run tarpaulin
         run: |
