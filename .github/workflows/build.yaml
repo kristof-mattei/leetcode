@@ -87,7 +87,7 @@ jobs:
           path: |
             ~/.cargo
             ./target
-          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargotest
+          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargoversion
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-

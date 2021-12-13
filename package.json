@@ -28,7 +28,6 @@
     "@commitlint/config-conventional": "^15.0.0",
     "@semantic-release/changelog": "^6.0.1",
     "conventional-changelog-conventionalcommits": "^4.6.1",
-    "husky": "^7.0.4",
     "is-ci": "^3.0.1",
     "prettier": "^2.5.1",
     "semantic-release": "^18.0.1",
@@ -37,6 +36,5 @@
   },
   "publishConfig": {
     "access": "restricted"
-  },
-  "dependencies": {}
+  }
 }
