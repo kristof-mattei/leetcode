@@ -68,7 +68,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
           rustup update
+
           cargo --version
 
       - name: Cache dependencies
@@ -116,7 +119,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
           rustup update
+
           cargo --version
 
       - name: Cache dependencies
@@ -152,7 +158,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
           rustup update
+
           cargo --version
 
       - name: Cache dependencies
@@ -188,7 +197,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
           rustup update
+
           cargo --version
 
       - name: Cache dependencies
@@ -246,7 +258,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
           rustup update
+
           cargo --version
 
       - name: Cache dependencies
