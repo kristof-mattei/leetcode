@@ -310,16 +310,6 @@ jobs:
             org.opencontainers.image.version=pr-${{ github.event.number }}
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
 
-      - name: Cache Docker layers
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
-        env:
-          CACHE_NAME: docker-cache-dependencies
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Dockerfile') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
-
       - name: Build Docker image
         uses: docker/build-push-action@a66e35b9cbcf4ad0ea91ffcaf7bbad63ad9e0229
         with:
@@ -328,17 +318,9 @@ jobs:
           # once the PR has been accepted
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
           outputs: type=docker,dest=${{ env.DOCKER_IMAGE_TAR_LOCATION }}
-
-        # Temp fix
-        # https://github.com/docker/build-push-action/issues/252
-        # https://github.com/moby/buildkit/issues/1896
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - name: Upload artifact
         uses: actions/upload-artifact@da838ae9595ac94171fa2d4de5a2f117b3e7ac32
