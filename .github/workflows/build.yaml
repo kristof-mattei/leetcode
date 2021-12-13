@@ -71,32 +71,39 @@ jobs:
           # the branch to be up to date with main before merging
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@04c56d2f954f1e4c69436aa54cfef261a018f458
-        with:
-          node-version-file: ".nvmrc"
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-
-      - name: Install dependencies
+      - name: Set up toolchain
         shell: bash
         run: |
-          npm ci --ignore-scripts
+          curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none --profile minimal -y
+
+          # invoking this actually sets up the toolchain as per rust-toolchain.toml
+          cargo --version
+
+      - name: Cache dependencies
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
+        env:
+          CACHE_NAME: cargo-cache-dependencies
+        with:
+          path: |
+            ~/.cargo
+            ./target
+          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargotest
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
+            ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Install tarpaulin for coverage checking
+        run: |
+          cargo install --locked cocogitto;
 
       - name: Calculate next version
         id: version
         shell: bash
         run: |
-
-          # semantic-release uses this to determine if we're on
-          # a PR, but we just want to calculate a version number, nothing more
-          # so we bypass it all
-          export GITHUB_EVENT_NAME=""
-          export GITHUB_REF="${{ github.head_ref }}"
-
-          npm run dump-version-number -- --branches '${{ github.head_ref }}'
-
-          echo "::set-output name=nextversion::$(cat NEXTVERSION)"
+          cog bump --auto
+          VERSION="$(git describe --tags "$(git rev-list --tags --max-count=1)")"
+          VERSION="${VERSION//v/}"
+          echo ::set-output name=version::"$VERSION"
 
   cargo-build:
     name: Cargo build
