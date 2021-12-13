@@ -25,9 +25,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
-          curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none --profile minimal -y
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
+          rustup update
 
-          # invoking this actually sets up the toolchain as per rust-toolchain.toml
           cargo --version
 
       - name: Cache dependencies
