@@ -72,8 +72,6 @@ jobs:
         with:
           path: |
             ~/.cargo
-            !~/.cargo/bin/rustfmt
-            !~/.cargo/bin/cargo-fmt
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cocogitto
           restore-keys: |
@@ -125,8 +123,6 @@ jobs:
         with:
           path: |
             ~/.cargo
-            !~/.cargo/bin/rustfmt
-            !~/.cargo/bin/cargo-fmt
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-build
           restore-keys: |
@@ -166,8 +162,6 @@ jobs:
         with:
           path: |
             ~/.cargo
-            !~/.cargo/bin/rustfmt
-            !~/.cargo/bin/cargo-fmt
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-fmt
           restore-keys: |
@@ -207,8 +201,6 @@ jobs:
         with:
           path: |
             ~/.cargo
-            !~/.cargo/bin/rustfmt
-            !~/.cargo/bin/cargo-fmt
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-test
           restore-keys: |
@@ -276,8 +268,6 @@ jobs:
         with:
           path: |
             ~/.cargo
-            !~/.cargo/bin/rustfmt
-            !~/.cargo/bin/cargo-fmt
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-clippy
           restore-keys: |
