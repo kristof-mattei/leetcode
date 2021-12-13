@@ -27,7 +27,7 @@ coverage = []
 # serde_yaml = "0.8.21"
 # structopt = "0.3.25"
 
-# We compile the docker container with musl to get a static library. Smaller, faster.
+# We compile the Docker container with musl to get a static library. Smaller, faster.
 # BUT that means that we need to include openssl
 # Documentation on the syntax:
 # https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies
