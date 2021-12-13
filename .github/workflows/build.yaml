@@ -289,8 +289,6 @@ jobs:
           args: --workspace --all-targets --all-features -- --deny clippy::all --warn clippy::pedantic --warn clippy::cargo
           name: Clippy report
 
-      # TODO upload clippy report for progress
-
   docker-build:
     name: Build Docker container
     runs-on: ubuntu-latest
