@@ -65,15 +65,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up toolchain
-        shell: bash
-        run: |
-          rm ${HOME}/.cargo/bin/rustfmt
-          rm ${HOME}/.cargo/bin/cargo-fmt
-          rustup update
-
-          cargo --version
-
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
         env:
@@ -86,6 +77,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up toolchain
+        shell: bash
+        run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
+          rustup update
+
+          cargo --version
 
       - name: Install cocogitto to get the next version number
         run: |
@@ -116,15 +116,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
-      - name: Set up toolchain
-        shell: bash
-        run: |
-          rm ${HOME}/.cargo/bin/rustfmt
-          rm ${HOME}/.cargo/bin/cargo-fmt
-          rustup update
-
-          cargo --version
-
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
         env:
@@ -137,6 +128,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up toolchain
+        shell: bash
+        run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
+          rustup update
+
+          cargo --version
 
       - name: Cargo build
         uses: actions-rs/cargo@844f36862e911db73fe0815f00a4a2602c279505
@@ -155,15 +155,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
-      - name: Set up toolchain
-        shell: bash
-        run: |
-          rm ${HOME}/.cargo/bin/rustfmt
-          rm ${HOME}/.cargo/bin/cargo-fmt
-          rustup update
-
-          cargo --version
-
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
         env:
@@ -176,6 +167,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up toolchain
+        shell: bash
+        run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
+          rustup update
+
+          cargo --version
 
       - name: Cargo fmt
         uses: actions-rs/cargo@844f36862e911db73fe0815f00a4a2602c279505
@@ -194,15 +194,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
-      - name: Set up toolchain
-        shell: bash
-        run: |
-          rm ${HOME}/.cargo/bin/rustfmt
-          rm ${HOME}/.cargo/bin/cargo-fmt
-          rustup update
-
-          cargo --version
-
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
         env:
@@ -215,6 +206,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up toolchain
+        shell: bash
+        run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
+          rustup update
+
+          cargo --version
 
       - name: Install tarpaulin for coverage checking
         run: |
@@ -255,15 +255,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
-      - name: Set up toolchain
-        shell: bash
-        run: |
-          rm ${HOME}/.cargo/bin/rustfmt
-          rm ${HOME}/.cargo/bin/cargo-fmt
-          rustup update
-
-          cargo --version
-
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
         env:
@@ -276,6 +267,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up toolchain
+        shell: bash
+        run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
+          rustup update
+
+          cargo --version
 
       - uses: actions-rs/clippy-check@b5b5f21f4797c02da247df37026fcd0a5024aa4d
         with:

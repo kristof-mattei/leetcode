@@ -22,15 +22,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up toolchain
-        shell: bash
-        run: |
-          rm ${HOME}/.cargo/bin/rustfmt
-          rm ${HOME}/.cargo/bin/cargo-fmt
-          rustup update
-
-          cargo --version
-
       - name: Cache dependencies
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
         env:
@@ -43,6 +34,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up toolchain
+        shell: bash
+        run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
+          rustup update
+
+          cargo --version
 
       - name: Install cocogitto for commit linting
         run: |
