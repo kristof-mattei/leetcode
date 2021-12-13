@@ -29,6 +29,8 @@ jobs:
         with:
           path: |
             ~/.cargo
+            !~/.cargo/bin/rustfmt
+            !~/.cargo/bin/cargo-fmt
             ./target
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cocogitto
           restore-keys: |
