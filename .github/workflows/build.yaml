@@ -112,7 +112,8 @@ jobs:
     if: |
       (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Set up toolchain
         shell: bash
@@ -149,7 +150,8 @@ jobs:
     if: |
       (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Set up toolchain
         shell: bash
@@ -186,7 +188,8 @@ jobs:
     if: |
       (needs.changes.outputs.code == 'true')
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Set up toolchain
         shell: bash
@@ -245,7 +248,8 @@ jobs:
     if: |
       (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
     steps:
-      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Set up toolchain
         shell: bash
