@@ -94,6 +94,11 @@ jobs:
         id: version
         shell: bash
         run: |
+
+          # no dry run yet, so fake it until we make it
+          git config --global user.name "fake"
+          git config --global user.email "fake@fake.com"
+
           cog bump --auto
           VERSION="$(git describe --tags "$(git rev-list --tags --max-count=1)")"
           VERSION="${VERSION//v/}"
