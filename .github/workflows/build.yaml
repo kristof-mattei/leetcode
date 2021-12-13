@@ -244,6 +244,12 @@ jobs:
           directory: reports
           fail_ci_if_error: true
 
+      - name: Coveralls
+        uses: coverallsapp/github-action@1.1.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: reports/lcov.info
+
   cargo-clippy-and-report:
     name: Cargo clippy (and report)
     runs-on: ubuntu-latest
