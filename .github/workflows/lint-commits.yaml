@@ -13,18 +13,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint-commits:
-    name: Lint commits
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
         with:
-          # we cannot use the actual merge as it is not a real commit yet
-          # so we get the tip of the PR
-          # and we protect ourselves from other changes by enforcing
-          # the branch to be up to date with main before merging
-          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
 
       - name: Set up toolchain
         shell: bash

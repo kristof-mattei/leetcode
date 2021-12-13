@@ -59,17 +59,11 @@ jobs:
       version: ${{ steps.version.outputs.nextversion }}
     if: |
       (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
-    permissions:
-      contents: write # for the dry run
     steps:
       - name: Checkout
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
         with:
-          # we cannot use the actual merge as it is not a real commit yet
-          # so we get the tip of the PR
-          # and we protect ourselves from other changes by enforcing
-          # the branch to be up to date with main before merging
-          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
 
       - name: Set up toolchain
         shell: bash
@@ -87,12 +81,12 @@ jobs:
           path: |
             ~/.cargo
             ./target
-          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargoversion
+          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargococogitto
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
-      - name: Install tarpaulin for coverage checking
+      - name: Install cocogitto to get the next version number
         run: |
           cargo install --locked cocogitto;
 
