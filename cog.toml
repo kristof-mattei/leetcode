@@ -1,7 +1,7 @@
 tag_prefix = "v"
 
 pre_bump_hooks = [
-  "echo '{{version}}' > NEXTVERSION",
+  "sh -c \"echo '{{version}}' > NEXTVERSION\"",
 ]
 post_bump_hooks = []
 
