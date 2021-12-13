@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Lint commits
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  # each new commit to a PR runs this workflow
+  # so we need to avoid a long running older one from overwriting the 'pr-<number>-latest'
+  group: "${{ github.workflow }} @ ${{ github.ref_name }}"
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+        with:
+          fetch-depth: 0
+
+      - name: Set up toolchain
+        shell: bash
+        run: |
+          curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none --profile minimal -y
+
+          # invoking this actually sets up the toolchain as per rust-toolchain.toml
+          cargo --version
+
+      - name: Cache dependencies
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
+        env:
+          CACHE_NAME: cargo-cache-dependencies
+        with:
+          path: |
+            ~/.cargo
+            ./target
+          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cargococogitto
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
+            ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Install cocogitto for commit linting
+        run: |
+          cargo install --locked cocogitto;
+
+      - name: Check the commits
+        shell: bash
+        run: |
+          cog check

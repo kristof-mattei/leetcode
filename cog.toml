@@ -1,0 +1,14 @@
+tag_prefix = "v"
+
+pre_bump_hooks = [
+  "sh -c \"echo '{{version}}' > NEXTVERSION\"",
+]
+post_bump_hooks = []
+
+[commit_types]
+
+[changelog]
+path = "CHANGELOG.md"
+authors = []
+
+[bump_profiles]

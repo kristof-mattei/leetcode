@@ -16,7 +16,7 @@ on:
 
 permissions:
   contents: write # to write tags
-  packages: write # to write tags to docker containers
+  packages: write # to write tags to Docker registry
   issues: write
   pull-requests: write
 

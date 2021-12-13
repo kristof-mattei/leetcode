@@ -4,9 +4,7 @@
   "description": "It's written in Rust!",
   "main": "src/main.rs",
   "scripts": {
-    "prepare": "is-ci || husky install",
     "prettier": "prettier -w \"**/*.{yml,yaml}\"",
-    "dump-version-number": "semantic-release -e ./.releaserc.nextversion.js --dry-run",
     "release": "semantic-release -e ./.releaserc.publish.js"
   },
   "engines": {
@@ -24,13 +22,7 @@
   "homepage": "https://github.com/kristof-mattei/rust-end-to-end-application#readme",
   "devDependencies": {
     "@actions/tool-cache": "^1.7.1",
-    "@commitlint/cli": "^15.0.0",
-    "@commitlint/config-conventional": "^15.0.0",
     "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/exec": "^6.0.2",
-    "conventional-changelog-conventionalcommits": "^4.6.1",
-    "husky": "^7.0.4",
-    "is-ci": "^3.0.1",
     "prettier": "^2.5.1",
     "semantic-release": "^18.0.1",
     "semver": "^7.3.5",
@@ -38,6 +30,5 @@
   },
   "publishConfig": {
     "access": "restricted"
-  },
-  "dependencies": {}
+  }
 }
