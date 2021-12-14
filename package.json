@@ -5,10 +5,11 @@
   "main": "src/main.rs",
   "scripts": {
     "prettier": "prettier -w \"**/*.{yml,yaml}\"",
-    "release": "semantic-release -e ./.releaserc.publish.js"
+    "release": "semantic-release"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,9 @@
   "devDependencies": {
     "@actions/tool-cache": "^1.7.1",
     "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/github": "^8.0.2",
+    "@semantic-release/release-notes-generator": "^10.0.3",
     "prettier": "^2.5.1",
     "semantic-release": "^18.0.1",
     "semver": "^7.3.5",
