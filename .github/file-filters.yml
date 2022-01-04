@@ -1,6 +1,7 @@
 code:
   - "src/**"
   - "TAG"
+  - Cargo.lock
   - "*.toml"
   - Dockerfile
   - "tests/**"
