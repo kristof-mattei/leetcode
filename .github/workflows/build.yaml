@@ -399,7 +399,7 @@ jobs:
       - cargo-test-and-report
       - docker-build
       - docker-publish
-    if: ${{ !failure() }}
+    if: ${{ !failure() && !cancelled() }}
     steps:
       - run: |
           echo "Great success!"
