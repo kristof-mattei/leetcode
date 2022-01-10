@@ -39,7 +39,7 @@ jobs:
           npm ci --ignore-scripts
 
       - name: Split the incoming tag into major, minor and patch
-        uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
+        uses: actions/github-script@e3cbab99d3a9b271e1b79fc96d103a4a5534998c
         env:
           # because in the JS github variable ref_name isn't there
           TAGNAME: ${{ github.ref_name }}
@@ -56,7 +56,7 @@ jobs:
             core.exportVariable("PATCH", parsed.patch);
 
       - name: Move v${{ env.MAJOR }} and v${{ env.MAJOR }}.${{ env.MINOR }} tags
-        uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
+        uses: actions/github-script@e3cbab99d3a9b271e1b79fc96d103a4a5534998c
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -132,7 +132,7 @@ jobs:
           npm ci --ignore-scripts
 
       - name: Download crane tar, extract, and add folder to path.
-        uses: actions/github-script@441359b1a30438de65712c2fbca0abe4816fa667
+        uses: actions/github-script@e3cbab99d3a9b271e1b79fc96d103a4a5534998c
         with:
           script: |
             const tc = require("@actions/tool-cache");
