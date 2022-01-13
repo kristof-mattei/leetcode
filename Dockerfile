@@ -1,4 +1,4 @@
-FROM rust:1.57.0 as builder
+FROM rust:1.58.0 as builder
 
 ENV TARGET=x86_64-unknown-linux-musl
 RUN rustup target add ${TARGET}
