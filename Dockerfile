@@ -1,4 +1,4 @@
-FROM rust:1.58.0 as builder
+FROM rust:1.58.0@sha256:81af0a1fabc30ffce6ed3d569fc91a27e462c793560f09d10543fa8a040ac77b as builder
 
 ENV TARGET=x86_64-unknown-linux-musl
 RUN rustup target add ${TARGET}
@@ -31,7 +31,7 @@ COPY src ./src
 RUN --mount=type=cache,target=/build/rust-end-to-end-application/target \
     cargo install --path . --target ${TARGET} --root /output
 
-FROM alpine:3.15.0
+FROM alpine:3.15.0@sha256:21a3deaa0d32a8057914f36584b5288d2e5ecc984380bc0118285c70fa8c9300
 WORKDIR /app
 COPY --from=builder /output/bin/rust-end-to-end-application /app
 ENTRYPOINT ["/app/rust-end-to-end-application"]
