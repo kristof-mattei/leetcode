@@ -29,7 +29,7 @@
     "@semantic-release/release-notes-generator": "^10.0.3",
     "conventional-changelog-conventionalcommits": "^4.6.3",
     "prettier": "^2.5.1",
-    "semantic-release": "^18.0.1",
+    "semantic-release": "^19.0.2",
     "semver": "^7.3.5",
     "serialize-error": "^8.1.0"
   },
