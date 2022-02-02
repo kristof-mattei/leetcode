@@ -25,7 +25,7 @@ coverage = []
 # log = "0.4.14"
 # env_logger = "0.9.0"
 # serde_yaml = "0.8.21"
-# structopt = "0.3.25"
+# clap = { version = "3.0.14", features = ["derive"] }
 
 # We compile the Docker container with musl to get a static library. Smaller, faster.
 # BUT that means that we need to include openssl
