@@ -216,7 +216,7 @@ jobs:
 
           cargo --version
 
-      - name: Install cargo2junit for formatting
+      - name: Install nextest, custom test runner, with native support for junit
         run: |
           cargo install --locked cargo-nextest;
 
@@ -230,7 +230,7 @@ jobs:
         with:
           check_name: Test Results
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          files: reports/result.xml
+          files: reports/results.xml
 
   cargo-coverage:
     name: Cargo coverage
