@@ -1,0 +1,3 @@
+[profile.ci.junit]
+path = "../../../reports/results.xml"
+fail-fast = false

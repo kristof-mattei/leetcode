@@ -33,4 +33,3 @@ coverage = []
 # https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies
 [target.'cfg(all(target_arch = "x86_64", target_os="linux", target_env="musl"))'.dependencies]
 # openssl = { version = "0.10.36", features = ["vendored"] }
-
