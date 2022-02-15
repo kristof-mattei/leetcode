@@ -188,7 +188,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - changes
-      - cargo-build
     if: |
       (needs.changes.outputs.code == 'true')
     steps:
