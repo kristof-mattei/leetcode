@@ -228,7 +228,7 @@ jobs:
       - name: Upload test results
         uses: EnricoMi/publish-unit-test-result-action@dcac06369f794058b4a69fe6a746ae4c24731c37
         with:
-          check_name: Test Results
+          check_name: Test results
           github_token: ${{ secrets.GITHUB_TOKEN }}
           files: reports/results.xml
 
