@@ -276,6 +276,22 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: reports/lcov.info
 
+      - name: Setup Code Climate test-reporter
+        shell: bash
+        run: |
+          # download test reporter as a static binary
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+
+      - name: Run code-climate-test-reporter
+        shell: bash
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        run: |
+          ./cc-test-reporter before-build
+          ./cc-test-reporter format-coverage reports/lcov.info --input-type lcov --output reports/codeclimate.json
+          ./cc-test-reporter after-build --input reports/codeclimate.json
+
   cargo-clippy-and-report:
     name: Cargo clippy (and report)
     runs-on: ubuntu-latest
