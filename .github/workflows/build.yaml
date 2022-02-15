@@ -288,9 +288,8 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
         run: |
-          ./cc-test-reporter before-build
           ./cc-test-reporter format-coverage reports/lcov.info --input-type lcov --output reports/codeclimate.json
-          ./cc-test-reporter after-build --input reports/codeclimate.json
+          ./cc-test-reporter upload-coverage --input reports/codeclimate.json
 
   cargo-clippy-and-report:
     name: Cargo clippy (and report)
