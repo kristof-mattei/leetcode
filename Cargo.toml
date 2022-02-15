@@ -3,7 +3,7 @@ name = "rust-end-to-end-application"
 # don't change this, it's updated before an actual build by update-version.sh
 version = "0.0.0-development"
 edition = "2021"
-rust-version = "1.56.1"
+rust-version = "1.58.1"
 authors = ["Kristof Mattei"]
 description = "Rust end-to-end application"
 license-file = "LICENSE"
@@ -33,4 +33,3 @@ coverage = []
 # https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies
 [target.'cfg(all(target_arch = "x86_64", target_os="linux", target_env="musl"))'.dependencies]
 # openssl = { version = "0.10.36", features = ["vendored"] }
-
