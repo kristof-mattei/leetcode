@@ -253,7 +253,6 @@ jobs:
         with:
           check_name: Test results
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          comment_mode: "create new"
           files: reports/results.xml
 
       - name: Run grcov
