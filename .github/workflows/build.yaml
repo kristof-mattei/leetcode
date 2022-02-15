@@ -177,11 +177,10 @@ jobs:
 
           cargo --version
 
-      - name: Cargo fmt
-        uses: actions-rs/cargo@844f36862e911db73fe0815f00a4a2602c279505
-        with:
-          command: fmt
-          args: --all -- --check --verbose
+      - name: Check formatting
+        shell: bash
+        run: |
+          cargo fmt --all -- --check --verbose
 
   cargo-test-and-report:
     name: Cargo test (and report)
