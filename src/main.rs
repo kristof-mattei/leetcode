@@ -81,7 +81,7 @@ mod tests {
 
     #[test]
     fn assert_foo() {
-        assert_eq!(                    foo(), "Foo");
+        assert_eq!(foo(), "Foo");
     }
 
     #[test]
