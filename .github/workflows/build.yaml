@@ -274,14 +274,14 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: reports/lcov.info
 
-      - name: Setup Code Climate test-reporter
+      - name: Setup Code Climate Test Reporter
         shell: bash
         run: |
           # download test reporter as a static binary
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
 
-      - name: Run code-climate-test-reporter
+      - name: Run Code Climate Test Reporter
         shell: bash
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
