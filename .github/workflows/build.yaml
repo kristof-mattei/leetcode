@@ -240,6 +240,7 @@ jobs:
 
       - name: Run nextest
         shell: bash
+        id: tests
         env:
           RUSTC_BOOTSTRAP: 1
           RUSTFLAGS: "-Zinstrument-coverage"
@@ -288,6 +289,17 @@ jobs:
         run: |
           ./cc-test-reporter format-coverage reports/lcov.info --input-type lcov --output reports/codeclimate.json
           ./cc-test-reporter upload-coverage --input reports/codeclimate.json
+
+      - name: Fail if tests failed
+        shell: bash
+        if: steps.tests.outcome != 'success'
+        run: |
+          # the test reporter we use (or any for that matter)
+          # all show a report. But we cannot depend on that report because
+          # we don't know which subsection it belongs in GitHub
+          # so we explicitly fail this one
+          # which will fail All Done
+          exit 1;
 
   cargo-clippy-and-report:
     name: Cargo clippy (and report)
