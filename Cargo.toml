@@ -11,6 +11,11 @@ repository = "https://github.com/kristof-mattei/leet-code"
 keywords = ["playground"]
 categories = ["playground"]
 
+[lib]
+path = "src/lib.rs"
+test = true
+crate-type = ["lib"]
+
 [profile.dev]
 debug = true
 

@@ -7,12 +7,9 @@
 #![allow(clippy::too_many_lines)]
 #![allow(clippy::let_and_return)]
 
-use shared::Problem;
-
 mod shared;
 mod utils;
 
-mod problem_10;
-fn main() {
-    problem_10::Solution::test();
-}
+pub mod problem_10;
+pub mod problem_11;
+pub mod problem_169;

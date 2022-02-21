@@ -1,5 +1,13 @@
-use crate::shared::Problem;
+pub struct Solution {}
 
+impl Solution {
+    #[allow(clippy::needless_pass_by_value)]
+    #[must_use]
+    pub fn is_match(s: String, p: String) -> bool {
+        let tokenized_regex = tokenize(&p);
+        is_match_inner(&s.chars().collect::<Vec<_>>(), &tokenized_regex)
+    }
+}
 enum SingleToken {
     Wildcard,
     Char(char),
@@ -9,6 +17,7 @@ enum Token {
     SingleToken(SingleToken),
     ZeroOrMore(SingleToken),
 }
+
 fn to_simple_token(c: char) -> SingleToken {
     match c {
         '.' => SingleToken::Wildcard,
@@ -111,21 +120,6 @@ fn is_match_inner(remainder: &[char], remaining_regex: &[Token]) -> bool {
         regex_index += 1;
     }
     index == remainder.len() && regex_index == remaining_regex.len()
-}
-
-pub struct Solution {}
-impl Problem for Solution {
-    fn test() {
-        assert!(Solution::is_match("foo".to_string(), ".*".to_string()));
-    }
-}
-
-impl Solution {
-    #[allow(clippy::needless_pass_by_value)]
-    pub fn is_match(s: String, p: String) -> bool {
-        let tokenized_regex = tokenize(&p);
-        is_match_inner(&s.chars().collect::<Vec<_>>(), &tokenized_regex)
-    }
 }
 
 #[cfg(test)]
