@@ -1,15 +1,27 @@
 [package]
-name = "rust-end-to-end-application"
+name = "leet-code"
 # don't change this, it's updated before an actual build by update-version.sh
 version = "0.0.0-development"
 edition = "2021"
 rust-version = "1.58.1"
 authors = ["Kristof Mattei"]
-description = "Rust end-to-end application"
 license-file = "LICENSE"
-categories = ["starter", "end-to-end"]
-keywords = ["integrity", "end-to-end", "starter", "docker", "release"]
-repository = "https://github.com/kristof-mattei/rust-end-to-end-application"
+description = "Leet Code"
+repository = "https://github.com/kristof-mattei/leet-code"
+keywords = ["playground"]
+categories = ["playground"]
+
+[profile.dev]
+debug = true
+
+[profile.release]
+debug = true
+
+[profile.bench]
+debug = true
+
+[profile.test]
+debug = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -17,15 +29,7 @@ repository = "https://github.com/kristof-mattei/rust-end-to-end-application"
 coverage = []
 
 [dependencies]
-# reqwest = { version = "0.11.5", features = ["json"] }
-# serde_json = "1.0.68"
-# serde = { version = "1.0.130", features = ["derive"] }
-# futures = "0.3.17"
-# tokio = { version = "1.12.0", features = ["full"] }
-# log = "0.4.14"
-# env_logger = "0.9.0"
-# serde_yaml = "0.8.21"
-# clap = { version = "3.0.14", features = ["derive"] }
+
 
 # We compile the Docker container with musl to get a static library. Smaller, faster.
 # BUT that means that we need to include openssl
@@ -33,3 +37,4 @@ coverage = []
 # https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies
 [target.'cfg(all(target_arch = "x86_64", target_os="linux", target_env="musl"))'.dependencies]
 # openssl = { version = "0.10.36", features = ["vendored"] }
+

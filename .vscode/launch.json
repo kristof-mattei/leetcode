@@ -7,15 +7,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'rust-end-to-end-application'",
+            "name": "Debug executable 'leet-code'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=rust-end-to-end-application",
-                    "--package=rust-end-to-end-application"
+                    "--bin=leet-code",
+                    "--package=leet-code"
                 ],
                 "filter": {
-                    "name": "rust-end-to-end-application",
+                    "name": "leet-code",
                     "kind": "bin"
                 }
             },
@@ -23,22 +23,22 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "RUST_LOG": "rust_end_to_end_application=trace"
+                "RUST_LOG": "leet_code=trace"
             }
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'rust-end-to-end-application'",
+            "name": "Debug unit tests in executable 'leet-code'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=rust-end-to-end-application",
-                    "--package=rust-end-to-end-application"
+                    "--bin=leet-code",
+                    "--package=leet-code"
                 ],
                 "filter": {
-                    "name": "rust-end-to-end-application",
+                    "name": "leet-code",
                     "kind": "bin"
                 }
             },

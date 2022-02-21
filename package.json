@@ -1,11 +1,10 @@
 {
-  "name": "rust-end-to-end-application",
+  "name": "leet-code",
   "version": "0.0.0-development",
   "description": "It's written in Rust!",
   "main": "src/main.rs",
   "scripts": {
-    "prettier": "prettier -w \"**/*.{yml,yaml}\"",
-    "release": "semantic-release"
+    "prettier": "prettier -w \"**/*.{yml,yaml}\""
   },
   "engines": {
     "node": ">=16.0.0",
@@ -13,25 +12,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kristof-mattei/rust-end-to-end-application.git"
+    "url": "https://github.com/kristof-mattei/leet-code.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kristof-mattei/rust-end-to-end-application/issues"
+    "url": "https://github.com/kristof-mattei/leet-code/issues"
   },
-  "homepage": "https://github.com/kristof-mattei/rust-end-to-end-application#readme",
+  "homepage": "https://github.com/kristof-mattei/leet-code#readme",
   "devDependencies": {
-    "@actions/tool-cache": "^1.7.1",
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/commit-analyzer": "^9.0.2",
-    "@semantic-release/github": "^8.0.2",
-    "@semantic-release/release-notes-generator": "^10.0.3",
-    "conventional-changelog-conventionalcommits": "^4.6.3",
-    "prettier": "^2.5.1",
-    "semantic-release": "^19.0.2",
-    "semver": "^7.3.5",
-    "serialize-error": "^9.1.0"
+    "prettier": "^2.5.1"
   },
   "publishConfig": {
     "access": "restricted"
