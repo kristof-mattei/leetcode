@@ -1,4 +1,4 @@
-pub struct Solution {}
+use crate::shared::Solution;
 
 impl Solution {
     #[allow(clippy::needless_pass_by_value)]

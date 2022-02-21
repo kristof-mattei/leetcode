@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub struct Solution {}
+use crate::shared::Solution;
 
 impl Solution {
     #[must_use]

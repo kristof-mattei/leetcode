@@ -7,9 +7,10 @@
 #![allow(clippy::too_many_lines)]
 #![allow(clippy::let_and_return)]
 
-mod shared;
+pub mod shared;
 mod utils;
 
 pub mod problem_10;
 pub mod problem_11;
+pub mod problem_12;
 pub mod problem_169;
