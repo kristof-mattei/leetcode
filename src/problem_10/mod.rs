@@ -124,7 +124,7 @@ fn is_match_inner(remainder: &[char], remaining_regex: &[Token]) -> bool {
 
 #[cfg(test)]
 mod test {
-    use crate::problem_10::Solution;
+    use super::Solution;
     fn is_match(input: &str, pattern: &str) -> bool {
         Solution::is_match(input.to_string(), pattern.to_string())
     }
