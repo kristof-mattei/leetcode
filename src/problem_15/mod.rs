@@ -63,7 +63,6 @@ impl Solution {
 mod test {
     use crate::problem_15::three_sum;
 
-
     fn vec_vec_eq<T>(left: Vec<T>, mut right: Vec<T>) -> bool
     where
         T: std::cmp::Eq + std::fmt::Debug,

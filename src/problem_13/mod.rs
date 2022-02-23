@@ -51,7 +51,6 @@ impl Solution {
 mod test {
     use crate::problem_13::roman_to_int;
 
-
     #[test]
     fn test() {
         assert_eq!(roman_to_int("III"), 3);
