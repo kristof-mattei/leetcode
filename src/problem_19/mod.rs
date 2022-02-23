@@ -1,10 +1,4 @@
-use crate::shared::Solution;
-// Definition for singly-linked list.
-#[derive(PartialEq, Eq, Clone, Debug)]
-pub struct ListNode {
-    pub val: i32,
-    pub next: Option<Box<ListNode>>,
-}
+use crate::shared::{ListNode, Solution};
 
 fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> (Option<Box<ListNode>>, usize) {
     match head {
@@ -37,20 +31,8 @@ impl Solution {
 
 #[cfg(test)]
 mod test {
-    use crate::problem_19::remove_nth_from_end;
+    use crate::{problem_19::remove_nth_from_end, shared::to_ll};
 
-    use super::ListNode;
-
-    fn to_ll(input: &[i32]) -> Option<Box<ListNode>> {
-        if input.is_empty() {
-            return None;
-        }
-
-        Some(Box::new(ListNode {
-            val: input[0],
-            next: to_ll(&input[1..]),
-        }))
-    }
     #[test]
 
     fn test() {
