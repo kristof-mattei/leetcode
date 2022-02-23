@@ -76,7 +76,6 @@ impl Solution {
 mod test {
     use crate::problem_18::{four_sums, two_sum};
 
-
     #[test]
     fn test_2_sum() {
         assert_eq!(two_sum(&[1, 2, 3, 4, 5], 6), vec![vec![4, 2], vec![5, 1]]);

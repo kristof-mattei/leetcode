@@ -56,8 +56,6 @@ impl Solution {
 mod test {
     use crate::problem_14::longest_common_prefix;
 
-
-
     #[test]
     fn test() {
         assert_eq!(
