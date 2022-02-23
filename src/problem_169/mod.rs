@@ -28,8 +28,6 @@ fn majority_element(nums: Vec<i32>) -> i32 {
 mod test {
     use crate::problem_169::majority_element;
 
-
-
     #[test]
     fn test() {
         let vec = vec![1, 2, 2, 3];

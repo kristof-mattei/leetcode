@@ -36,7 +36,6 @@ fn max_area(height: &[i32]) -> i32 {
 mod test {
     use crate::problem_11::max_area;
 
-
     #[test]
     fn test() {
         assert_eq!(max_area(&[1, 8, 6, 2, 5, 4, 8, 3, 7]), 49);

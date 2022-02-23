@@ -41,7 +41,6 @@ mod test {
 
     use super::ListNode;
 
-
     fn to_ll(input: &[i32]) -> Option<Box<ListNode>> {
         if input.is_empty() {
             return None;
