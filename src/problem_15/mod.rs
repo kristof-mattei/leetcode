@@ -61,7 +61,8 @@ impl Solution {
 
 #[cfg(test)]
 mod test {
-    use super::three_sum;
+    use crate::problem_15::three_sum;
+
 
     fn vec_vec_eq<T>(left: Vec<T>, mut right: Vec<T>) -> bool
     where

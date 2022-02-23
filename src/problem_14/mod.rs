@@ -54,7 +54,9 @@ impl Solution {
 
 #[cfg(test)]
 mod test {
-    use super::longest_common_prefix;
+    use crate::problem_14::longest_common_prefix;
+
+
 
     #[test]
     fn test() {
@@ -96,19 +98,5 @@ mod test {
             ),
             "a".to_string()
         );
-    }
-
-    #[test]
-    fn test_4() {
-        let v = String::from("🗻∈🌏");
-
-        assert_eq!(Some("🗻"), v.get(0..3));
-    }
-
-    #[test]
-    fn test_5() {
-        let v = String::from("é");
-
-        assert_eq!(Some("é"), v.get(0..2));
     }
 }

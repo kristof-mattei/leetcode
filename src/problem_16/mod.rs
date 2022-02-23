@@ -54,7 +54,7 @@ impl Solution {
 
 #[cfg(test)]
 mod test {
-    use super::three_sum_closest;
+    use crate::problem_16::three_sum_closest;
 
     #[test]
     fn test() {

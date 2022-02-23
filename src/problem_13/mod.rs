@@ -49,7 +49,8 @@ impl Solution {
 
 #[cfg(test)]
 mod test {
-    use super::roman_to_int;
+    use crate::problem_13::roman_to_int;
+
 
     #[test]
     fn test() {

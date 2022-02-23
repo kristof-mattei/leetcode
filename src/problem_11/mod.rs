@@ -34,7 +34,8 @@ fn max_area(height: &[i32]) -> i32 {
 
 #[cfg(test)]
 mod test {
-    use super::max_area;
+    use crate::problem_11::max_area;
+
 
     #[test]
     fn test() {

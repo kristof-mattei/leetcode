@@ -4,8 +4,7 @@ impl Solution {
     #[allow(clippy::needless_pass_by_value)]
     #[must_use]
     pub fn is_match(s: String, p: String) -> bool {
-        let tokenized_regex = tokenize(&p);
-        is_match_inner(&s.chars().collect::<Vec<_>>(), &tokenized_regex)
+        is_match(&s, &p)
     }
 }
 enum SingleToken {
@@ -43,7 +42,12 @@ fn tokenize(p: &str) -> Vec<Token> {
     tokenized
 }
 
-fn is_match_inner(remainder: &[char], remaining_regex: &[Token]) -> bool {
+fn is_match(s: &str, p: &str) -> bool {
+    let tokenized_regex = tokenize(p);
+    is_match_r(&s.chars().collect::<Vec<_>>(), &tokenized_regex)
+}
+
+fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
     let mut index: usize = 0;
     let mut regex_index: usize = 0;
     while let Some(token) = remaining_regex.get(regex_index) {
@@ -84,7 +88,7 @@ fn is_match_inner(remainder: &[char], remaining_regex: &[Token]) -> bool {
 
                             // range is inclusive as we start from the index (i.e. no match for the current <char>* all the way until AFTER the last matching char)
                             return (index..=highest_continuation).rev().any(|c| {
-                                is_match_inner(&remainder[c..], &remaining_regex[regex_index + 1..])
+                                is_match_r(&remainder[c..], &remaining_regex[regex_index + 1..])
                             });
                         }
                     },
@@ -111,7 +115,7 @@ fn is_match_inner(remainder: &[char], remaining_regex: &[Token]) -> bool {
                         // inclusive range because we also want to test an emtpy string
                         // in the case the remaining tokens are all of the form of <char>* or .*
                         return (index..=remainder.len()).rev().any(|c| {
-                            is_match_inner(&remainder[c..], &remaining_regex[regex_index + 1..])
+                            is_match_r(&remainder[c..], &remaining_regex[regex_index + 1..])
                         });
                     },
                 }
@@ -124,10 +128,7 @@ fn is_match_inner(remainder: &[char], remaining_regex: &[Token]) -> bool {
 
 #[cfg(test)]
 mod test {
-    use super::Solution;
-    fn is_match(input: &str, pattern: &str) -> bool {
-        Solution::is_match(input.to_string(), pattern.to_string())
-    }
+    use crate::problem_10::is_match;
 
     #[test]
     fn first() {

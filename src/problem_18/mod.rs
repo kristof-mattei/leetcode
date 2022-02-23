@@ -75,15 +75,17 @@ impl Solution {
 #[cfg(test)]
 mod test {
     use crate::problem_18::{four_sums, two_sum};
+
+
     #[test]
     fn test_2_sum() {
-        assert_eq!(two_sum(&[1, 2, 3, 4, 5], 6), vec![(2, 4), (1, 5)]);
+        assert_eq!(two_sum(&[1, 2, 3, 4, 5], 6), vec![vec![4, 2], vec![5, 1]]);
     }
     #[test]
     fn test() {
         assert_eq!(
             four_sums(vec![1, 0, -1, 0, -2, 2], 0),
-            vec![[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]
+            vec![[2, 1, -1, -2], [2, 0, 0, -2], [1, 0, 0, -1]]
         );
     }
 

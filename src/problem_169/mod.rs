@@ -26,7 +26,9 @@ fn majority_element(nums: Vec<i32>) -> i32 {
 
 #[cfg(test)]
 mod test {
-    use super::majority_element;
+    use crate::problem_169::majority_element;
+
+
 
     #[test]
     fn test() {

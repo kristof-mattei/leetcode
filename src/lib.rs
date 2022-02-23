@@ -20,3 +20,5 @@ pub mod problem_16;
 pub mod problem_169;
 pub mod problem_17;
 pub mod problem_18;
+pub mod problem_19;
+pub mod problem_20;
