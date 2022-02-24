@@ -69,20 +69,24 @@ impl Solution {
 
 #[cfg(test)]
 mod test {
-    use crate::problem_22::generate_parenthesis;
+    use crate::{problem_22::generate_parenthesis, shared::vec_vec_eq};
 
     #[test]
     fn test() {
-        println!("{:?}", generate_parenthesis(1));
+        assert!(vec_vec_eq(generate_parenthesis(1), vec!["()".to_string()]));
     }
 
     #[test]
     fn test_2() {
-        println!("{:?}", generate_parenthesis(0));
-    }
-
-    #[test]
-    fn test_3() {
-        println!("{:?}", generate_parenthesis(3));
+        assert!(vec_vec_eq(
+            generate_parenthesis(3),
+            vec![
+                "((()))".to_string(),
+                "()()()".to_string(),
+                "(()())".to_string(),
+                "()(())".to_string(),
+                "(())()".to_string(),
+            ]
+        ));
     }
 }
