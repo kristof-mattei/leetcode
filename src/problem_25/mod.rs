@@ -1,19 +1,5 @@
 use crate::shared::{ListNode, Solution};
 
-// fn swap_pairs(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-//     if head.is_none() || head.as_ref().unwrap().next.is_none() {
-//         return head;
-//     }
-
-//     let mut first = head.unwrap();
-//     let mut second = first.next.take().unwrap();
-
-//     first.next = swap_pairs(second.next);
-//     second.next = Some(first);
-
-//     Some(second)
-// }
-
 #[allow(clippy::vec_box)]
 fn reverse_list(
     mut list: Vec<Box<ListNode>>,
