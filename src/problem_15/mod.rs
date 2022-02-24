@@ -61,26 +61,7 @@ impl Solution {
 
 #[cfg(test)]
 mod test {
-    use crate::problem_15::three_sum;
-
-    fn vec_vec_eq<T>(left: Vec<T>, mut right: Vec<T>) -> bool
-    where
-        T: std::cmp::Eq + std::fmt::Debug,
-    {
-        if left.len() != right.len() {
-            return false;
-        }
-
-        for l in left {
-            if let Some(p) = right.iter().position(|x| x == &l) {
-                right.remove(p);
-            } else {
-                return false;
-            }
-        }
-
-        true
-    }
+    use crate::{problem_15::three_sum, shared::vec_vec_eq};
 
     #[test]
     fn test_vec_eq() {
