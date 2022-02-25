@@ -30,3 +30,4 @@ pub mod problem_25;
 pub mod problem_26;
 pub mod problem_27;
 pub mod problem_28;
+pub mod problem_29;
