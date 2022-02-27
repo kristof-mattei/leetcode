@@ -1,35 +1,26 @@
-use std::thread::current;
+use std::cmp;
 
 use crate::shared::Solution;
 
-fn longest_valid_parentheses(s: String) -> i32 {
+fn longest_valid_parentheses(s: &str) -> i32 {
     let mut max_valid = 0;
-    let mut current_valid = 0;
-    let mut opens = 0;
-    // let mut closes = 0;
+    let mut stack = vec![-1];
 
-    let bytes = s.as_bytes();
+    for (index, symbol) in s.as_bytes().iter().enumerate() {
+        let index = index as i32;
+        match symbol {
+            b'(' => stack.push(index),
+            b')' => {
+                stack.pop();
 
-    for i in 0..s.len() {
-        for symbol in bytes.iter().skip(i) {
-            match symbol {
-                b'(' => opens += 1,
-                b')' => {
-                    if opens == 0 {
-                        break;
-                    }
-                    opens -= 1;
-                },
-                _ => unreachable!(),
-            }
-            if opens == 0 {
-                current_valid += 1;
-            }
+                if stack.is_empty() {
+                    stack.push(index);
+                } else {
+                    max_valid = cmp::max(max_valid, index - stack[stack.len() - 1]);
+                }
+            },
+            _ => unreachable!(),
         }
-        if current_valid > max_valid {
-            max_valid = current_valid;
-        }
-        // i += current_valid;
     }
 
     max_valid
@@ -39,27 +30,51 @@ impl Solution {
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
     pub fn longest_valid_parentheses(s: String) -> i32 {
-        longest_valid_parentheses(s)
+        longest_valid_parentheses(&s)
     }
 }
 
 #[cfg(test)]
 mod test {
     use crate::problem_32::longest_valid_parentheses;
-
+    #[test]
+    fn test_x() {
+        let input = "()".to_string();
+        assert_eq!(longest_valid_parentheses(&input), 2);
+    }
     #[test]
     fn test() {
         let input = "(()".to_string();
-        assert_eq!(longest_valid_parentheses(input), 2);
+        assert_eq!(longest_valid_parentheses(&input), 2);
     }
+
     #[test]
     fn test_2() {
         let input = ")()())".to_string();
-        assert_eq!(longest_valid_parentheses(input), 4);
+        assert_eq!(longest_valid_parentheses(&input), 4);
     }
+
     #[test]
     fn test_3() {
         let input = "".to_string();
-        assert_eq!(longest_valid_parentheses(input), 0);
+        assert_eq!(longest_valid_parentheses(&input), 0);
+    }
+
+    #[test]
+    fn test_4() {
+        let input = "()(())".to_string();
+        assert_eq!(longest_valid_parentheses(&input), 6);
+    }
+
+    #[test]
+    fn test_5() {
+        let input = "()(()".to_string();
+        assert_eq!(longest_valid_parentheses(&input), 2);
+    }
+
+    #[test]
+    fn test_6() {
+        let input = "(())(".to_string();
+        assert_eq!(longest_valid_parentheses(&input), 4);
     }
 }
