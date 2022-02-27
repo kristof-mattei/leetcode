@@ -34,3 +34,4 @@ pub mod problem_29;
 pub mod problem_30;
 pub mod problem_31;
 pub mod problem_32;
+pub mod problem_33;
