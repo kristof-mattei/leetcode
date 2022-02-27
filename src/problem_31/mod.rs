@@ -36,12 +36,6 @@ fn next_permutation(nums: &mut Vec<i32>) {
                 break;
             }
         }
-        // for i in (max_index..len).rev() {
-        //     if nums[i] > minimum {
-        //         nums.swap(i, max_index - 1);
-        //         break;
-        //     }
-        // }
     }
 
     // we bumped the number in front of max_index
