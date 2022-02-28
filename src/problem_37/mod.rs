@@ -1,7 +1,4 @@
-use std::{
-    collections::{HashMap, HashSet},
-    mem,
-};
+use std::collections::HashSet;
 
 use crate::shared::Solution;
 
@@ -20,7 +17,6 @@ const QUADRANTS: [(usize, usize); 9] = [
 struct World {
     board: Vec<Vec<char>>,
     guess_depth: usize,
-    opens: HashMap<(usize, usize), HashSet<char>>,
 }
 
 fn check_hashmap(hash_map: &mut HashSet<char>, c: char) -> bool {
@@ -111,35 +107,45 @@ fn get_possibilities(board: &[Vec<char>], row: usize, col: usize) -> HashSet<cha
     all_possibilities
 }
 
-fn solve_sudoku(board: &mut Vec<Vec<char>>) {
-    let opens = board
-        .iter()
-        .enumerate()
-        .flat_map(|(row_index, row)| {
-            row.iter()
-                .enumerate()
-                .filter_map(|(col_index, c)| {
-                    if c == &'.' {
-                        // Some((
-                        //     (row_index, col_index),
-                        //     get_possibilities(board, row_index, col_index),
-                        // ))
-                        Some(((row_index, col_index), HashSet::new()))
-                    } else {
-                        None
-                    }
-                })
-                .collect::<Vec<_>>()
-        })
-        .collect::<HashMap<(usize, usize), HashSet<char>>>();
+fn solve_sudoku_until_no_more_1(
+    board: &mut Vec<Vec<char>>,
+) -> Vec<((usize, usize), HashSet<char>)> {
+    loop {
+        let mut opens = vec![];
+        let mut any_1 = false;
+        for r in 0..=8 {
+            for c in 0..=8 {
+                if board[r][c] == '.' {
+                    let p = get_possibilities(board, r, c);
 
+                    if p.is_empty() {
+                        return vec![];
+                    }
+
+                    if p.len() == 1 {
+                        board[r][c] = *p.iter().next().unwrap();
+                        any_1 = true;
+                    } else {
+                        opens.push(((r, c), p));
+                    }
+                }
+            }
+        }
+
+        if any_1 {
+        } else {
+            return opens;
+        }
+    }
+}
+
+fn solve_sudoku(board: &mut Vec<Vec<char>>) {
     let mut worlds = vec![World {
         board: board.clone(),
         guess_depth: 1,
-        opens,
     }];
 
-    'outer: loop {
+    loop {
         let board_index = worlds
             .iter()
             .enumerate()
@@ -150,88 +156,40 @@ fn solve_sudoku(board: &mut Vec<Vec<char>>) {
         let World {
             board: mut current_board,
             guess_depth,
-            mut opens,
         } = worlds.swap_remove(board_index);
 
+        let opens = solve_sudoku_until_no_more_1(&mut current_board);
+
         if opens.is_empty() {
-            for (row_index, row) in current_board.iter().enumerate() {
-                for (col_index, value) in row.iter().enumerate() {
-                    board[row_index][col_index] = *value;
+            if !current_board.iter().any(|r| r.iter().any(|c| c == &'.')) {
+                for r in 0..=8 {
+                    for c in 0..=8 {
+                        board[r][c] = current_board[r][c];
+                    }
                 }
+
+                return;
             }
-            return;
-        }
-
-        // refresh the opens
-        for ((r, c), p) in &mut opens {
-            let mut new_p = get_possibilities(&current_board, *r, *c);
-
-            // if any of the opens doesn't have any possibilities, we have a faulty board
-            if new_p.is_empty() {
-                continue 'outer;
-            }
-
-            mem::swap(p, &mut new_p);
+            continue;
         }
 
         // get the ones with min possibilities
         let lowest_p = opens.iter().map(|((_, _), p)| p.len()).min().unwrap();
-        if lowest_p == 1 {
-            for ((row, col), p) in opens.iter().filter(|((_, _), p)| p.len() == 1) {
-                current_board[*row][*col] = *p.iter().next().unwrap();
-            }
+        for ((row, col), possibilities) in
+            opens.into_iter().filter(|((_, _), p)| p.len() == lowest_p)
+        {
+            for p in possibilities {
+                let mut new_board = current_board.clone();
+                new_board[row][col] = p;
 
-            if !is_valid_sudoku(&current_board) {
-                continue;
-            }
-
-            opens.retain(|_, v| v.len() != 1);
-
-            worlds.push(World {
-                board: current_board,
-                guess_depth,
-                opens,
-            });
-        } else {
-            for ((row, col), possibilities) in
-                opens.iter().filter(|((_, _), p)| p.len() == lowest_p)
-            {
-                'p: for p in possibilities {
-                    let mut new_board = current_board.clone();
-                    new_board[*row][*col] = *p;
-
-                    if !is_valid_sudoku(&current_board) {
-                        continue;
-                    }
-
-                    let mut new_opens = opens.clone();
-                    new_opens.remove(&(*row, *col));
-
-                    // refresh the opens
-                    // for ((r, c), p) in &mut new_opens {
-                    //     if !(r == row || c == col || (r / 3 == row / 3 && c / 3 == col / 3)) {
-                    //         continue;
-                    //     }
-
-                    //     let mut new_p = get_possibilities(&current_board, *r, *c);
-
-                    //     // if any of the opens doesn't have any possibilities, we have a faulty board
-                    //     if new_p.is_empty() {
-                    //         continue 'p;
-                    //     }
-
-                    //     mem::swap(p, &mut new_p);
-                    // }
-                    // we multiply the guess depth with our current amount of possibilities
-                    // if we have only 1 choice for this cell, then that world should have a higher
-                    // priority than when we have a cell with 7 possibilities that we're
-                    // splitting in 7 worlds and trying each version
-                    worlds.push(World {
-                        board: new_board,
-                        guess_depth: guess_depth * lowest_p,
-                        opens: new_opens,
-                    });
-                }
+                // we multiply the guess depth with our current amount of possibilities
+                // if we have only 1 choice for this cell, then that world should have a higher
+                // priority than when we have a cell with 7 possibilities that we're
+                // splitting in 7 worlds and trying each version
+                worlds.push(World {
+                    board: new_board,
+                    guess_depth: guess_depth * lowest_p,
+                });
             }
         }
     }
