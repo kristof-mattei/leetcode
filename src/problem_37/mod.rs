@@ -77,8 +77,7 @@ fn get_cell_with_lowest_p(board: &[Vec<char>]) -> (usize, usize, [bool; 10]) {
         }
     }
 
-    let mut mask = masks[min.1][min.2];
-    (min.1, min.2, mask)
+    (min.1, min.2, masks[min.1][min.2])
 }
 
 impl Solution {
