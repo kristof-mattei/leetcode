@@ -375,7 +375,7 @@ jobs:
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
 
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@6af3c118c8376c675363897acf1757f7a9be6583
+        uses: docker/login-action@bb984efc561711aaa26e433c32c3521176eae55b
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -420,7 +420,7 @@ jobs:
           path: ${{ env.DOCKER_IMAGE_OUTPUT_LOCATION }}
 
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@6af3c118c8376c675363897acf1757f7a9be6583
+        uses: docker/login-action@bb984efc561711aaa26e433c32c3521176eae55b
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
