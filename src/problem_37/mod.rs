@@ -1,67 +1,34 @@
-use std::collections::HashSet;
-
 use crate::shared::Solution;
 
-const QUADRANTS: [(usize, usize); 9] = [
-    (0, 0),
-    (0, 1),
-    (0, 2),
-    (1, 0),
-    (1, 1),
-    (1, 2),
-    (2, 0),
-    (2, 1),
-    (2, 2),
-];
-
-struct World {
-    board: Vec<Vec<char>>,
-    guess_depth: usize,
-}
-
-fn check_hashmap(hash_map: &mut HashSet<char>, c: char) -> bool {
-    if c == '.' {
+fn solve_sudoku(board: &mut Vec<Vec<char>>) -> bool {
+    if is_solved(board) {
         return true;
     }
 
-    hash_map.insert(c)
+    let (i, j, mask) = get_cell_with_lowest_p(board);
+
+    for c in mask
+        .iter()
+        .enumerate()
+        .filter(|(_, x)| **x)
+        .map(|(i, _)| (i as u8 + b'0') as char)
+    {
+        board[i][j] = c;
+
+        if solve_sudoku(board) {
+            return true;
+        }
+
+        board[i][j] = '.';
+    }
+
+    false
 }
 
-fn is_valid_sudoku(board: &[Vec<char>]) -> bool {
-    let mut h = HashSet::<char>::with_capacity(9);
-
-    // rows
-    for row in board {
-        h.clear();
-
-        if row.iter().any(|c| !check_hashmap(&mut h, *c)) {
-            return false;
-        }
-    }
-
-    // columns
-    for c in 0..9 {
-        h.clear();
-
-        if board
-            .iter()
-            .map(|row| row[c])
-            .any(|c| !check_hashmap(&mut h, c))
-        {
-            return false;
-        }
-    }
-
-    // quadrants
-    for row_quadrant in 0..=2 {
-        for col_quadrant in 0..=2 {
-            h.clear();
-
-            if QUADRANTS
-                .iter()
-                .map(|(row, col)| board[row + (3 * row_quadrant)][col + (3 * col_quadrant)])
-                .any(|c| !check_hashmap(&mut h, c))
-            {
+fn is_solved(board: &[Vec<char>]) -> bool {
+    for r in board {
+        for c in r {
+            if c == &'.' {
                 return false;
             }
         }
@@ -70,129 +37,48 @@ fn is_valid_sudoku(board: &[Vec<char>]) -> bool {
     true
 }
 
-fn get_possibilities_in_quadrant(board: &[Vec<char>], row: usize, col: usize) -> HashSet<char> {
-    // determine quadrant:
-    let row_quadrant = row / 3;
-    let col_quadrant = col / 3;
+fn get_cell_with_lowest_p(board: &[Vec<char>]) -> (usize, usize, [bool; 10]) {
+    // first element is ignored
+    // efficient storage for possibilities fora cell
+    // if mask[i][j][c] is set, that means that c + 1 as char is a possibility
+    let mut masks = [[[false, true, true, true, true, true, true, true, true, true]; 9]; 9];
 
-    QUADRANTS
-        .iter()
-        .map(|(row, col)| board[row + (3 * row_quadrant)][col + (3 * col_quadrant)])
-        .filter(|c| c != &'.')
-        .collect()
-}
+    for i in 0..=8 {
+        for j in 0..=8 {
+            let c = board[i][j];
 
-fn get_possibilities_in_row(board: &[Vec<char>], row: usize) -> HashSet<char> {
-    board[row].iter().filter(|c| *c != &'.').copied().collect()
-}
-
-fn get_possibilities_in_col(board: &[Vec<char>], col: usize) -> HashSet<char> {
-    board.iter().map(|v| v[col]).filter(|c| *c != '.').collect()
-}
-
-fn get_possibilities(board: &[Vec<char>], row: usize, col: usize) -> HashSet<char> {
-    let nums_in_quadrant = get_possibilities_in_quadrant(board, row, col);
-    let nums_in_row = get_possibilities_in_row(board, row);
-    let nums_in_col = get_possibilities_in_col(board, col);
-
-    let mut all_possibilities = ('1'..='9').collect::<HashSet<char>>();
-
-    for c in vec![nums_in_col, nums_in_row, nums_in_quadrant]
-        .iter()
-        .flatten()
-    {
-        all_possibilities.remove(c);
-    }
-
-    all_possibilities
-}
-
-fn solve_sudoku_until_no_more_1(
-    board: &mut Vec<Vec<char>>,
-) -> Vec<((usize, usize), HashSet<char>)> {
-    loop {
-        let mut opens = vec![];
-        let mut any_1 = false;
-        for r in 0..=8 {
-            for c in 0..=8 {
-                if board[r][c] == '.' {
-                    let p = get_possibilities(board, r, c);
-
-                    if p.is_empty() {
-                        return vec![];
-                    }
-
-                    if p.len() == 1 {
-                        board[r][c] = *p.iter().next().unwrap();
-                        any_1 = true;
-                    } else {
-                        opens.push(((r, c), p));
-                    }
-                }
+            if c == '.' {
+                continue;
             }
-        }
 
-        if any_1 {
-        } else {
-            return opens;
-        }
-    }
-}
+            let c = (c as u8 - b'0') as usize;
 
-fn solve_sudoku(board: &mut Vec<Vec<char>>) {
-    let mut worlds = vec![World {
-        board: board.clone(),
-        guess_depth: 1,
-    }];
-
-    loop {
-        let board_index = worlds
-            .iter()
-            .enumerate()
-            .min_by_key(|(_, w)| w.guess_depth)
-            .map(|(i, ..)| i)
-            .unwrap();
-
-        let World {
-            board: mut current_board,
-            guess_depth,
-        } = worlds.swap_remove(board_index);
-
-        let opens = solve_sudoku_until_no_more_1(&mut current_board);
-
-        if opens.is_empty() {
-            if !current_board.iter().any(|r| r.iter().any(|c| c == &'.')) {
-                for r in 0..=8 {
-                    for c in 0..=8 {
-                        board[r][c] = current_board[r][c];
-                    }
-                }
-
-                return;
-            }
-            continue;
-        }
-
-        // get the ones with min possibilities
-        let lowest_p = opens.iter().map(|((_, _), p)| p.len()).min().unwrap();
-        for ((row, col), possibilities) in
-            opens.into_iter().filter(|((_, _), p)| p.len() == lowest_p)
-        {
-            for p in possibilities {
-                let mut new_board = current_board.clone();
-                new_board[row][col] = p;
-
-                // we multiply the guess depth with our current amount of possibilities
-                // if we have only 1 choice for this cell, then that world should have a higher
-                // priority than when we have a cell with 7 possibilities that we're
-                // splitting in 7 worlds and trying each version
-                worlds.push(World {
-                    board: new_board,
-                    guess_depth: guess_depth * lowest_p,
-                });
+            // unset all the fields that have our current number
+            for t in 0..=8 {
+                // for this row (i), for all columns (t), set that c isn't a possibility
+                masks[i][t][c] = false;
+                // for all rows (t), for this column (c), set that c isn't a possibility
+                masks[t][j][c] = false;
+                // for our current quadrant, set that c isn't a possibility
+                masks[i / 3 * 3 + t / 3][j / 3 * 3 + t % 3][c] = false;
             }
         }
     }
+
+    let mut min = (10, 0, 0);
+
+    for i in 0..=8 {
+        for j in 0..=8 {
+            if board[i][j] != '.' {
+                continue;
+            }
+
+            min = min.min((masks[i][j].iter().filter(|x| **x).count(), i, j));
+        }
+    }
+
+    let mut mask = masks[min.1][min.2];
+    (min.1, min.2, mask)
 }
 
 impl Solution {
@@ -203,15 +89,11 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
+    use crate::problem_37::solve_sudoku;
 
-    use crate::problem_37::{
-        get_possibilities, get_possibilities_in_col, get_possibilities_in_quadrant,
-        get_possibilities_in_row, solve_sudoku,
-    };
-
-    fn get_board() -> Vec<Vec<char>> {
-        let board = [
+    #[test]
+    fn test_1() {
+        let mut board = [
             ["5", "3", ".", ".", "7", ".", ".", ".", "."],
             ["6", ".", ".", "1", "9", "5", ".", ".", "."],
             [".", "9", "8", ".", ".", ".", ".", "6", "."],
@@ -225,82 +107,6 @@ mod tests {
         .iter()
         .map(|l| l.iter().map(|l| l.chars().next().unwrap()).collect())
         .collect::<Vec<_>>();
-
-        board
-    }
-
-    #[test]
-    fn test_row() {
-        let board = get_board();
-        let taken_numbers_in_row = get_possibilities_in_row(&board, 7);
-
-        let row_numbers = HashSet::from(['4', '1', '9', '5']);
-        assert_eq!(taken_numbers_in_row, row_numbers);
-    }
-
-    #[test]
-    fn test_col() {
-        let board = get_board();
-
-        let taken_numbers_in_col = get_possibilities_in_col(&board, 3);
-
-        let col_numbers = HashSet::from(['1', '8', '4']);
-        assert_eq!(taken_numbers_in_col, col_numbers);
-    }
-
-    #[test]
-    fn test_quadrant_1() {
-        let board = get_board();
-        let taken_numbers_in_quadrant = get_possibilities_in_quadrant(&board, 0, 0);
-
-        let quadrant_numbers = HashSet::from(['5', '3', '6', '9', '8']);
-        assert_eq!(taken_numbers_in_quadrant, quadrant_numbers);
-
-        let taken_numbers_in_quadrant = get_possibilities_in_quadrant(&board, 2, 2);
-
-        assert_eq!(taken_numbers_in_quadrant, quadrant_numbers);
-    }
-
-    #[test]
-    fn test_quadrant_2() {
-        let board = get_board();
-        let taken_numbers_in_quadrant = get_possibilities_in_quadrant(&board, 6, 6);
-
-        let quadrant_numbers = HashSet::from(['2', '8', '5', '7', '9']);
-        assert_eq!(taken_numbers_in_quadrant, quadrant_numbers);
-
-        let taken_numbers_in_quadrant = get_possibilities_in_quadrant(&board, 8, 8);
-
-        assert_eq!(taken_numbers_in_quadrant, quadrant_numbers);
-    }
-
-    #[test]
-    fn test_possibilities_1() {
-        let board = get_board();
-        let possibilities = get_possibilities(&board, 6, 5);
-
-        assert_eq!(possibilities, HashSet::from(['7']));
-    }
-
-    #[test]
-    fn test_possibilities_2() {
-        let board = get_board();
-
-        let possibilities = get_possibilities(&board, 2, 1);
-
-        assert_eq!(possibilities, HashSet::from(['1', '2', '4', '7']));
-    }
-    #[test]
-    fn test_possibilities_3() {
-        let board = get_board();
-        let possibilities = get_possibilities(&board, 5, 3);
-
-        assert_eq!(possibilities, HashSet::from(['5', '9']));
-    }
-
-    #[test]
-    fn test_1() {
-        let mut board = get_board();
 
         let solution: Vec<Vec<char>> = [
             ["5", "3", "4", "6", "7", "8", "9", "1", "2"],
