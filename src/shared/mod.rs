@@ -44,3 +44,14 @@ where
 
     true
 }
+
+pub fn sort_vec_of_vec<T>(vec: &mut Vec<Vec<T>>)
+where
+    T: std::cmp::Ord,
+{
+    for inner_v in vec.iter_mut() {
+        inner_v.sort_unstable();
+    }
+
+    vec.sort_unstable();
+}

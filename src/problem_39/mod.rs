@@ -38,12 +38,12 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
-    use crate::problem_39::combination_sum;
+    use crate::{problem_39::combination_sum, shared::sort_vec_of_vec};
 
     #[test]
     fn test_1() {
         let mut result = combination_sum(&[2, 3, 6, 7], 7);
-        result.sort_unstable();
+        sort_vec_of_vec(&mut result);
 
         assert_eq!(result, vec![vec![2, 2, 3], vec![7]]);
     }
@@ -51,7 +51,7 @@ mod tests {
     #[test]
     fn test_2() {
         let mut result = combination_sum(&[2, 3, 5], 8);
-        result.sort_unstable();
+        sort_vec_of_vec(&mut result);
 
         assert_eq!(result, vec![vec![2, 2, 2, 2], vec![2, 3, 3], vec![3, 5]]);
     }
@@ -59,7 +59,7 @@ mod tests {
     #[test]
     fn test_3() {
         let mut result = combination_sum(&[2], 1);
-        result.sort_unstable();
+        sort_vec_of_vec(&mut result);
 
         assert_eq!(result, Vec::<Vec::<i32>>::new());
     }
@@ -67,7 +67,7 @@ mod tests {
     #[test]
     fn test_4() {
         let mut result = combination_sum(&[1, 2], 4);
-        result.sort_unstable();
+        sort_vec_of_vec(&mut result);
 
         assert_eq!(result, vec![vec![1, 1, 1, 1], vec![1, 1, 2], vec![2, 2]]);
     }
@@ -75,7 +75,7 @@ mod tests {
     #[test]
     fn test_5() {
         let mut result = combination_sum(&[2, 7, 6, 3, 5, 1], 9);
-        result.sort_unstable();
+        sort_vec_of_vec(&mut result);
 
         assert_eq!(
             result,
@@ -108,7 +108,7 @@ mod tests {
     #[test]
     fn test_6() {
         let mut result = combination_sum(&[3, 12, 9, 11, 6, 7, 8, 5, 4], 15);
-        result.sort_unstable();
+        sort_vec_of_vec(&mut result);
 
         assert_eq!(
             result,
