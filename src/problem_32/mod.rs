@@ -35,7 +35,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_32::longest_valid_parentheses;
     #[test]
     fn test_x() {

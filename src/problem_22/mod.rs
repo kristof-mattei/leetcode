@@ -68,7 +68,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::{problem_22::generate_parenthesis, shared::vec_vec_eq};
 
     #[test]

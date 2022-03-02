@@ -63,7 +63,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_34::search_range;
 
     #[test]

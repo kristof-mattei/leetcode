@@ -36,7 +36,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_12::int_to_roman;
 
     #[test]

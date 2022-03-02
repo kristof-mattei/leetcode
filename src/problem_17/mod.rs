@@ -55,7 +55,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_17::letter_combinations;
 
     #[test]

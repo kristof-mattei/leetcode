@@ -60,7 +60,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::{problem_15::three_sum, shared::vec_vec_eq};
 
     #[test]

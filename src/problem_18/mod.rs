@@ -73,7 +73,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_18::{four_sums, two_sum};
 
     #[test]

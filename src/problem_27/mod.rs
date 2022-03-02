@@ -25,7 +25,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_27::remove_element;
 
     #[test]

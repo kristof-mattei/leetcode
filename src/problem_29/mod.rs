@@ -54,7 +54,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_29::divide;
 
     #[test]
