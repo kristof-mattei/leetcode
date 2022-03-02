@@ -1,0 +1,35 @@
+name: Dependabot auto-approve and merge
+on: pull_request
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@a3e5f86ae9f2f49b441498973ddec20035d326b8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Approve PR
+        if: ${{steps.metadata.outputs.update-type != 'version-update:semver-major'}}
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        shell: bash
+        run: |
+          gh pr review --approve "$PR_URL"
+
+      - name: Auto-merge
+        if: ${{steps.metadata.outputs.update-type != 'version-update:semver-major'}}
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        shell: bash
+        run: |
+          gh pr merge --auto --merge "$PR_URL"
