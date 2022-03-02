@@ -1,47 +1,31 @@
-use std::collections::{HashMap, HashSet};
-
 use crate::shared::Solution;
 
-fn combination_sum_r(
-    cache: &mut HashMap<i32, HashSet<Vec<i32>>>,
-    src: &[i32],
-    target: i32,
-) -> HashSet<Vec<i32>> {
-    if let Some(c) = cache.get(&(target)) {
-        return c.clone();
-    }
+fn combination_sum_r(src: &[i32], target: i32) -> Vec<Vec<i32>> {
+    let mut results = Vec::new();
 
-    let mut results = HashSet::new();
-
-    for &v in src {
+    for (i, &v) in src.iter().enumerate() {
         if v > target {
             continue;
         }
 
         if v == target {
-            results.insert(vec![v]);
+            results.push(vec![v]);
             continue;
         }
 
-        let x = combination_sum_r(cache, src, target - v);
+        let x = combination_sum_r(&src[i..], target - v);
 
         for mut y in x {
             y.push(v);
-            y.sort_unstable();
-            results.insert(y);
+            results.push(y);
         }
     }
 
-    let entry = cache.entry(target).or_default();
-    for r in &results {
-        entry.insert(r.clone());
-    }
-    // HashSet::from_iter(results.clone()));
     results
 }
 
 fn combination_sum(candidates: &[i32], target: i32) -> Vec<Vec<i32>> {
-    Vec::from_iter(combination_sum_r(&mut HashMap::new(), candidates, target))
+    combination_sum_r(candidates, target)
 }
 
 impl Solution {
