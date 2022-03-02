@@ -52,7 +52,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_31::next_permutation;
 
     #[test]

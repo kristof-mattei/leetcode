@@ -127,7 +127,7 @@ fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_10::is_match;
 
     #[test]

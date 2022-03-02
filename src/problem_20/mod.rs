@@ -31,7 +31,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_20::is_valid;
 
     #[test]

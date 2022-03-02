@@ -34,7 +34,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_26::remove_duplicates;
 
     #[test]

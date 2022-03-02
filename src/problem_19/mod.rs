@@ -30,7 +30,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::{problem_19::remove_nth_from_end, shared::to_ll};
 
     #[test]

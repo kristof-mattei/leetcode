@@ -53,7 +53,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_16::three_sum_closest;
 
     #[test]

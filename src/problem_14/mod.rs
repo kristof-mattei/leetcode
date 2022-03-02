@@ -53,7 +53,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_14::longest_common_prefix;
 
     #[test]

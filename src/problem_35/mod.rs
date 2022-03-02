@@ -37,7 +37,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::problem_35::search_insert;
 
     #[test]

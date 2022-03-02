@@ -32,7 +32,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::{problem_21::merge_two_lists, shared::to_ll};
 
     #[test]
