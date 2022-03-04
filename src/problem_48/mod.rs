@@ -1,17 +1,29 @@
 use crate::shared::Solution;
 
 fn swap(matrix: &mut Vec<Vec<i32>>, r1c1: (usize, usize), r2c2: (usize, usize)) {
-    if r1c1.0 == r2c2.0 {
-        matrix[r1c1.0].swap(r1c1.1, r2c2.1);
-        return;
+    match r1c1.0.cmp(&r2c2.0) {
+        std::cmp::Ordering::Equal => {
+            matrix[r1c1.0].swap(r1c1.1, r2c2.1);
+        },
+        std::cmp::Ordering::Less => {
+            swap_ord(matrix, r1c1, r2c2);
+        },
+        std::cmp::Ordering::Greater => {
+            swap_ord(matrix, r2c2, r1c1);
+        },
     }
+}
 
-    let min = r1c1.min(r2c2);
-    let max = r1c1.max(r2c2);
-
-    let (left, right) = matrix.split_at_mut(max.0);
-
-    std::mem::swap(&mut left[min.0][min.1], &mut right[0][max.1]);
+fn swap_ord(
+    matrix: &mut Vec<Vec<i32>>,
+    low_row_coordinates: (usize, usize),
+    high_row_coordinates: (usize, usize),
+) {
+    let (left, right) = matrix.split_at_mut(high_row_coordinates.0);
+    std::mem::swap(
+        &mut left[low_row_coordinates.0][low_row_coordinates.1],
+        &mut right[0][high_row_coordinates.1],
+    );
 }
 
 fn rotate(matrix: &mut Vec<Vec<i32>>) {
@@ -19,9 +31,11 @@ fn rotate(matrix: &mut Vec<Vec<i32>>) {
 
     for x in 0..n / 2 {
         for y in 0..(n + 1) / 2 {
-            swap(matrix, (x, y), (n - y - 1, x));
+            swap_ord(matrix, (x, y), (n - y - 1, x));
+
             swap(matrix, (n - y - 1, x), (n - x - 1, n - y - 1));
-            swap(matrix, (n - x - 1, n - y - 1), (y, n - x - 1));
+
+            swap_ord(matrix, (y, n - x - 1), (n - x - 1, n - y - 1));
         }
     }
 }
