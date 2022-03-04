@@ -1,28 +1,29 @@
 use crate::shared::Solution;
 
 fn trap(height: &[i32]) -> i32 {
+    let mut index_l = 0;
+    let mut index_r = height.len() - 1;
+    let mut left_max = 0;
+    let mut right_max = 0;
     let mut trapped = 0;
-    let len = height.len();
-    let (max_height_index, _) = height.iter().enumerate().max_by_key(|(_, v)| *v).unwrap();
 
-    let mut max_height_2 = height[0];
-    for h in height.iter().take(max_height_index).skip(1) {
-        if h > &max_height_2 {
-            max_height_2 = *h;
+    while index_l < index_r {
+        if height[index_l] < height[index_r] {
+            if height[index_l] >= left_max {
+                left_max = height[index_l];
+            } else {
+                trapped += left_max - height[index_l];
+            }
+            index_l += 1;
         } else {
-            trapped += max_height_2 - h;
+            if height[index_r] >= right_max {
+                right_max = height[index_r];
+            } else {
+                trapped += right_max - height[index_r];
+            }
+            index_r -= 1;
         }
     }
-
-    max_height_2 = height[len - 1];
-    for h in height.iter().rev().take(len - max_height_index - 1).skip(1) {
-        if h > &max_height_2 {
-            max_height_2 = *h;
-        } else {
-            trapped += max_height_2 - h;
-        }
-    }
-
     trapped
 }
 
