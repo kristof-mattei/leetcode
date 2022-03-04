@@ -49,3 +49,4 @@ pub mod problem_44;
 pub mod problem_45;
 pub mod problem_46;
 pub mod problem_47;
+pub mod problem_48;
