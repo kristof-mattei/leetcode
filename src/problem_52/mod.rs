@@ -6,6 +6,7 @@ fn total_n_queens(n: i32) -> i32 {
 }
 
 impl Solution {
+    #[must_use]
     pub fn total_n_queens(n: i32) -> i32 {
         total_n_queens(n)
     }
