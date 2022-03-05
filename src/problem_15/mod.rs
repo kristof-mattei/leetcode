@@ -61,7 +61,7 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_15::three_sum, shared::vec_vec_eq};
+    use crate::{problem_15::three_sum, shared::vec_eq};
 
     #[test]
     fn test_vec_eq() {
@@ -70,35 +70,35 @@ mod tests {
 
     #[test]
     fn test_vec_eq_2() {
-        assert!(vec_vec_eq(vec![2, 1], vec![1, 2]));
+        assert!(vec_eq(vec![2, 1], vec![1, 2]));
     }
 
     #[test]
     fn test() {
-        assert!(vec_vec_eq(
+        assert!(vec_eq(
             three_sum(vec![-1, 0, 1, 2, -1, -4]),
             vec![vec![-1, -1, 2], vec![-1, 0, 1]]
         ));
     }
     #[test]
     fn test_2() {
-        assert!(vec_vec_eq(three_sum(vec![]), Vec::<Vec<i32>>::new()));
+        assert!(vec_eq(three_sum(vec![]), Vec::<Vec<i32>>::new()));
     }
 
     #[test]
     fn test_3() {
-        assert!(vec_vec_eq(three_sum(vec![0]), Vec::<Vec<i32>>::new()));
+        assert!(vec_eq(three_sum(vec![0]), Vec::<Vec<i32>>::new()));
     }
     #[test]
     fn test_4() {
-        assert!(vec_vec_eq(
+        assert!(vec_eq(
             three_sum(vec![3, 0, -2, -1, 1, 2]),
             vec![vec![-2, -1, 3], vec![-2, 0, 2], vec![-1, 0, 1]]
         ));
     }
     #[test]
     fn test_5() {
-        assert!(vec_vec_eq(
+        assert!(vec_eq(
             three_sum(vec![-1, 0, 1, 2, -1, -4, -2, -3, 3, 0, 4]),
             vec![
                 vec![-4, 0, 4],
@@ -223,6 +223,6 @@ mod tests {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ];
 
-        assert!(vec_vec_eq(three_sum(input), vec![vec![0, 0, 0]]));
+        assert!(vec_eq(three_sum(input), vec![vec![0, 0, 0]]));
     }
 }
