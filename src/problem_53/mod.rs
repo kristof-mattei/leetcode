@@ -1,11 +1,11 @@
 use crate::shared::Solution;
 
 fn max_crossing_sum(nums: &[i32]) -> i32 {
-    let len_d_2 = nums.len() / 2;
+    let middle = nums.len() / 2;
 
     let sum_left = nums
         .iter()
-        .take(len_d_2)
+        .take(middle)
         .rev()
         .fold((0, i32::MIN), |(acc, max), &cur| {
             let sum = acc + cur;
@@ -15,7 +15,7 @@ fn max_crossing_sum(nums: &[i32]) -> i32 {
 
     let sum_right = nums
         .iter()
-        .skip(len_d_2)
+        .skip(middle)
         .fold((0, i32::MIN), |(acc, max), &cur| {
             let sum = acc + cur;
             (sum, (sum).max(max))
