@@ -26,7 +26,7 @@ pub fn to_ll(input: &[i32]) -> Option<Box<ListNode>> {
 }
 
 #[must_use]
-pub fn vec_vec_eq<T>(left: Vec<T>, mut right: Vec<T>) -> bool
+pub fn vec_eq<T>(left: Vec<T>, mut right: Vec<T>) -> bool
 where
     T: std::cmp::Eq,
 {
