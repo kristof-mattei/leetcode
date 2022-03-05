@@ -86,7 +86,7 @@ fn solve_n_queens_r(
     results
 }
 
-fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
+pub(crate) fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
     if n == 2 || n == 3 {
         return vec![];
     }
