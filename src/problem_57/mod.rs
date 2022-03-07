@@ -100,6 +100,7 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
+    use crate::problem_57::insert;
 
     #[test]
     fn test_1() {
@@ -123,24 +124,4 @@ mod tests {
 
         assert_eq!(result, [[1, 2], [3, 10], [12, 16]]);
     }
-
-    // #[test]
-    // fn test_3() {
-    //     let mut result = insert(&[vec![1,3],vec![6,9]], &[2,5]);
-    //     result.sort_unstable();
-
-    //     assert_eq!(result, [[1,5],[6,9]]);
-
-    // }
-
-    // #[test]
-    // fn test_4() {
-    //     let mut result = insert(&[vec![1,3],vec![6,9]], &[2,5]);
-    //     result.sort_unstable();
-
-    //     assert_eq!(result, [[1,5],[6,9]]);
-
-    // }
-
-    use crate::problem_57::insert;
 }

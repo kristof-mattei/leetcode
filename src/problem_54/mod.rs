@@ -1,63 +1,69 @@
-use std::vec::Vec;
+use std::{ops::Neg, vec::Vec};
 
 use crate::shared::Solution;
 
+#[derive(Clone, Copy)]
+enum Direction {
+    Decrease,
+    Standstill,
+    Increase,
+}
+
+impl std::ops::Add<Direction> for usize {
+    type Output = usize;
+
+    fn add(self, rhs: Direction) -> Self::Output {
+        match rhs {
+            Direction::Decrease => self.wrapping_sub(1),
+            Direction::Standstill => self,
+            Direction::Increase => self + 1,
+        }
+    }
+}
+
+impl std::ops::AddAssign<Direction> for usize {
+    fn add_assign(&mut self, rhs: Direction) {
+        *self = *self + rhs;
+    }
+}
+
+impl Neg for Direction {
+    type Output = Direction;
+
+    fn neg(self) -> Self::Output {
+        match self {
+            Direction::Decrease => Direction::Increase,
+            Direction::Standstill => Direction::Standstill,
+            Direction::Increase => Direction::Decrease,
+        }
+    }
+}
+
 fn spiral_order(matrix: &[Vec<i32>]) -> Vec<i32> {
+    let height = matrix.len();
+    let width = matrix.get(0).map_or(0, Vec::len);
+    let mut found = vec![vec![false; width]; height];
+
     let mut results = Vec::new();
-    let width = matrix.get(0).map_or(0, Vec::len) - 1;
-    let height = matrix.len() - 1;
-    let mut offset = 0;
 
-    loop {
-        // go right
-        for &v in &matrix[offset][offset..=(width - offset)] {
-            results.push(v);
+    let mut row: usize = 0;
+    let mut col: usize = 0;
+
+    let mut di = Direction::Standstill;
+    let mut dj = Direction::Increase;
+
+    for _ in 0..height * width {
+        results.push(matrix[row][col]);
+        found[row][col] = true;
+
+        // turn 90 degrees
+        if found[(row + di) % height][(col + dj) % width] {
+            std::mem::swap(&mut di, &mut dj);
+            dj = -dj;
         }
 
-        if offset == height - offset {
-            break;
-        }
-
-        // go to bottom
-        for v in matrix[(offset + 1)..=(height - offset)]
-            .iter()
-            .map(|v| v[width - offset])
-        {
-            results.push(v);
-        }
-
-        if offset == width - offset {
-            break;
-        }
-
-        // go left
-        #[allow(clippy::range_minus_one)]
-        for &v in matrix[height - offset][offset..=(width - offset - 1)]
-            .iter()
-            .rev()
-        {
-            results.push(v);
-        }
-
-        if offset == height - offset - 1 {
-            break;
-        }
-
-        // go up
-        #[allow(clippy::range_minus_one)]
-        for v in matrix[(offset + 1)..=(height - offset - 1)]
-            .iter()
-            .map(|v| v[offset])
-            .rev()
-        {
-            results.push(v);
-        }
-
-        if offset == width - offset - 1 {
-            break;
-        }
-
-        offset += 1;
+        row += di;
+        col += dj;
     }
 
     results
