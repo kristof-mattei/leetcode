@@ -1,6 +1,5 @@
 use crate::shared::Solution;
 
-#[allow(dead_code)]
 #[derive(Clone, Copy)]
 enum R {
     Empty,
@@ -11,7 +10,6 @@ enum R {
 }
 
 // alt
-#[allow(dead_code)]
 fn merge_alt(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
     let mut arr = [R::Empty; 10001];
 
@@ -90,47 +88,97 @@ impl Solution {
     pub fn merge(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         merge(intervals)
     }
+
+    #[must_use]
+    #[allow(clippy::needless_pass_by_value)]
+    pub fn merge_alt(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+        merge_alt(intervals)
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::problem_56::merge;
+    use crate::problem_56::{merge, merge_alt};
 
     #[test]
     fn test_1() {
-        let mut result = merge(vec![vec![1, 3], vec![2, 6], vec![8, 10], vec![15, 18]]);
-        result.sort_unstable();
+        let result = merge(vec![vec![1, 3], vec![2, 6], vec![8, 10], vec![15, 18]]);
+
+        assert_eq!(result, [[1, 6], [8, 10], [15, 18]]);
+    }
+
+    #[test]
+    fn test_1_alt() {
+        let result = merge_alt(vec![vec![1, 3], vec![2, 6], vec![8, 10], vec![15, 18]]);
 
         assert_eq!(result, [[1, 6], [8, 10], [15, 18]]);
     }
 
     #[test]
     fn test_2() {
-        let mut result = merge(vec![
+        let result = merge(vec![
             vec![2, 3],
             vec![4, 5],
             vec![6, 7],
             vec![8, 9],
             vec![1, 10],
         ]);
-        result.sort_unstable();
+
+        assert_eq!(result, [[1, 10]]);
+    }
+
+    #[test]
+    fn test_2_alt() {
+        let result = merge_alt(vec![
+            vec![2, 3],
+            vec![4, 5],
+            vec![6, 7],
+            vec![8, 9],
+            vec![1, 10],
+        ]);
 
         assert_eq!(result, [[1, 10]]);
     }
 
     #[test]
     fn test_3() {
-        let mut result = merge(vec![vec![1, 4], vec![0, 0]]);
-        result.sort_unstable();
+        let result = merge(vec![vec![1, 4], vec![0, 0]]);
+
+        assert_eq!(result, [[0, 0], [1, 4]]);
+    }
+
+    #[test]
+    fn test_3_alt() {
+        let result = merge_alt(vec![vec![1, 4], vec![0, 0]]);
 
         assert_eq!(result, [[0, 0], [1, 4]]);
     }
 
     #[test]
     fn test_4() {
-        let mut result = merge(vec![vec![1, 4], vec![4, 5]]);
-        result.sort_unstable();
+        let result = merge(vec![vec![1, 4], vec![4, 5]]);
 
         assert_eq!(result, [[1, 5]]);
+    }
+
+    #[test]
+    fn test_4_alt() {
+        let result = merge_alt(vec![vec![1, 4], vec![4, 5]]);
+
+        assert_eq!(result, [[1, 5]]);
+    }
+
+    #[test]
+    fn test_5() {
+        let result = merge(vec![vec![1, 3], vec![1, 7], vec![4, 5]]);
+
+        assert_eq!(result, [[1, 7]]);
+    }
+
+    #[test]
+    fn test_5_alt() {
+        let result = merge_alt(vec![vec![1, 3], vec![1, 7], vec![4, 5]]);
+
+        assert_eq!(result, [[1, 7]]);
     }
 }
