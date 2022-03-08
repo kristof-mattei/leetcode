@@ -4,17 +4,16 @@ fn permute_r(nums: &mut Vec<i32>) -> Vec<Vec<i32>> {
     let mut results = Vec::new();
     let len = nums.len();
 
-    for i in 0..nums.len() {
-        let v = nums[i];
-        nums.swap_remove(i);
+    for i in 0..len {
+        let v = nums.remove(i);
 
         for mut p in permute_r(nums) {
-            p.push(v);
-            results.push(p);
+            let mut n = vec![v];
+            n.append(&mut p);
+            results.push(n);
         }
 
-        nums.push(v);
-        nums.swap(i, len - 1);
+        nums.insert(i, v);
     }
 
     if results.is_empty() {
@@ -43,8 +42,7 @@ mod tests {
     fn test_1() {
         let input = [1, 2, 3];
 
-        let mut result = permute(input.to_vec());
-        result.sort_unstable();
+        let result = permute(input.to_vec());
 
         assert_eq!(
             result,
@@ -63,8 +61,7 @@ mod tests {
     fn test_2() {
         let input = [1, 2, 3, 4];
 
-        let mut result = permute(input.to_vec());
-        result.sort_unstable();
+        let result = permute(input.to_vec());
 
         assert_eq!(
             result,
