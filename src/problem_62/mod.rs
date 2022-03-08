@@ -4,7 +4,8 @@ use crate::shared::Solution;
 
 fn memoize(
     cache: &mut HashMap<(usize, usize), usize>,
-    matrix: &[Vec<i32>],
+    m: usize,
+    n: usize,
     lr: usize,
     lc: usize,
 ) -> usize {
@@ -14,81 +15,69 @@ fn memoize(
         return cache[&key];
     }
 
-    let r = unique_paths_with_obstacles_r(cache, matrix, lr, lc);
+    let r = unique_paths_r(cache, m, n, lr, lc);
 
     cache.insert(key, r);
 
     r
 }
 
-fn unique_paths_with_obstacles_r(
+fn unique_paths_r(
     cache: &mut HashMap<(usize, usize), usize>,
-    matrix: &[Vec<i32>],
+    m: usize,
+    n: usize,
     lr: usize,
     lc: usize,
 ) -> usize {
-    let max_row = matrix.len() - 1;
-    let max_col = matrix.get(0).map_or(0, |r| r.len() - 1);
-
-    if matrix.get(lr).and_then(|r| r.get(lc)).unwrap_or(&1) == &1 {
-        return 0; // invalid
-    }
-
-    if lr == max_row && lc == max_col {
+    if lr == m && lc == n {
         return 1; // done
     }
 
     let mut result = 0;
 
-    let possibility = memoize(cache, matrix, lr + 1, lc);
+    if lr < m {
+        let possibility = memoize(cache, m, n, lr + 1, lc);
 
-    result += possibility;
+        result += possibility;
+    }
 
-    let possibility = memoize(cache, matrix, lr, lc + 1);
+    if lc < n {
+        let possibility = memoize(cache, m, n, lr, lc + 1);
 
-    result += possibility;
+        result += possibility;
+    }
 
     result
 }
-
-fn unique_paths_with_obstacles(obstacle_grid: &[Vec<i32>]) -> i32 {
-    let r = unique_paths_with_obstacles_r(&mut HashMap::new(), obstacle_grid, 0, 0);
+fn unique_paths(m: usize, n: usize) -> i32 {
+    let r = unique_paths_r(&mut HashMap::new(), m - 1, n - 1, 0, 0);
 
     r as i32
 }
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
-    pub fn unique_paths_with_obstacles(obstacle_grid: Vec<Vec<i32>>) -> i32 {
-        unique_paths_with_obstacles(&obstacle_grid)
+    pub fn unique_paths(m: i32, n: i32) -> i32 {
+        unique_paths(m as usize, n as usize)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::problem_62::unique_paths_with_obstacles;
+    use crate::problem_62::unique_paths;
 
     #[test]
     fn test_1() {
-        assert_eq!(
-            unique_paths_with_obstacles(&[vec![0, 0, 0], vec![0, 1, 0], vec![0, 0, 0]]),
-            2
-        );
+        assert_eq!(unique_paths(3, 2), 3);
     }
 
     #[test]
     fn test_2() {
-        assert_eq!(unique_paths_with_obstacles(&[vec![0, 1], vec![0, 0]]), 1);
+        assert_eq!(unique_paths(3, 7), 28);
     }
 
     #[test]
     fn test_3() {
-        assert_eq!(unique_paths_with_obstacles(&[vec![1]]), 0);
-    }
-
-    #[test]
-    fn test_4() {
-        assert_eq!(unique_paths_with_obstacles(&[vec![1, 0]]), 0);
+        assert_eq!(unique_paths(23, 12), 193_536_720);
     }
 }

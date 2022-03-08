@@ -1,108 +1,60 @@
-use std::collections::HashMap;
+use crate::shared::{ListNode, Solution};
 
-use crate::shared::Solution;
+fn get_last_n(
+    head: &mut Option<Box<ListNode>>,
+    rotate_places: usize,
+    depth_counter: usize,
+) -> (Option<Box<ListNode>>, usize, usize) {
+    match head {
+        Some(n) => {
+            let (r, depth, max_depth) = get_last_n(&mut n.next, rotate_places, depth_counter + 1);
 
-// fn unique_paths_r(cache: &mut Vec<Vec<usize>>, m: usize, n: usize) -> usize {
-//     if m == 0 || n == 0 {
-//         return 1;
-//     }
-
-//     if cache[n][m] > 0 {
-//         return cache[n][m];
-//     }
-
-//     let next_m = if m > 0 {
-//         unique_paths_r(cache, m - 1, n)
-//     } else {
-//         0
-//     };
-
-//     let next_n = if n > 0 {
-//         unique_paths_r(cache, m, n - 1)
-//     } else {
-//         0
-//     };
-
-//     cache[n][m] = next_m + next_n;
-//     cache[n][m]
-// }
-
-fn memoize(
-    cache: &mut HashMap<(usize, usize), usize>,
-    m: usize,
-    n: usize,
-    lr: usize,
-    lc: usize,
-) -> usize {
-    let key = (lr, lc);
-
-    if cache.contains_key(&key) {
-        return cache[&key];
+            if (rotate_places % max_depth) == depth {
+                let to_return = n.next.take();
+                (to_return, depth + 1, max_depth)
+            } else {
+                (r, depth + 1, max_depth)
+            }
+        },
+        None => (None, 0, depth_counter),
     }
-
-    let r = unique_paths_r(cache, m, n, lr, lc);
-
-    cache.insert(key, r);
-
-    r
 }
 
-fn unique_paths_r(
-    cache: &mut HashMap<(usize, usize), usize>,
-    m: usize,
-    n: usize,
-    lr: usize,
-    lc: usize,
-) -> usize {
-    if lr == m && lc == n {
-        return 1; // done
+fn re_attach(
+    new_head: Option<Box<ListNode>>,
+    head: Option<Box<ListNode>>,
+) -> Option<Box<ListNode>> {
+    match new_head {
+        Some(mut n) => {
+            n.next = re_attach(n.next, head);
+            Some(n)
+        },
+        None => head,
     }
-
-    let mut result = 0;
-
-    if lr < m {
-        let possibility = memoize(cache, m, n, lr + 1, lc);
-
-        result += possibility;
-    }
-
-    if lc < n {
-        let possibility = memoize(cache, m, n, lr, lc + 1);
-
-        result += possibility;
-    }
-
-    result
 }
-fn unique_paths(m: usize, n: usize) -> i32 {
-    let r = unique_paths_r(&mut HashMap::new(), m - 1, n - 1, 0, 0);
 
-    r as i32
+fn rotate_right(mut head: Option<Box<ListNode>>, k: usize) -> Option<Box<ListNode>> {
+    let (new_head, ..) = get_last_n(&mut head, k, 0);
+
+    re_attach(new_head, head)
 }
 
 impl Solution {
     #[must_use]
-    pub fn unique_paths(m: i32, n: i32) -> i32 {
-        unique_paths(m as usize, n as usize)
+    pub fn rotate_right(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
+        rotate_right(head, k as usize)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::problem_61::unique_paths;
+    use crate::{problem_61::rotate_right, shared::to_ll};
 
     #[test]
     fn test_1() {
-        assert_eq!(unique_paths(3, 2), 3);
-    }
-
-    #[test]
-    fn test_2() {
-        assert_eq!(unique_paths(3, 7), 28);
-    }
-
-    #[test]
-    fn test_3() {
-        assert_eq!(unique_paths(23, 12), 193_536_720);
+        assert_eq!(
+            rotate_right(to_ll(&[1, 2, 3, 4, 5]), 2),
+            to_ll(&[4, 5, 1, 2, 3])
+        );
     }
 }

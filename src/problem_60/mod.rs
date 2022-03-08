@@ -1,60 +1,60 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::Solution;
 
-fn get_last_n(
-    head: &mut Option<Box<ListNode>>,
-    rotate_places: usize,
-    depth_counter: usize,
-) -> (Option<Box<ListNode>>, usize, usize) {
-    match head {
-        Some(n) => {
-            let (r, depth, max_depth) = get_last_n(&mut n.next, rotate_places, depth_counter + 1);
+fn get_permutation(n: usize, k: usize) -> String {
+    assert!((1..=9).contains(&n));
+    assert!((1..=factorial(n)).contains(&k));
 
-            if (rotate_places % max_depth) == depth {
-                let to_return = n.next.take();
-                (to_return, depth + 1, max_depth)
-            } else {
-                (r, depth + 1, max_depth)
-            }
-        },
-        None => (None, 0, depth_counter),
+    let mut k = k - 1;
+
+    let mut start_permutation = (1..=n as u8)
+        .into_iter()
+        .map(|v| (v + b'0'))
+        .collect::<Vec<_>>();
+
+    let mut permutation = String::new();
+    for i in (0..n).rev() {
+        let f = factorial(i);
+
+        permutation.push(start_permutation.remove(k / f) as char);
+
+        k %= f;
     }
+
+    permutation
 }
 
-fn re_attach(
-    new_head: Option<Box<ListNode>>,
-    head: Option<Box<ListNode>>,
-) -> Option<Box<ListNode>> {
-    match new_head {
-        Some(mut n) => {
-            n.next = re_attach(n.next, head);
-            Some(n)
-        },
-        None => head,
-    }
-}
-
-fn rotate_right(mut head: Option<Box<ListNode>>, k: usize) -> Option<Box<ListNode>> {
-    let (new_head, ..) = get_last_n(&mut head, k, 0);
-
-    re_attach(new_head, head)
+fn factorial(n: usize) -> usize {
+    (1..=n).product()
 }
 
 impl Solution {
     #[must_use]
-    pub fn rotate_right(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
-        rotate_right(head, k as usize)
+    pub fn get_permutation(n: i32, k: i32) -> String {
+        get_permutation(n as usize, k as usize)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_60::rotate_right, shared::to_ll};
+    use crate::problem_60::get_permutation;
 
     #[test]
     fn test_1() {
-        assert_eq!(
-            rotate_right(to_ll(&[1, 2, 3, 4, 5]), 2),
-            to_ll(&[4, 5, 1, 2, 3])
-        );
+        assert_eq!(get_permutation(3, 3), "213");
+    }
+
+    #[test]
+    fn test_2() {
+        assert_eq!(get_permutation(4, 9), "2314");
+    }
+
+    #[test]
+    fn test_3() {
+        assert_eq!(get_permutation(3, 1), "123");
+    }
+
+    #[test]
+    fn test_4() {
+        assert_eq!(get_permutation(9, 100), "123495786");
     }
 }
