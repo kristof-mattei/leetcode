@@ -250,7 +250,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload test results
-        uses: EnricoMi/publish-unit-test-result-action@d512bc689c979e673baaa5ad7b437ef1b6271eb8
+        uses: EnricoMi/publish-unit-test-result-action@4a00ba50806e7658e5005bb91acdb3274714595a
         with:
           check_name: Test results
           github_token: ${{ secrets.GITHUB_TOKEN }}
