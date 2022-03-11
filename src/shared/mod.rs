@@ -1,9 +1,21 @@
 pub struct Solution {}
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Eq)]
 pub struct ListNode {
     pub val: i32,
     pub next: Option<Box<ListNode>>,
+}
+
+impl std::fmt::Debug for ListNode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.val)?;
+
+        if let Some(n) = &self.next {
+            write!(f, ",{:?}", n)?;
+        }
+
+        Ok(())
+    }
 }
 
 // impl ListNode {
