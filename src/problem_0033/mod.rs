@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 use crate::shared::Solution;
 
 fn search(nums: &[i32], target: i32) -> i32 {
@@ -12,26 +14,30 @@ fn search(nums: &[i32], target: i32) -> i32 {
         }
 
         // if our middle > the end
-        if nums[middle] > nums[end - 1] {
-            // if our target is below the middle
-            // AND larger than the beginning
-            if target < nums[middle] && target >= nums[offset] {
-                // then we search again, between offset and middle
-                end = middle;
-            } else {
-                // our target is on the right side of middle, narrow down there
-                offset = middle + 1;
-            }
-        } else {
-            // our middle is less than the end
-            // if our target sits on the right side of middle
-            if target > nums[middle] && target <= nums[end - 1] {
-                // we narrow down the scope
-                offset = middle + 1;
-            } else {
-                // we look in offset..middle
-                end = middle;
-            }
+        match nums[middle].cmp(&nums[end - 1]) {
+            Ordering::Greater => {
+                // if our target is below the middle
+                // AND larger than the beginning
+                if target >= nums[offset] && target < nums[middle] {
+                    // then we search again, between offset and middle
+                    end = middle;
+                } else {
+                    // our target is on the right side of middle, narrow down there
+                    offset = middle + 1;
+                }
+            },
+            Ordering::Less => {
+                // our middle is less than the end
+                // if our target sits on the right side of middle
+                if target > nums[middle] && target <= nums[end - 1] {
+                    // we narrow down the scope
+                    offset = middle + 1;
+                } else {
+                    // we look in offset..middle
+                    end = middle;
+                }
+            },
+            Ordering::Equal => unreachable!(),
         }
     }
     -1
