@@ -1,13 +1,5 @@
 use crate::shared::Solution;
 
-impl Solution {
-    #[allow(clippy::needless_pass_by_value)]
-    #[must_use]
-    pub fn max_area(height: Vec<i32>) -> i32 {
-        max_area(&height)
-    }
-}
-
 fn max_area(height: &[i32]) -> i32 {
     let mut left = 0;
     let mut right = height.len() - 1;
@@ -30,6 +22,14 @@ fn max_area(height: &[i32]) -> i32 {
     }
 
     max_water
+}
+
+impl Solution {
+    #[must_use]
+    #[allow(clippy::needless_pass_by_value)]
+    pub fn max_area(height: Vec<i32>) -> i32 {
+        max_area(&height)
+    }
 }
 
 #[cfg(test)]
