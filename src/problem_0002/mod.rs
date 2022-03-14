@@ -1,16 +1,15 @@
 use crate::shared::{ListNode, Solution};
 
 fn add_two_numbers(
-    l1: Option<Box<ListNode>>,
+    mut l1: Option<Box<ListNode>>,
     mut l2: Option<Box<ListNode>>,
 ) -> Option<Box<ListNode>> {
     let mut carry = 0;
 
-    let mut head = l1;
-    let mut l1 = &mut head;
+    let mut l1_ref = &mut l1;
 
-    while !(l1.is_none() && l2.is_none() && carry == 0) {
-        let val1 = l1.as_ref().map_or(0, |l| l.val);
+    while !(l1_ref.is_none() && l2.is_none() && carry == 0) {
+        let val1 = l1_ref.as_ref().map_or(0, |l| l.val);
         let val2 = l2.as_ref().map_or(0, |l| l.val);
 
         let val = carry + val1 + val2;
@@ -19,18 +18,14 @@ fn add_two_numbers(
 
         carry = val / 10;
 
-        let n = if let Some(n) = l1 {
-            n.val = r;
-            n
-        } else {
-            l1.insert(Box::new(ListNode { val: r, next: None }))
-        };
+        let n = l1_ref.get_or_insert(Box::new(ListNode { val: r, next: None }));
+        n.val = r;
 
-        l1 = &mut n.next;
+        l1_ref = &mut n.next;
         l2 = l2.and_then(|l| l.next);
     }
 
-    head
+    l1
 }
 
 impl Solution {

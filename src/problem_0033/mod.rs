@@ -26,7 +26,7 @@ fn search(nums: &[i32], target: i32) -> i32 {
                     offset = middle + 1;
                 }
             },
-            Ordering::Less => {
+            Ordering::Less | Ordering::Equal => {
                 // our middle is less than the end
                 // if our target sits on the right side of middle
                 if target > nums[middle] && target <= nums[end - 1] {
@@ -37,7 +37,6 @@ fn search(nums: &[i32], target: i32) -> i32 {
                     end = middle;
                 }
             },
-            Ordering::Equal => unreachable!(),
         }
     }
     -1
