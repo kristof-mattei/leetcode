@@ -1,33 +1,29 @@
 use crate::shared::{ListNode, Solution};
 
 fn reverse_between(
-    head: Option<Box<ListNode>>,
+    mut current: Option<Box<ListNode>>,
     left: usize,
     right: usize,
 ) -> Option<Box<ListNode>> {
-    if left == right || head.as_ref().unwrap().next.is_none() {
-        return head;
+    if left == right || current.as_ref().unwrap().next.is_none() {
+        return current;
     }
 
     let mut previous = None;
-
-    let mut processor = head;
 
     let mut index = 1;
 
     let mut section1 = None;
     let mut section3 = None;
 
-    while processor.as_ref().is_some() {
-        let mut node = processor.unwrap();
-
-        processor = node.next.take();
+    while let Some(mut node) = current {
+        current = node.next.take();
 
         if index == left {
             node.next = None;
             section1 = previous;
         } else if index == right {
-            section3 = processor.take();
+            section3 = current.take();
             node.next = previous;
         } else {
             node.next = previous;
@@ -40,39 +36,35 @@ fn reverse_between(
     if section3.is_none() && section1.is_none() {
         previous
     } else if section1.is_none() {
-        let mut reversed_section2 = previous;
+        let mut connector = &mut previous;
 
-        let mut connector = reversed_section2.as_mut().unwrap();
-
-        while connector.next.is_some() {
-            connector = connector.next.as_mut().unwrap();
+        while let Some(c) = connector {
+            connector = &mut c.next;
         }
-        connector.next = section3;
 
-        reversed_section2
+        *connector = section3;
+
+        previous
     } else {
         let mut orig_section1 = None;
 
-        while section1.is_some() {
-            let mut node = section1.unwrap();
+        while let Some(mut node) = section1 {
             section1 = node.next.take();
             node.next = orig_section1;
             orig_section1 = Some(node);
         }
 
-        let mut connector = orig_section1.as_mut().unwrap();
-
-        while connector.next.is_some() {
-            connector = connector.next.as_mut().unwrap();
+        let mut connector = &mut orig_section1;
+        while let Some(c) = connector {
+            connector = &mut c.next;
         }
 
-        connector.next = previous;
+        *connector = previous;
 
-        while connector.next.is_some() {
-            connector = connector.next.as_mut().unwrap();
+        while let Some(c) = connector {
+            connector = &mut c.next;
         }
-
-        connector.next = section3;
+        *connector = section3;
 
         orig_section1
     }
