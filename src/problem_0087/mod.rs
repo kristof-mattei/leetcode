@@ -25,7 +25,10 @@ fn permute_m<'a, 'b>(
     r
 }
 
-fn count_elements<'a, 'b>(cache: &'a mut SliceCharCountCache<'b>, slice: &'b [L]) -> Rc<HashMap<L, usize>> {
+fn count_elements<'a, 'b>(
+    cache: &'a mut SliceCharCountCache<'b>,
+    slice: &'b [L],
+) -> Rc<HashMap<L, usize>> {
     if cache.contains_key(slice) {
         return Rc::clone(&cache[slice]);
     }
