@@ -1,6 +1,6 @@
 use crate::shared::Solution;
 
-fn restore_ip_addresses(s: &str) -> Vec<String> {
+fn restore_ip_addresses(_s: &str) -> Vec<String> {
     // see 91
     vec![]
 }
