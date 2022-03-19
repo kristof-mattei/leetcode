@@ -43,7 +43,10 @@ impl Solution {
 mod tests {
     use std::collections::HashSet;
 
-    use crate::{problem_0095::generate_trees, shared::from_bt};
+    use crate::{
+        problem_0095::generate_trees,
+        shared::{from_bt, vec_eq},
+    };
 
     #[test]
     fn test_1() {
@@ -64,6 +67,6 @@ mod tests {
             .into_iter()
             .collect::<Vec<_>>();
 
-        assert_eq!(easy_list, expected);
+        assert!(vec_eq(easy_list, expected));
     }
 }
