@@ -10,9 +10,7 @@ fn inorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
     let mut results = vec![];
     let mut queue = Vec::from_iter([root]);
 
-    while !queue.is_empty() {
-        let current = queue.pop().unwrap().unwrap();
-
+    while let Some(current) = queue.pop().flatten() {
         let left = current.borrow_mut().left.take();
         if left.is_some() {
             queue.push(Some(current));

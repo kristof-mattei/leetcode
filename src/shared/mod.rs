@@ -47,14 +47,14 @@ use std::{cell::RefCell, collections::VecDeque, option::Option, rc::Rc};
 
 #[must_use]
 pub fn to_ll(input: &[i32]) -> Option<Box<ListNode>> {
-    if input.is_empty() {
-        return None;
+    if let [head, rest @ ..] = input {
+        Some(Box::new(ListNode {
+            val: *head,
+            next: to_ll(rest),
+        }))
+    } else {
+        None
     }
-
-    Some(Box::new(ListNode {
-        val: input[0],
-        next: to_ll(&input[1..]),
-    }))
 }
 
 #[must_use]
@@ -113,9 +113,7 @@ pub fn to_bt(input: &[Option<i32>]) -> Option<Rc<RefCell<TreeNode>>> {
     let mut index = 1;
     let mut queue = VecDeque::from_iter([root.clone()]);
 
-    while !queue.is_empty() && index < input.len() {
-        let current = queue.pop_front().unwrap().unwrap();
-
+    while let Some(current) = queue.pop_front().flatten() {
         if index < input.len() {
             let item = input.get(index).and_then(Option::as_ref);
             index += 1;
