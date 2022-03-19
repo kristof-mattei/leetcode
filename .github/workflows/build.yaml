@@ -452,8 +452,16 @@ jobs:
       - cargo-test-and-report
       - docker-build
       - docker-publish
-    if: ${{ !failure() && !cancelled() }}
+    if: ${{ always() }}
     steps:
+      - name: Fail!
+        shell: bash
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        run: |
+          echo "One / more upstream failed or was cancelled. Failing job..."
+
+          exit 1
+
       - name: Success!
         shell: bash
         run: |
