@@ -1,3 +1,4 @@
+ignore_merge_commits = true
 tag_prefix = "v"
 
 pre_bump_hooks = [
