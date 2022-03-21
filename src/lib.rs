@@ -112,5 +112,5 @@ pub mod problem_0169;
 pub mod problem_0316;
 pub mod problem_0747;
 pub mod problem_0895;
-pub mod problem_1705;
 pub mod problem_1007;
+pub mod problem_1705;
