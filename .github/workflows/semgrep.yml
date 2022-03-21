@@ -42,7 +42,7 @@ jobs:
 
       # Upload SARIF file generated in previous step
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@21c48e7a01c38ddfa489aa2d1f22829f40325298
+        uses: github/codeql-action/upload-sarif@883476649888a9e8e219d5b2e6b789dc024f690c
         with:
           sarif_file: semgrep.sarif
         if: always()
