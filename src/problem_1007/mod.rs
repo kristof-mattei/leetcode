@@ -29,6 +29,8 @@ fn min_domino_rotations(tops: &[i32], bottoms: &[i32]) -> i32 {
 }
 
 impl Solution {
+    #[must_use]
+    #[allow(clippy::needless_pass_by_value)]
     pub fn min_domino_rotations(tops: Vec<i32>, bottoms: Vec<i32>) -> i32 {
         min_domino_rotations(&tops, &bottoms)
     }
