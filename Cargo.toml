@@ -1,5 +1,5 @@
 [package]
-name = "leet-code"
+name = "leetcode"
 # don't change this, it's updated before an actual build by update-version.sh
 version = "0.0.0-development"
 edition = "2021"
@@ -7,7 +7,7 @@ rust-version = "1.59.0"
 authors = ["Kristof Mattei"]
 license-file = "LICENSE"
 description = "Leet Code"
-repository = "https://github.com/kristof-mattei/leet-code"
+repository = "https://github.com/kristof-mattei/leetcode"
 keywords = ["playground"]
 categories = ["playground"]
 

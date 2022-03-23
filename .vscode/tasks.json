@@ -8,7 +8,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "rust: cargo check"
+			"label": "Rust: cargo check"
 		},
 		{
 			"type": "cargo",
@@ -17,7 +17,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "rust: cargo clean"
+			"label": "Rust: cargo clean"
 		},
 		{
 			"type": "cargo",
@@ -29,7 +29,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "rust: cargo build"
+			"label": "Rust: cargo build"
 		},
 		{
 			"type": "cargo",
@@ -43,7 +43,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "rust: cargo fmt"
+			"label": "Rust: cargo fmt"
 		},
 		{
 			"type": "cargo",
@@ -64,7 +64,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "rust: cargo clippy"
+			"label": "Rust: cargo clippy"
 		},
 		{
 			"type": "cargo",
@@ -74,7 +74,7 @@
 				"$rustc"
 			],
 			"group": "test",
-			"label": "rust: cargo test"
+			"label": "Rust: cargo test"
 		}
 	]
 }
