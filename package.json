@@ -1,5 +1,5 @@
 {
-  "name": "leet-code",
+  "name": "leetcode",
   "version": "0.0.0-development",
   "description": "It's written in Rust!",
   "main": "src/main.rs",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kristof-mattei/leet-code.git"
+    "url": "https://github.com/kristof-mattei/leetcode.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kristof-mattei/leet-code/issues"
+    "url": "https://github.com/kristof-mattei/leetcode/issues"
   },
-  "homepage": "https://github.com/kristof-mattei/leet-code#readme",
+  "homepage": "https://github.com/kristof-mattei/leetcode#readme",
   "devDependencies": {
     "prettier": "^2.6.0"
   },
