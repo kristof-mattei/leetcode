@@ -18,7 +18,7 @@ fn add_two_numbers(
 
         carry = val / 10;
 
-        let n = l1_ref.get_or_insert(Box::new(ListNode { val: r, next: None }));
+        let n = l1_ref.get_or_insert(Box::new(ListNode::new(r)));
         n.val = r;
 
         l1_ref = &mut n.next;

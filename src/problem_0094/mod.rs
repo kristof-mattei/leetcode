@@ -72,4 +72,34 @@ mod tests {
 
         assert_eq!(inorder_traversal(t), expected);
     }
+
+    #[test]
+    fn test_4() {
+        let input = [1.into(), 2.into(), None, None, 3.into()];
+        let t = to_bt(&input);
+
+        let expected = [2, 3, 1];
+
+        assert_eq!(inorder_traversal(t), expected);
+    }
+
+    #[test]
+    fn test_5() {
+        let input = [2.into(), 1.into(), 3.into(), None, None, None, 4.into()];
+        let t = to_bt(&input);
+
+        let expected = [1, 2, 3, 4];
+
+        assert_eq!(inorder_traversal(t), expected);
+    }
+
+    #[test]
+    fn test_6() {
+        let input = [4.into(), 1.into(), None, None, 3.into(), 2.into()];
+        let t = to_bt(&input);
+
+        let expected = [1, 2, 3, 4];
+
+        assert_eq!(inorder_traversal(t), expected);
+    }
 }
