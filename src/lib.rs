@@ -122,6 +122,7 @@ pub mod problem_0109;
 pub mod problem_0110;
 pub mod problem_0111;
 pub mod problem_0112;
+pub mod problem_0113;
 pub mod problem_0169;
 pub mod problem_0316;
 pub mod problem_0747;
