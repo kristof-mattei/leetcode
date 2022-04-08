@@ -169,8 +169,7 @@ jobs:
       - name: Build with instrumentation support
         shell: bash
         env:
-          RUSTC_BOOTSTRAP: 1
-          RUSTFLAGS: "-Zinstrument-coverage"
+          RUSTFLAGS: "-C instrument-coverage"
         run: |
           cargo build --all-targets --workspace --verbose
 
@@ -178,8 +177,7 @@ jobs:
         shell: bash
         id: tests
         env:
-          RUSTC_BOOTSTRAP: 1
-          RUSTFLAGS: "-Zinstrument-coverage"
+          RUSTFLAGS: "-C instrument-coverage"
           LLVM_PROFILE_FILE: "profiling/profile-%p-%m.profraw"
         run: |
           cargo nextest run --profile ci --no-fail-fast --all-targets --workspace
