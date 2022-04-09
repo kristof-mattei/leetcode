@@ -1,6 +1,6 @@
 use crate::shared::Solution;
 
-fn swap(matrix: &mut Vec<Vec<i32>>, r1c1: (usize, usize), r2c2: (usize, usize)) {
+fn swap(matrix: &mut [Vec<i32>], r1c1: (usize, usize), r2c2: (usize, usize)) {
     match r1c1.0.cmp(&r2c2.0) {
         std::cmp::Ordering::Equal => {
             matrix[r1c1.0].swap(r1c1.1, r2c2.1);
@@ -15,7 +15,7 @@ fn swap(matrix: &mut Vec<Vec<i32>>, r1c1: (usize, usize), r2c2: (usize, usize)) 
 }
 
 fn swap_ord(
-    matrix: &mut Vec<Vec<i32>>,
+    matrix: &mut [Vec<i32>],
     low_row_coordinates: (usize, usize),
     high_row_coordinates: (usize, usize),
 ) {
@@ -26,7 +26,7 @@ fn swap_ord(
     );
 }
 
-fn rotate(matrix: &mut Vec<Vec<i32>>) {
+fn rotate(matrix: &mut [Vec<i32>]) {
     let n = matrix.len();
 
     for x in 0..n / 2 {
@@ -41,6 +41,7 @@ fn rotate(matrix: &mut Vec<Vec<i32>>) {
 }
 
 impl Solution {
+    #[allow(clippy::ptr_arg)]
     pub fn rotate(matrix: &mut Vec<Vec<i32>>) {
         rotate(matrix);
     }

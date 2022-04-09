@@ -79,7 +79,7 @@ where
     true
 }
 
-pub fn sort_vec_of_vec<T>(vec: &mut Vec<Vec<T>>)
+pub fn sort_vec_of_vec<T>(vec: &mut [Vec<T>])
 where
     T: std::cmp::Ord,
 {
@@ -182,13 +182,11 @@ pub fn from_bt(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Option<i32>> {
                 results.push(None);
             },
             Some(current) => {
-                results.push(Some(current.borrow().val));
+                let borrow = current.borrow();
+                results.push(Some(borrow.val));
 
-                let left = current.borrow_mut().left.take();
-                queue.push_back(left);
-
-                let right = current.borrow_mut().right.take();
-                queue.push_back(right);
+                queue.push_back(borrow.left.clone());
+                queue.push_back(borrow.right.clone());
             },
         }
     }
