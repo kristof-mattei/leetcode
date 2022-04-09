@@ -79,7 +79,7 @@ where
     true
 }
 
-pub fn sort_vec_of_vec<T>(vec: &mut Vec<Vec<T>>)
+pub fn sort_vec_of_vec<T>(vec: &mut [Vec<T>])
 where
     T: std::cmp::Ord,
 {
