@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846
 
       - name: Cache dependencies
-        uses: actions/cache@136d96b4aee02b1f0de3ba493b1d47135042d9c0
+        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -92,7 +92,7 @@ jobs:
         uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846
 
       - name: Cache dependencies
-        uses: actions/cache@136d96b4aee02b1f0de3ba493b1d47135042d9c0
+        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -130,7 +130,7 @@ jobs:
         uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846
 
       - name: Cache dependencies
-        uses: actions/cache@136d96b4aee02b1f0de3ba493b1d47135042d9c0
+        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -169,8 +169,7 @@ jobs:
       - name: Build with instrumentation support
         shell: bash
         env:
-          RUSTC_BOOTSTRAP: 1
-          RUSTFLAGS: "-Zinstrument-coverage"
+          RUSTFLAGS: "-C instrument-coverage"
         run: |
           cargo build --all-targets --workspace --verbose
 
@@ -178,15 +177,14 @@ jobs:
         shell: bash
         id: tests
         env:
-          RUSTC_BOOTSTRAP: 1
-          RUSTFLAGS: "-Zinstrument-coverage"
+          RUSTFLAGS: "-C instrument-coverage"
           LLVM_PROFILE_FILE: "profiling/profile-%p-%m.profraw"
         run: |
           cargo nextest run --profile ci --no-fail-fast --all-targets --workspace
         continue-on-error: true
 
       - name: Upload test results
-        uses: EnricoMi/publish-unit-test-result-action@4a00ba50806e7658e5005bb91acdb3274714595a
+        uses: EnricoMi/publish-unit-test-result-action@0c8c54b3a1700e3d97e2efc1ccd68316af0eb6f6
         with:
           check_name: Test results
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -249,7 +247,7 @@ jobs:
         uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846
 
       - name: Cache dependencies
-        uses: actions/cache@136d96b4aee02b1f0de3ba493b1d47135042d9c0
+        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
