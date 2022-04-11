@@ -1,34 +1,31 @@
+use std::cmp;
+
 use crate::shared::Solution;
 
-// fn is_higher(ratings: &[i32], index: usize) -> bool {
-//     if index + 1 == ratings.len() {
-//         return ratings[index - 1] < ratings[index];
-//     }
-
-//     if index == 0 {
-//         return ratings[index] > ratings[index + 1];
-//     }
-
-//     return ratings[index - 1] < ratings[index] || ratings[index] > ratings[index + 1];
-// }
-
 fn candy(ratings: &[i32]) -> i32 {
-    // let result = vec![1; ratings.len()];
+    let length = ratings.len();
 
-    // let mut change_made = true;
+    let mut counts = vec![1; length];
 
-    // while change_made {
-    //     change_made = false;
+    for i in 1..length {
+        if ratings[i] > ratings[i - 1] {
+            counts[i] = counts[i - 1] + 1;
+        }
+    }
 
-    //     for i in 0..ratings.len() {
-    //         if is_higher(ratings, i) {
-    //             change_made = true;
-    //             bump_result_until_higher(&mut result, i);
-    //         }
-    //     }
-    // }
+    let mut sum = counts[length - 1];
 
-    0
+    for i in (0..length - 1).rev() {
+        counts[i] = if ratings[i] > ratings[i + 1] {
+            cmp::max(counts[i + 1] + 1, counts[i])
+        } else {
+            counts[i]
+        };
+
+        sum += counts[i];
+    }
+
+    sum
 }
 
 impl Solution {
@@ -55,6 +52,11 @@ mod tests {
 
     #[test]
     fn test_3() {
-        // assert_eq!(candy(&[1, 2, 3, 4, 5]), 5);
+        assert_eq!(candy(&[1, 2, 87, 87, 87, 2, 1]), 13);
+    }
+
+    #[test]
+    fn test_4() {
+        assert_eq!(candy(&[0]), 1);
     }
 }
