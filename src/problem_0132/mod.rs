@@ -1,61 +1,33 @@
-use std::collections::HashMap;
-
 use crate::shared::Solution;
 
-fn is_palindrome(chars: &[char]) -> bool {
-    match chars {
-        [] | [_] => true,
-        [..] => {
-            let mut start = 0;
+fn min_cut(s: &[u8]) -> i32 {
+    let len = s.len();
+    let mut dp = (0..=len).collect::<Vec<_>>();
 
-            let mut end = chars.len() - 1;
-
-            while start < end {
-                if chars[start] == chars[end] {
-                    start += 1;
-                    end -= 1;
-                    continue;
-                }
-
-                return false;
-            }
-
-            true
-        },
-    }
-}
-
-fn split_up<'a>(cache: &mut HashMap<&'a [char], usize>, chars: &'a [char]) -> usize {
-    if is_palindrome(chars) {
-        return 0;
-    }
-
-    for i in (1..chars.len()).rev() {
-        let (l, r) = chars.split_at(i);
-
-        if !is_palindrome(l) {
-            continue;
+    for i in 0..len {
+        for (l, r) in (0..=(usize::min(i, len - i - 1)))
+            .map(|j| (i - j, i + j))
+            .take_while(|&(l, r)| s[l] == s[r])
+        {
+            dp[r + 1] = usize::min(dp[r + 1], dp[l] + 1);
         }
 
-        return 1 + split_up(cache, r);
+        for (l, r) in (0..(usize::min(i + 1, len - i - 1)))
+            .map(|j| (i - j, i + 1 + j))
+            .take_while(|&(l, r)| s[l] == s[r])
+        {
+            dp[r + 1] = usize::min(dp[r + 1], dp[l] + 1);
+        }
     }
 
-    unreachable!()
-}
-
-fn min_cut(s: &str) -> i32 {
-    let chars = s.chars().collect::<Vec<_>>();
-
-    let r = split_up(&mut HashMap::new(), &chars);
-
-    r as i32
+    (dp[s.len()] - 1) as i32
 }
 
 impl Solution {
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
     pub fn min_cut(s: String) -> i32 {
-        min_cut(&s)
+        min_cut(s.as_bytes())
     }
 }
 
@@ -66,16 +38,21 @@ mod tests {
 
     #[test]
     fn test_1() {
-        assert_eq!(min_cut("aab"), 1);
+        assert_eq!(min_cut("aab".as_bytes()), 1);
     }
 
     #[test]
     fn test_2() {
-        assert_eq!(min_cut("a"), 0);
+        assert_eq!(min_cut("a".as_bytes()), 0);
     }
 
     #[test]
     fn test_3() {
-        assert_eq!(min_cut("ab"), 1);
+        assert_eq!(min_cut("ab".as_bytes()), 1);
+    }
+
+    #[test]
+    fn test_4() {
+        assert_eq!(min_cut("aaabaa".as_bytes()), 1);
     }
 }

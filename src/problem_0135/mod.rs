@@ -3,19 +3,19 @@ use std::cmp;
 use crate::shared::Solution;
 
 fn candy(ratings: &[i32]) -> i32 {
-    let length = ratings.len();
+    let len = ratings.len();
 
-    let mut counts = vec![1; length];
+    let mut counts = vec![1; len];
 
-    for i in 1..length {
+    for i in 1..len {
         if ratings[i] > ratings[i - 1] {
             counts[i] = counts[i - 1] + 1;
         }
     }
 
-    let mut sum = counts[length - 1];
+    let mut sum: i32 = counts[len - 1];
 
-    for i in (0..length - 1).rev() {
+    for i in (0..len - 1).rev() {
         counts[i] = if ratings[i] > ratings[i + 1] {
             cmp::max(counts[i + 1] + 1, counts[i])
         } else {
