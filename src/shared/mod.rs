@@ -176,8 +176,8 @@ pub fn from_bt(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Option<i32>> {
     let mut results = vec![];
     let mut queue = VecDeque::from_iter([root]);
 
-    while !queue.is_empty() && queue.iter().any(Option::is_some) {
-        match queue.pop_front().unwrap() {
+    while queue.iter().any(Option::is_some) {
+        match queue.pop_front().flatten() {
             None => {
                 results.push(None);
             },
