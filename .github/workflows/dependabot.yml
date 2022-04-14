@@ -17,19 +17,19 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Approve PR
-        if: ${{steps.metadata.outputs.update-type != 'version-update:semver-major'}}
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
         shell: bash
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr review --approve "$PR_URL"
 
       - name: Auto-merge
-        if: ${{steps.metadata.outputs.update-type != 'version-update:semver-major'}}
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
         env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
           gh pr merge --auto --merge "$PR_URL"
