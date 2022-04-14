@@ -22,9 +22,7 @@
 		{
 			"type": "cargo",
 			"command": "build",
-			"args": [
-				"--verbose"
-			],
+			"args": [],
 			"problemMatcher": [
 				"$rustc"
 			],
@@ -36,8 +34,6 @@
 			"command": "fmt",
 			"args": [
 				"--all",
-				"--",
-				"--verbose"
 			],
 			"problemMatcher": [
 				"$rustc"
