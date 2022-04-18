@@ -1,58 +1,29 @@
-use std::fmt::Display;
-
 use crate::shared::Solution;
-enum Sign {
-    Plus,
-    Minus,
-    Multiply,
-    Divide,
-}
-
-fn try_to_sign<T: AsRef<str>>(t: &T) -> Option<Sign> {
-    match t.as_ref() {
-        "+" => Sign::Plus.into(),
-        "-" => Sign::Minus.into(),
-        "*" => Sign::Multiply.into(),
-        "/" => Sign::Divide.into(),
-        _ => None,
-    }
-}
-
-impl Display for Sign {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Sign::Plus => write!(f, "+"),
-            Sign::Minus => write!(f, "-"),
-            Sign::Multiply => write!(f, "*"),
-            Sign::Divide => write!(f, "/"),
-        }
-    }
-}
 
 fn eval_rpn<T>(tokens: &[T]) -> i32
 where
     T: AsRef<str>,
-    // [T]: Copy,
 {
-    let mut i = 0;
+    let mut stack = Vec::with_capacity((tokens.len() + 1) / 2);
 
-    let mut stack = vec![];
-    loop {
-        if let Some(sign) = try_to_sign(&tokens[i]) {
-            // let op1 = String::from_utf8_lossy(tokens[i - 2].as_ref().as_bytes());
-            // let op2 = String::from_utf8_lossy(tokens[i - 1].as_ref().as_bytes());
-
-            // println!("{op1} {sign} {op2}");
-
-            break;
+    for token in tokens {
+        if let Ok(digit) = token.as_ref().parse::<i32>() {
+            stack.push(digit);
         } else {
-            stack.push(tokens[i]);
-        }
+            let second = unsafe { stack.pop().unwrap_unchecked() };
+            let first = unsafe { stack.pop().unwrap_unchecked() };
 
-        i += 1;
+            stack.push(match token.as_ref() {
+                "+" => first + second,
+                "-" => first - second,
+                "*" => first * second,
+                "/" => first / second,
+                _ => unreachable!(),
+            });
+        }
     }
 
-    0
+    stack.pop().unwrap()
 }
 
 impl Solution {
@@ -70,5 +41,10 @@ mod tests {
     #[test]
     fn test_1() {
         assert_eq!(eval_rpn(&["2", "1", "+", "3", "*"]), 9);
+    }
+
+    #[test]
+    fn test_2() {
+        assert_eq!(eval_rpn(&["4", "13", "5", "/", "+"]), 6);
     }
 }
