@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@dcd71f646680f2efd8db4afa5ad64fdcba30e748
+        uses: actions/checkout@0ffe6f9c5599e73776da5b7f113e994bc0a76ede
 
       - name: Setup Node.js
         uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854
