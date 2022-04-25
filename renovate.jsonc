@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "dependencyDashboard": true,
+  "dependencyDashboardAutoclose": true,
+  "extends": [
+    "config:base"
+  ],
+  "packageRules": [
+    {
+      "description": "Automatically merges minor and patch-level updates",
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "Automatically creates a PR whenever there is a new major Renovate version",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false,
+      "prCreation": "immediate"
+    }
+  ],
+  "rangeStrategy": "replace",
+  "rebaseWhen": "behind-base-branch"
+}
