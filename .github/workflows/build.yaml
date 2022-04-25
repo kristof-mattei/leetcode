@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Check if we actually made changes
-        uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721
+        uses: dorny/paths-filter@1ec7035ff53cbd7a98744bd986f6ca1c7e17d1cb
         id: filter
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
