@@ -1,36 +1,23 @@
-use std::collections::HashMap;
-
 use crate::shared::Solution;
 
 fn max_product(nums: &[i32]) -> i32 {
-    max_product_r(&mut HashMap::new(), nums)
-}
+    let mut global_max = nums[0];
 
-fn memoize(cache: &mut HashMap<(usize, usize), i32>, nums: &[i32], i: usize, j: usize) -> i32 {
-    if let Some(&c) = cache.get(&(i, j)) {
-        c
-    } else {
-        let r = nums[i..=j].iter().product();
+    let mut local_min = global_max;
+    let mut local_max = global_max;
 
-        cache.insert((i, j), r);
-        r
-    }
-}
-
-fn max_product_r(cache: &mut HashMap<(usize, usize), i32>, nums: &[i32]) -> i32 {
-    if nums.len() == 1 {
-        return nums[0];
-    }
-
-    let mut max = i32::MIN;
-
-    for i in 0..nums.len() {
-        for j in i..nums.len() {
-            max = max.max(nums[i] * memoize(cache, nums, i + 1, j));
+    for &num in nums.iter().skip(1) {
+        if num.is_negative() {
+            std::mem::swap(&mut local_max, &mut local_min);
         }
+
+        local_max = i32::max(num, local_max * num);
+        local_min = i32::min(num, local_min * num);
+
+        global_max = i32::max(global_max, local_max);
     }
 
-    max
+    global_max
 }
 
 impl Solution {
@@ -681,6 +668,6 @@ mod tests {
             -1, 1, 1, 1, -1, 1, -1, 1, -1, 1, 1, 1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1,
         ];
 
-        assert_eq!(max_product(input), 1);
+        assert_eq!(max_product(input), 1492992000);
     }
 }
