@@ -71,6 +71,18 @@
 			],
 			"group": "test",
 			"label": "Rust: cargo test"
-		}
+		},
+		{
+			"type": "cargo",
+			"command": "test",
+			"args": [
+				"--release"
+			],
+			"problemMatcher": [
+				"$rustc"
+			],
+			"group": "test",
+			"label": "Rust: cargo test release"
+		},
 	]
 }
