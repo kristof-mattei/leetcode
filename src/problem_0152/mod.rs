@@ -668,6 +668,6 @@ mod tests {
             -1, 1, 1, 1, -1, 1, -1, 1, -1, 1, 1, 1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1,
         ];
 
-        assert_eq!(max_product(input), 1492992000);
+        assert_eq!(max_product(input), 1_492_992_000);
     }
 }
