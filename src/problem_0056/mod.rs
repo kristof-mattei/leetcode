@@ -94,7 +94,7 @@ impl Solution {
     }
 }
 
-pub struct Solution {}
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {
