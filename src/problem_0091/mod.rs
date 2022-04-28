@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn num_decodings(s: &str) -> i32 {
     let bytes = s.as_bytes();
 
@@ -32,6 +30,8 @@ impl Solution {
         num_decodings(&s)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

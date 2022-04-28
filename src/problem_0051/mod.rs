@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn can_place(board: &[(usize, usize)], n: usize, row: usize, col: usize) -> bool {
     // is there a queen where we are
     // if board[row][col] {
@@ -117,6 +115,8 @@ impl Solution {
         solve_n_queens(n)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

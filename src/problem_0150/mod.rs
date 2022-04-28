@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn eval_rpn<T>(tokens: &[T]) -> i32
 where
     T: AsRef<str>,
@@ -33,6 +31,8 @@ impl Solution {
         eval_rpn(&tokens)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

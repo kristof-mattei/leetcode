@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn exist_r(board: &mut [Vec<char>], word: &[char], row: usize, col: usize) -> bool {
     if word.is_empty() {
         return true;
@@ -48,6 +46,8 @@ impl Solution {
         exist(board, &word)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

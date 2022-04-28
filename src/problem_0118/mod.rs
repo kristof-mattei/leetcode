@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn generate(num_rows: usize) -> Vec<Vec<i32>> {
     let mut result = vec![vec![1]];
     for i in 1..num_rows {
@@ -22,6 +20,8 @@ impl Solution {
         generate(num_rows as usize)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

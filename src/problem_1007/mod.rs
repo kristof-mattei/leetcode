@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn min_domino_rotations(tops: &[i32], bottoms: &[i32]) -> i32 {
     'outer: for domino in 1..=6 {
         let mut top_count = 0;
@@ -35,6 +33,8 @@ impl Solution {
         min_domino_rotations(&tops, &bottoms)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

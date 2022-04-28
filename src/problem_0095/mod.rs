@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn generate_trees(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
     generate_trees_r(1, n as usize)
@@ -38,6 +38,8 @@ impl Solution {
         generate_trees(n)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

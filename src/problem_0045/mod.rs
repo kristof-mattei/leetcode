@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn jump(nums: &[i32]) -> i32 {
     if nums.len() == 1 {
         return 0;
@@ -41,6 +39,8 @@ impl Solution {
         jump(&nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

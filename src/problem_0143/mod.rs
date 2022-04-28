@@ -1,6 +1,6 @@
 use std::iter;
 
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn reorder_list(mut head: &mut Option<Box<ListNode>>) {
     let length = iter::successors(head.as_ref(), |node| node.next.as_ref()).count();
@@ -41,6 +41,8 @@ impl Solution {
         reorder_list(head);
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

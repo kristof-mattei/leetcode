@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn min_path_sum(grid: &[Vec<i32>]) -> i32 {
     let rows = grid.len();
     let cols = grid[0].len();
@@ -43,6 +41,8 @@ impl Solution {
         min_path_sum(&grid)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

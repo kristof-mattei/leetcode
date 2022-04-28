@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn path_sum_h(
     root: Option<Rc<RefCell<TreeNode>>>,
@@ -39,6 +39,8 @@ impl Solution {
         path_sum(root, target_sum)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

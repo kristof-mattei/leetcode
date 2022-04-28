@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 fn is_palindrome(chars: &[char]) -> bool {
     match chars {
         [] | [_] => true,
@@ -91,10 +89,12 @@ fn partition(s: &str) -> Vec<Vec<String>> {
 impl Solution {
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
-    pub fn partition_0131(s: String) -> Vec<Vec<String>> {
+    pub fn partition(s: String) -> Vec<Vec<String>> {
         partition(&s)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

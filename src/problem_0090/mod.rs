@@ -1,7 +1,5 @@
 use std::collections::HashSet;
 
-use crate::shared::Solution;
-
 fn subsets_with_dup_r(nums: &[i32]) -> Vec<Vec<i32>> {
     if nums.is_empty() {
         return vec![vec![]];
@@ -43,6 +41,8 @@ impl Solution {
         subsets_with_dup(nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

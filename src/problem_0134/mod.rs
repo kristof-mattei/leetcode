@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn can_complete_circuit(gas: &[i32], cost: &[i32]) -> i32 {
     if gas.iter().sum::<i32>() < cost.iter().sum::<i32>() {
         return -1;
@@ -25,6 +23,8 @@ impl Solution {
         can_complete_circuit(&gas, &cost)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

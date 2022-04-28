@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn dominant_index(nums: &[i32]) -> i32 {
     let mut is_largest = true;
     let mut largest = (0, 0);
@@ -28,6 +26,8 @@ impl Solution {
         dominant_index(&nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

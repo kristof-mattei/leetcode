@@ -1,7 +1,5 @@
 use std::{cmp::Reverse, collections::BinaryHeap};
 
-use crate::shared::Solution;
-
 fn eaten_apples(apples: &[i32], days: &[i32]) -> i32 {
     let mut fresh_days_and_apples = BinaryHeap::<(Reverse<usize>, usize)>::new();
 
@@ -64,6 +62,8 @@ impl Solution {
         eaten_apples(&apples, &days)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

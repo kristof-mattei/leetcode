@@ -1,6 +1,6 @@
 use std::ops::Not;
 
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 enum Side {
     Left,
@@ -82,6 +82,8 @@ impl Solution {
         sort_list(head)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

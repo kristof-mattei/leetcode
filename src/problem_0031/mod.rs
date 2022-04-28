@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn next_permutation(nums: &mut [i32]) {
     let mut max_index = 0;
 
@@ -51,6 +49,8 @@ impl Solution {
         next_permutation(nums);
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

@@ -1,6 +1,6 @@
 use std::{cell::RefCell, collections::BTreeMap, rc::Rc};
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn calc(
     inorder_val_to_index: &BTreeMap<i32, usize>,
@@ -52,10 +52,12 @@ fn build_tree(inorder: &[i32], mut postorder: Vec<i32>) -> Option<Rc<RefCell<Tre
 impl Solution {
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
-    pub fn build_tree_2(inorder: Vec<i32>, postorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
+    pub fn build_tree(inorder: Vec<i32>, postorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
         build_tree(&inorder, postorder)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod test {

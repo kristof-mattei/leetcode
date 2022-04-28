@@ -1,4 +1,4 @@
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 use std::{cell::RefCell, rc::Rc};
 
 fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
@@ -46,6 +46,8 @@ impl Solution {
         flatten(root);
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

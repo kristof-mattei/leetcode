@@ -4,7 +4,7 @@ use std::{
     rc::Rc,
 };
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn calc(
     preorder: &mut VecDeque<i32>,
@@ -59,6 +59,8 @@ impl Solution {
         build_tree(preorder, &inorder)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod test {

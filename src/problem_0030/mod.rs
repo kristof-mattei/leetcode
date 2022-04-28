@@ -1,7 +1,5 @@
 use std::{collections::HashMap, string::String, vec::Vec};
 
-use crate::shared::Solution;
-
 fn find_substring(s: &str, words: &[String]) -> Vec<i32> {
     let mut indexes = vec![];
 
@@ -74,6 +72,8 @@ impl Solution {
         find_substring(&s, &words)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

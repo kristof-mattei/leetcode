@@ -1,7 +1,5 @@
 use std::collections::HashSet;
 
-use crate::shared::Solution;
-
 fn four_sums(mut nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
     nums.sort_unstable();
     k_sum(&nums, target, 4)
@@ -71,6 +69,8 @@ impl Solution {
         four_sums(nums, target)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

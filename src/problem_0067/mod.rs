@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn add(long: &str, short: &str) -> String {
     let mut carry = false;
 
@@ -57,6 +55,8 @@ impl Solution {
         add_binary(&a, &b)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

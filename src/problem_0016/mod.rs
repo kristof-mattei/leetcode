@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn three_sum_closest(mut nums: Vec<i32>, target: i32) -> i32 {
     if nums.len() < 3 {
         return 0;
@@ -51,6 +49,8 @@ impl Solution {
         three_sum_closest(nums, target)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

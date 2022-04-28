@@ -1,5 +1,3 @@
-pub struct Solution {}
-
 use std::{cell::RefCell, collections::VecDeque, option::Option, rc::Rc};
 
 #[derive(PartialEq, Eq)]

@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn combination_sum_r(src: &[i32], target: i32) -> Vec<Vec<i32>> {
     let remaining_sum = src.iter().sum::<i32>();
 
@@ -52,6 +50,8 @@ impl Solution {
         combination_sum2(candidates, target)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

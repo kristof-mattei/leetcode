@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn is_palindrome(x: i32) -> bool {
     if x < 0 {
         return false;
@@ -23,6 +21,8 @@ impl Solution {
         is_palindrome(x)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

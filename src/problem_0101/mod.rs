@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn is_symmetric_r(
     left: &Option<Rc<RefCell<TreeNode>>>,
@@ -43,6 +43,8 @@ impl Solution {
         is_symmetric(root)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn simplify_path(path: &str) -> String {
     let pieces = path.split('/').collect::<Vec<_>>();
 
@@ -37,6 +35,8 @@ impl Solution {
         simplify_path(&path)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

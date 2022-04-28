@@ -1,4 +1,3 @@
-use crate::shared::Solution;
 use std::collections::BTreeSet;
 
 fn longest_consecutive(nums: Vec<i32>) -> i32 {
@@ -29,6 +28,8 @@ impl Solution {
         longest_consecutive(nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

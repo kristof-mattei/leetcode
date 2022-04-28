@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn merge(nums1: &mut [i32], m: usize, nums2: &mut [i32], n: usize) {
     (&mut nums1[m..m + n]).copy_from_slice(nums2);
 
@@ -20,10 +18,12 @@ fn merge(nums1: &mut [i32], m: usize, nums2: &mut [i32], n: usize) {
 }
 
 impl Solution {
-    pub fn merge2(nums1: &mut [i32], m: i32, nums2: &mut [i32], n: i32) {
+    pub fn merge(nums1: &mut [i32], m: i32, nums2: &mut [i32], n: i32) {
         merge(nums1, m as usize, nums2, n as usize);
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

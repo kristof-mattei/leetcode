@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn max_depth_r(root: Option<Rc<RefCell<TreeNode>>>, depth: usize) -> usize {
     if let Some(r) = root {
@@ -26,6 +26,8 @@ impl Solution {
         max_depth(root) as i32
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn my_pow(x: f64, n: i32) -> f64 {
     if n == 0 {
         return 1.0;
@@ -22,6 +20,8 @@ impl Solution {
         my_pow(x, n)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

@@ -1,7 +1,5 @@
 // https://leetcode.com/problems/word-ladder-ii/
 
-use crate::shared::Solution;
-
 impl Solution {
     /// # Panics
     /// not implemented
@@ -15,3 +13,5 @@ impl Solution {
         unimplemented!();
     }
 }
+
+pub struct Solution {}

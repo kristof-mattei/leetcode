@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn length_of_last_word(s: &str) -> i32 {
     let trimmed = s.trim_end();
 
@@ -18,6 +16,8 @@ impl Solution {
         length_of_last_word(&s)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

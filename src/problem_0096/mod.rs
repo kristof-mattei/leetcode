@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn num_trees(n: i32) -> i32 {
     let n = n as usize;
     let mut dp: Vec<i32> = vec![0; n + 1];
@@ -22,6 +20,8 @@ impl Solution {
         num_trees(n)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn inorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
     if root.is_none() {
@@ -37,6 +37,8 @@ impl Solution {
         inorder_traversal(root)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

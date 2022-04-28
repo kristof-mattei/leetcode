@@ -1,5 +1,4 @@
 use crate::problem_0051::solve_n_queens;
-use crate::shared::Solution;
 
 fn total_n_queens(n: i32) -> i32 {
     solve_n_queens(n).len() as i32
@@ -11,6 +10,8 @@ impl Solution {
         total_n_queens(n)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

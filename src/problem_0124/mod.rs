@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn max_path_sum(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     if let Some(r) = root {
@@ -38,6 +38,8 @@ impl Solution {
         max_path_sum(root)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

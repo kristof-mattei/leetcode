@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
     let mut counts = HashMap::<[u8; 26], usize>::new();
     let mut anagrams = Vec::<Vec<String>>::new();
@@ -30,6 +28,8 @@ impl Solution {
         group_anagrams(strs)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

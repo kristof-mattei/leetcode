@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 fn word_break_r<'a>(
     cache: &mut HashMap<&'a str, bool>,
     s: &'a str,
@@ -58,6 +56,8 @@ impl Solution {
         word_break(&s, &strs)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

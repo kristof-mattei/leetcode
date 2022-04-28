@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn max_area(height: &[i32]) -> i32 {
     let mut left = 0;
     let mut right = height.len() - 1;
@@ -31,6 +29,8 @@ impl Solution {
         max_area(&height)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

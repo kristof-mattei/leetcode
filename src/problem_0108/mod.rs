@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn sorted_array_to_bst(nums: &[i32]) -> Option<Rc<RefCell<TreeNode>>> {
     if nums.is_empty() {
@@ -23,6 +23,8 @@ impl Solution {
         sorted_array_to_bst(&nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

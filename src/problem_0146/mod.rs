@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 struct Node {
     key: i32,
     value: i32,
@@ -115,6 +113,8 @@ impl Solution {
         lru_cache.get(1)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

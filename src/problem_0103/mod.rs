@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn zigzag_level_order(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
     let mut result = vec![];
@@ -47,6 +47,8 @@ impl Solution {
         zigzag_level_order(root)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

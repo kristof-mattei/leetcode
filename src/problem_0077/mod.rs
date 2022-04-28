@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn combine_r(numbers: &[i32], k: i32) -> Vec<Vec<i32>> {
     if k == 0 {
         return vec![vec![]];
@@ -29,6 +27,8 @@ impl Solution {
         combine(n, k)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

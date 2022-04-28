@@ -1,6 +1,6 @@
 use std::{cell::RefCell, mem, rc::Rc};
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn level_order_bottom(root: Option<&Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
     if let Some(root_r) = root {
@@ -44,6 +44,8 @@ impl Solution {
         level_order_bottom(root.as_ref())
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

@@ -1,7 +1,5 @@
 use std::collections::{hash_map::Entry, HashMap};
 
-use crate::shared::Solution;
-
 // this one is cool too:
 // https://leetcode.com/submissions/detail/678459562/
 
@@ -42,10 +40,12 @@ fn single_number(nums: Vec<i32>) -> i32 {
 impl Solution {
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
-    pub fn single_number_0137(nums: Vec<i32>) -> i32 {
+    pub fn single_number(nums: Vec<i32>) -> i32 {
         single_number(nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

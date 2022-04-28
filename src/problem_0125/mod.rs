@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn process(c: char) -> Option<char> {
     match c.to_ascii_lowercase() {
         l @ ('0'..='9' | 'a'..='z') => Some(l),
@@ -48,6 +46,8 @@ impl Solution {
         is_palindrome(&s)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

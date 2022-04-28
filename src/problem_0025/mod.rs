@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 #[allow(clippy::vec_box)]
 fn reverse_list(
@@ -51,6 +51,8 @@ impl Solution {
         reverse_k_group(head, k)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

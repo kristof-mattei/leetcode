@@ -1,4 +1,3 @@
-use crate::shared::Solution;
 use std::collections::HashMap;
 
 fn greatest_common_divisor(mut x: i32, mut y: i32) -> i32 {
@@ -71,6 +70,8 @@ impl Solution {
         max_points(&points)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

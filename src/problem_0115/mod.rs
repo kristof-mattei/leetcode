@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn num_distinct_r(s: &[u8], t: &[u8]) -> i32 {
     let n = s.len();
     let m = t.len();
@@ -29,6 +27,8 @@ impl Solution {
         num_distinct(&s, &t)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

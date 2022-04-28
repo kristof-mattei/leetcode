@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
     if nums.len() < 3 {
         return vec![];
@@ -58,6 +56,8 @@ impl Solution {
         three_sum(nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

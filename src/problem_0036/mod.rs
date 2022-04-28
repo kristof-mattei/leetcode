@@ -1,7 +1,5 @@
 use std::collections::HashSet;
 
-use crate::shared::Solution;
-
 fn is_valid_sudoku(board: &[Vec<char>]) -> bool {
     let mut h = HashSet::<char>::with_capacity(9);
     // rows
@@ -71,6 +69,8 @@ impl Solution {
         is_valid_sudoku(&board)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

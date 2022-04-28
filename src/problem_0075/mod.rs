@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn sort_colors(nums: &mut [i32]) {
     let mut arr: [usize; 3] = [0; 3];
 
@@ -30,6 +28,8 @@ impl Solution {
         sort_colors(nums);
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

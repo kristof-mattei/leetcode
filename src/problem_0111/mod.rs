@@ -1,4 +1,4 @@
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 use std::cell::RefCell;
 use std::{collections::VecDeque, rc::Rc};
 
@@ -30,6 +30,8 @@ impl Solution {
         min_depth(root)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn swap(matrix: &mut [Vec<i32>], r1c1: (usize, usize), r2c2: (usize, usize)) {
     match r1c1.0.cmp(&r2c2.0) {
         std::cmp::Ordering::Equal => {
@@ -46,6 +44,8 @@ impl Solution {
         rotate(matrix);
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

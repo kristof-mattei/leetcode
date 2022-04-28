@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn remove_duplicate_letters(s: &str) -> String {
     let s_bytes = s.as_bytes();
 
@@ -41,6 +39,8 @@ impl Solution {
         remove_duplicate_letters(&s)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

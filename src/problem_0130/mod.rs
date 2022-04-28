@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn mark_touching_o_s(board: &mut Vec<Vec<char>>, r: usize, c: usize) {
     if board[r][c] == 'X' {
         return;
@@ -68,6 +66,8 @@ impl Solution {
         solve(board);
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

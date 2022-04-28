@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn first_missing_positive(mut nums: Vec<i32>) -> i32 {
     let n = nums.len();
     for i in 0..n {
@@ -29,6 +27,8 @@ impl Solution {
         first_missing_positive(nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

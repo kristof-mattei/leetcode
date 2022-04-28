@@ -1,7 +1,5 @@
 use std::collections::HashSet;
 
-use crate::shared::Solution;
-
 fn set_zeroes(matrix: &mut [Vec<i32>]) {
     let mut rows_to_zero = HashSet::new();
     let mut cols_to_zero = HashSet::new();
@@ -31,6 +29,8 @@ impl Solution {
         set_zeroes(matrix);
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

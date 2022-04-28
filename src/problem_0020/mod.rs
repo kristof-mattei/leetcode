@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn is_valid(s: &str) -> bool {
     // s.len() is valid for strings
     // which only use 1 byte characters
@@ -29,6 +27,8 @@ impl Solution {
         is_valid(&s)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

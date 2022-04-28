@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn max_profit(prices: &[i32]) -> i32 {
     let mut buy_price = prices[0];
     let mut result = 0;
@@ -22,6 +20,8 @@ impl Solution {
         max_profit(&prices)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod test {

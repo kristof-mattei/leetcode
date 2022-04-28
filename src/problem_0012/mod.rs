@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn when_over_add(letters: &mut Vec<char>, num: &mut i32, over: i32, add: &[char]) {
     while *num >= over {
         add.iter().for_each(|c| letters.push(*c));
@@ -34,6 +32,8 @@ impl Solution {
         int_to_roman(num)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

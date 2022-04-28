@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 // use std::cmp::Ordering;
 
 fn my_sqrt(x: i32) -> i32 {
@@ -42,6 +40,8 @@ impl Solution {
         my_sqrt(x)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

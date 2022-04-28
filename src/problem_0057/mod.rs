@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 use std::cmp::Ordering;
 
 fn merge(mut intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
@@ -97,6 +95,8 @@ impl Solution {
         insert(intervals, new_interval)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

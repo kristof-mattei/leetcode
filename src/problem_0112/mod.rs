@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn has_path_sum(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> bool {
     if let Some(r) = root {
@@ -23,6 +23,8 @@ impl Solution {
         has_path_sum(root, target_sum)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

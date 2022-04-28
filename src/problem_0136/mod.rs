@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn single_number(nums: &[i32]) -> i32 {
     nums.iter().fold(0, |acc, i| acc ^ i)
 }
@@ -11,6 +9,8 @@ impl Solution {
         single_number(&nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

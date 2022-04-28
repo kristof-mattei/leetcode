@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn trap(height: &[i32]) -> i32 {
     let mut index_l = 0;
     let mut index_r = height.len() - 1;
@@ -34,6 +32,8 @@ impl Solution {
         trap(&height)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

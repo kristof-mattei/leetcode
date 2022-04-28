@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 fn is_same_tree(p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>) -> bool {
     match (p, q) {
         (None, None) => true,
@@ -24,6 +24,8 @@ impl Solution {
         is_same_tree(p, q)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

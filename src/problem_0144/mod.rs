@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn preorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
     let mut results = vec![];
@@ -31,6 +31,8 @@ impl Solution {
         preorder_traversal(root)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

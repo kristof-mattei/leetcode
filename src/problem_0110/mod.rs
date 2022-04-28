@@ -1,4 +1,4 @@
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 use std::{cell::RefCell, rc::Rc};
 
 fn is_balanced(root: Option<&Rc<RefCell<TreeNode>>>) -> bool {
@@ -27,6 +27,8 @@ impl Solution {
         is_balanced(root.as_ref())
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

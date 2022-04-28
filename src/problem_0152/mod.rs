@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn max_product(nums: &[i32]) -> i32 {
     let mut global_max = nums[0];
 
@@ -27,6 +25,8 @@ impl Solution {
         max_product(&nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {
@@ -668,6 +668,6 @@ mod tests {
             -1, 1, 1, 1, -1, 1, -1, 1, -1, 1, 1, 1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1,
         ];
 
-        assert_eq!(max_product(input), 1492992000);
+        assert_eq!(max_product(input), 1_492_992_000);
     }
 }

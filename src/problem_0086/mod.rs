@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn add_to_end(head: &mut Option<Box<ListNode>>, to_add_to_end: Option<Box<ListNode>>) {
     let mut current = head;
@@ -48,6 +48,8 @@ impl Solution {
         partition(head, x)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

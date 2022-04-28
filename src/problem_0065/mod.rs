@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn parse(decimal: &str, allow_dots: bool) -> bool {
     let chars: Vec<char> = decimal.chars().collect();
 
@@ -47,6 +45,8 @@ impl Solution {
         is_number(&s)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

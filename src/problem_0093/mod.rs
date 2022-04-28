@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn restore_ip_addresses_r(digits: &[char], octet: usize) -> Vec<Vec<Vec<char>>> {
     if octet == 5 {
         if digits.is_empty() {
@@ -66,6 +64,8 @@ impl Solution {
         restore_ip_addresses(&s)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

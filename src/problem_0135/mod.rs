@@ -1,7 +1,5 @@
 use std::cmp;
 
-use crate::shared::Solution;
-
 fn candy(ratings: &[i32]) -> i32 {
     let len = ratings.len();
 
@@ -35,6 +33,8 @@ impl Solution {
         candy(&ratings)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

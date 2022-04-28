@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn get_last_n(
     head: &mut Option<Box<ListNode>>,
@@ -45,6 +45,8 @@ impl Solution {
         rotate_right(head, k as usize)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

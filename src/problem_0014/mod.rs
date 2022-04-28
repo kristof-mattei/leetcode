@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 use std::string::String;
 
 fn longest_common_prefix(strs: &[String]) -> String {
@@ -51,6 +49,8 @@ impl Solution {
         longest_common_prefix(&strs)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

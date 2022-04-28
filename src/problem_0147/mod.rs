@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn insertion_sort_list(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     let mut new_head = Some(Box::new(ListNode { val: 0, next: None }));
@@ -34,6 +34,8 @@ impl Solution {
         insertion_sort_list(head)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

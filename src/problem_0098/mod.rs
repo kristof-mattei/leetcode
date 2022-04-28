@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
     is_valid_bst_r(root, None, None)
@@ -25,6 +25,8 @@ impl Solution {
         is_valid_bst(root)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

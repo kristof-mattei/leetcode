@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn reverse_words<T: AsRef<str>>(s: T) -> String {
     let bytes = s.as_ref().as_bytes();
 
@@ -37,6 +35,8 @@ impl Solution {
         reverse_words(s)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

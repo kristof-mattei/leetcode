@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn recover_tree(root: &mut Option<Rc<RefCell<TreeNode>>>) {
     let mut first_node: Option<Rc<RefCell<TreeNode>>> = None;
@@ -64,6 +64,8 @@ impl Solution {
         recover_tree(root);
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

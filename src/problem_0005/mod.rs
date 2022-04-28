@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn is_palindrome(substring: &str) -> bool {
     let reversed = substring.as_bytes().iter().rev();
     let normal = substring.as_bytes();
@@ -45,6 +43,8 @@ impl Solution {
         longest_palindrome(&s)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

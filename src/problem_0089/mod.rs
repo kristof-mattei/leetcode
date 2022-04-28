@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn gray_code(n: i32) -> Vec<i32> {
     let length = 2usize.pow(n as u32) as usize;
     let mut result = vec![0; length];
@@ -18,6 +16,8 @@ impl Solution {
         gray_code(n)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

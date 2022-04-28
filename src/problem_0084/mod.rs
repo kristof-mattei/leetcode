@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn largest_rectangle_area(mut heights: Vec<i32>) -> i32 {
     heights.push(0);
 
@@ -32,6 +30,8 @@ impl Solution {
         largest_rectangle_area(heights)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

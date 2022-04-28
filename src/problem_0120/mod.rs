@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn minimum_total(triangle: &[Vec<i32>]) -> i32 {
     let rows = triangle.len();
 
@@ -20,6 +18,8 @@ impl Solution {
         minimum_total(&triangle)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

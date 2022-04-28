@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn merge_two_lists(
     head1: Option<Box<ListNode>>,
@@ -30,6 +30,8 @@ impl Solution {
         merge_two_lists(list1, list2)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

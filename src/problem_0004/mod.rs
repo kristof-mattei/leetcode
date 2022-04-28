@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn find_median_sorted_arrays(nums1: &[i32], nums2: &[i32]) -> f64 {
     let len = nums1.len() + nums2.len();
 
@@ -53,6 +51,8 @@ impl Solution {
         find_median_sorted_arrays(&nums1, &nums2)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

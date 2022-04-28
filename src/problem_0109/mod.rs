@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::shared::{ListNode, Solution, TreeNode};
+use crate::shared::{ListNode, TreeNode};
 
 fn sorted_list_to_bst(mut head: Option<Box<ListNode>>) -> Option<Rc<RefCell<TreeNode>>> {
     let mut arr = vec![];
@@ -35,6 +35,8 @@ impl Solution {
         sorted_list_to_bst(head)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

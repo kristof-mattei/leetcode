@@ -1,7 +1,5 @@
 use std::cmp::Ordering;
 
-use crate::shared::Solution;
-
 fn search(nums: &[i32], target: i32) -> i32 {
     let mut offset = 0;
     let mut end = nums.len();
@@ -49,6 +47,8 @@ impl Solution {
         search(&nums, target)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

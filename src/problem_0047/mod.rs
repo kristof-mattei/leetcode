@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn permute_unique_r(nums: &mut Vec<i32>) -> Vec<Vec<i32>> {
     let mut results = Vec::new();
 
@@ -37,6 +35,8 @@ impl Solution {
         permute_unique(nums)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn min_cut(s: &[u8]) -> i32 {
     let len = s.len();
     let mut dp = (0..=len).collect::<Vec<_>>();
@@ -30,6 +28,8 @@ impl Solution {
         min_cut(s.as_bytes())
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

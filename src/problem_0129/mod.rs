@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn sum_numbers_h(root: &Option<Rc<RefCell<TreeNode>>>, current_sum: i32) -> i32 {
     if let Some(r) = root {
@@ -28,6 +28,8 @@ impl Solution {
         sum_numbers(&root)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

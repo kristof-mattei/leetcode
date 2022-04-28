@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn str_str(haystack: &str, needle: &str) -> i32 {
     let res = haystack.find(needle);
 
@@ -13,6 +11,8 @@ impl Solution {
         str_str(&haystack, &needle)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {

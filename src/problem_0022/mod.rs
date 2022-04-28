@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 #[allow(dead_code)]
 fn generate_parenthesis_r(n: i32, opens: i32, closes: i32) -> Vec<Vec<u8>> {
     if n == opens && n == closes {
@@ -66,6 +64,8 @@ impl Solution {
         generate_parenthesis(n)
     }
 }
+
+pub struct Solution {}
 
 #[cfg(test)]
 mod tests {
