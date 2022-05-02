@@ -22,14 +22,6 @@ fn maximal_square(matrix: &[Vec<char>]) -> i32 {
         }
     }
 
-    for r in dp {
-        for c in r {
-            print!("{c}");
-        }
-
-        println!();
-    }
-
     max * max
 }
 
