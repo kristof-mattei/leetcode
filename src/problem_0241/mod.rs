@@ -43,11 +43,17 @@ mod tests {
 
     #[test]
     fn test_1() {
-        assert_eq!(diff_ways_to_compute("2-1-1"), [0, 2]);
+        let mut result = diff_ways_to_compute("2-1-1");
+        result.sort_unstable();
+
+        assert_eq!(result, [0, 2]);
     }
 
     #[test]
     fn test_2() {
-        assert_eq!(diff_ways_to_compute("2*3-4*5"), [-34, -14, -10, -10, 10]);
+        let mut result = diff_ways_to_compute("2*3-4*5");
+        result.sort_unstable();
+
+        assert_eq!(result, [-34, -14, -10, -10, 10]);
     }
 }
