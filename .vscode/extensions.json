@@ -1,7 +1,7 @@
 {
     "recommendations": [
         "usernamehw.errorlens",
-        "matklad.rust-analyzer",
+        "rust-lang.rust-analyzer",
         "swellaby.vscode-rust-test-adapter"
     ]
 }
