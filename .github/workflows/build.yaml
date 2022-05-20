@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Cache dependencies
-        uses: actions/cache@8f1e2e02865c42348f9baddbbaafb1841dce610a
+        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -92,7 +92,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Cache dependencies
-        uses: actions/cache@8f1e2e02865c42348f9baddbbaafb1841dce610a
+        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -130,7 +130,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Cache dependencies
-        uses: actions/cache@8f1e2e02865c42348f9baddbbaafb1841dce610a
+        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -196,7 +196,7 @@ jobs:
           grcov $(find profiling -name "profile-*.profraw" -print) --source-dir . --binary-path ./target/debug/ --output-type lcov --branch --ignore-not-existing --llvm --keep-only 'src/**' --keep-only 'tests/**' --output-path ./reports/lcov.info
 
       - name: Upload to CodeCov
-        uses: codecov/codecov-action@53cfbc752e9c24b67aa0ada6f90cd0ea22c5f6d6
+        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
         with:
           # # required for private repositories:
           # token: ${{ secrets.CODECOV_TOKEN }}
@@ -247,7 +247,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Cache dependencies
-        uses: actions/cache@8f1e2e02865c42348f9baddbbaafb1841dce610a
+        uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:

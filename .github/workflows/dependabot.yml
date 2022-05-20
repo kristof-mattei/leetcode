@@ -12,24 +12,24 @@ jobs:
     steps:
       - name: Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@a7c13a83a67acff9b107367e6e9f1cdf9a66e97f
+        uses: dependabot/fetch-metadata@bfac3fa29cc6834ca2e3fd659343da191a65d971
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Approve PR
-        if: ${{steps.metadata.outputs.update-type != 'version-update:semver-major'}}
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
         shell: bash
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr review --approve "$PR_URL"
 
       - name: Auto-merge
-        if: ${{steps.metadata.outputs.update-type != 'version-update:semver-major'}}
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
         env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
           gh pr merge --auto --merge "$PR_URL"
