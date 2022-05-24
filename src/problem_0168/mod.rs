@@ -32,11 +32,6 @@ mod tests {
     use crate::problem_0168::convert_to_title;
 
     #[test]
-    fn test_0() {
-        assert_eq!(convert_to_title(12356), "12356");
-    }
-
-    #[test]
     fn test_1() {
         assert_eq!(convert_to_title(1), "A");
     }
