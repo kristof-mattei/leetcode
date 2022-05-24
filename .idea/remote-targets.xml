@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteTargetsManager">
+    <option name="projectDefaultTargetUuid" value="405c1e79-b375-40b3-9dd0-30d9c83c20a3" />
+    <targets>
+      <target name="WSL - Ubuntu-Actual" type="wsl" uuid="405c1e79-b375-40b3-9dd0-30d9c83c20a3">
+        <config>
+          <option name="distributionMsId" value="Ubuntu-Actual" />
+          <option name="projectRootOnTarget" value="/mnt/c/Program Files/JetBrains/CLion 2021.2.2/jbr/bin&#10;/leetcode" />
+        </config>
+        <ContributedStateBase type="RsLanguageRuntime">
+          <config>
+            <option name="cargoPath" value="/home/kristof/.cargo/bin/cargo" />
+            <option name="cargoVersion" value="1.61.0 (a028ae4 2022-04-29)" />
+            <option name="rustcPath" value="/home/kristof/.cargo/bin/rustc" />
+            <option name="rustcVersion" value="1.61.0 (fe5b13d68 2022-05-18)" />
+          </config>
+        </ContributedStateBase>
+      </target>
+    </targets>
+  </component>
+</project>
