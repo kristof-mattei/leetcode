@@ -31,7 +31,7 @@ COPY src ./src
 RUN --mount=type=cache,target=/build/rust-end-to-end-application/target \
     cargo install --path . --target ${TARGET} --root /output
 
-FROM alpine:3.15.4@sha256:4edbd2beb5f78b1014028f4fbb99f3237d9561100b6881aabbf5acce2c4f9454
+FROM alpine:3.16.0@sha256:686d8c9dfa6f3ccfc8230bc3178d23f84eeaf7e457f36f271ab1acc53015037c
 WORKDIR /app
 COPY --from=builder /output/bin/rust-end-to-end-application /app
 ENTRYPOINT ["/app/rust-end-to-end-application"]
