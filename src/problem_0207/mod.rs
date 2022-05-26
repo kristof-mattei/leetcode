@@ -18,32 +18,49 @@ fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
     let mut states = vec![State::NotVisited; num_courses];
 
     #[allow(clippy::match_on_vec_items)]
+    // courses go from 0 to num_courses - 1
     for v in 0..num_courses {
         if states[v] == State::NotVisited {
             stack.push(v);
 
+            // fetch the next cource
             while let Some(v) = stack.pop() {
                 match states[v] {
                     State::NotVisited => {
+                        // We put it back IN thet stack
                         states[v] = State::InStack;
                         stack.push(v);
 
                         for &u in &adjecent_list[v] {
                             match states[u] {
                                 State::InStack => {
+                                    // to do the current task (v)
+                                    // we need to do u, but u is dependent on us
+                                    // so we are stuck
                                     return false;
                                 },
                                 State::NotVisited => {
+                                    // we didn't do the prerequisite yet, let's try and process it
                                     stack.push(u);
                                 },
-                                State::Done => {},
+                                State::Done => {
+                                    // Great, we did the prerequisite
+                                },
                             }
                         }
                     },
+
                     State::InStack => {
+                        // this means that we went from
+                        // NotVisited to a whole set of dependencies
+                        // back to us
+                        // because of that we know that the dependencies
+                        // have been resolved, and we can solve the chain of `v`
                         states[v] = State::Done;
                     },
-                    State::Done => {},
+                    State::Done => {
+                        // we already did it, ignore
+                    },
                 };
             }
         }
