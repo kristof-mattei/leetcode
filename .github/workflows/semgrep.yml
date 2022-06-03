@@ -30,16 +30,24 @@ jobs:
       # Make a token at semgrep.dev/orgs/-/settings/tokens, and then
       # save it in your GitHub Secrets.
       - name: Run Semgrep
-        run: semgrep scan --sarif --output=semgrep.sarif --config=auto
+        shell: bash
+        run: |
+          semgrep scan --sarif --output=semgrep.sarif --config=auto
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
       # Option 2: Set hard-coded rulesets, viewable in logs.
       # - run: semgrep scan --sarif --output=semgrep.sarif
       #   env:
       #     SEMGREP_RULES: p/default # See more at semgrep.dev/explore.
+      - name: Fix sarif file
+        shell: bash
+        run: |
+          # remove the "fixes": [],
+          # see https://github.com/returntocorp/semgrep/issues/5421
+          sed -i 's/"fixes": \[\], //g' semgrep.sarif
 
       - name: Upload SARIF file for GitHub Advanced Security Dashboard
+        if: always()
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: semgrep.sarif
-        if: always()
