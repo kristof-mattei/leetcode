@@ -30,7 +30,7 @@ jobs:
       # Make a token at semgrep.dev/orgs/-/settings/tokens, and then
       # save it in your GitHub Secrets.
       - name: Run Semgrep
-        run: semgrep scan --sarif --output=semgrep.sarif --config=policy
+        run: semgrep scan --sarif --output=semgrep.sarif --config=auto
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
       # Option 2: Set hard-coded rulesets, viewable in logs.
