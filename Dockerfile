@@ -25,6 +25,7 @@ COPY Cargo.toml Cargo.lock ./
 RUN --mount=type=cache,target=/build/rust-end-to-end-application/target \
     cargo build --release --target ${TARGET}
 
+
 # now we copy in the source which is more prone to changes and build it
 COPY src ./src
 # --release not needed, it is implied with install
@@ -32,6 +33,11 @@ RUN --mount=type=cache,target=/build/rust-end-to-end-application/target \
     cargo install --path . --target ${TARGET} --root /output
 
 FROM alpine:3.16.0@sha256:686d8c9dfa6f3ccfc8230bc3178d23f84eeaf7e457f36f271ab1acc53015037c
+
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
 WORKDIR /app
 COPY --from=builder /output/bin/rust-end-to-end-application /app
+USER appuser
 ENTRYPOINT ["/app/rust-end-to-end-application"]
