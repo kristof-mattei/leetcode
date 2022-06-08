@@ -39,5 +39,5 @@ USER appuser
 
 WORKDIR /app
 COPY --from=builder /output/bin/rust-end-to-end-application /app
-USER user
+USER appuser
 ENTRYPOINT ["/app/rust-end-to-end-application"]
