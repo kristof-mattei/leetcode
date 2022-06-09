@@ -9,6 +9,11 @@ on:
   schedule:
     - cron: "41 3 * * 6"
 
+permissions:
+  security-events: write
+  actions: read
+  contents: read
+
 jobs:
   semgrep:
     # User definable name of this GitHub Actions job.
