@@ -1,12 +1,13 @@
+#![allow(dead_code)]
 use std::iter::Peekable;
 
 #[allow(dead_code)]
-#[derive(Default)]
+#[derive(Default, Debug)]
 struct Trie {
     states: Vec<State>,
 }
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 struct State([u16; 26], bool);
 
 impl State {
@@ -44,12 +45,20 @@ impl Trie {
         }
     }
 
+    #[allow(clippy::needless_pass_by_value)]
     fn insert(&mut self, word: String) {
+        println!("Inserting {word}");
         let mut iter = word.as_bytes().iter().copied().peekable();
+
         let mut index = self.follow(&mut iter);
+
+        println!("Starting index: {index}");
+
         for letter in iter {
             let new_index = self.states.len();
+            println!("New index: {new_index}");
             let next_index = self.states[index].next_or_insert(letter, new_index);
+            println!("Next index: {next_index}");
             if next_index == new_index {
                 self.states.push(State::default());
             }
@@ -59,12 +68,15 @@ impl Trie {
         self.states[index].set_complete();
     }
 
+    #[allow(clippy::needless_pass_by_value)]
     fn search(&self, word: String) -> bool {
         let mut iter = word.as_bytes().iter().copied().peekable();
+
         let index = self.follow(&mut iter);
         iter.next().is_none() && self.states[index].is_complete()
     }
 
+    #[allow(clippy::needless_pass_by_value)]
     fn starts_with(&self, prefix: String) -> bool {
         let mut iter = prefix.as_bytes().iter().copied().peekable();
         self.follow(&mut iter);
@@ -78,6 +90,7 @@ impl Trie {
             iter.next();
             index = next;
         }
+
         index
     }
 }
@@ -91,11 +104,22 @@ mod tests {
     #[test]
     fn test_1() {
         let mut trie = Trie::new();
+
         trie.insert("apple".to_string());
-        assert!(trie.search("apple".to_string())); // return True
-        assert!(!trie.search("app".to_string())); // return False
-        assert!(trie.starts_with("app".to_string())); // return True
+        assert!(trie.search("apple".to_string()));
+        assert!(!trie.search("app".to_string()));
+        assert!(trie.starts_with("app".to_string()));
+
         trie.insert("app".to_string());
-        assert!(trie.search("app".to_string())); // return True
+        assert!(trie.search("app".to_string()));
+    }
+
+    #[test]
+    fn test_2() {
+        let mut trie = Trie::new();
+
+        trie.insert("abcd".to_string());
+        trie.insert("aac".to_string());
+        assert!(!trie.search("abc".to_string()));
     }
 }
