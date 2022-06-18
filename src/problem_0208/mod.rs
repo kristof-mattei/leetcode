@@ -1,7 +1,5 @@
 #![allow(dead_code)]
-use std::iter::Peekable;
 
-#[allow(dead_code)]
 #[derive(Default, Debug)]
 struct Trie {
     states: Vec<State>,
@@ -14,8 +12,13 @@ impl State {
     pub fn next(&self, letter: u8) -> Option<usize> {
         let lookup_index = (letter - b'a') as usize;
 
+        // next index is the index in `Trie.states[]`
         let next_index = self.0[lookup_index];
 
+        // a next_index of `0` means there's no state in `Trie.states` following the current state
+        // as `Trie.states[0]` is actually the entrypoint state, and is never used outside of that
+        // TODO: self.0 should be of type [Option<u16>;26] so that we don't need to rely
+        // on 0 being a magic number
         (next_index != 0).then(|| next_index as usize)
     }
 
@@ -47,55 +50,44 @@ impl Trie {
 
     #[allow(clippy::needless_pass_by_value)]
     fn insert(&mut self, word: String) {
-        println!("Inserting {word}");
-        let mut iter = word.as_bytes().iter().copied().peekable();
+        let mut last_matching_index = self.follow(&word);
 
-        let mut index = self.follow(&mut iter);
-
-        println!("Starting index: {index}");
-
-        for letter in iter {
+        for letter in word.bytes().into_iter().skip(last_matching_index) {
             let new_index = self.states.len();
-            println!("New index: {new_index}");
-            let next_index = self.states[index].next_or_insert(letter, new_index);
-            println!("Next index: {next_index}");
+
+            let next_index = self.states[last_matching_index].next_or_insert(letter, new_index);
+
             if next_index == new_index {
                 self.states.push(State::default());
             }
-            index = next_index;
+
+            last_matching_index = next_index;
         }
 
-        self.states[index].set_complete();
+        self.states[last_matching_index].set_complete();
     }
 
     #[allow(clippy::needless_pass_by_value)]
     fn search(&self, word: String) -> bool {
-        let mut iter = word.as_bytes().iter().copied().peekable();
-
-        let index = self.follow(&mut iter);
-        iter.next().is_none() && self.states[index].is_complete()
+        let index = self.follow(&word) + 1;
+        word.as_bytes().get(index).is_none() && self.states[index].is_complete()
     }
 
     #[allow(clippy::needless_pass_by_value)]
     fn starts_with(&self, prefix: String) -> bool {
-        let mut iter = prefix.as_bytes().iter().copied().peekable();
-        self.follow(&mut iter);
-        iter.next().is_none()
+        let index = self.follow(&prefix) + 1;
+        prefix.as_bytes().get(index).is_none()
     }
 
-    fn follow(&self, iter: &mut Peekable<impl Iterator<Item = u8>>) -> usize {
-        let mut index = 0;
-
-        while let Some(next) = iter.peek().and_then(|&c| self.states[index].next(c)) {
-            iter.next();
-            index = next;
-        }
-
-        index
+    /// Follows the bytes in `word` against `self.states`
+    /// and returns the last matching index
+    fn follow(&self, word: &str) -> usize {
+        word.as_bytes()
+            .iter()
+            .try_fold(0, |acc, curr| self.states[acc].next(*curr).ok_or(acc))
+            .map_or_else(|e| e, |o| o)
     }
 }
-
-pub struct Solution;
 
 #[cfg(test)]
 mod tests {
