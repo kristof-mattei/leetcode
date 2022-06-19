@@ -69,14 +69,14 @@ impl Trie {
 
     #[allow(clippy::needless_pass_by_value)]
     fn search(&self, word: String) -> bool {
-        let index = self.follow(&word) + 1;
-        word.as_bytes().get(index).is_none() && self.states[index].is_complete()
+        let index = self.follow(&word);
+        word.as_bytes().get(index + 1).is_none() && self.states[index].is_complete()
     }
 
     #[allow(clippy::needless_pass_by_value)]
     fn starts_with(&self, prefix: String) -> bool {
-        let index = self.follow(&prefix) + 1;
-        prefix.as_bytes().get(index).is_none()
+        let index = self.follow(&prefix);
+        prefix.as_bytes().get(index + 1).is_none()
     }
 
     /// Follows the bytes in `word` against `self.states`
