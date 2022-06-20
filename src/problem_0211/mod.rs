@@ -1,60 +1,37 @@
-// #![allow(dead_code)]
-// struct WordDictionary {}
+#![allow(dead_code)]
+struct WordDictionary {}
 
-// impl WordDictionary {
-//     fn new() -> Self {
-//         Self {}
-//     }
+impl WordDictionary {
+    fn new() -> Self {
+        Self {}
+    }
 
-//     #[allow(clippy::needless_pass_by_value)]
-//     fn add_word(&mut self, word: String) {
-//         // println!("Inserting {word}");
-//         // let mut iter = word.as_bytes().iter().copied().peekable();
+    // #[allow(clippy::needless_pass_by_value)]
+    // fn add_word(&mut self, _word: String) {
+    //     unimplemented!()
+    // }
 
-//         // let mut index = self.follow(&mut iter);
+    // #[allow(clippy::needless_pass_by_value)]
+    // fn search(&self, _word: String) -> bool {
+    //     unimplemented!()
+    // }
+}
 
-//         // println!("Starting index: {index}");
+#[cfg(test)]
+mod tests {
+    // use crate::problem_0211::WordDictionary;
 
-//         // for letter in iter {
-//         //     let new_index = self.states.len();
-//         //     println!("New index: {new_index}");
-//         //     let next_index = self.states[index].next_or_insert(letter, new_index);
-//         //     println!("Next index: {next_index}");
-//         //     if next_index == new_index {
-//         //         self.states.push(State::default());
-//         //     }
-//         //     index = next_index;
-//         // }
+    #[test]
+    fn test_1() {
+        // let mut word_dictionary = WordDictionary::new();
 
-//         self.states[index].set_complete();
-//     }
+        // word_dictionary.add_word("bad".to_string());
+        // word_dictionary.add_word("dad".to_string());
+        // word_dictionary.add_word("mad".to_string());
 
-//     #[allow(clippy::needless_pass_by_value)]
-//     fn search(&self, word: String) -> bool {
-//         // let mut iter = word.as_bytes().iter().copied().peekable();
-
-//         // let index = self.follow(&mut iter);
-//         // iter.next().is_none() && self.states[index].is_complete()
-//     }
-// }
-
-// pub struct Solution;
-
-// #[cfg(test)]
-// mod tests {
-//     use crate::problem_0211::WordDictionary;
-
-//     #[test]
-//     fn test_1() {
-//         let mut word_dictionary = WordDictionary::new();
-
-//         word_dictionary.add_word("bad".to_string());
-//         word_dictionary.add_word("dad".to_string());
-//         word_dictionary.add_word("mad".to_string());
-
-//         assert!(!word_dictionary.search("pad".to_string())); // return False
-//         assert!(word_dictionary.search("bad".to_string())); // return True
-//         assert!(word_dictionary.search(".ad".to_string())); // return True
-//         assert!(word_dictionary.search("b..".to_string())); // return True
-//     }
-// }
+        // assert!(!word_dictionary.search("pad".to_string())); // return False
+        // assert!(word_dictionary.search("bad".to_string())); // return True
+        // assert!(word_dictionary.search(".ad".to_string())); // return True
+        // assert!(word_dictionary.search("b..".to_string())); // return True
+    }
+}
