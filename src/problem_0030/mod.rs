@@ -103,7 +103,7 @@ mod tests {
                     .map(ToString::to_string)
                     .collect::<Vec<_>>()
             ),
-            vec![]
+            ([] as [i32; 0])
         );
     }
 
@@ -131,7 +131,7 @@ mod tests {
                     .map(ToString::to_string)
                     .collect::<Vec<_>>()
             ),
-            vec![]
+            ([] as [i32; 0])
         );
     }
 

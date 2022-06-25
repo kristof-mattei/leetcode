@@ -48,7 +48,7 @@ mod tests {
 
     #[test]
     fn test_2() {
-        assert_eq!(preorder_traversal(to_bt(&[])), []);
+        assert_eq!(preorder_traversal(to_bt(&[])), ([] as [i32; 0]));
     }
 
     #[test]
