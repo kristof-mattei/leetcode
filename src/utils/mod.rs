@@ -17,3 +17,22 @@ pub(crate) fn nearly_equal(a: f64, b: f64, epsilon: f64) -> bool {
         (diff / f64::min(abs_a + abs_b, f64::MAX)) < epsilon
     }
 }
+
+pub mod svec {
+    #![macro_use]
+
+    #[macro_export]
+    macro_rules! svec {
+        () => {{
+            let v = Vec::<String>::new();
+            v
+
+        }};
+        ($($elem:expr),+ $(,)?) => {{
+            let v = vec![
+                $( String::from($elem), )*
+            ];
+            v
+        }};
+    }
+}
