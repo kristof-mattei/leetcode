@@ -1,102 +1,98 @@
-use std::collections::HashSet;
+/// used to turn a char into a 0-based index
+const LETTER_OFFSET: u8 = b'a';
+/// letters in the alphabet
+const NUM_LETTERS: usize = 26;
+/// replacement character to define processing of current i,j
+const PROCESSING_PLACEHOLDER: char = '*';
 
 #[derive(Default)]
 struct Trie {
-    children: [Option<Box<Trie>>; 26],
-    is_end: bool,
-    index: Option<usize>,
+    word: Option<String>,
+    word_count: u32,
+    children: [Option<Box<Trie>>; NUM_LETTERS],
 }
 
-fn insert(mut trie: &mut Box<Trie>, word: &[u8], index: usize) {
-    for b in word {
-        let child_index = (b - b'a') as usize;
-        trie = trie.children[child_index].get_or_insert(Box::new(Trie::default()));
-    }
-    trie.is_end = true;
-    trie.index = Some(index);
-}
-
-fn search(
-    i: usize,
-    j: usize,
-    n: usize,
+fn check_cell(
+    row: usize,
+    col: usize,
     m: usize,
+    n: usize,
     board: &mut Vec<Vec<char>>,
-    answers: &mut HashSet<usize>,
-    root: &Trie,
-) {
-    if (board[i][j] as u8 >> 7 & 1u8 == 1u8)
-        || root.children[((board[i][j] as u8 - b'a') as usize)].is_none()
-    {
-        return;
+    trie: &mut Trie,
+    result: &mut Vec<String>,
+) -> u32 {
+    if board[row][col] == PROCESSING_PLACEHOLDER {
+        return 0;
     }
 
-    let root = root.children[((board[i][j] as u8 - b'a') as usize)]
-        .as_ref()
-        .unwrap();
+    let mut found_words = 0;
 
-    if root.is_end {
-        answers.insert(root.index.unwrap());
+    let index = (board[row][col] as u8 - LETTER_OFFSET) as usize;
+
+    if let Some(mut child) = trie.children[index].take() {
+        if let Some(word) = child.word.take() {
+            result.push(word);
+            found_words += 1;
     }
 
-    board[i][j] = (board[i][j] as u8 | (1u8 << 7)) as char;
+        let character = board[row][col];
 
-    if i + 1 < n {
-        search(i + 1, j, n, m, board, answers, root);
+        board[row][col] = PROCESSING_PLACEHOLDER;
+
+        if row > 0 {
+            found_words += check_cell(row - 1, col, m, n, board, &mut child, result);
     }
-    if j + 1 < m {
-        search(i, j + 1, n, m, board, answers, root);
+        if col > 0 {
+            found_words += check_cell(row, col - 1, m, n, board, &mut child, result);
+        }
+        if row + 1 < m {
+            found_words += check_cell(row + 1, col, m, n, board, &mut child, result);
+        }
+        if col + 1 < n {
+            found_words += check_cell(row, col + 1, m, n, board, &mut child, result);
     }
 
-    if j > 0 {
-        search(i, j - 1, n, m, board, answers, root);
+        board[row][col] = character;
+
+        if found_words < child.word_count {
+            trie.children[index] = Some(child);
     }
-    if i > 0 {
-        search(i - 1, j, n, m, board, answers, root);
     }
 
-    board[i][j] = (board[i][j] as u8 & !(1u8 << 7)) as char;
+    found_words
 }
 
-fn find_words(mut board: Vec<Vec<char>>, words: &[String]) -> Vec<String> {
-    let rows = board.len();
-    let columns = board[0].len();
+fn find_words(mut board: Vec<Vec<char>>, mut words: Vec<String>) -> Vec<String> {
+    let mut trie = Trie::default();
 
-    let mut root = Box::new(Trie::default());
-
-    for (i, word) in words.iter().enumerate() {
-        insert(&mut root, word.as_bytes(), i);
+    for word in words.drain(..) {
+        let mut node = &mut trie;
+        for &b in word.as_bytes() {
+            node.word_count += 1;
+            node = node.children[(b - LETTER_OFFSET) as usize].get_or_insert_with(Default::default);
+        }
+        node.word_count += 1;
+        node.word = Some(word);
     }
 
-    let mut answer_indeces = HashSet::new();
+    // check board
+    let m = board.len();
+    let n = board[0].len();
 
-    for row_index in 0..rows {
-        for col_index in 0..columns {
-            search(
-                row_index,
-                col_index,
-                rows,
-                columns,
-                &mut board,
-                &mut answer_indeces,
-                &root,
-            );
+    for row in 0..m {
+        for col in 0..n {
+            check_cell(row, col, m, n, &mut board, &mut trie, &mut words);
         }
     }
 
-    let mut result = vec![];
-
-    for i in answer_indeces {
-        result.push(words[i].clone());
-    }
-    result
+    words
 }
 
 impl Solution {
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
     pub fn find_words(board: Vec<Vec<char>>, words: Vec<String>) -> Vec<String> {
-        find_words(board, &words)
+        find_words(board, words)
     }
 }
 
@@ -115,7 +111,7 @@ mod tests {
                 vec!['i', 'h', 'k', 'r'],
                 vec!['i', 'f', 'l', 'v'],
             ],
-            &svec!["oath", "pea", "eat", "rain"],
+            svec!["oath", "pea", "eat", "rain"],
         );
 
         result.sort();
@@ -125,24 +121,10 @@ mod tests {
 
     #[test]
     fn test_2() {
-        let mut result = find_words(vec![vec!['a']], &svec!["a"]);
+        let mut result = find_words(vec![vec!['a']], svec!["a"]);
 
         result.sort();
 
         assert_eq!(result, ["a"]);
-    }
-
-    #[test]
-    fn test_3() {
-        for i in 'a'..='z' {
-            // println!("{},{:#010b},{:#010b}", i, i as u8, (i as u8 ^ 0xff));
-            println!(
-                "{},{:#010b},{:#010b},{:#010b}",
-                i,
-                i as u8,
-                (i as u8) | 0b1000_0000,
-                ((i as u8) & !(1u8 << 7))
-            );
-        }
     }
 }
