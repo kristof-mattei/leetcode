@@ -63,7 +63,7 @@ mod tests {
 
     #[test]
     fn test_3() {
-        assert_eq!(right_side_view(to_bt(&[])), &[]);
+        assert_eq!(right_side_view(to_bt(&[])), (&[] as &[i32; 0]));
     }
 
     #[test]
