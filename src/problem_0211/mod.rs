@@ -167,3 +167,51 @@ mod tests {
         assert!(!word_dictionary.search("a.".to_string()));
     }
 }
+
+// #[test]
+// fn test_1() {
+//     run_test(include_str!("./tests/1/in"), include_str!("./tests/1/out"));
+// }
+
+// #[test]
+// fn test_3() {
+//     run_test(include_str!("./tests/3/in"), include_str!("./tests/3/out"));
+// }
+
+// fn run_test(input: &str, expected: &str) {
+//     let methods_and_args = input.split('\n').collect::<Vec<_>>();
+
+//     let methods =
+//         serde_json::from_str::<Vec<String>>(methods_and_args.get(0).unwrap()).unwrap();
+//     let arguments =
+//         serde_json::from_str::<Vec<Vec<String>>>(methods_and_args.get(1).unwrap()).unwrap();
+
+//     let results = serde_json::from_str::<Vec<Option<bool>>>(expected).unwrap();
+
+//     let mut wd = WordDictionary::new();
+//     for ((method, args), result) in methods.iter().zip(arguments).zip(results).skip(1) {
+//         match method.as_str() {
+//             "search" => {
+//                 println!("Searching {}", args[0]);
+//                 if let Some(r) = result {
+//                     if r {
+//                         assert!(wd.search(args[0].clone()), "Expected true, got false");
+//                     } else {
+//                         assert!(!wd.search(args[0].clone()), "Expected false, got true");
+//                     }
+//                 } else {
+//                     panic!("OMG WTF BBQ?")
+//                 }
+//             },
+//             "addWord" => {
+//                 println!("Inserting {}", args[0]);
+//                 wd.add_word(args[0].clone());
+//             },
+//             _ => {
+//                 panic!("OMG WTF BBQ?")
+//             },
+//         }
+//     }
+
+//     // println!("{results:?}");
+// }
