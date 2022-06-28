@@ -4,7 +4,6 @@ on:
   push:
     branches: [main]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [main]
   schedule:
     - cron: "41 3 * * 6"
@@ -16,43 +15,23 @@ permissions:
 
 jobs:
   semgrep:
-    # User definable name of this GitHub Actions job.
     name: Scan
-    # Only change the if you are self-hosting. See also:
-    # https://docs.github.com/en/actions/using-jobs/choosing-the-runner-for-a-job#choosing-self-hosted-runners
     runs-on: ubuntu-latest
     container:
-      # A Docker image with Semgrep installed. Don't change this.
+      # This job runs inside of a container
       image: returntocorp/semgrep:latest@sha256:f913122a53936f278e32767ec0eb6fef4289c7315a8f36414df390319bb0a539
 
     steps:
       - name: Check out repo
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
-      # Select rules for your scan with one of these two options:
-      #
-      # Option 1: Scan with rules set in Semgrep App's rule board.
-      # Make a token at semgrep.dev/orgs/-/settings/tokens, and then
-      # save it in your GitHub Secrets.
       - name: Run Semgrep
         shell: bash
         run: |
           semgrep scan --sarif --output=semgrep.sarif --config=auto
-        env:
-          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-      # Option 2: Set hard-coded rulesets, viewable in logs.
-      # - run: semgrep scan --sarif --output=semgrep.sarif
-      #   env:
-      #     SEMGREP_RULES: p/default # See more at semgrep.dev/explore.
-      - name: Fix sarif file
-        shell: bash
-        run: |
-          # remove the "fixes": [],
-          # see https://github.com/returntocorp/semgrep/issues/5421
-          sed -i 's/"fixes": \[\], //g' semgrep.sarif
 
       - name: Upload SARIF file for GitHub Advanced Security Dashboard
         if: always()
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@41a4ada31ba866a7f1196b9602703a89edd69e22
         with:
           sarif_file: semgrep.sarif
