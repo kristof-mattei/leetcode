@@ -33,7 +33,7 @@ fn check_cell(
         if let Some(word) = child.word.take() {
             result.push(word);
             found_words += 1;
-    }
+        }
 
         let character = board[row][col];
 
@@ -41,7 +41,7 @@ fn check_cell(
 
         if row > 0 {
             found_words += check_cell(row - 1, col, m, n, board, &mut child, result);
-    }
+        }
         if col > 0 {
             found_words += check_cell(row, col - 1, m, n, board, &mut child, result);
         }
@@ -50,13 +50,13 @@ fn check_cell(
         }
         if col + 1 < n {
             found_words += check_cell(row, col + 1, m, n, board, &mut child, result);
-    }
+        }
 
         board[row][col] = character;
 
         if found_words < child.word_count {
             trie.children[index] = Some(child);
-    }
+        }
     }
 
     found_words
