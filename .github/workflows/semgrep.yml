@@ -17,13 +17,15 @@ jobs:
   semgrep:
     name: Scan
     runs-on: ubuntu-latest
-    container:
-      # This job runs inside of a container
-      image: returntocorp/semgrep:latest@sha256:f913122a53936f278e32767ec0eb6fef4289c7315a8f36414df390319bb0a539
 
     steps:
       - name: Check out repo
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
+      - name: Install Semgrep
+        shell: bash
+        run: |
+          brew install semgrep
 
       - name: Run Semgrep
         shell: bash
