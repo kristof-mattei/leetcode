@@ -1,48 +1,49 @@
-fn is_palindrome(bytes: &[u8]) -> bool {
-    match bytes {
-        [] | [_] => true,
-        [..] => {
-            let mut start = 0;
-
-            let mut end = bytes.len() - 1;
-
-            while start < end {
-                if bytes[start] == bytes[end] {
-                    start += 1;
-                    end -= 1;
-                    continue;
-                }
-
-                return false;
-            }
-
-            true
-        },
+fn insert_delimiter(s: &str) -> Vec<char> {
+    let ss = s;
+    let mut sss = vec!['^', '£'];
+    for i in ss.chars() {
+        sss.push(i);
+        sss.push('£');
     }
+    sss.push('$');
+    sss
+}
+
+fn manachar(s: &str) -> Vec<usize> {
+    use std::cmp;
+    let new_word: Vec<char> = insert_delimiter(s);
+    let new_len = new_word.len();
+    let mut new_vec = vec![0; new_len];
+    let (mut r, mut c) = (0, 0);
+    for i in 1..(new_len - 1) {
+        let m_i = 2 * c - i;
+        if r > i {
+            new_vec[i] = cmp::min(r - i, new_vec[m_i]);
+        } else {
+            new_vec[i] = 0;
+        }
+        while new_word[i + 1 + new_vec[i]] == new_word[i - 1 - new_vec[i]] {
+            new_vec[i] += 1;
+        }
+        if (i + new_vec[i]) > r {
+            r = i + new_vec[i];
+            c = i;
+        }
+    }
+    new_vec
 }
 
 fn shortest_palindrome(s: &str) -> String {
-    if s.is_empty() {
-        return String::from("");
-    }
-    let bytes = s.as_bytes();
-
-    for i in (0..bytes.len()).rev() {
-        if is_palindrome(&bytes[0..=i]) {
-            let mut r = String::with_capacity(s.len() + s.len() - i);
-
-            let mut rev = bytes[(i + 1)..].to_vec();
-            rev.reverse();
-
-            r.push_str(&String::from_utf8_lossy(&rev).to_string());
-
-            r.push_str(s);
-
-            return r;
+    let n = insert_delimiter(s).len();
+    let mut len = 1;
+    let max_palind = manachar(s);
+    for i in 1..n - 1 {
+        if i - max_palind[i] <= 2 {
+            len = max_palind[i];
         }
     }
-
-    unreachable!()
+    let strs: String = s[len..].chars().rev().collect();
+    strs + s
 }
 
 impl Solution {
