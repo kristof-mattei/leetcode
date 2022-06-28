@@ -29,6 +29,8 @@ jobs:
 
       - name: Run Semgrep
         shell: bash
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
         run: |
           semgrep scan --sarif --output=semgrep.sarif --config=auto
 
