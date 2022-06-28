@@ -49,7 +49,6 @@ impl WordDictionary {
 
     #[allow(clippy::needless_pass_by_value)]
     fn add_word(&mut self, word: String) {
-        println!("Inserting {}", word);
         let (to_skip, mut last_matching_index) = self.follow(&word);
 
         for letter in word.bytes().into_iter().skip(to_skip) {
@@ -66,18 +65,6 @@ impl WordDictionary {
 
         self.states[last_matching_index].set_complete();
     }
-
-    // #[allow(clippy::needless_pass_by_value)]
-    // fn search(&self, word: String) -> bool {
-    //     let index = self.follow(&word);
-    //     word.as_bytes().get(index + 1).is_none() && self.states[index].is_complete()
-    // }
-    // fn follow(&self, word: &str) -> usize {
-    //     word.as_bytes()
-    //         .iter()
-    //         .try_fold(0, |acc, curr| self.states[acc].next(*curr).ok_or(acc))
-    //         .map_or_else(|e| e, |o| o)
-    // }
 
     #[allow(clippy::needless_pass_by_value)]
     fn search_r(&self, word: &[u8], mut acc: usize) -> bool {
