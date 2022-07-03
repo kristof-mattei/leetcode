@@ -87,10 +87,22 @@ jobs:
 
           cargo --version
 
+      - name: Get binstall
+        shell: bash
+        run: |
+          archive="cargo-binstall-x86_64-unknown-linux-musl.tgz"
+          wget "https://github.com/ryankurte/cargo-binstall/releases/latest/download/${archive}"
+
+          tar -xvf "./${archive}"
+
+          rm "./${archive}"
+
+          mv ./cargo-binstall ~/.cargo/bin/binstall
+
       - name: Install cocogitto to get the next version number
         shell: bash
         run: |
-          cargo install --locked cocogitto;
+          cargo binstall cocogitto --pkg-url "{ repo }/releases/download/{ version }/{ name }-{ version }-{ target }.tar.gz";
 
       - name: Calculate next version
         id: version
@@ -220,15 +232,27 @@ jobs:
         run: |
           rustup component add llvm-tools-preview
 
+      - name: Get binstall
+        shell: bash
+        run: |
+          archive="cargo-binstall-x86_64-unknown-linux-musl.tgz"
+          wget "https://github.com/ryankurte/cargo-binstall/releases/latest/download/${archive}"
+
+          tar -xvf "./${archive}"
+
+          rm "./${archive}"
+
+          mv ./cargo-binstall ~/.cargo/bin/binstall
+
       - name: Install nextest, custom test runner, with native support for junit
         shell: bash
         run: |
-          cargo install --locked cargo-nextest;
+          cargo binstall cargo-nextest;
 
       - name: Install grcov
         shell: bash
         run: |
-          cargo install --locked grcov;
+          cargo binstall grcov --pkg-url "{ repo }/releases/download/v{ version }/{ name }-{ target }.tar.bz2" --pkg-fmt tbz2
 
       - name: Build with instrumentation support
         shell: bash
