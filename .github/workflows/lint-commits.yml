@@ -44,9 +44,22 @@ jobs:
 
           cargo --version
 
-      - name: Install cocogitto for commit linting
+      - name: Get binstall
+        shell: bash
         run: |
-          cargo install --locked cocogitto;
+          archive="cargo-binstall-x86_64-unknown-linux-musl.tgz"
+          wget "https://github.com/ryankurte/cargo-binstall/releases/latest/download/${archive}"
+
+          tar -xvf "./${archive}"
+
+          rm "./${archive}"
+
+          mv ./cargo-binstall ~/.cargo/bin/
+
+      - name: Install cocogitto to get the next version number
+        shell: bash
+        run: |
+          cargo binstall --no-confirm cocogitto --pkg-url "{ repo }/releases/download/{ version }/{ name }-{ version }-{ target }.tar.gz" --bin-dir "{ bin }";
 
       - name: Check the commits
         shell: bash
