@@ -276,7 +276,7 @@ jobs:
         with:
           check_name: Test results
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          files: reports/results.xml
+          junit_files: reports/results.xml
 
       - name: Run grcov
         shell: bash
