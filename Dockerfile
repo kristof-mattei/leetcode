@@ -25,7 +25,6 @@ COPY Cargo.toml Cargo.lock ./
 RUN --mount=type=cache,target=/build/rust-end-to-end-application/target \
     cargo build --release --target ${TARGET}
 
-
 # now we copy in the source which is more prone to changes and build it
 COPY src ./src
 # --release not needed, it is implied with install
@@ -39,5 +38,4 @@ USER appuser
 
 WORKDIR /app
 COPY --from=builder /output/bin/rust-end-to-end-application /app
-USER appuser
 ENTRYPOINT ["/app/rust-end-to-end-application"]
