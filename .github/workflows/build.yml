@@ -378,7 +378,7 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6
+        uses: docker/setup-buildx-action@312f67c6629946ba17269558b63d0bd84a63caab
 
       # TODO validate no changes between github.event.pull_request.head.sha and the actual current sha (representing the hypothetical merge)
 
@@ -438,7 +438,7 @@ jobs:
     if: ${{ github.repository == 'kristof-mattei/rust-end-to-end-application' && github.event_name == 'pull_request' }}
     steps:
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6
+        uses: docker/setup-buildx-action@312f67c6629946ba17269558b63d0bd84a63caab
 
       - name: Download artifact
         uses: actions/download-artifact@076f0f7dd036d87e8e04f5f00d614e790308961b
