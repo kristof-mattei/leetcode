@@ -1,5 +1,7 @@
 {
     "extends": [
-        "github>kristof-mattei/renovate-config"
+        "github>kristof-mattei/renovate-config",
+        "github>kristof-mattei/renovate-config//rust/updateupdateRustVersionInCargoToml",
+        "github>kristof-mattei/renovate-config//rust/updateChannelInRustToolchainToml"
     ]
 }
