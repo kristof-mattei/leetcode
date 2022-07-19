@@ -290,11 +290,11 @@ jobs:
           directory: reports
           fail_ci_if_error: true
 
-      - name: Upload to Coveralls
-        uses: coverallsapp/github-action@3284643be2c47fb6432518ecec17f1255e8a06a6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: reports/lcov.info
+      # - name: Upload to Coveralls
+      #   uses: coverallsapp/github-action@3284643be2c47fb6432518ecec17f1255e8a06a6
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     path-to-lcov: reports/lcov.info
 
       - name: Setup Code Climate Test Reporter
         shell: bash
