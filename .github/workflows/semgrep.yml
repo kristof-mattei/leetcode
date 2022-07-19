@@ -36,6 +36,6 @@ jobs:
 
       - name: Upload SARIF file for GitHub Advanced Security Dashboard
         if: always()
-        uses: github/codeql-action/upload-sarif@3e7e3b32d0fb8283594bb0a76cc60a00918b0969
+        uses: github/codeql-action/upload-sarif@ba95eeb60ecae6c0c6ffcec05f8958b46ef39e79
         with:
           sarif_file: semgrep.sarif
