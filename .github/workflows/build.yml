@@ -176,7 +176,7 @@ jobs:
       - name: Install grcov
         shell: bash
         run: |
-          cargo binstall --no-confirm grcov --pkg-url "{ repo }/releases/download/v{ version }/{ name }-{ target }.tar.bz2" --pkg-fmt tbz2 --bin-dir "{ bin }";
+          cargo binstall --no-confirm grcov --pkg-url "{ repo }/releases/download/v{ version }/{ name }-{ target }.tar.bz2" --pkg-fmt Tbz2 --bin-dir "{ bin }";
 
       - name: Build with instrumentation support
         shell: bash
@@ -196,7 +196,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload test results
-        uses: EnricoMi/publish-unit-test-result-action@4cab3f4e0e4840922b50c099cf0c52b7aae0f2c4
+        uses: EnricoMi/publish-unit-test-result-action@8b03530a086aaacbc2e00a9743670685273623a0
         with:
           check_name: Test results
           github_token: ${{ secrets.GITHUB_TOKEN }}
