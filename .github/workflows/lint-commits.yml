@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0
 
       - name: Cache dependencies
-        uses: actions/cache@71e3ee5cce2c68463a957afeb44ac60fb1ef7907
+        uses: actions/cache@4387dbc81ae9321da605e73c0b1f097efb97dd1d
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
