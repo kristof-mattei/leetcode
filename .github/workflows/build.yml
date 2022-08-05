@@ -66,7 +66,7 @@ jobs:
           fetch-depth: 0
 
       - name: Cache dependencies
-        uses: actions/cache@4387dbc81ae9321da605e73c0b1f097efb97dd1d
+        uses: actions/cache@f4278025ab0f432ce369118909e46deec636f50c
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -131,7 +131,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Cache dependencies
-        uses: actions/cache@4387dbc81ae9321da605e73c0b1f097efb97dd1d
+        uses: actions/cache@f4278025ab0f432ce369118909e46deec636f50c
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -169,7 +169,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Cache dependencies
-        uses: actions/cache@4387dbc81ae9321da605e73c0b1f097efb97dd1d
+        uses: actions/cache@f4278025ab0f432ce369118909e46deec636f50c
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -207,7 +207,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Cache dependencies
-        uses: actions/cache@4387dbc81ae9321da605e73c0b1f097efb97dd1d
+        uses: actions/cache@f4278025ab0f432ce369118909e46deec636f50c
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -335,7 +335,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Cache dependencies
-        uses: actions/cache@4387dbc81ae9321da605e73c0b1f097efb97dd1d
+        uses: actions/cache@f4278025ab0f432ce369118909e46deec636f50c
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
