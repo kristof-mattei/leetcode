@@ -70,7 +70,7 @@ jobs:
           npm ci --ignore-scripts
 
       - name: Download crane tar, extract, and add folder to path.
-        uses: actions/github-script@46a476b63873db13c0e745b5ff456324742dfe00
+        uses: actions/github-script@d50f485531ba88479582bc2da03ff424389af5c1
         with:
           script: |
             const tc = require("@actions/tool-cache");
