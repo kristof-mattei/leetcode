@@ -3,7 +3,7 @@ name = "leetcode"
 # don't change this, it's updated before an actual build by update-version.sh
 version = "0.0.0-development"
 edition = "2021"
-rust-version = "1.62.1"
+rust-version = "1.63.0"
 authors = ["Kristof Mattei"]
 license-file = "LICENSE"
 description = "Leet Code"
