@@ -49,7 +49,7 @@ fn search_range(nums: &[i32], target: i32) -> Vec<i32> {
 
         return vec![start_index as i32, end_index as i32];
     }
-    return vec![-1, -1];
+    vec![-1, -1]
 }
 
 impl Solution {

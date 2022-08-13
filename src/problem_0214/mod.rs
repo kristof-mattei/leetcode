@@ -34,7 +34,7 @@ fn shortest_palindrome(s: &str) -> String {
             let mut rev = bytes[(i + 1)..].to_vec();
             rev.reverse();
 
-            r.push_str(&String::from_utf8_lossy(&rev).to_string());
+            r.push_str(&String::from_utf8_lossy(&rev));
 
             r.push_str(s);
 
