@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Setup Node.js
-        uses: actions/setup-node@e954e154314f6a50ae79ea6c1c369b1f340307ff
+        uses: actions/setup-node@d04c34e7d9c7fa48998fb73e5b5961bf9d8bf317
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
