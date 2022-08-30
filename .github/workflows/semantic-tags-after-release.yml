@@ -24,10 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@9fc76ff6856cd291b7d7ce307628ba4b8d7bc186
+        uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
@@ -39,7 +39,7 @@ jobs:
           npm ci --ignore-scripts
 
       - name: Split the incoming tag into major, minor and patch
-        uses: actions/github-script@c713e510dbd7d213d92d41b7a7805a986f4c5c66
+        uses: actions/github-script@v6
         env:
           # because in the JS github variable ref_name isn't there
           TAGNAME: ${{ github.ref_name }}
@@ -56,7 +56,7 @@ jobs:
             core.exportVariable("PATCH", parsed.patch);
 
       - name: Move v${{ env.MAJOR }} and v${{ env.MAJOR }}.${{ env.MINOR }} tags
-        uses: actions/github-script@c713e510dbd7d213d92d41b7a7805a986f4c5c66
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -117,10 +117,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@9fc76ff6856cd291b7d7ce307628ba4b8d7bc186
+        uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
@@ -132,7 +132,7 @@ jobs:
           npm ci --ignore-scripts
 
       - name: Download crane tar, extract, and add folder to path.
-        uses: actions/github-script@c713e510dbd7d213d92d41b7a7805a986f4c5c66
+        uses: actions/github-script@v6
         with:
           script: |
             const tc = require("@actions/tool-cache");
@@ -154,7 +154,7 @@ jobs:
             core.addPath(craneExtractedFolder);
 
       - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@be010b42938448d8a286c21d5c4ccf2aae1524a1
+        uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -184,7 +184,7 @@ jobs:
 
       - name: Set the new TAGs
         id: meta
-        uses: docker/metadata-action@59bc9ddfd5a31eb6f5b55e89b65578fe3bbba85e
+        uses: docker/metadata-action@v4
         with:
           images: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
           tags: |
