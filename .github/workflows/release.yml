@@ -33,12 +33,12 @@ jobs:
           exit 1
 
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.TOKEN_TO_TRIGGER_SUBSEQUENT_WORKFLOWS }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@9fc76ff6856cd291b7d7ce307628ba4b8d7bc186
+        uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
