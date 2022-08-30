@@ -66,7 +66,7 @@ jobs:
           fetch-depth: 0
 
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # tag=v3.0.8
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -131,7 +131,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # tag=v3.0.8
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -169,7 +169,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # tag=v3.0.8
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -207,7 +207,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # tag=v3.0.8
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -322,7 +322,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # tag=v3.0.8
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
