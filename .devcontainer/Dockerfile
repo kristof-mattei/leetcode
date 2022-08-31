@@ -1,7 +1,4 @@
-# See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.195.0/containers/rust/.devcontainer/base.Dockerfile
-# [Choice] Debian OS version (use bullseye on local arm64/Apple Silicon): buster, bullseye
-ARG VARIANT="bullseye"
-FROM mcr.microsoft.com/vscode/devcontainers/rust:1-${VARIANT}
+FROM mcr.microsoft.com/vscode/devcontainers/rust:1-bullseye@sha256:f42f6c3e4b4acbf0768bfd3d9708544124df25c5a907e94443be8f7406b845d9
 
 # [Optional] Uncomment this section to install additional packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \

@@ -33,10 +33,10 @@ jobs:
       code: ${{ steps.filter.outputs.code }}
     steps:
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
 
       - name: Check if we actually made changes
-        uses: dorny/paths-filter@8c7f485a57f7cad3483dcc0fdf36122a0542f200
+        uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721 # tag=v2.10.2
         id: filter
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -51,10 +51,10 @@ jobs:
       (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
     steps:
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
 
       - name: Cache dependencies
-        uses: actions/cache@b195c997a41f41d0dab6d9aafe79e437611b78db
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # tag=v3.0.8
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -89,10 +89,10 @@ jobs:
       (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
     steps:
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
 
       - name: Cache dependencies
-        uses: actions/cache@b195c997a41f41d0dab6d9aafe79e437611b78db
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # tag=v3.0.8
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -127,10 +127,10 @@ jobs:
       (needs.changes.outputs.code == 'true')
     steps:
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
 
       - name: Cache dependencies
-        uses: actions/cache@b195c997a41f41d0dab6d9aafe79e437611b78db
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # tag=v3.0.8
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -196,7 +196,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload test results
-        uses: EnricoMi/publish-unit-test-result-action@60624fdd8b1c397574bea72453e03235683eca86
+        uses: EnricoMi/publish-unit-test-result-action@2a60c5d47eb29cd5cc922f51bbea18e148f56203 # tag=v2
         with:
           check_name: Test results
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -206,19 +206,6 @@ jobs:
         shell: bash
         run: |
           grcov $(find profiling -name "profile-*.profraw" -print) --source-dir . --binary-path ./target/debug/ --output-type lcov --branch --ignore-not-existing --llvm --keep-only 'src/**' --keep-only 'tests/**' --output-path ./reports/lcov.info
-
-      - name: Upload to CodeCov
-        uses: codecov/codecov-action@7f20bd4c4151750a1d013be0901b7e35a46c2aad
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          directory: reports
-          fail_ci_if_error: true
-
-      # - name: Upload to Coveralls
-      #   uses: coverallsapp/github-action@3284643be2c47fb6432518ecec17f1255e8a06a6
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     path-to-lcov: reports/lcov.info
 
       - name: Setup Code Climate Test Reporter
         shell: bash
@@ -255,10 +242,10 @@ jobs:
       (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
     steps:
       - name: Checkout
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
 
       - name: Cache dependencies
-        uses: actions/cache@b195c997a41f41d0dab6d9aafe79e437611b78db
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # tag=v3.0.8
         env:
           CACHE_NAME: cargo-cache-dependencies
         with:
@@ -280,7 +267,7 @@ jobs:
           cargo --version
 
       - name: Run Clippy for GitHub Actions report
-        uses: actions-rs/clippy-check@b5b5f21f4797c02da247df37026fcd0a5024aa4d
+        uses: actions-rs/clippy-check@b5b5f21f4797c02da247df37026fcd0a5024aa4d # tag=v1.0.7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --workspace --all-targets --all-features -- --deny clippy::all --warn clippy::pedantic --warn clippy::cargo
