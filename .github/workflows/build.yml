@@ -253,7 +253,7 @@ jobs:
       - name: Install grcov
         shell: bash
         run: |
-          cargo binstall --no-confirm grcov --pkg-url "{ repo }/releases/download/v{ version }/{ name }-{ target }.tar.bz2" --pkg-fmt Tbz2 --bin-dir "{ bin }";
+          cargo binstall --no-confirm grcov --pkg-url "{ repo }/releases/download/v{ version }/{ name }-{ target }.tar.bz2" --pkg-fmt tbz2 --bin-dir "{ bin }";
 
       - name: Build with instrumentation support
         shell: bash
