@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/googleapis/repo-automation-bots/main/packages/sync-repo-settings/src/schema.json
+# Whether or not rebase-merging is enabled on this repository.
+# Defaults to `true`
+rebaseMergeAllowed: false
+
+# Whether or not squash-merging is enabled on this repository.
+# Defaults to `true`
+squashMergeAllowed: false
+
+# Whether or not PRs are merged with a merge commit on this repository.
+# Defaults to `false`
+mergeCommitAllowed: true
+
+# Automatically delete head branches after merging PRs.  Defaults to `true`.
+deleteBranchOnMerge: true
+
+# Rules for branch protection (add multiple entries to configure multiple branches)
+branchProtectionRules:
+  # Identifies the protection rule pattern. Name of the branch to be protected.
+  # Defaults to `master`
+  - pattern: main
+    # Will new commits pushed to matching branches dissmiss pull request review approvals.
+    # Defaults to `false`
+    dismissesStaleReviews: false
+    # Can admins overwrite branch protection.
+    # Defaults to `true`
+    isAdminEnforced: true
+    # Number of approving reviews required to update matching branches.
+    # Defaults to `1`
+    requiredApprovingReviewCount: 1
+    # Are reviews from code owners required to update matching branches.
+    # Defaults to `false`
+    requiresCodeOwnerReviews: true
+    # Require up to date branches
+    requiresStrictStatusChecks: true
+    # List of required status check contexts that must pass for commits to be accepted to matching branches.
+    requiredStatusCheckContexts:
+      - "All done"
+    # Are commits required to be signed.
+    # Defaults to `false`
+    requiresCommitSignatures: false
+    # Are status checks required to update matching branches.
+    # Defaults to `true`
+    requiresStatusChecks: true
+    # Is pushing to matching branches restricted.
+    # Defaults to `false`
+    restrictsPushes: true
+    # Is dismissal of pull request reviews restricted.
+    # Defaults to `false`
+    restrictsReviewDismissals: false
+    # Is linear history required for this branch.
+    # Defaults to `true`
+    requiresLinearHistory: false
+# # List of explicit permissions to add (additive only)
+# permissionRules:
+#     # Team slug to add to repository permissions
+#   - team: team1
+#     # Access level required, one of push|pull|admin
+#     permission: push
