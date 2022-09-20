@@ -27,7 +27,7 @@ branchProtectionRules:
     isAdminEnforced: true
     # Number of approving reviews required to update matching branches.
     # Defaults to `1`
-    requiredApprovingReviewCount: 1
+    requiredApprovingReviewCount: 0
     # Are reviews from code owners required to update matching branches.
     # Defaults to `false`
     requiresCodeOwnerReviews: true
