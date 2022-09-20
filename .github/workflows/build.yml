@@ -284,6 +284,13 @@ jobs:
         run: |
           grcov $(find profiling -name "profile-*.profraw" -print) --source-dir . --binary-path ./target/debug/ --output-type lcov --branch --ignore-not-existing --llvm --keep-only 'src/**' --keep-only 'tests/**' --output-path ./reports/lcov.info
 
+      - name: Upload to CodeCov
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70 # tag=v3.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: reports
+          fail_ci_if_error: true
+
       - name: Setup Code Climate Test Reporter
         shell: bash
         run: |
