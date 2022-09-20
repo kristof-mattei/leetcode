@@ -30,7 +30,7 @@ branchProtectionRules:
     requiredApprovingReviewCount: 0
     # Are reviews from code owners required to update matching branches.
     # Defaults to `false`
-    requiresCodeOwnerReviews: true
+    requiresCodeOwnerReviews: false
     # Require up to date branches
     requiresStrictStatusChecks: true
     # List of required status check contexts that must pass for commits to be accepted to matching branches.
@@ -47,7 +47,7 @@ branchProtectionRules:
     restrictsPushes: true
     # Is dismissal of pull request reviews restricted.
     # Defaults to `false`
-    restrictsReviewDismissals: false
+    restrictsReviewDismissals: true
     # Is linear history required for this branch.
     # Defaults to `true`
     requiresLinearHistory: false
