@@ -38,7 +38,7 @@ branchProtectionRules:
       - "All done"
     # Are commits required to be signed.
     # Defaults to `false`
-    requiresCommitSignatures: false
+    requiresCommitSignatures: true
     # Are status checks required to update matching branches.
     # Defaults to `true`
     requiresStatusChecks: true
