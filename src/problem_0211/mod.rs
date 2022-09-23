@@ -18,7 +18,7 @@ impl State {
         // as `Trie.states[0]` is actually the entrypoint state, and is never used outside of that
         // TODO: self.0 should be of type [Option<u16>;26] so that we don't need to rely
         // on 0 being a magic number
-        (next_index != 0).then(|| next_index as usize)
+        (next_index != 0).then_some(next_index as usize)
     }
 
     pub fn is_complete(&self) -> bool {
@@ -73,7 +73,7 @@ impl WordDictionary {
                 for s in self.states[acc]
                     .0
                     .iter()
-                    .filter_map(|&o| (o != 0).then(|| (o as usize)))
+                    .filter_map(|&o| (o != 0).then_some(o as usize))
                 {
                     if self.search_r(&word[(index + 1)..], s) {
                         return true;
