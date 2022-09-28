@@ -18,21 +18,19 @@ jobs:
     name: Scan
     runs-on: ubuntu-latest
 
+    container:
+      image: returntocorp/semgrep
+
     steps:
       - name: Check out repo
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
 
-      - name: Install Semgrep
-        shell: bash
-        run: |
-          brew install semgrep
-
-      - name: Run Semgrep
+      - name: Run semgrep
         shell: bash
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
         run: |
-          semgrep scan --sarif --output=semgrep.sarif --config=auto
+          semgrep ci --sarif --output=semgrep.sarif
 
       - name: Upload SARIF file for GitHub Advanced Security Dashboard
         if: always()
