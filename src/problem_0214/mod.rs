@@ -1,54 +1,51 @@
-fn is_palindrome(bytes: &[u8]) -> bool {
-    match bytes {
-        [] | [_] => true,
-        [..] => {
-            let mut start = 0;
+fn find_lps(s: &[char]) -> usize {
+    let n = s.len();
 
-            let mut end = bytes.len() - 1;
+    let mut lps = vec![0; n];
 
-            while start < end {
-                if bytes[start] == bytes[end] {
-                    start += 1;
-                    end -= 1;
-                    continue;
-                }
+    let mut len = 0;
+    let mut i = 1;
 
-                return false;
-            }
-
-            true
-        },
-    }
-}
-
-fn shortest_palindrome(s: &str) -> String {
-    if s.is_empty() {
-        return String::from("");
-    }
-    let bytes = s.as_bytes();
-
-    for i in (0..bytes.len()).rev() {
-        if is_palindrome(&bytes[0..=i]) {
-            let mut r = String::with_capacity(s.len() + s.len() - i);
-
-            let mut rev = bytes[(i + 1)..].to_vec();
-            rev.reverse();
-
-            r.push_str(&String::from_utf8_lossy(&rev));
-
-            r.push_str(s);
-
-            return r;
+    while i < n {
+        if s[len] == s[i] {
+            len += 1;
+            lps[i] = len;
+            i += 1;
+        } else if len != 0 {
+            len = lps[len - 1];
+        } else {
+            lps[i] = 0;
+            i += 1;
         }
     }
 
-    unreachable!()
+    lps[n - 1]
+}
+
+fn shortest_palindrome(s: &str) -> String {
+    let mut original = s.chars().collect::<Vec<char>>();
+
+    // char length, not byte length
+    let original_length = &original.len();
+
+    original.push('#');
+    original.extend(s.chars().rev());
+
+    let length = find_lps(original.as_slice());
+
+    format!(
+        "{}{}",
+        s.chars()
+            .rev()
+            .take(original_length - length)
+            .collect::<String>(),
+        s
+    )
 }
 
 impl Solution {
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
-
     pub fn shortest_palindrome(s: String) -> String {
         shortest_palindrome(&s)
     }
