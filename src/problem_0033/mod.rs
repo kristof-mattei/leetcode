@@ -13,7 +13,7 @@ fn search(nums: &[i32], target: i32) -> i32 {
 
         // if our middle > the end
         match nums[middle].cmp(&nums[end - 1]) {
-            Ordering::Greater => {
+            | Ordering::Greater => {
                 // if our target is below the middle
                 // AND larger than the beginning
                 if target >= nums[offset] && target < nums[middle] {
@@ -24,7 +24,7 @@ fn search(nums: &[i32], target: i32) -> i32 {
                     offset = middle + 1;
                 }
             },
-            Ordering::Less | Ordering::Equal => {
+            | Ordering::Less | Ordering::Equal => {
                 // our middle is less than the end
                 // if our target sits on the right side of middle
                 if target > nums[middle] && target <= nums[end - 1] {

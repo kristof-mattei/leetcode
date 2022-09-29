@@ -7,17 +7,17 @@ enum Direction {
 impl Direction {
     fn next(&self, u: usize) -> usize {
         match self {
-            Direction::Decrease => u.wrapping_sub(1),
-            Direction::Standstill => u,
-            Direction::Increase => u + 1,
+            | Direction::Decrease => u.wrapping_sub(1),
+            | Direction::Standstill => u,
+            | Direction::Increase => u + 1,
         }
     }
 
     fn flip(&mut self) {
         *self = match *self {
-            Direction::Decrease => Direction::Increase,
-            Direction::Standstill => Direction::Standstill,
-            Direction::Increase => Direction::Decrease,
+            | Direction::Decrease => Direction::Increase,
+            | Direction::Standstill => Direction::Standstill,
+            | Direction::Increase => Direction::Decrease,
         }
     }
 }

@@ -11,18 +11,18 @@ fn postorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
             let mut borrow = node.borrow_mut();
 
             match (borrow.left.take(), borrow.right.take()) {
-                (None, None) => {
+                | (None, None) => {
                     results.push(borrow.val);
                 },
-                (Some(l), None) => {
+                | (Some(l), None) => {
                     queue.push(node.clone());
                     queue.push(l);
                 },
-                (None, Some(r)) => {
+                | (None, Some(r)) => {
                     queue.push(node.clone());
                     queue.push(r);
                 },
-                (Some(l), Some(r)) => {
+                | (Some(l), Some(r)) => {
                     queue.push(node.clone());
                     queue.push(r);
 

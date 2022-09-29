@@ -6,10 +6,10 @@ fn climb_stairs_r(cache: &mut HashMap<i32, i32>, n: i32) -> i32 {
     }
 
     let result = match n {
-        0 => 0,
-        1 => 1,
-        2 => 2,
-        _ => climb_stairs_r(cache, n - 1) + climb_stairs_r(cache, n - 2),
+        | 0 => 0,
+        | 1 => 1,
+        | 2 => 2,
+        | _ => climb_stairs_r(cache, n - 1) + climb_stairs_r(cache, n - 2),
     };
 
     cache.insert(n, result);

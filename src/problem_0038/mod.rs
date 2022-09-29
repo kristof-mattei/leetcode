@@ -8,10 +8,10 @@ fn count_and_say_r(n: i32) -> Vec<u32> {
 
     for o in c_a_s {
         match n.last_mut() {
-            Some((number, count)) if *number == o => {
+            | Some((number, count)) if *number == o => {
                 *count += 1;
             },
-            Some(_) | None => n.push((o, 1u32)),
+            | Some(_) | None => n.push((o, 1u32)),
         }
     }
 

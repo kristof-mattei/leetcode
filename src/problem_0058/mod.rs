@@ -2,8 +2,8 @@ fn length_of_last_word(s: &str) -> i32 {
     let trimmed = s.trim_end();
 
     let l = match trimmed.rsplit_once(' ') {
-        Some((_, r)) => r.len(),
-        None => trimmed.len(),
+        | Some((_, r)) => r.len(),
+        | None => trimmed.len(),
     };
 
     l as i32

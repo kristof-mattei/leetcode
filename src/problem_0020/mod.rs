@@ -5,15 +5,15 @@ fn is_valid(s: &str) -> bool {
 
     for symbol in s.chars() {
         match symbol {
-            '(' => opens.push(')'),
-            '[' => opens.push(']'),
-            '{' => opens.push('}'),
-            ')' | ']' | '}' => {
+            | '(' => opens.push(')'),
+            | '[' => opens.push(']'),
+            | '{' => opens.push('}'),
+            | ')' | ']' | '}' => {
                 if Some(symbol) != opens.pop() {
                     return false;
                 }
             },
-            _ => unreachable!(),
+            | _ => unreachable!(),
         }
     }
 

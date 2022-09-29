@@ -7,15 +7,15 @@ fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
         let n = nums[index];
 
         match n.cmp(&previous) {
-            std::cmp::Ordering::Equal => {
+            | std::cmp::Ordering::Equal => {
                 let _ = nums.remove(index);
                 length -= 1;
             },
-            std::cmp::Ordering::Greater => {
+            | std::cmp::Ordering::Greater => {
                 previous = n;
                 index += 1;
             },
-            std::cmp::Ordering::Less => unreachable!(),
+            | std::cmp::Ordering::Less => unreachable!(),
         };
     }
     (length) as i32

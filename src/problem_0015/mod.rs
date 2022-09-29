@@ -19,7 +19,7 @@ fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
         while tripple_2_index < tripple_3_index {
             let sum = nums[tripple_1_index] + nums[tripple_2_index] + nums[tripple_3_index];
             match sum {
-                0 => {
+                | 0 => {
                     tripples.push(vec![
                         nums[tripple_1_index],
                         nums[tripple_2_index],
@@ -35,11 +35,11 @@ fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
                         tripple_3_index -= 1;
                     }
                 },
-                _ if sum > 0 => {
+                | _ if sum > 0 => {
                     // Decrement to reduce sum value (we're sorted)
                     tripple_3_index -= 1;
                 },
-                _ => {
+                | _ => {
                     // Increment to increase sum value
                     tripple_2_index += 1;
                 },

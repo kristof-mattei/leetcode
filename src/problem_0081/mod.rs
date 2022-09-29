@@ -12,21 +12,21 @@ fn search(nums: &[i32], target: i32) -> bool {
         }
 
         match nums[middle].cmp(&nums[end - 1]) {
-            Ordering::Greater => {
+            | Ordering::Greater => {
                 if target >= nums[offset] && target < nums[middle] {
                     end -= 1;
                 } else {
                     offset = middle + 1;
                 }
             },
-            Ordering::Less => {
+            | Ordering::Less => {
                 if target > nums[middle] && target <= nums[end - 1] {
                     offset = middle + 1;
                 } else {
                     end -= 1;
                 }
             },
-            Ordering::Equal => {
+            | Ordering::Equal => {
                 while offset < nums.len() && nums[offset] == nums[middle] {
                     offset += 1;
                 }

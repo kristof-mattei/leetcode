@@ -2,8 +2,8 @@ use crate::shared::ListNode;
 
 fn delete_duplicates_r_mut(head: &mut Option<Box<ListNode>>) {
     let h = match head {
-        Some(h) => h,
-        None => {
+        | Some(h) => h,
+        | None => {
             return;
         },
     };

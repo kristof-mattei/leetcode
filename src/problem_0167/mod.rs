@@ -6,11 +6,11 @@ fn two_sum(numbers: &[i32], target: i32) -> Vec<i32> {
 
     loop {
         match (numbers[left] + numbers[right]).cmp(&target) {
-            Ordering::Less => {
+            | Ordering::Less => {
                 left += 1;
             },
-            Ordering::Equal => return vec![(left + 1) as i32, (right + 1) as i32],
-            Ordering::Greater => {
+            | Ordering::Equal => return vec![(left + 1) as i32, (right + 1) as i32],
+            | Ordering::Greater => {
                 right -= 1;
             },
         }

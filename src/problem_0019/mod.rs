@@ -2,8 +2,8 @@ use crate::shared::ListNode;
 
 fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> (Option<Box<ListNode>>, usize) {
     match head {
-        None => (None, 1),
-        Some(mut node) => {
+        | None => (None, 1),
+        | Some(mut node) => {
             let (next_of_next, distance_from_end) = remove_nth_from_end(node.next, n);
             // if we are at distance from end, we
             // return the next_of_next instead

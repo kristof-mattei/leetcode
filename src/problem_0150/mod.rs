@@ -12,11 +12,11 @@ where
             let first = unsafe { stack.pop().unwrap_unchecked() };
 
             stack.push(match token.as_ref() {
-                "+" => first + second,
-                "-" => first - second,
-                "*" => first * second,
-                "/" => first / second,
-                _ => unreachable!(),
+                | "+" => first + second,
+                | "-" => first - second,
+                | "*" => first * second,
+                | "/" => first / second,
+                | _ => unreachable!(),
             });
         }
     }

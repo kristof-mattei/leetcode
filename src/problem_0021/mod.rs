@@ -5,9 +5,9 @@ fn merge_two_lists(
     head2: Option<Box<ListNode>>,
 ) -> Option<Box<ListNode>> {
     match (head1, head2) {
-        (None, None) => None,
-        (None, Some(n)) | (Some(n), None) => Some(n),
-        (Some(mut l), Some(mut r)) => {
+        | (None, None) => None,
+        | (None, Some(n)) | (Some(n), None) => Some(n),
+        | (Some(mut l), Some(mut r)) => {
             let n = if l.val <= r.val {
                 l.next = merge_two_lists(l.next, Some(r));
                 l
