@@ -3,8 +3,8 @@ fn reverse(mut x: i32) -> i32 {
 
     while x != 0 {
         r = match r.checked_mul(10) {
-            | Some(x) => x,
-            | None => {
+            Some(x) => x,
+            None => {
                 return 0;
             },
         };

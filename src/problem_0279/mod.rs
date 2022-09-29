@@ -12,16 +12,16 @@ fn num_squares(n: i32) -> i32 {
             let target = val + i * i;
 
             match target.cmp(&n) {
-                | Ordering::Less => {
+                Ordering::Less => {
                     if dp[target as usize] == 0 {
                         dp[target as usize] = step + 1;
                         queue.push_back((target, step + 1));
                     }
                 },
-                | Ordering::Equal => {
+                Ordering::Equal => {
                     return step + 1;
                 },
-                | Ordering::Greater => {
+                Ordering::Greater => {
                     break;
                 },
             }

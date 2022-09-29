@@ -1,7 +1,7 @@
 fn process(c: char) -> Option<char> {
     match c.to_ascii_lowercase() {
-        | l @ ('0'..='9' | 'a'..='z') => Some(l),
-        | _ => None,
+        l @ ('0'..='9' | 'a'..='z') => Some(l),
+        _ => None,
     }
 }
 

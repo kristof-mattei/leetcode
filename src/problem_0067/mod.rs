@@ -23,11 +23,11 @@ fn add(long: &str, short: &str) -> String {
         // (long_v[i], carry) = match &[l, s, carry].iter().filter(|&&v| v).count() {
 
         let (b, c) = match &[l, s, carry].iter().filter(|&&v| v).count() {
-            | 0 => (b'0', false),
-            | 1 => (b'1', false),
-            | 2 => (b'0', true),
-            | 3 => (b'1', true),
-            | _ => unreachable!(),
+            0 => (b'0', false),
+            1 => (b'1', false),
+            2 => (b'0', true),
+            3 => (b'1', true),
+            _ => unreachable!(),
         };
 
         long_v[i] = b;

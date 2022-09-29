@@ -9,8 +9,8 @@ fn longest_common_prefix(strs: &[String]) -> String {
     'outer: while let Some(char) = as_chars[0].get(index) {
         for ac in as_chars.iter().skip(1) {
             match ac.get(index) {
-                | Some(c) if c == char => {},
-                | _ => break 'outer,
+                Some(c) if c == char => {},
+                _ => break 'outer,
             }
         }
 
@@ -30,8 +30,8 @@ fn longest_common_prefix_a_z(strs: &[String]) -> String {
     'outer: while let Some(char) = strs[0].get(index..=index) {
         for ac in strs.iter().skip(1) {
             match ac.get(index..=index) {
-                | Some(c) if c == char => {},
-                | _ => break 'outer,
+                Some(c) if c == char => {},
+                _ => break 'outer,
             }
         }
 

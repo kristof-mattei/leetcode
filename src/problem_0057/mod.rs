@@ -34,8 +34,8 @@ fn insert(mut intervals: Vec<Vec<i32>>, new_interval: Vec<i32>) -> Vec<Vec<i32>>
             match interval[0].cmp(&new_interval[0]) {
                 // for calculation the one before doesn't matter
                 // as they are non-overlapping, due to the question's guarantees
-                | Ordering::Equal => Some((i, false)),
-                | Ordering::Greater => {
+                Ordering::Equal => Some((i, false)),
+                Ordering::Greater => {
                     // if the interval is greater than our new one
                     // we want to check include the one before
                     // becaue the one before might overlap with ours, and we're doing everything
@@ -49,7 +49,7 @@ fn insert(mut intervals: Vec<Vec<i32>>, new_interval: Vec<i32>) -> Vec<Vec<i32>>
 
                     Some((if p { i - 1 } else { i }, p))
                 },
-                | Ordering::Less => None,
+                Ordering::Less => None,
             }
         })
         .unwrap_or_else(|| {

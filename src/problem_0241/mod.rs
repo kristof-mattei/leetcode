@@ -13,10 +13,10 @@ fn diff_ways_to_compute(expression: &str) -> Vec<i32> {
             for a in &left {
                 for b in &right {
                     result.push(match expression.as_bytes()[i] {
-                        | b'+' => a + b,
-                        | b'-' => a - b,
-                        | b'*' => a * b,
-                        | _ => unreachable!(),
+                        b'+' => a + b,
+                        b'-' => a - b,
+                        b'*' => a * b,
+                        _ => unreachable!(),
                     });
                 }
             }

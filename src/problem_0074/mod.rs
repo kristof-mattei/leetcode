@@ -12,15 +12,15 @@ fn find_range(nums: &[i32], target: i32) -> RangeResult {
     while offset < end {
         let middle = (end - offset) / 2 + offset;
         match target.cmp(&nums[middle]) {
-            | std::cmp::Ordering::Equal => {
+            std::cmp::Ordering::Equal => {
                 return RangeResult::Exact(middle);
             },
-            | std::cmp::Ordering::Greater => {
+            std::cmp::Ordering::Greater => {
                 // we narrow down the scope
                 offset = middle + 1;
                 index = middle + 1;
             },
-            | std::cmp::Ordering::Less => {
+            std::cmp::Ordering::Less => {
                 // we look in offset..middle
                 end = middle;
                 index = middle;
@@ -34,11 +34,11 @@ fn find_range(nums: &[i32], target: i32) -> RangeResult {
 fn search_matrix(matrix: &[Vec<i32>], target: i32) -> bool {
     let row_search_result = find_range(&matrix.iter().map(|r| r[0]).collect::<Vec<_>>(), target);
     match row_search_result {
-        | RangeResult::Exact(_) => true,
-        | RangeResult::Close(r) if r > 0 => {
+        RangeResult::Exact(_) => true,
+        RangeResult::Close(r) if r > 0 => {
             matches!(find_range(&matrix[r - 1], target), RangeResult::Exact(_))
         },
-        | RangeResult::Close(_) => false,
+        RangeResult::Close(_) => false,
     }
 }
 

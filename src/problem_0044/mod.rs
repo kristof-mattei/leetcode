@@ -34,17 +34,17 @@ fn is_match_r(
     remaining_regex: &[char],
 ) -> bool {
     let token = match remaining_regex.first() {
-        | Some(t) => t,
-        | None => return remainder.is_empty() && remaining_regex.is_empty(),
+        Some(t) => t,
+        None => return remainder.is_empty() && remaining_regex.is_empty(),
     };
 
     match token {
-        | '?' if remainder.first().is_some() => {
+        '?' if remainder.first().is_some() => {
             // here
             memoize(cache, &remainder[1..], &remaining_regex[1..])
         },
-        | '?' => false,
-        | c @ 'a'..='z' => {
+        '?' => false,
+        c @ 'a'..='z' => {
             if let Some(e_c) = remainder.first() {
                 if e_c == c {
                     return memoize(cache, &remainder[1..], &remaining_regex[1..]);
@@ -53,7 +53,7 @@ fn is_match_r(
             false
         },
 
-        | '*' => {
+        '*' => {
             let mut offset = 0;
 
             for rr in remaining_regex.iter().skip(1) {
@@ -78,7 +78,7 @@ fn is_match_r(
 
             false
         },
-        | _ => unreachable!(),
+        _ => unreachable!(),
     }
 }
 

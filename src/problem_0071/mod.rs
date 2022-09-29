@@ -5,13 +5,13 @@ fn simplify_path(path: &str) -> String {
 
     for piece in pieces {
         match piece {
-            | ".." => {
+            ".." => {
                 simplified.pop();
             },
-            | "" | "." => {
+            "" | "." => {
                 // ignore
             },
-            | p => {
+            p => {
                 simplified.push(p);
             },
         }
