@@ -17,8 +17,8 @@ enum Token {
 
 fn to_simple_token(c: char) -> SingleToken {
     match c {
-        '.' => SingleToken::Wildcard,
-        x => SingleToken::Char(x),
+        | '.' => SingleToken::Wildcard,
+        | x => SingleToken::Char(x),
     }
 }
 
@@ -27,11 +27,11 @@ fn tokenize(p: &str) -> Vec<Token> {
     let mut tokenized = Vec::new();
     while let Some(c) = chars.pop() {
         let token = match c {
-            '*' => {
+            | '*' => {
                 let next_token = to_simple_token(chars.pop().unwrap());
                 Token::ZeroOrMore(next_token)
             },
-            x => Token::SingleToken(to_simple_token(x)),
+            | x => Token::SingleToken(to_simple_token(x)),
         };
         tokenized.push(token);
     }
@@ -50,22 +50,22 @@ fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
     let mut regex_index: usize = 0;
     while let Some(token) = remaining_regex.get(regex_index) {
         match token {
-            Token::SingleToken(t) => {
+            | Token::SingleToken(t) => {
                 match remainder.get(index) {
-                    Some(c) => {
+                    | Some(c) => {
                         if let SingleToken::Char(expected_char) = t {
                             if expected_char != c {
                                 return false;
                             }
                         }
                     },
-                    None => return false,
+                    | None => return false,
                 }
                 index += 1;
             },
-            Token::ZeroOrMore(st) => {
+            | Token::ZeroOrMore(st) => {
                 match st {
-                    SingleToken::Char(expected_char) => {
+                    | SingleToken::Char(expected_char) => {
                         // we walk for as long as we find
                         // our current character, and once at the end
                         // we check if our next token requests that character too. If so, move one index back so that one can be satisfied
@@ -90,7 +90,7 @@ fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
                             });
                         }
                     },
-                    SingleToken::Wildcard => {
+                    | SingleToken::Wildcard => {
                         // optimization
                         if remaining_regex.get(regex_index + 1).is_none() {
                             return true;

@@ -20,14 +20,14 @@ fn three_sum_closest(mut nums: Vec<i32>, target: i32) -> i32 {
             let sum = nums[tripple_1_index] + nums[tripple_2_index] + nums[tripple_3_index];
 
             match sum {
-                _ if sum == target => {
+                | _ if sum == target => {
                     return sum;
                 },
-                _ if sum > target => {
+                | _ if sum > target => {
                     // Decrement to reduce sum value (we're sorted)
                     tripple_3_index -= 1;
                 },
-                _ => {
+                | _ => {
                     // Increment to increase sum value
                     tripple_2_index += 1;
                 },

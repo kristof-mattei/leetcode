@@ -3,18 +3,18 @@ use std::{cell::RefCell, rc::Rc};
 
 fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
     match root {
-        Some(r) => {
+        | Some(r) => {
             let mut b = r.borrow_mut();
 
             match (b.left.take(), b.right.take()) {
-                (None, None) => {},
-                (Some(l), None) => {
+                | (None, None) => {},
+                | (Some(l), None) => {
                     let _ = b.right.insert(l);
                 },
-                (None, Some(r)) => {
+                | (None, Some(r)) => {
                     let _ = b.right.insert(r);
                 },
-                (Some(l), Some(r)) => {
+                | (Some(l), Some(r)) => {
                     let _ = b.right.insert(l);
 
                     let mut current = b.right.clone().unwrap();
@@ -37,7 +37,7 @@ fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
 
             flatten(&mut b.right);
         },
-        None => {},
+        | None => {},
     }
 }
 

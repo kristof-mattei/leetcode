@@ -8,13 +8,13 @@ fn find_min(nums: &[i32]) -> i32 {
         let mid = offset + (end - offset) / 2;
 
         match nums[mid].cmp(&nums[end]) {
-            Ordering::Less => {
+            | Ordering::Less => {
                 end = mid;
             },
-            Ordering::Greater => {
+            | Ordering::Greater => {
                 offset = mid + 1;
             },
-            Ordering::Equal => {
+            | Ordering::Equal => {
                 end -= 1;
             },
         }

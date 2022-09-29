@@ -9,14 +9,14 @@ fn compare_version(version1: &str, version2: &str) -> i32 {
             split_v1.next().map(|v1| v1.parse::<u32>().unwrap()),
             split_v2.next().map(|v2| v2.parse::<u32>().unwrap()),
         ) {
-            (None, None) => return 0,
-            (None, Some(0)) | (Some(0), None) => {},
-            (None, Some(_)) => return -1,
-            (Some(_), None) => return 1,
-            (Some(v1_piece), Some(v2_piece)) => match v1_piece.cmp(&v2_piece) {
-                Ordering::Less => return -1,
-                Ordering::Equal => {},
-                Ordering::Greater => return 1,
+            | (None, None) => return 0,
+            | (None, Some(0)) | (Some(0), None) => {},
+            | (None, Some(_)) => return -1,
+            | (Some(_), None) => return 1,
+            | (Some(v1_piece), Some(v2_piece)) => match v1_piece.cmp(&v2_piece) {
+                | Ordering::Less => return -1,
+                | Ordering::Equal => {},
+                | Ordering::Greater => return 1,
             },
         };
     }

@@ -1,12 +1,12 @@
 fn swap(matrix: &mut [Vec<i32>], r1c1: (usize, usize), r2c2: (usize, usize)) {
     match r1c1.0.cmp(&r2c2.0) {
-        std::cmp::Ordering::Equal => {
+        | std::cmp::Ordering::Equal => {
             matrix[r1c1.0].swap(r1c1.1, r2c2.1);
         },
-        std::cmp::Ordering::Less => {
+        | std::cmp::Ordering::Less => {
             swap_ord(matrix, r1c1, r2c2);
         },
-        std::cmp::Ordering::Greater => {
+        | std::cmp::Ordering::Greater => {
             swap_ord(matrix, r2c2, r1c1);
         },
     }

@@ -21,10 +21,10 @@ fn single_number(nums: Vec<i32>) -> i32 {
 
     for n in nums {
         match hashmap.entry(n) {
-            Entry::Vacant(v) => {
+            | Entry::Vacant(v) => {
                 v.insert(1);
             },
-            Entry::Occupied(mut o) => {
+            | Entry::Occupied(mut o) => {
                 if *o.get() == 2 {
                     o.remove_entry();
                 } else {
