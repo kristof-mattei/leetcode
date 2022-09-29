@@ -127,10 +127,10 @@ pub fn to_bt(input: &[Option<i32>]) -> Option<Rc<RefCell<TreeNode>>> {
             let new_node = Some(Rc::new(RefCell::new(TreeNode::new(v))));
 
             match side {
-                | Side::Left => {
+                Side::Left => {
                     (*node.borrow_mut()).left = new_node.clone();
                 },
-                | Side::Right => {
+                Side::Right => {
                     (*node.borrow_mut()).right = new_node.clone();
                 },
             }
@@ -176,10 +176,10 @@ pub fn from_bt(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Option<i32>> {
 
     while queue.iter().any(Option::is_some) {
         match queue.pop_front().flatten() {
-            | None => {
+            None => {
                 results.push(None);
             },
-            | Some(current) => {
+            Some(current) => {
                 let borrow = current.borrow();
                 results.push(Some(borrow.val));
 

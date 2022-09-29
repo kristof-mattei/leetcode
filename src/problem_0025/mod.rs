@@ -6,11 +6,11 @@ fn reverse_list(
     next: Option<Box<ListNode>>,
 ) -> Option<Box<ListNode>> {
     match list.pop() {
-        | Some(mut t) => {
+        Some(mut t) => {
             t.next = reverse_list(list, next);
             Some(t)
         },
-        | None => next,
+        None => next,
     }
 }
 
@@ -19,13 +19,13 @@ fn reverse_k_group(mut head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNo
     let mut list = Vec::new();
     for _ in 0..k {
         match head {
-            | Some(mut current) => {
+            Some(mut current) => {
                 let next = current.next.take();
                 list.push(current);
 
                 head = next;
             },
-            | None => {
+            None => {
                 return {
                     let mut previous = None;
 

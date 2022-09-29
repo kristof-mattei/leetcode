@@ -5,16 +5,16 @@ fn min_domino_rotations(tops: &[i32], bottoms: &[i32]) -> i32 {
 
         for (&top_d, &bottom_d) in tops.iter().zip(bottoms.iter()) {
             match (top_d == domino, bottom_d == domino) {
-                | (true, true) => {
+                (true, true) => {
                     // we don't need to count this position
                 },
-                | (true, false) => {
+                (true, false) => {
                     top_count += 1;
                 },
-                | (false, true) => {
+                (false, true) => {
                     bottom_count += 1;
                 },
-                | (false, false) => {
+                (false, false) => {
                     // we hit a combination where we don't have `domino`, so we can't make it work.
                     continue 'outer;
                 },

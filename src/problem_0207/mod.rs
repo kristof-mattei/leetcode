@@ -26,31 +26,31 @@ fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
             // fetch the next cource
             while let Some(v) = stack.pop() {
                 match states[v] {
-                    | State::NotVisited => {
+                    State::NotVisited => {
                         // We put it back IN thet stack
                         states[v] = State::InStack;
                         stack.push(v);
 
                         for &u in &adjecent_list[v] {
                             match states[u] {
-                                | State::InStack => {
+                                State::InStack => {
                                     // to do the current task (v)
                                     // we need to do u, but u is dependent on us
                                     // so we are stuck
                                     return false;
                                 },
-                                | State::NotVisited => {
+                                State::NotVisited => {
                                     // we didn't do the prerequisite yet, let's try and process it
                                     stack.push(u);
                                 },
-                                | State::Done => {
+                                State::Done => {
                                     // Great, we did the prerequisite
                                 },
                             }
                         }
                     },
 
-                    | State::InStack => {
+                    State::InStack => {
                         // this means that we went from
                         // NotVisited to a whole set of dependencies
                         // back to us
@@ -58,7 +58,7 @@ fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
                         // have been resolved, and we can solve the chain of `v`
                         states[v] = State::Done;
                     },
-                    | State::Done => {
+                    State::Done => {
                         // we already did it, ignore
                     },
                 };

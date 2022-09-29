@@ -2,13 +2,13 @@ fn divide(mut dividend: i32, mut divisor: i32) -> i32 {
     let mut quotient = 0;
 
     match (dividend, divisor) {
-        | (i32::MIN, i32::MIN) => return 1,
-        | (0, _) | (_, i32::MIN) => return 0,
-        | (i32::MIN, -1) => return i32::MAX,
-        | (i32::MIN, 1) => return i32::MIN,
-        | (i32::MIN, 2) => return i32::MIN >> 1,
-        | (i32::MIN, -2) => return -(i32::MIN >> 1),
-        | (i32::MIN, _) => {
+        (i32::MIN, i32::MIN) => return 1,
+        (0, _) | (_, i32::MIN) => return 0,
+        (i32::MIN, -1) => return i32::MAX,
+        (i32::MIN, 1) => return i32::MIN,
+        (i32::MIN, 2) => return i32::MIN >> 1,
+        (i32::MIN, -2) => return -(i32::MIN >> 1),
+        (i32::MIN, _) => {
             quotient += 1;
             if divisor < 0 {
                 dividend -= divisor;
@@ -17,7 +17,7 @@ fn divide(mut dividend: i32, mut divisor: i32) -> i32 {
                 dividend += divisor;
             }
         },
-        | _ => {},
+        _ => {},
     }
 
     let output_is_negative = dividend >> 31 != divisor >> 31;

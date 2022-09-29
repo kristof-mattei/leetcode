@@ -7,9 +7,9 @@ fn my_atoi(mut s: &str) -> i32 {
     }
 
     let explicit_sign = match &s[..1] {
-        | "-" => Some(true),
-        | "+" => Some(false),
-        | _ => None,
+        "-" => Some(true),
+        "+" => Some(false),
+        _ => None,
     };
 
     let mut chars = s.chars();
@@ -21,7 +21,7 @@ fn my_atoi(mut s: &str) -> i32 {
     for c in chars {
         let parsed = c.to_digit(10);
         match parsed {
-            | Some(digit) => {
+            Some(digit) => {
                 if let Some(t) = i.checked_mul(10) {
                     i = t;
                 } else {
@@ -30,7 +30,7 @@ fn my_atoi(mut s: &str) -> i32 {
                 }
                 i += digit;
             },
-            | None => {
+            None => {
                 break;
             },
         }
@@ -39,10 +39,10 @@ fn my_atoi(mut s: &str) -> i32 {
     let to_i32 = i32::try_from(i);
 
     match (explicit_sign, to_i32) {
-        | (Some(true), Ok(x)) => -x,
-        | (Some(true), Err(_)) => i32::MIN,
-        | (_, Ok(x)) => x,
-        | (_, Err(_)) => i32::MAX,
+        (Some(true), Ok(x)) => -x,
+        (Some(true), Err(_)) => i32::MIN,
+        (_, Ok(x)) => x,
+        (_, Err(_)) => i32::MAX,
     }
 }
 

@@ -12,17 +12,17 @@ fn find_median_sorted_arrays(nums1: &[i32], nums2: &[i32]) -> f64 {
         let n2 = nums2.get(nums2_index);
 
         let current = match (n1, n2) {
-            | (None, None) => unreachable!(),
-            | (None, Some(&v)) => {
+            (None, None) => unreachable!(),
+            (None, Some(&v)) => {
                 nums2_index += 1;
                 v
             },
-            | (Some(&v), None) => {
+            (Some(&v), None) => {
                 nums1_index += 1;
                 v
             },
 
-            | (Some(&l), Some(&r)) => {
+            (Some(&l), Some(&r)) => {
                 if l < r {
                     nums1_index += 1;
                     l

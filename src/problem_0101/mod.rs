@@ -8,8 +8,8 @@ fn is_symmetric_r(
     right: &Option<Rc<RefCell<TreeNode>>>,
 ) -> bool {
     match (left, right) {
-        | (None, None) => true,
-        | (Some(l), Some(r)) => {
+        (None, None) => true,
+        (Some(l), Some(r)) => {
             let l_borrow = l.borrow();
             let r_borrow = r.borrow();
 
@@ -23,7 +23,7 @@ fn is_symmetric_r(
 
             false
         },
-        | _ => false,
+        _ => false,
     }
 }
 

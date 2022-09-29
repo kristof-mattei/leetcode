@@ -2,8 +2,8 @@ use std::collections::HashMap;
 
 fn is_palindrome(chars: &[char]) -> bool {
     match chars {
-        | [] | [_] => true,
-        | [..] => {
+        [] | [_] => true,
+        [..] => {
             let mut start = 0;
 
             let mut end = chars.len() - 1;

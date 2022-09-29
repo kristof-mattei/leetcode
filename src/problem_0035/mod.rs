@@ -7,15 +7,15 @@ fn search_insert(nums: &[i32], target: i32) -> i32 {
     while offset < end {
         let middle = (end - offset) / 2 + offset;
         match target.cmp(&nums[middle]) {
-            | std::cmp::Ordering::Equal => {
+            std::cmp::Ordering::Equal => {
                 return middle as i32;
             },
-            | std::cmp::Ordering::Greater => {
+            std::cmp::Ordering::Greater => {
                 // we narrow down the scope
                 offset = middle + 1;
                 potential_insert = middle + 1;
             },
-            | std::cmp::Ordering::Less => {
+            std::cmp::Ordering::Less => {
                 // we look in offset..middle
                 end = middle;
                 potential_insert = middle;

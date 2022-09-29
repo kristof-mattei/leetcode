@@ -1,6 +1,5 @@
 edition = "2021"
 # group_imports = "StdExternalCrate"
 match_block_trailing_comma = true
-match_arm_leading_pipes = "Always"
 use_field_init_shorthand = true
 use_try_shorthand = true

@@ -12,8 +12,8 @@ impl Not for Side {
 
     fn not(self) -> Self::Output {
         match self {
-            | Side::Left => Side::Right,
-            | Side::Right => Side::Left,
+            Side::Left => Side::Right,
+            Side::Right => Side::Left,
         }
     }
 }
@@ -31,11 +31,11 @@ fn split(mut head: Option<Box<ListNode>>) -> (Option<Box<ListNode>>, Option<Box<
         head = next_node.next.take();
 
         match side {
-            | Side::Left => {
+            Side::Left => {
                 left_ptr.as_mut().unwrap().next = Some(next_node);
                 left_ptr = &mut left_ptr.as_mut().unwrap().next;
             },
-            | Side::Right => {
+            Side::Right => {
                 right_ptr.as_mut().unwrap().next = Some(next_node);
                 right_ptr = &mut right_ptr.as_mut().unwrap().next;
             },
@@ -52,7 +52,7 @@ fn merge_lists(
     list2: Option<Box<ListNode>>,
 ) -> Option<Box<ListNode>> {
     match (list1, list2) {
-        | (Some(mut l), Some(mut r)) => {
+        (Some(mut l), Some(mut r)) => {
             if l.val < r.val {
                 l.next = merge_lists(l.next, Some(r));
                 Some(l)
@@ -61,18 +61,18 @@ fn merge_lists(
                 Some(r)
             }
         },
-        | (l @ Some(_), None) => l,
-        | (None, r @ Some(_)) => r,
-        | (None, None) => None,
+        (l @ Some(_), None) => l,
+        (None, r @ Some(_)) => r,
+        (None, None) => None,
     }
 }
 
 fn sort_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     match split(head) {
-        | (l @ Some(_), r @ Some(_)) => merge_lists(sort_list(l), sort_list(r)),
-        | (l @ Some(_), None) => l,
-        | (None, r @ Some(_)) => r,
-        | (None, None) => None,
+        (l @ Some(_), r @ Some(_)) => merge_lists(sort_list(l), sort_list(r)),
+        (l @ Some(_), None) => l,
+        (None, r @ Some(_)) => r,
+        (None, None) => None,
     }
 }
 

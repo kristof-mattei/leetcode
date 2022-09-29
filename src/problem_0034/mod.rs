@@ -8,15 +8,15 @@ fn search_range(nums: &[i32], target: i32) -> Vec<i32> {
         let middle = (end - offset) / 2 + offset;
 
         match target.cmp(&nums[middle]) {
-            | std::cmp::Ordering::Equal => {
+            std::cmp::Ordering::Equal => {
                 end = middle;
                 start_index = Some(middle);
             },
-            | std::cmp::Ordering::Greater => {
+            std::cmp::Ordering::Greater => {
                 // we narrow down the scope
                 offset = middle + 1;
             },
-            | std::cmp::Ordering::Less => {
+            std::cmp::Ordering::Less => {
                 // we look in offset..middle
                 end = middle;
             },
@@ -32,15 +32,15 @@ fn search_range(nums: &[i32], target: i32) -> Vec<i32> {
         while offset < end {
             let middle = (end - offset) / 2 + offset;
             match target.cmp(&nums[middle]) {
-                | std::cmp::Ordering::Equal => {
+                std::cmp::Ordering::Equal => {
                     offset = middle + 1;
                     end_index = middle;
                 },
-                | std::cmp::Ordering::Greater => {
+                std::cmp::Ordering::Greater => {
                     // we narrow down the scope
                     offset = middle + 1;
                 },
-                | std::cmp::Ordering::Less => {
+                std::cmp::Ordering::Less => {
                     // we look in offset..middle
                     end = middle;
                 },

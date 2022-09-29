@@ -12,9 +12,9 @@ impl std::ops::Add<Direction> for usize {
 
     fn add(self, rhs: Direction) -> Self::Output {
         match rhs {
-            | Direction::Decrease => self.wrapping_sub(1),
-            | Direction::Standstill => self,
-            | Direction::Increase => self + 1,
+            Direction::Decrease => self.wrapping_sub(1),
+            Direction::Standstill => self,
+            Direction::Increase => self + 1,
         }
     }
 }
@@ -30,9 +30,9 @@ impl Neg for Direction {
 
     fn neg(self) -> Self::Output {
         match self {
-            | Direction::Decrease => Direction::Increase,
-            | Direction::Standstill => Direction::Standstill,
-            | Direction::Increase => Direction::Decrease,
+            Direction::Decrease => Direction::Increase,
+            Direction::Standstill => Direction::Standstill,
+            Direction::Increase => Direction::Decrease,
         }
     }
 }

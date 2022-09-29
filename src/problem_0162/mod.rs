@@ -8,10 +8,10 @@ fn find_peak_element(nums: &[i32]) -> i32 {
         let mid = offset + (end - offset) / 2;
 
         match nums[mid].cmp(&nums[mid + 1]) {
-            | Ordering::Less => {
+            Ordering::Less => {
                 offset = mid + 1;
             },
-            | Ordering::Greater | Ordering::Equal => {
+            Ordering::Greater | Ordering::Equal => {
                 end = mid;
             },
         }

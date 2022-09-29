@@ -6,7 +6,7 @@ fn get_last_n(
     depth_counter: usize,
 ) -> (Option<Box<ListNode>>, usize, usize) {
     match head {
-        | Some(n) => {
+        Some(n) => {
             let (r, depth, max_depth) = get_last_n(&mut n.next, rotate_places, depth_counter + 1);
 
             if (rotate_places % max_depth) == depth {
@@ -16,7 +16,7 @@ fn get_last_n(
                 (r, depth + 1, max_depth)
             }
         },
-        | None => (None, 0, depth_counter),
+        None => (None, 0, depth_counter),
     }
 }
 
@@ -25,11 +25,11 @@ fn re_attach(
     head: Option<Box<ListNode>>,
 ) -> Option<Box<ListNode>> {
     match new_head {
-        | Some(mut n) => {
+        Some(mut n) => {
             n.next = re_attach(n.next, head);
             Some(n)
         },
-        | None => head,
+        None => head,
     }
 }
 

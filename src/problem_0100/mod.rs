@@ -4,9 +4,9 @@ use std::rc::Rc;
 use crate::shared::TreeNode;
 fn is_same_tree(p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>) -> bool {
     match (p, q) {
-        | (None, None) => true,
-        | (None, Some(_)) | (Some(_), None) => false,
-        | (Some(l), Some(r)) => {
+        (None, None) => true,
+        (None, Some(_)) | (Some(_), None) => false,
+        (Some(l), Some(r)) => {
             let l_borrow = l.borrow();
             let r_borrow = r.borrow();
             l_borrow.val == r_borrow.val

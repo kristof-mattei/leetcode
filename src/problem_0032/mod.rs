@@ -7,8 +7,8 @@ fn longest_valid_parentheses(s: &str) -> i32 {
     for (index, symbol) in s.as_bytes().iter().enumerate() {
         let index = index as i32;
         match symbol {
-            | b'(' => stack.push(index),
-            | b')' => {
+            b'(' => stack.push(index),
+            b')' => {
                 stack.pop();
 
                 if stack.is_empty() {
@@ -17,7 +17,7 @@ fn longest_valid_parentheses(s: &str) -> i32 {
                     max_valid = cmp::max(max_valid, index - stack[stack.len() - 1]);
                 }
             },
-            | _ => unreachable!(),
+            _ => unreachable!(),
         }
     }
 

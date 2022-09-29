@@ -28,31 +28,31 @@ fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {
             // fetch the next cource
             while let Some(v) = stack.pop() {
                 match states[v] {
-                    | State::NotVisited => {
+                    State::NotVisited => {
                         // We put it back IN thet stack
                         states[v] = State::InStack;
                         stack.push(v);
 
                         for &u in &adjecent_list[v] {
                             match states[u] {
-                                | State::InStack => {
+                                State::InStack => {
                                     // to do the current task (v)
                                     // we need to do u, but u is dependent on us
                                     // so we are stuck
                                     return vec![];
                                 },
-                                | State::NotVisited => {
+                                State::NotVisited => {
                                     // we didn't do the prerequisite yet, let's try and process it
                                     stack.push(u);
                                 },
-                                | State::Done => {
+                                State::Done => {
                                     // Great, we did the prerequisite
                                 },
                             }
                         }
                     },
 
-                    | State::InStack => {
+                    State::InStack => {
                         // this means that we went from
                         // NotVisited to a whole set of dependencies
                         // back to us
@@ -63,7 +63,7 @@ fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {
                         // and since it's done, this is the order we're supposed to complete it =)
                         order.push(v as i32);
                     },
-                    | State::Done => {
+                    State::Done => {
                         // we already did it, ignore
                     },
                 };

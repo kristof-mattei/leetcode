@@ -2,8 +2,8 @@ fn letter_combinations(digits: &str) -> Vec<String> {
     let numbers: Vec<_> = digits.chars().collect();
 
     match letter_combinations_rec(&numbers) {
-        | Some(combinations) => combinations.iter().map(|a| a.iter().collect()).collect(),
-        | None => vec![],
+        Some(combinations) => combinations.iter().map(|a| a.iter().collect()).collect(),
+        None => vec![],
     }
 }
 
@@ -32,15 +32,15 @@ fn letter_combinations_rec(numbers: &[char]) -> Option<Vec<Vec<char>>> {
 
 fn get_letters(number_char: char) -> Vec<char> {
     match number_char.to_digit(10).unwrap() {
-        | 2 => vec!['a', 'b', 'c'],
-        | 3 => vec!['d', 'e', 'f'],
-        | 4 => vec!['g', 'h', 'i'],
-        | 5 => vec!['j', 'k', 'l'],
-        | 6 => vec!['m', 'n', 'o'],
-        | 7 => vec!['p', 'q', 'r', 's'],
-        | 8 => vec!['t', 'u', 'v'],
-        | 9 => vec!['w', 'x', 'y', 'z'],
-        | _ => unreachable!(),
+        2 => vec!['a', 'b', 'c'],
+        3 => vec!['d', 'e', 'f'],
+        4 => vec!['g', 'h', 'i'],
+        5 => vec!['j', 'k', 'l'],
+        6 => vec!['m', 'n', 'o'],
+        7 => vec!['p', 'q', 'r', 's'],
+        8 => vec!['t', 'u', 'v'],
+        9 => vec!['w', 'x', 'y', 'z'],
+        _ => unreachable!(),
     }
 }
 

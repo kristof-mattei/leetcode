@@ -6,21 +6,21 @@ fn parse(decimal: &str, allow_dots: bool) -> bool {
 
     for (p, &c) in chars.iter().enumerate() {
         match c {
-            | '-' | '+' => {
+            '-' | '+' => {
                 if p != 0 {
                     return false;
                 }
             },
-            | '0'..='9' => {
+            '0'..='9' => {
                 number_found = true;
             },
-            | '.' => {
+            '.' => {
                 if !allow_dots || dot_found {
                     return false;
                 }
                 dot_found = true;
             },
-            | _ => {
+            _ => {
                 return false;
             },
         }
@@ -33,8 +33,8 @@ fn is_number(s: &str) -> bool {
     let split = s.split_once(&['e', 'E']);
 
     match split {
-        | Some((l, r)) => parse(l, true) && parse(r, false),
-        | None => parse(s, true),
+        Some((l, r)) => parse(l, true) && parse(r, false),
+        None => parse(s, true),
     }
 }
 
