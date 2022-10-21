@@ -117,7 +117,7 @@ jobs:
           cog bump --auto
           VERSION="$(git describe --tags "$(git rev-list --tags --max-count=1)")"
           VERSION="${VERSION//v/}"
-          echo ::set-output name=nextversion::"$VERSION"
+          echo "nextversion=${VERSION}" >> ${GITHUB_OUTPUT}
 
   cargo-build:
     name: Cargo build
