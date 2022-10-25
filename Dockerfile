@@ -1,4 +1,4 @@
-FROM rust:1.64.0@sha256:5fadb1fc8c0c22099a3576933dc7e58af20dd1860495bfab8f3a2be4964245dd as builder
+FROM rust:1.64.0@sha256:4b8c9932fa9dd0a44fcbe104ab25b2ca8582fb34880c230fff21d39f46baef7d as builder
 
 ENV TARGET=x86_64-unknown-linux-musl
 RUN rustup target add ${TARGET}
