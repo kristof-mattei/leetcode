@@ -80,7 +80,7 @@ mod tests {
                     .collect::<Vec<_>>()
                     .as_ref()
             ),
-            "".to_string()
+            String::new()
         );
     }
 

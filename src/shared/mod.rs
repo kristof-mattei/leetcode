@@ -128,10 +128,10 @@ pub fn to_bt(input: &[Option<i32>]) -> Option<Rc<RefCell<TreeNode>>> {
 
             match side {
                 Side::Left => {
-                    (*node.borrow_mut()).left = new_node.clone();
+                    node.borrow_mut().left = new_node.clone();
                 },
                 Side::Right => {
-                    (*node.borrow_mut()).right = new_node.clone();
+                    node.borrow_mut().right = new_node.clone();
                 },
             }
 
