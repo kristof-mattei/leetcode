@@ -56,7 +56,7 @@ mod tests {
 
     #[test]
     fn test_3() {
-        let input = "".to_string();
+        let input = String::new();
         assert_eq!(longest_valid_parentheses(&input), 0);
     }
 
