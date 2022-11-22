@@ -31,7 +31,7 @@ COPY src ./src
 RUN --mount=type=cache,target=/build/rust-end-to-end-application/target \
     cargo install --path . --target ${TARGET} --root /output
 
-FROM alpine:3.16.3@sha256:b95359c2505145f16c6aa384f9cc74eeff78eb36d308ca4fd902eeeb0a0b161b
+FROM alpine:3.17.0@sha256:839e8c0d8c70b6587dd546b3a92357da4db3c36c59285a409826a569c3c58994
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
