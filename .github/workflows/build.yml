@@ -351,11 +351,9 @@ jobs:
           cargo --version
 
       - name: Run Clippy for GitHub Actions report
-        uses: actions-rs/clippy-check@b5b5f21f4797c02da247df37026fcd0a5024aa4d # tag=v1.0.7
+        uses: actions-rs-plus/clippy-check@b25c194e77a6d1d73615d978e21becf447959e25
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           args: --workspace --all-targets --all-features -- --deny clippy::all --deny clippy::pedantic --deny clippy::cargo
-          name: Clippy report
 
   docker-build:
     name: Build Docker container
