@@ -1,5 +1,7 @@
 edition = "2021"
-# group_imports = "StdExternalCrate"
+group_imports = "StdExternalCrate"
+imports_granularity = "Module"
 match_block_trailing_comma = true
+reorder_imports = true
 use_field_init_shorthand = true
 use_try_shorthand = true
