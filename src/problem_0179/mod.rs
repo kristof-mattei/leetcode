@@ -1,5 +1,5 @@
 fn largest_number(mut nums: Vec<i32>) -> String {
-    nums.sort_by(|l, r| format!("{}{}", r, l).cmp(&format!("{}{}", l, r)));
+    nums.sort_by(|l, r| format!("{r}{l}").cmp(&format!("{l}{r}")));
 
     // if the biggest number is a 0, then all is zero
     if nums[0] == 0 {
