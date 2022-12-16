@@ -18,7 +18,7 @@ fn count_primes(n: i32) -> i32 {
         }
     }
 
-    count as i32
+    count
 }
 
 impl Solution {

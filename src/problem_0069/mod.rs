@@ -25,7 +25,7 @@ fn my_sqrt(x: i32) -> i32 {
 
     // or newton's integer method
     let x = i64::from(x);
-    let mut r = x as i64;
+    let mut r = x;
 
     while r * r > x {
         r = (r + x / r) / 2;
