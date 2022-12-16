@@ -80,7 +80,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0082::delete_duplicates, shared::to_ll};
+    use crate::problem_0082::delete_duplicates;
+    use crate::shared::to_ll;
 
     #[test]
     fn test_1() {

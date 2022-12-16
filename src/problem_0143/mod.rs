@@ -46,7 +46,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0143::reorder_list, shared::to_ll};
+    use crate::problem_0143::reorder_list;
+    use crate::shared::to_ll;
 
     #[test]
     fn test_1() {

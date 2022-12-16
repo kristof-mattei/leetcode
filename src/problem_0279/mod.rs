@@ -1,4 +1,5 @@
-use std::{cmp::Ordering, collections::VecDeque};
+use std::cmp::Ordering;
+use std::collections::VecDeque;
 
 fn num_squares(n: i32) -> i32 {
     let mut dp = vec![0; n as usize];

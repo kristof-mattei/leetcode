@@ -1,8 +1,6 @@
-use std::{
-    cell::RefCell,
-    collections::{BTreeMap, VecDeque},
-    rc::Rc,
-};
+use std::cell::RefCell;
+use std::collections::{BTreeMap, VecDeque};
+use std::rc::Rc;
 
 use crate::shared::TreeNode;
 
@@ -64,7 +62,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod test {
-    use crate::{problem_0105::build_tree, shared::to_bt};
+    use crate::problem_0105::build_tree;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

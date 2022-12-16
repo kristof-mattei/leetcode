@@ -1,4 +1,5 @@
-use std::{cell::RefCell, rc::Rc};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 fn right_side_view(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
     let mut history = vec![];
@@ -39,7 +40,8 @@ use crate::shared::TreeNode;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0199::right_side_view, shared::to_bt};
+    use crate::problem_0199::right_side_view;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

@@ -56,7 +56,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0004::find_median_sorted_arrays, utils::nearly_equal};
+    use crate::problem_0004::find_median_sorted_arrays;
+    use crate::utils::nearly_equal;
 
     #[test]
     fn test_1() {

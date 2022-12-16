@@ -30,9 +30,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::shared::to_ll;
-
     use super::reverse_list;
+    use crate::shared::to_ll;
 
     #[test]
     fn test_1() {

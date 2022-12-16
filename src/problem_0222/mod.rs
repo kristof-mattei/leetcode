@@ -1,4 +1,5 @@
-use std::{cell::RefCell, rc::Rc};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 use crate::shared::TreeNode;
 
@@ -22,9 +23,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::shared::to_bt;
-
     use super::count_nodes;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

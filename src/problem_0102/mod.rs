@@ -44,7 +44,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0102::level_order, shared::to_bt};
+    use crate::problem_0102::level_order;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

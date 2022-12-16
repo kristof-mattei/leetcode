@@ -35,7 +35,8 @@ pub struct Solution;
 mod tests {
     use std::string::ToString;
 
-    use crate::{problem_0049::group_anagrams, shared::sort_vec_of_vec};
+    use crate::problem_0049::group_anagrams;
+    use crate::shared::sort_vec_of_vec;
 
     fn test_base(input: Vec<&str>, expected: Vec<Vec<&str>>) {
         let input = input

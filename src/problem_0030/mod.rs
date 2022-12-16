@@ -1,4 +1,6 @@
-use std::{collections::HashMap, string::String, vec::Vec};
+use std::collections::HashMap;
+use std::string::String;
+use std::vec::Vec;
 
 fn find_substring(s: &str, words: &[String]) -> Vec<i32> {
     let mut indexes = vec![];

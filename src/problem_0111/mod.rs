@@ -1,6 +1,8 @@
-use crate::shared::TreeNode;
 use std::cell::RefCell;
-use std::{collections::VecDeque, rc::Rc};
+use std::collections::VecDeque;
+use std::rc::Rc;
+
+use crate::shared::TreeNode;
 
 fn min_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     let mut queue = VecDeque::from_iter([(root, 0)]);
@@ -35,7 +37,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0111::min_depth, shared::to_bt};
+    use crate::problem_0111::min_depth;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

@@ -25,7 +25,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0050::my_pow, utils::nearly_equal};
+    use crate::problem_0050::my_pow;
+    use crate::utils::nearly_equal;
 
     #[test]
     fn test_1() {
