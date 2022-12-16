@@ -1,5 +1,5 @@
 fn gray_code(n: i32) -> Vec<i32> {
-    let length = 2usize.pow(n as u32) as usize;
+    let length = 2usize.pow(n as u32);
     let mut result = vec![0; length];
 
     #[allow(clippy::needless_range_loop)]

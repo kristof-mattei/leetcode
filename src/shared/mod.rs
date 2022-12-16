@@ -11,7 +11,7 @@ impl std::fmt::Debug for ListNode {
         write!(f, "{}", self.val)?;
 
         if let Some(n) = &self.next {
-            write!(f, ",{:?}", n)?;
+            write!(f, ",{n:?}")?;
         }
 
         Ok(())
