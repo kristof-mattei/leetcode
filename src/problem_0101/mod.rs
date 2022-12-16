@@ -48,7 +48,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0101::is_symmetric, shared::to_bt};
+    use crate::problem_0101::is_symmetric;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

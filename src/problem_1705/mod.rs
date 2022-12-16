@@ -1,4 +1,5 @@
-use std::{cmp::Reverse, collections::BinaryHeap};
+use std::cmp::Reverse;
+use std::collections::BinaryHeap;
 
 fn eaten_apples(apples: &[i32], days: &[i32]) -> i32 {
     let mut fresh_days_and_apples = BinaryHeap::<(Reverse<usize>, usize)>::new();

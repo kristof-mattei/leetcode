@@ -42,7 +42,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0002::add_two_numbers, shared::to_ll};
+    use crate::problem_0002::add_two_numbers;
+    use crate::shared::to_ll;
 
     #[test]
     fn test_1() {

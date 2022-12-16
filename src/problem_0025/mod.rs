@@ -56,7 +56,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0025::reverse_k_group, shared::to_ll};
+    use crate::problem_0025::reverse_k_group;
+    use crate::shared::to_ll;
 
     #[test]
     fn test() {

@@ -25,7 +25,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0024::swap_pairs, shared::to_ll};
+    use crate::problem_0024::swap_pairs;
+    use crate::shared::to_ll;
 
     #[test]
     fn test() {

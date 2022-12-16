@@ -69,7 +69,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0022::generate_parenthesis, shared::vec_eq};
+    use crate::problem_0022::generate_parenthesis;
+    use crate::shared::vec_eq;
 
     #[test]
     fn test() {

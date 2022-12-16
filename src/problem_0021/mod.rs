@@ -35,7 +35,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0021::merge_two_lists, shared::to_ll};
+    use crate::problem_0021::merge_two_lists;
+    use crate::shared::to_ll;
 
     #[test]
     fn test() {

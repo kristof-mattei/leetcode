@@ -43,7 +43,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0124::max_path_sum, shared::to_bt};
+    use crate::problem_0124::max_path_sum;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

@@ -122,7 +122,8 @@ pub struct Solution;
 mod tests {
     use std::string::ToString;
 
-    use crate::{problem_0051::solve_n_queens, shared::vec_eq};
+    use crate::problem_0051::solve_n_queens;
+    use crate::shared::vec_eq;
 
     #[test]
     fn test_1() {

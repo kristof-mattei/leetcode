@@ -100,7 +100,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0212::find_words, svec};
+    use crate::problem_0212::find_words;
+    use crate::svec;
 
     #[test]
     fn test_1() {

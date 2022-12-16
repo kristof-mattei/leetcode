@@ -29,7 +29,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0100::is_same_tree, shared::to_bt};
+    use crate::problem_0100::is_same_tree;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

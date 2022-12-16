@@ -33,7 +33,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0019::remove_nth_from_end, shared::to_ll};
+    use crate::problem_0019::remove_nth_from_end;
+    use crate::shared::to_ll;
 
     #[test]
 
