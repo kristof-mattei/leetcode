@@ -1,4 +1,5 @@
-use std::{cell::RefCell, rc::Rc};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 use crate::shared::{ListNode, TreeNode};
 
@@ -40,10 +41,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        problem_0109::sorted_list_to_bst,
-        shared::{to_bt, to_ll},
-    };
+    use crate::problem_0109::sorted_list_to_bst;
+    use crate::shared::{to_bt, to_ll};
 
     #[test]
     fn test_1() {

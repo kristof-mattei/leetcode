@@ -30,9 +30,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::shared::to_bt;
-
     use super::is_valid_bst;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

@@ -53,7 +53,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0086::partition, shared::to_ll};
+    use crate::problem_0086::partition;
+    use crate::shared::to_ll;
 
     #[test]
     fn test_1() {

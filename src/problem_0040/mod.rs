@@ -55,7 +55,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0040::combination_sum2, shared::sort_vec_of_vec};
+    use crate::problem_0040::combination_sum2;
+    use crate::shared::sort_vec_of_vec;
 
     #[test]
     fn test_1() {

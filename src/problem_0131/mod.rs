@@ -99,7 +99,8 @@ pub struct Solution;
 #[cfg(test)]
 mod tests {
 
-    use crate::{problem_0131::partition, shared::sort_vec_of_vec};
+    use crate::problem_0131::partition;
+    use crate::shared::sort_vec_of_vec;
 
     #[test]
     fn test_1() {

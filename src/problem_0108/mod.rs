@@ -1,4 +1,5 @@
-use std::{cell::RefCell, rc::Rc};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 use crate::shared::TreeNode;
 
@@ -28,7 +29,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0108::sorted_array_to_bst, shared::to_bt};
+    use crate::problem_0108::sorted_array_to_bst;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

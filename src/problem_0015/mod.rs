@@ -61,7 +61,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0015::three_sum, shared::vec_eq};
+    use crate::problem_0015::three_sum;
+    use crate::shared::vec_eq;
 
     #[test]
     fn test_vec_eq() {

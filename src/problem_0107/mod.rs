@@ -1,4 +1,6 @@
-use std::{cell::RefCell, mem, rc::Rc};
+use std::cell::RefCell;
+use std::mem;
+use std::rc::Rc;
 
 use crate::shared::TreeNode;
 
@@ -49,7 +51,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0107::level_order_bottom, shared::to_bt};
+    use crate::problem_0107::level_order_bottom;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

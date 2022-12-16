@@ -1,5 +1,7 @@
+use std::cell::RefCell;
+use std::rc::Rc;
+
 use crate::shared::TreeNode;
-use std::{cell::RefCell, rc::Rc};
 
 fn is_balanced(root: Option<&Rc<RefCell<TreeNode>>>) -> bool {
     if let Some(root) = root {
@@ -32,7 +34,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0110::is_balanced, shared::to_bt};
+    use crate::problem_0110::is_balanced;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

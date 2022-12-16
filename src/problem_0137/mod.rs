@@ -1,4 +1,5 @@
-use std::collections::{hash_map::Entry, HashMap};
+use std::collections::hash_map::Entry;
+use std::collections::HashMap;
 
 // this one is cool too:
 // https://leetcode.com/submissions/detail/678459562/

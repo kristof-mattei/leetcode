@@ -1,4 +1,5 @@
-use std::{ops::Neg, vec::Vec};
+use std::ops::Neg;
+use std::vec::Vec;
 
 #[derive(Clone, Copy)]
 enum Direction {
