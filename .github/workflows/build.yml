@@ -109,14 +109,20 @@ jobs:
         id: version
         shell: bash
         run: |
+          VERSION="$(cog bump --auto --dry-run)"
 
-          # no dry run yet, so fake it until we make it
-          git config --global user.name "fake"
-          git config --global user.email "fake@fake.com"
+          if [[ -z $VERSION ]]; then
+              VERSION="$(git describe --tags "$(git rev-list --tags --max-count=1)")"
 
-          cog bump --auto
-          VERSION="$(git describe --tags "$(git rev-list --tags --max-count=1)")"
+              echo "No version generated, defaulting to latest git tag: ${VERSION}"
+          else
+              echo "New version: ${VERSION}"
+          fi
+
+          # remove v
           VERSION="${VERSION//v/}"
+
+          # store
           echo "nextversion=${VERSION}" >> ${GITHUB_OUTPUT}
 
   cargo-build:
