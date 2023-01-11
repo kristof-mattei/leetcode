@@ -8,11 +8,6 @@ env:
 
 on:
   workflow_dispatch: # releasing is manual as we don't want to release every time
-    inputs:
-      name:
-        description: World?
-        required: false
-        default: "Hello World!"
 
 permissions:
   contents: write
