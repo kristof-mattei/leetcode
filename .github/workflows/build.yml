@@ -109,7 +109,7 @@ jobs:
         id: version
         shell: bash
         run: |
-          VERSION="$(cog bump --auto --dry-run)"
+          VERSION="$(cog bump --auto --dry-run || true)"
 
           if [[ -z $VERSION ]]; then
               VERSION="$(git describe --tags "$(git rev-list --tags --max-count=1)")"
