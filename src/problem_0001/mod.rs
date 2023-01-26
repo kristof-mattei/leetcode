@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 fn two_sum(nums: &[i32], target: i32) -> Vec<i32> {
     let mut hash_set = HashMap::<i32, usize>::new();
 
@@ -23,6 +21,8 @@ impl Solution {
         two_sum(&nums, target)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

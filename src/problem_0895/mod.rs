@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 struct FreqStack {
     frequency_map: HashMap<i32, i32>,
     set_map: HashMap<i32, Vec<i32>>,
@@ -56,6 +54,8 @@ impl Solution {
         f.pop()
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

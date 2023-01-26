@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> (Option<Box<ListNode>>, usize) {
     match head {
@@ -29,9 +29,12 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0019::remove_nth_from_end, shared::to_ll};
+    use crate::problem_0019::remove_nth_from_end;
+    use crate::shared::to_ll;
 
     #[test]
 

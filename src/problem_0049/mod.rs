@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
     let mut counts = HashMap::<[u8; 26], usize>::new();
     let mut anagrams = Vec::<Vec<String>>::new();
@@ -31,11 +29,14 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
     use std::string::ToString;
 
-    use crate::{problem_0049::group_anagrams, shared::sort_vec_of_vec};
+    use crate::problem_0049::group_anagrams;
+    use crate::shared::sort_vec_of_vec;
 
     fn test_base(input: Vec<&str>, expected: Vec<Vec<&str>>) {
         let input = input

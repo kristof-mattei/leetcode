@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn reverse_between(
     mut current: Option<Box<ListNode>>,
@@ -81,9 +81,12 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0092::reverse_between, shared::to_ll};
+    use crate::problem_0092::reverse_between;
+    use crate::shared::to_ll;
 
     #[test]
     fn test_1() {

@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 fn climb_stairs_r(cache: &mut HashMap<i32, i32>, n: i32) -> i32 {
     if cache.contains_key(&n) {
         return cache[&n];
@@ -29,6 +27,8 @@ impl Solution {
         climb_stairs(n)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

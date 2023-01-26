@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn my_pow(x: f64, n: i32) -> f64 {
     if n == 0 {
         return 1.0;
@@ -23,9 +21,12 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0050::my_pow, utils::nearly_equal};
+    use crate::problem_0050::my_pow;
+    use crate::utils::nearly_equal;
 
     #[test]
     fn test_1() {

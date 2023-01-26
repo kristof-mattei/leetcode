@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn my_atoi(mut s: &str) -> i32 {
     let mut i: u32 = 0;
 
@@ -55,6 +53,8 @@ impl Solution {
         my_atoi(&s)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

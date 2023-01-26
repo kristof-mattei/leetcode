@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn subsets_r(nums: &[i32], k: usize) -> Vec<Vec<i32>> {
     if k == 0 {
         return vec![vec![]];
@@ -39,6 +37,8 @@ impl Solution {
         subsets(&nums)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

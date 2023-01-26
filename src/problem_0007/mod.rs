@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn reverse(mut x: i32) -> i32 {
     let mut r: i32 = 0;
 
@@ -22,6 +20,8 @@ impl Solution {
         reverse(x)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

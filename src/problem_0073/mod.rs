@@ -1,8 +1,6 @@
 use std::collections::HashSet;
 
-use crate::shared::Solution;
-
-fn set_zeroes(matrix: &mut Vec<Vec<i32>>) {
+fn set_zeroes(matrix: &mut [Vec<i32>]) {
     let mut rows_to_zero = HashSet::new();
     let mut cols_to_zero = HashSet::new();
 
@@ -26,10 +24,13 @@ fn set_zeroes(matrix: &mut Vec<Vec<i32>>) {
 }
 
 impl Solution {
+    #[allow(clippy::ptr_arg)]
     pub fn set_zeroes(matrix: &mut Vec<Vec<i32>>) {
         set_zeroes(matrix);
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

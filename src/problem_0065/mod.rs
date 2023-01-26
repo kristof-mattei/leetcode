@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn parse(decimal: &str, allow_dots: bool) -> bool {
     let chars: Vec<char> = decimal.chars().collect();
 
@@ -32,7 +30,7 @@ fn parse(decimal: &str, allow_dots: bool) -> bool {
 }
 
 fn is_number(s: &str) -> bool {
-    let split = s.split_once(&['e', 'E']);
+    let split = s.split_once(['e', 'E']);
 
     match split {
         Some((l, r)) => parse(l, true) && parse(r, false),
@@ -47,6 +45,8 @@ impl Solution {
         is_number(&s)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 #[allow(dead_code)]
 fn generate_parenthesis_r(n: i32, opens: i32, closes: i32) -> Vec<Vec<u8>> {
     if n == opens && n == closes {
@@ -27,7 +25,7 @@ fn generate_parenthesis_r(n: i32, opens: i32, closes: i32) -> Vec<Vec<u8>> {
 
 fn generate_parenthesis_reversed_r(n: i32, opens: i32, closes: i32) -> Vec<String> {
     if n == opens && n == closes {
-        return vec!["".to_string()];
+        return vec![String::new()];
     }
 
     let mut result = Vec::new();
@@ -67,9 +65,12 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0022::generate_parenthesis, shared::vec_eq};
+    use crate::problem_0022::generate_parenthesis;
+    use crate::shared::vec_eq;
 
     #[test]
     fn test() {

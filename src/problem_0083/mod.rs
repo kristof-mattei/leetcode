@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn delete_duplicates_r(head: &mut Option<Box<ListNode>>) {
     let h = match head {
@@ -28,15 +28,18 @@ fn delete_duplicates_r(head: &mut Option<Box<ListNode>>) {
 
 impl Solution {
     #[must_use]
-    pub fn delete_duplicates2(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+    pub fn delete_duplicates(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         delete_duplicates_r(&mut head);
         head
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0083::delete_duplicates_r, shared::to_ll};
+    use crate::problem_0083::delete_duplicates_r;
+    use crate::shared::to_ll;
 
     #[test]
     fn test_1() {

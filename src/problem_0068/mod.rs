@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn full_justify_one_line(words: &[String], max_width: usize) -> String {
     if words.len() == 1 {
         return left_justify(words, max_width);
@@ -68,6 +66,8 @@ impl Solution {
         full_justify(words, max_width as usize)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

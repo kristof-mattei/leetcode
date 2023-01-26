@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn can_jump(nums: &[i32]) -> bool {
     let len = nums.len();
 
@@ -21,6 +19,8 @@ impl Solution {
         can_jump(&nums)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

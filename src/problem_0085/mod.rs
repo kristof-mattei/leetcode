@@ -1,7 +1,5 @@
 use std::cmp;
 
-use crate::shared::Solution;
-
 fn area(heights: &[usize]) -> usize {
     let mut seen = Vec::with_capacity(heights.len());
     let mut max_area = 0;
@@ -61,6 +59,8 @@ impl Solution {
         maximal_rectangle(&matrix)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

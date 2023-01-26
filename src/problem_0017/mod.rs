@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn letter_combinations(digits: &str) -> Vec<String> {
     let numbers: Vec<_> = digits.chars().collect();
 
@@ -53,6 +51,8 @@ impl Solution {
         letter_combinations(&digits)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 enum Direction {
     Decrease,
     Standstill,
@@ -55,6 +53,8 @@ impl Solution {
         generate_matrix(n as usize)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

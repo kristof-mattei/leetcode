@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 impl Solution {
     #[must_use]
     pub fn majority_element(nums: Vec<i32>) -> i32 {
@@ -23,6 +21,8 @@ fn majority_element(nums: Vec<i32>) -> i32 {
 
     *hm.iter().max_by_key(|(_, c)| *c).unwrap().0
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

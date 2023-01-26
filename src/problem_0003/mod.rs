@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn length_of_longest_substring(s: &str) -> i32 {
     let mut longest = 0;
 
@@ -26,6 +24,8 @@ impl Solution {
         length_of_longest_substring(&s)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

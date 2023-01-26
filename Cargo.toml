@@ -33,7 +33,10 @@ debug = true
 [features]
 coverage = []
 
-[dependencies]
+[dev-dependencies]
+cargo-husky = { version = "1.5.0", default-features = false, features = [
+    "user-hooks",
+] }
 
 
 # We compile the Docker container with musl to get a static library. Smaller, faster.
@@ -42,4 +45,3 @@ coverage = []
 # https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies
 [target.'cfg(all(target_arch = "x86_64", target_os="linux", target_env="musl"))'.dependencies]
 # openssl = { version = "0.10.36", features = ["vendored"] }
-

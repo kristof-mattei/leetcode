@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn can_place(board: &[(usize, usize)], n: usize, row: usize, col: usize) -> bool {
     // is there a queen where we are
     // if board[row][col] {
@@ -118,11 +116,14 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
     use std::string::ToString;
 
-    use crate::{problem_0051::solve_n_queens, shared::vec_eq};
+    use crate::problem_0051::solve_n_queens;
+    use crate::shared::vec_eq;
 
     #[test]
     fn test_1() {

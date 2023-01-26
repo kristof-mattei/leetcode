@@ -9,4 +9,8 @@
     "editor.trimAutoWhitespace": true,
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
+    "lldb.displayFormat": "auto",
+    "lldb.dereferencePointers": true,
+    "lldb.showDisassembly": "never",
+    "lldb.consoleMode": "commands",
 }

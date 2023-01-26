@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn get_permutation(n: usize, k: usize) -> String {
     assert!((1..=9).contains(&n));
     assert!((1..=factorial(n)).contains(&k));
@@ -33,6 +31,8 @@ impl Solution {
         get_permutation(n as usize, k as usize)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

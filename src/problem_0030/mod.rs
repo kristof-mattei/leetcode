@@ -1,6 +1,6 @@
-use std::{collections::HashMap, string::String, vec::Vec};
-
-use crate::shared::Solution;
+use std::collections::HashMap;
+use std::string::String;
+use std::vec::Vec;
 
 fn find_substring(s: &str, words: &[String]) -> Vec<i32> {
     let mut indexes = vec![];
@@ -75,6 +75,8 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
     use crate::problem_0030::find_substring;
@@ -103,7 +105,7 @@ mod tests {
                     .map(ToString::to_string)
                     .collect::<Vec<_>>()
             ),
-            vec![]
+            ([] as [i32; 0])
         );
     }
 
@@ -131,7 +133,7 @@ mod tests {
                     .map(ToString::to_string)
                     .collect::<Vec<_>>()
             ),
-            vec![]
+            ([] as [i32; 0])
         );
     }
 

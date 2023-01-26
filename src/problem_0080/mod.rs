@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
     let mut index = 2;
 
@@ -16,10 +14,12 @@ fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
 
 impl Solution {
     #[must_use]
-    pub fn remove_duplicates2(nums: &mut Vec<i32>) -> i32 {
+    pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
         remove_duplicates(nums)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

@@ -1,6 +1,4 @@
-use crate::shared::Solution;
-
-fn sort_colors(nums: &mut Vec<i32>) {
+fn sort_colors(nums: &mut [i32]) {
     let mut arr: [usize; 3] = [0; 3];
 
     for n in nums.iter() {
@@ -25,10 +23,13 @@ fn sort_colors(nums: &mut Vec<i32>) {
 }
 
 impl Solution {
+    #[allow(clippy::ptr_arg)]
     pub fn sort_colors(nums: &mut Vec<i32>) {
         sort_colors(nums);
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

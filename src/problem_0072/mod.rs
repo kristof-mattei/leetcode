@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 #[inline]
 fn min3<T>(f: T, s: T, t: T) -> T
 where
@@ -84,6 +82,8 @@ impl Solution {
         min_distance(&word1, &word2)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

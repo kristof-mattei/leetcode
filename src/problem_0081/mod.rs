@@ -1,7 +1,5 @@
 use std::cmp::Ordering;
 
-use crate::shared::Solution;
-
 fn search(nums: &[i32], target: i32) -> bool {
     let mut offset = 0;
     let mut end = nums.len();
@@ -44,10 +42,12 @@ fn search(nums: &[i32], target: i32) -> bool {
 impl Solution {
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
-    pub fn search2(nums: Vec<i32>, target: i32) -> bool {
+    pub fn search(nums: Vec<i32>, target: i32) -> bool {
         search(&nums, target)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

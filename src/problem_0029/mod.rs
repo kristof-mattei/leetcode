@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn divide(mut dividend: i32, mut divisor: i32) -> i32 {
     let mut quotient = 0;
 
@@ -52,6 +50,8 @@ impl Solution {
         divide(dividend, divisor)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

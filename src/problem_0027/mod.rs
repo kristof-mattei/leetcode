@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     let mut length = nums.len();
 
@@ -23,6 +21,8 @@ impl Solution {
         remove_element(nums, val)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

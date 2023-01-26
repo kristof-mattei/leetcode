@@ -1,7 +1,5 @@
 use std::collections::{HashMap, HashSet, VecDeque};
 
-use crate::shared::Solution;
-
 fn min_window(s: &str, t: &str) -> String {
     if t.is_empty() {
         return String::new();
@@ -81,6 +79,8 @@ impl Solution {
         min_window(&s, &t)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

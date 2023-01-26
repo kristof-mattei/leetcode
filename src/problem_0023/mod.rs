@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn merge_k_lists(mut lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>> {
     if let Some(m) = lists.iter().flatten().min_by_key(|list| list.val) {
@@ -25,9 +25,12 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0023::merge_k_lists, shared::to_ll};
+    use crate::problem_0023::merge_k_lists;
+    use crate::shared::to_ll;
 
     #[test]
     fn test() {

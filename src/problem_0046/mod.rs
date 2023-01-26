@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn permute_r(nums: &mut Vec<i32>) -> Vec<Vec<i32>> {
     let mut results = Vec::new();
     let len = nums.len();
@@ -33,6 +31,8 @@ impl Solution {
         permute(nums)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

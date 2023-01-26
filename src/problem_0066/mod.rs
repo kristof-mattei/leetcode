@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn plus_one(mut digits: Vec<i32>) -> Vec<i32> {
     for i in (0..digits.len()).rev() {
         digits[i] += 1;
@@ -22,6 +20,8 @@ impl Solution {
         plus_one(digits)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

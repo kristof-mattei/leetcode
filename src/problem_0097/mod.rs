@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn is_interleave(s1: &str, s2: &str, s3: &str) -> bool {
     if s1.len() + s2.len() != s3.len() {
         return false;
@@ -40,6 +38,8 @@ impl Solution {
         is_interleave(&s1, &s2, &s3)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

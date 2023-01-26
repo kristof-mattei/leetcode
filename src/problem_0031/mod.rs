@@ -1,6 +1,4 @@
-use crate::shared::Solution;
-
-fn next_permutation(nums: &mut Vec<i32>) {
+fn next_permutation(nums: &mut [i32]) {
     let mut max_index = 0;
 
     // find the first index of a number where the number before it is lower than the current
@@ -46,10 +44,13 @@ fn next_permutation(nums: &mut Vec<i32>) {
 }
 
 impl Solution {
+    #[allow(clippy::ptr_arg)]
     pub fn next_permutation(nums: &mut Vec<i32>) {
         next_permutation(nums);
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

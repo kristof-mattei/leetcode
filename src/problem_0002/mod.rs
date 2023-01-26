@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn add_two_numbers(
     mut l1: Option<Box<ListNode>>,
@@ -18,7 +18,7 @@ fn add_two_numbers(
 
         carry = val / 10;
 
-        let n = l1_ref.get_or_insert(Box::new(ListNode { val: r, next: None }));
+        let n = l1_ref.get_or_insert(Box::new(ListNode::new(r)));
         n.val = r;
 
         l1_ref = &mut n.next;
@@ -38,9 +38,12 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0002::add_two_numbers, shared::to_ll};
+    use crate::problem_0002::add_two_numbers;
+    use crate::shared::to_ll;
 
     #[test]
     fn test_1() {

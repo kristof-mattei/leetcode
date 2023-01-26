@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn search_range(nums: &[i32], target: i32) -> Vec<i32> {
     let mut offset = 0;
     let mut end = nums.len();
@@ -51,7 +49,7 @@ fn search_range(nums: &[i32], target: i32) -> Vec<i32> {
 
         return vec![start_index as i32, end_index as i32];
     }
-    return vec![-1, -1];
+    vec![-1, -1]
 }
 
 impl Solution {
@@ -61,6 +59,8 @@ impl Solution {
         search_range(&nums, target)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

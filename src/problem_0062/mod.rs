@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 fn memoize(
     cache: &mut HashMap<(usize, usize), usize>,
     m: usize,
@@ -62,6 +60,8 @@ impl Solution {
         unique_paths(m as usize, n as usize)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

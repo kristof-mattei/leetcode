@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 fn is_match(s: &str, p: &str) -> bool {
     is_match_r(
         &mut HashMap::new(),
@@ -87,10 +85,12 @@ fn is_match_r(
 impl Solution {
     #[allow(clippy::needless_pass_by_value)]
     #[must_use]
-    pub fn is_match_2(s: String, p: String) -> bool {
+    pub fn is_match(s: String, p: String) -> bool {
         is_match(&s, &p)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

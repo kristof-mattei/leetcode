@@ -1,8 +1,7 @@
-use std::{collections::HashMap, rc::Rc};
+use std::collections::HashMap;
+use std::rc::Rc;
 
 pub mod vec_char_char;
-
-use crate::shared::Solution;
 
 type L = u8;
 type ValidSliceCache<'a> = HashMap<(&'a [L], &'a [L]), bool>;
@@ -144,6 +143,8 @@ impl Solution {
         is_scramble(&s1, &s2)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

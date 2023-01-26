@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn solve_sudoku(board: &mut Vec<Vec<char>>) -> bool {
     if is_solved(board) {
         return true;
@@ -85,6 +83,8 @@ impl Solution {
         solve_sudoku(board);
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

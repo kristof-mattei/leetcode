@@ -1,6 +1,5 @@
-use std::{cmp, collections::HashMap, hash};
-
-use crate::shared::Solution;
+use std::collections::HashMap;
+use std::{cmp, hash};
 
 type Cache = HashMap<(Vec<char>, Vec<char>), Vec<Vec<char>>>;
 
@@ -146,6 +145,8 @@ impl Solution {
         is_scramble(&s1, &s2)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

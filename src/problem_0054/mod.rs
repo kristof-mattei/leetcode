@@ -1,6 +1,5 @@
-use std::{ops::Neg, vec::Vec};
-
-use crate::shared::Solution;
+use std::ops::Neg;
+use std::vec::Vec;
 
 #[derive(Clone, Copy)]
 enum Direction {
@@ -76,6 +75,8 @@ impl Solution {
         spiral_order(&matrix)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn when_letter_add(
     num: &mut i32,
     index: &mut usize,
@@ -46,6 +44,8 @@ impl Solution {
         roman_to_int(&s)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn get_smallest_string(n: i32, k: i32) -> String {
     let mut z = 0;
 
@@ -32,6 +30,8 @@ impl Solution {
         get_smallest_string(n, k)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

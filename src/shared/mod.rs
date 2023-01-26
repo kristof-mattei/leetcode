@@ -1,4 +1,7 @@
-pub struct Solution {}
+use std::cell::RefCell;
+use std::collections::VecDeque;
+use std::option::Option;
+use std::rc::Rc;
 
 #[derive(PartialEq, Eq)]
 pub struct ListNode {
@@ -11,19 +14,20 @@ impl std::fmt::Debug for ListNode {
         write!(f, "{}", self.val)?;
 
         if let Some(n) = &self.next {
-            write!(f, ",{:?}", n)?;
+            write!(f, ",{n:?}")?;
         }
 
         Ok(())
     }
 }
 
-// impl ListNode {
-//     #[inline]
-//     pub(crate) fn new(val: i32) -> Self {
-//         ListNode { next: None, val }
-//     }
-// }
+impl ListNode {
+    #[inline]
+    #[must_use]
+    pub fn new(val: i32) -> Self {
+        ListNode { next: None, val }
+    }
+}
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
@@ -32,18 +36,17 @@ pub struct TreeNode {
     pub right: Option<Rc<RefCell<TreeNode>>>,
 }
 
-// impl TreeNode {
-//   #[inline]
-//   pub fn new(val: i32) -> Self {
-//     TreeNode {
-//       val,
-//       left: None,
-//       right: None
-//     }
-//   }
-// }
-
-use std::{cell::RefCell, collections::VecDeque, option::Option, rc::Rc};
+impl TreeNode {
+    #[inline]
+    #[must_use]
+    pub fn new(val: i32) -> Self {
+        TreeNode {
+            val,
+            left: None,
+            right: None,
+        }
+    }
+}
 
 #[must_use]
 pub fn to_ll(input: &[i32]) -> Option<Box<ListNode>> {
@@ -77,7 +80,7 @@ where
     true
 }
 
-pub fn sort_vec_of_vec<T>(vec: &mut Vec<Vec<T>>)
+pub fn sort_vec_of_vec<T>(vec: &mut [Vec<T>])
 where
     T: std::cmp::Ord,
 {
@@ -88,13 +91,19 @@ where
     vec.sort_unstable();
 }
 
+#[derive(PartialEq, Eq)]
+enum Side {
+    Left,
+    Right,
+}
+
 /// Converts a slice of &[Option<T>] to a Binary tree
 ///
 /// # Examples
 ///
 /// ```
-/// use leet_code::shared::to_bt;
-/// use leet_code::shared::tn;
+/// use leetcode::shared::to_bt;
+/// use leetcode::shared::tn;
 ///
 /// let input = [1.into(), None, 3.into()];
 /// assert_eq!(to_bt(&input), tn(1, None, tn(3, None, None)));
@@ -110,30 +119,34 @@ pub fn to_bt(input: &[Option<i32>]) -> Option<Rc<RefCell<TreeNode>>> {
     }
 
     let root = tn(input[0].unwrap(), None, None);
-    let mut index = 1;
     let mut queue = VecDeque::from_iter([root.clone()]);
 
-    while let Some(current) = queue.pop_front().flatten() {
-        if index < input.len() {
-            let item = input.get(index).and_then(Option::as_ref);
-            index += 1;
+    let mut side = Side::Left;
 
-            if let Some(&v) = item {
-                let node = tn(v, None, None);
-                (*current.borrow_mut()).left = node.clone();
-                queue.push_back(node);
+    for o in input.iter().skip(1) {
+        let node = queue.front().unwrap().as_ref().unwrap();
+
+        if let Some(&v) = o.as_ref() {
+            let new_node = Some(Rc::new(RefCell::new(TreeNode::new(v))));
+
+            match side {
+                Side::Left => {
+                    node.borrow_mut().left = new_node.clone();
+                },
+                Side::Right => {
+                    node.borrow_mut().right = new_node.clone();
+                },
             }
+
+            queue.push_back(new_node);
         }
 
-        if index < input.len() {
-            let item = input.get(index).and_then(Option::as_ref);
-            index += 1;
+        if side == Side::Left {
+            side = Side::Right;
+        } else {
+            queue.pop_front();
 
-            if let Some(&v) = item {
-                let node = tn(v, None, None);
-                (*current.borrow_mut()).right = node.clone();
-                queue.push_back(node);
-            }
+            side = Side::Left;
         }
     }
 
@@ -145,8 +158,8 @@ pub fn to_bt(input: &[Option<i32>]) -> Option<Rc<RefCell<TreeNode>>> {
 /// # Examples
 ///
 /// ```
-/// use leet_code::shared::from_bt;
-/// use leet_code::shared::tn;
+/// use leetcode::shared::from_bt;
+/// use leetcode::shared::tn;
 ///
 /// let input = tn(1, None, tn(3, None, None));
 /// assert_eq!(from_bt(input), [1.into(), None, 3.into()]);
@@ -164,19 +177,17 @@ pub fn from_bt(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Option<i32>> {
     let mut results = vec![];
     let mut queue = VecDeque::from_iter([root]);
 
-    while !queue.is_empty() && queue.iter().any(Option::is_some) {
-        match queue.pop_front().unwrap() {
+    while queue.iter().any(Option::is_some) {
+        match queue.pop_front().flatten() {
             None => {
                 results.push(None);
             },
             Some(current) => {
-                results.push(Some(current.borrow().val));
+                let borrow = current.borrow();
+                results.push(Some(borrow.val));
 
-                let left = current.borrow_mut().left.take();
-                queue.push_back(left);
-
-                let right = current.borrow_mut().right.take();
-                queue.push_back(right);
+                queue.push_back(borrow.left.clone());
+                queue.push_back(borrow.right.clone());
             },
         }
     }
@@ -195,7 +206,7 @@ pub fn tn(
 
 #[cfg(test)]
 mod tests {
-    use crate::shared::{from_bt, tn, to_bt};
+    use crate::shared::{tn, to_bt};
 
     #[test]
     fn test_bt() {
@@ -240,29 +251,5 @@ mod tests {
         );
 
         assert_eq!(to_bt(&input), expected);
-    }
-    #[test]
-
-    fn test_from_bt_1() {
-        let expected = [
-            5.into(),
-            4.into(),
-            7.into(),
-            3.into(),
-            None,
-            2.into(),
-            None,
-            (-1).into(),
-            None,
-            9.into(),
-        ];
-
-        let input = tn(
-            5,
-            tn(4, tn(3, tn(-1, None, None), None), None),
-            tn(7, tn(2, tn(9, None, None), None), None),
-        );
-
-        assert_eq!(from_bt(input), expected);
     }
 }

@@ -1,0 +1,49 @@
+{
+    "configurations": {
+        "rust - lldb": {
+            "adapter": "CodeLLDB",
+            "configuration": {
+                "type": "lldb",
+                "request": "launch",
+                "program": "${workspaceRoot}/target/debug/leetcode",
+                "args": [
+                    "*${Args}"
+                ],
+                "sourceLanguages": [
+                    "rust"
+                ],
+                "cargo": {
+                    "args": [
+                        "test",
+                        "--no-run",
+                        "--lib",
+                        "--package=leetcode"
+                    ],
+                    "filter": {
+                        "name": "leetcode",
+                        "kind": "lib"
+                    }
+                }
+            },
+            "breakpoints": {
+                "exception": {
+                    "cpp_throw": "Y",
+                    "cpp_catch": "N"
+                }
+            }
+        },
+        "rust - gdb": {
+            "adapter": "vscode-cpptools",
+            "configuration": {
+                "request": "launch",
+                "program": "${Executable}",
+                "args": [
+                    "*${Args}"
+                ],
+                "externalConsole": true,
+                "stopOnEntry": true,
+                "MIMode": "gdb"
+            }
+        }
+    }
+}

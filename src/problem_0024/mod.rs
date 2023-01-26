@@ -1,4 +1,4 @@
-use crate::shared::{ListNode, Solution};
+use crate::shared::ListNode;
 
 fn swap_pairs(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     if head.is_none() || head.as_ref().unwrap().next.is_none() {
@@ -21,9 +21,12 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0024::swap_pairs, shared::to_ll};
+    use crate::problem_0024::swap_pairs;
+    use crate::shared::to_ll;
 
     #[test]
     fn test() {

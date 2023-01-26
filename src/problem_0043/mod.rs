@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn multiply(num1: &str, num2: &str) -> String {
     let mut digits = vec![0; num1.len() + num2.len()];
 
@@ -49,6 +47,8 @@ impl Solution {
         multiply(&num1, &num2)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

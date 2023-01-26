@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 impl Solution {
     #[allow(clippy::needless_pass_by_value)]
     #[must_use]
@@ -125,6 +123,8 @@ fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
     }
     index == remainder.len() && regex_index == remaining_regex.len()
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

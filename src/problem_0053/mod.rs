@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn max_crossing_sum(nums: &[i32]) -> i32 {
     let middle = nums.len() / 2;
 
@@ -48,6 +46,8 @@ impl Solution {
         max_sub_array(&nums)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

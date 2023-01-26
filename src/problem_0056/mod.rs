@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 #[derive(Clone, Copy)]
 enum R {
     Empty,
@@ -95,6 +93,8 @@ impl Solution {
         merge_alt(intervals)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

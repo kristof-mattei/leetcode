@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn convert(s: &str, num_rows: usize) -> String {
     if num_rows == 1 {
         return s.to_string();
@@ -37,6 +35,8 @@ impl Solution {
         convert(&s, num_rows as usize)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

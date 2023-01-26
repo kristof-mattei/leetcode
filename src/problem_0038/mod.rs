@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn count_and_say_r(n: i32) -> Vec<u32> {
     if n == 1 {
         return vec![1];
@@ -33,6 +31,8 @@ impl Solution {
         count_and_say(n)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

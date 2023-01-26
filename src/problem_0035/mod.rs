@@ -1,5 +1,3 @@
-use crate::shared::Solution;
-
 fn search_insert(nums: &[i32], target: i32) -> i32 {
     let mut offset = 0;
     let mut end = nums.len();
@@ -35,6 +33,8 @@ impl Solution {
         search_insert(&nums, target)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

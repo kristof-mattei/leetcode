@@ -1,6 +1,7 @@
-use std::{cell::RefCell, rc::Rc};
+use std::cell::RefCell;
+use std::rc::Rc;
 
-use crate::shared::{Solution, TreeNode};
+use crate::shared::TreeNode;
 
 fn inorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
     if root.is_none() {
@@ -38,10 +39,13 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
 
-    use crate::{problem_0094::inorder_traversal, shared::to_bt};
+    use crate::problem_0094::inorder_traversal;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {
@@ -69,6 +73,36 @@ mod tests {
         let t = to_bt(&input);
 
         let expected = [1, 2, 3];
+
+        assert_eq!(inorder_traversal(t), expected);
+    }
+
+    #[test]
+    fn test_4() {
+        let input = [1.into(), 2.into(), None, None, 3.into()];
+        let t = to_bt(&input);
+
+        let expected = [2, 3, 1];
+
+        assert_eq!(inorder_traversal(t), expected);
+    }
+
+    #[test]
+    fn test_5() {
+        let input = [2.into(), 1.into(), 3.into(), None, None, None, 4.into()];
+        let t = to_bt(&input);
+
+        let expected = [1, 2, 3, 4];
+
+        assert_eq!(inorder_traversal(t), expected);
+    }
+
+    #[test]
+    fn test_6() {
+        let input = [4.into(), 1.into(), None, None, 3.into(), 2.into()];
+        let t = to_bt(&input);
+
+        let expected = [1, 2, 3, 4];
 
         assert_eq!(inorder_traversal(t), expected);
     }

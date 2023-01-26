@@ -1,7 +1,5 @@
 use std::cmp;
 
-use crate::shared::Solution;
-
 fn longest_valid_parentheses(s: &str) -> i32 {
     let mut max_valid = 0;
     let mut stack = vec![-1];
@@ -34,6 +32,8 @@ impl Solution {
     }
 }
 
+pub struct Solution;
+
 #[cfg(test)]
 mod tests {
     use crate::problem_0032::longest_valid_parentheses;
@@ -56,7 +56,7 @@ mod tests {
 
     #[test]
     fn test_3() {
-        let input = "".to_string();
+        let input = String::new();
         assert_eq!(longest_valid_parentheses(&input), 0);
     }
 

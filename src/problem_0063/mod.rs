@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use crate::shared::Solution;
-
 fn memoize(
     cache: &mut HashMap<(usize, usize), usize>,
     matrix: &[Vec<i32>],
@@ -64,6 +62,8 @@ impl Solution {
         unique_paths_with_obstacles(&obstacle_grid)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {

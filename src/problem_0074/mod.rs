@@ -31,8 +31,6 @@ fn find_range(nums: &[i32], target: i32) -> RangeResult {
     RangeResult::Close(index)
 }
 
-use crate::shared::Solution;
-
 fn search_matrix(matrix: &[Vec<i32>], target: i32) -> bool {
     let row_search_result = find_range(&matrix.iter().map(|r| r[0]).collect::<Vec<_>>(), target);
     match row_search_result {
@@ -51,6 +49,8 @@ impl Solution {
         search_matrix(&matrix, target)
     }
 }
+
+pub struct Solution;
 
 #[cfg(test)]
 mod tests {
