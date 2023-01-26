@@ -23,7 +23,7 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "RUST_LOG": "leet_code=trace"
+                "RUST_LOG": "leetcode=trace"
             }
         },
         {
@@ -43,7 +43,11 @@
                 }
             },
             "args": [],
-            "cwd": "${workspaceFolder}"
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "RUST_BACKTRACE": "1",
+                "RUST_LOG": "leetcode=trace"
+            }
         }
     ]
 }

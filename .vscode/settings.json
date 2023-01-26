@@ -1,14 +1,12 @@
 {
-    "cSpell.words": [
-        "clippy",
-        "reqwest",
-    ],
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/*.code-search": true,
+        "**/target": true,
+    },
     "editor.renderFinalNewline": true,
     "editor.trimAutoWhitespace": true,
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
-    "lldb.displayFormat": "auto",
-    "lldb.dereferencePointers": true,
-    "lldb.showDisassembly": "never",
-    "lldb.consoleMode": "commands",
 }

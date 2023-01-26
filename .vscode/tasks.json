@@ -22,9 +22,7 @@
 		{
 			"type": "cargo",
 			"command": "build",
-			"args": [
-				"--verbose"
-			],
+			"args": [],
 			"problemMatcher": [
 				"$rustc"
 			],
@@ -36,8 +34,6 @@
 			"command": "fmt",
 			"args": [
 				"--all",
-				"--",
-				"--verbose"
 			],
 			"problemMatcher": [
 				"$rustc"
@@ -75,6 +71,18 @@
 			],
 			"group": "test",
 			"label": "Rust: cargo test"
-		}
+		},
+		{
+			"type": "cargo",
+			"command": "test",
+			"args": [
+				"--release"
+			],
+			"problemMatcher": [
+				"$rustc"
+			],
+			"group": "test",
+			"label": "Rust: cargo test release"
+		},
 	]
 }
