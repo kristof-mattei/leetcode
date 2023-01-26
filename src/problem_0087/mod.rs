@@ -7,11 +7,11 @@ type L = u8;
 type ValidSliceCache<'a> = HashMap<(&'a [L], &'a [L]), bool>;
 type SliceCharCountCache<'a> = HashMap<&'a [L], Rc<HashMap<L, usize>>>;
 
-fn permute_m<'a, 'b>(
-    valid_slice_cache: &'a mut ValidSliceCache<'b>,
-    slice_char_count_cache: &mut SliceCharCountCache<'b>,
-    from: &'b [L],
-    to: &'b [L],
+fn permute_m<'a>(
+    valid_slice_cache: &mut ValidSliceCache<'a>,
+    slice_char_count_cache: &mut SliceCharCountCache<'a>,
+    from: &'a [L],
+    to: &'a [L],
 ) -> bool {
     if valid_slice_cache.contains_key(&(from, to)) {
         return valid_slice_cache[&(from, to)];
@@ -24,9 +24,9 @@ fn permute_m<'a, 'b>(
     r
 }
 
-fn count_elements<'a, 'b>(
-    cache: &'a mut SliceCharCountCache<'b>,
-    slice: &'b [L],
+fn count_elements<'a>(
+    cache: &mut SliceCharCountCache<'a>,
+    slice: &'a [L],
 ) -> Rc<HashMap<L, usize>> {
     if cache.contains_key(slice) {
         return Rc::clone(&cache[slice]);
@@ -54,11 +54,11 @@ fn normal_or_swapped_or_both(
     (normal, swapped)
 }
 
-fn permute<'a, 'b>(
-    valid_slice_cache: &'a mut ValidSliceCache<'b>,
-    slice_char_count_cache: &mut SliceCharCountCache<'b>,
-    from: &'b [L],
-    to: &'b [L],
+fn permute<'a>(
+    valid_slice_cache: &mut ValidSliceCache<'a>,
+    slice_char_count_cache: &mut SliceCharCountCache<'a>,
+    from: &'a [L],
+    to: &'a [L],
 ) -> bool {
     if from.len() != to.len() {
         return false;

@@ -33,9 +33,8 @@ fn is_match_r(
     remainder: &[char],
     remaining_regex: &[char],
 ) -> bool {
-    let token = match remaining_regex.first() {
-        Some(t) => t,
-        None => return remainder.is_empty() && remaining_regex.is_empty(),
+    let Some(token) = remaining_regex.first() else {
+        return remainder.is_empty() && remaining_regex.is_empty();
     };
 
     match token {

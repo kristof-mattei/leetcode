@@ -51,7 +51,7 @@ impl WordDictionary {
     fn add_word(&mut self, word: String) {
         let (to_skip, mut last_matching_index) = self.follow(&word);
 
-        for letter in word.bytes().into_iter().skip(to_skip) {
+        for letter in word.bytes().skip(to_skip) {
             let new_index = self.states.len();
 
             let next_index = self.states[last_matching_index].next_or_insert(letter, new_index);

@@ -52,7 +52,7 @@ impl Trie {
     fn insert(&mut self, word: String) {
         let mut last_matching_index = self.follow(&word);
 
-        for letter in word.bytes().into_iter().skip(last_matching_index) {
+        for letter in word.bytes().skip(last_matching_index) {
             let new_index = self.states.len();
 
             let next_index = self.states[last_matching_index].next_or_insert(letter, new_index);

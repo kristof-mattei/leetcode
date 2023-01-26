@@ -4,10 +4,7 @@ fn get_permutation(n: usize, k: usize) -> String {
 
     let mut k = k - 1;
 
-    let mut start_permutation = (1..=n as u8)
-        .into_iter()
-        .map(|v| (v + b'0'))
-        .collect::<Vec<_>>();
+    let mut start_permutation = (1..=n as u8).map(|v| (v + b'0')).collect::<Vec<_>>();
 
     let mut permutation = String::new();
     for i in (0..n).rev() {

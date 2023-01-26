@@ -12,9 +12,7 @@ fn find_substring(s: &str, words: &[String]) -> Vec<i32> {
     let word_size = words[0].len();
     let window_size = word_size * words.len();
 
-    let last_split = if let Some(m) = s.len().checked_sub(window_size) {
-        m
-    } else {
+    let Some(last_split) = s.len().checked_sub(window_size) else {
         return indexes;
     };
 

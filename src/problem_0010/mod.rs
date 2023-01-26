@@ -23,7 +23,7 @@ fn to_simple_token(c: char) -> SingleToken {
 }
 
 fn tokenize(p: &str) -> Vec<Token> {
-    let mut chars = p.chars().into_iter().collect::<Vec<_>>();
+    let mut chars = p.chars().collect::<Vec<_>>();
     let mut tokenized = Vec::new();
     while let Some(c) = chars.pop() {
         let token = match c {
