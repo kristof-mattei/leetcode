@@ -1,11 +1,8 @@
 use crate::shared::ListNode;
 
 fn delete_duplicates_r(head: &mut Option<Box<ListNode>>) {
-    let h = match head {
-        Some(h) => h,
-        None => {
-            return;
-        },
+    let Some(h) = head else {
+        return;
     };
 
     let current_val = h.val;

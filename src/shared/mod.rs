@@ -234,7 +234,7 @@ mod tests {
 
     #[test]
     fn test_bt_2() {
-        let input = (1..=15).into_iter().map(Some).collect::<Vec<_>>();
+        let input = (1..=15).map(Some).collect::<Vec<_>>();
 
         let expected = tn(
             1,
