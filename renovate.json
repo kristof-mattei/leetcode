@@ -1,4 +1,5 @@
 {
+    "rangeStrategy": "bump",
     "extends": [
         "github>kristof-mattei/renovate-config",
         "github>kristof-mattei/renovate-config//rust/updateRustVersionInCargoToml",
