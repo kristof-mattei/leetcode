@@ -1,4 +1,5 @@
 #![cfg_attr(not(debug_assertions), deny(warnings))]
+#![allow(clippy::uninlined_format_args)]
 
 // use std::path::PathBuf;
 
