@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/kristof-mattei/leetcode#readme",
   "devDependencies": {
-    "prettier": "^2.8.2"
+    "prettier": "^2.8.4"
   },
   "publishConfig": {
     "access": "restricted"
