@@ -1,11 +1,13 @@
+#![cfg_attr(not(debug_assertions), deny(warnings))]
 #![deny(clippy::all)]
-#![warn(clippy::pedantic)]
-#![warn(clippy::cargo)]
+#![deny(clippy::pedantic)]
+#![deny(clippy::cargo)]
 #![allow(clippy::cast_possible_truncation)]
 #![allow(clippy::cast_possible_wrap)]
 #![allow(clippy::cast_sign_loss)]
 #![allow(clippy::too_many_lines)]
 #![allow(clippy::let_and_return)]
+#![allow(clippy::uninlined_format_args)]
 
 pub mod shared;
 mod utils;

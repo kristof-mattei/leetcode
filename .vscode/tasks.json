@@ -51,9 +51,9 @@
 				"--",
 				"--deny",
 				"clippy::all",
-				"--warn",
+				"--deny",
 				"clippy::pedantic",
-				"--warn",
+				"--deny",
 				"clippy::cargo",
 			],
 			"problemMatcher": [
