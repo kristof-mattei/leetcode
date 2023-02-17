@@ -214,21 +214,6 @@ jobs:
           directory: reports
           fail_ci_if_error: true
 
-      - name: Setup Code Climate Test Reporter
-        shell: bash
-        run: |
-          # download test reporter as a static binary
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-
-      - name: Run Code Climate Test Reporter
-        shell: bash
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-        run: |
-          ./cc-test-reporter format-coverage reports/lcov.info --input-type lcov --output reports/codeclimate.json
-          ./cc-test-reporter upload-coverage --input reports/codeclimate.json
-
       - name: Fail if tests failed
         shell: bash
         if: steps.tests.outcome != 'success'
