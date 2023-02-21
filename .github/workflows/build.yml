@@ -112,7 +112,7 @@ jobs:
           VERSION="$(cog bump --auto --dry-run || true)"
 
           if [[ -z $VERSION ]]; then
-              VERSION="$(git describe --tags "$(git rev-list --tags --max-count=1)")"
+              VERSION="$(git tag --points-at "$(git rev-list --tags --max-count=1)" | sort --reverse | head --lines 1)"
 
               echo "No version generated, defaulting to latest git tag: ${VERSION}"
           else
