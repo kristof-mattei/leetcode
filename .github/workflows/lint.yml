@@ -1,17 +1,13 @@
-name: Lint Yaml
+name: Lint
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
-    paths:
-      - "**/*.yml"
-      - "**/*.yaml"
   pull_request:
-    paths:
-      - "**/*.yml"
-      - "**/*.yaml"
+    branches:
+      - main
 
 jobs:
   lint:
@@ -36,4 +32,4 @@ jobs:
       - name: Run linter
         shell: bash
         run: |
-          npx --no-install prettier -c "**/*.{yml,yaml}"
+          npx --no-install prettier --check .
