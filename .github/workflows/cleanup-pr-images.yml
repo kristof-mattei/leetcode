@@ -22,7 +22,7 @@ env:
 
 concurrency:
   # each new commit to a PR runs this workflow
-  # so we need to avoid a long running older one from overwriting the 'pr-<number>-latest'
+  # so we need to avoid a long running older one from overwriting the "pr-<number>-latest"
   group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label }}"
   cancel-in-progress: true
 
@@ -30,7 +30,7 @@ jobs:
   cleanup:
     name: Cleanup
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged == false }}
+    if: github.event.pull_request.merged == false
     steps:
       - name: Void
         shell: bash

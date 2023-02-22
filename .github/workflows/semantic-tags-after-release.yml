@@ -44,7 +44,7 @@ jobs:
           # because in the JS github variable ref_name isn't there
           TAGNAME: ${{ github.ref_name }}
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const semver = require("semver");
 
