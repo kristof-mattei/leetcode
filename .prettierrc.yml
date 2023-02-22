@@ -4,3 +4,13 @@ overrides:
       - "**/*.{yml,yaml}"
     options:
       singleQuote: false
+  - files:
+      - "**/*.json"
+    options:
+      tabWidth: 4
+      trailingComma: all
+  - files:
+      - "package.json"
+      - "package-lock.json"
+    options:
+      tabWidth: 2

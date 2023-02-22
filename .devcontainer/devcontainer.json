@@ -1,20 +1,20 @@
-// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.195.0/containers/rust
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/rust
 {
     "name": "Rust",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    // "image": "mcr.microsoft.com/devcontainers/rust:0-1-bullseye",
+
     "build": {
         "dockerfile": "Dockerfile",
         "args": {
             // Use the VARIANT arg to pick a Debian OS version: buster, bullseye
             // Use bullseye when on local on arm64/Apple Silicon.
-            "VARIANT": "bullseye"
+            // We use full sha256
+            // "VARIANT": "bullseye"
         }
     },
-    "runArgs": [
-        "--cap-add=SYS_PTRACE",
-        "--security-opt",
-        "seccomp=unconfined"
-    ],
+    "runArgs": ["--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
     // Configure tool-specific properties.
     "customizations": {
         // Configure properties specific to VS Code.
@@ -25,8 +25,10 @@
                 // VS Code don't watch files under ./target
                 "files.watcherExclude": {
                     "**/target/**": true
-                }
+                },
+                "rust-analyzer.checkOnSave.command": "clippy"
             },
+
             // Add the IDs of extensions you want installed when the container is created.
             "extensions": [
                 "vadimcn.vscode-lldb",
@@ -37,10 +39,25 @@
             ]
         }
     },
+
+    // Use 'mounts' to make the cargo cache persistent in a Docker Volume.
+    // "mounts": [
+    // 	{
+    // 		"source": "devcontainer-cargo-cache-${devcontainerId}",
+    // 		"target": "/usr/local/cargo",
+    // 		"type": "volume"
+    // 	}
+    // ]
+
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    // "features": {},
+
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],
+
     // Use 'postCreateCommand' to run commands after the container is created.
     // "postCreateCommand": "rustc --version",
-    // Comment out to run as root instead.
+
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "vscode"
 }

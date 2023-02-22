@@ -18,14 +18,35 @@ permissions:
 
 env:
   CARGO_TERM_COLOR: always
+  BUILD_DOCKER_CONTAINER: false
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+  # just a name, but storing it separately as we're nice people
+  DOCKER_IMAGE_ARTIFACT_NAME: Docker image
+  DOCKER_IMAGE_OUTPUT_LOCATION: /tmp
+  DOCKER_IMAGE_TAR_LOCATION: /tmp/docker-image.tar # notice /tmp same as DOCKER_IMAGE_OUTPUT_LOCATION
 
 concurrency:
   # each new commit to a PR runs this workflow
-  # so we need to avoid a long running older one from overwriting the 'pr-<number>-latest'
+  # so we need to avoid a long running older one from overwriting the "pr-<number>-latest"
   group: "${{ github.workflow }} @ ${{ github.ref_name }}"
   cancel-in-progress: true
 
 jobs:
+  produce-docker-container:
+    name: Should Docker container be built?
+    runs-on: ubuntu-latest
+    outputs:
+      should: ${{ fromJSON(env.BUILD_DOCKER_CONTAINER) }}
+
+    steps:
+      - name: Dummy
+        shell: bash
+        run: |
+          echo "These are not the steps you're looking for..."
+
   changes:
     name: Detect changes
     runs-on: ubuntu-latest
@@ -42,13 +63,92 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           filters: .github/file-filters.yml
 
+  calculate-version:
+    name: Calculate version
+    runs-on: ubuntu-latest
+    needs:
+      - changes
+      - produce-docker-container
+    outputs:
+      version: ${{ steps.version.outputs.nextversion }}
+    if: |
+      github.event_name == 'pull_request' &&
+      fromJSON(needs.produce-docker-container.outputs.should) == true &&
+      fromJSON(needs.changes.outputs.code) == true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+        with:
+          fetch-depth: 0
+
+      - name: Cache dependencies
+        uses: actions/cache@69d9d449aced6a2ede0bc19182fadc3a0a42d2b0 # v3.2.6
+        env:
+          CACHE_NAME: cargo-cache-dependencies
+        with:
+          path: |
+            ~/.cargo
+            ./target
+          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cocogitto
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
+            ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up toolchain
+        shell: bash
+        run: |
+          rm ${HOME}/.cargo/bin/rustfmt
+          rm ${HOME}/.cargo/bin/cargo-fmt
+          rustup update
+
+          cargo --version
+
+      - name: Get binstall
+        shell: bash
+        run: |
+          cd /tmp
+          archive="cargo-binstall-x86_64-unknown-linux-musl.tgz"
+          wget "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/${archive}"
+
+          tar -xvf "./${archive}"
+
+          rm "./${archive}"
+
+          mv ./cargo-binstall ~/.cargo/bin/
+
+      - name: Install cocogitto to get the next version number
+        shell: bash
+        run: |
+          cargo binstall --no-confirm cocogitto --target x86_64-unknown-linux-musl --pkg-url "{ repo }/releases/download/{ version }/{ name }-{ version }-{ target }.tar.gz" --bin-dir "{ bin }" --pkg-fmt tgz
+
+      - name: Calculate next version
+        id: version
+        shell: bash
+        run: |
+          VERSION="$(cog bump --auto --dry-run || true)"
+
+          if [[ -z $VERSION ]]; then
+              VERSION="$(git tag --points-at "$(git rev-list --tags --max-count=1)" | sort --reverse | head --lines 1)"
+
+              echo "No version generated, defaulting to latest git tag: ${VERSION}"
+          else
+              echo "New version: ${VERSION}"
+          fi
+
+          # remove v
+          VERSION="${VERSION//v/}"
+
+          # store
+          echo "nextversion=${VERSION}" >> ${GITHUB_OUTPUT}
+
   cargo-build:
     name: Cargo build
     runs-on: ubuntu-latest
     needs:
       - changes
     if: |
-      (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
+      github.event_name == 'pull_request' &&
+      fromJSON(needs.changes.outputs.code) == true
     steps:
       - name: Checkout
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
@@ -86,7 +186,8 @@ jobs:
     needs:
       - changes
     if: |
-      (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
+      github.event_name == 'pull_request' &&
+      fromJSON(needs.changes.outputs.code) == true
     steps:
       - name: Checkout
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
@@ -123,8 +224,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - changes
-    if: |
-      (needs.changes.outputs.code == 'true')
+    if: fromJSON(needs.changes.outputs.code) == true
     steps:
       - name: Checkout
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
@@ -205,7 +305,7 @@ jobs:
       - name: Run grcov
         shell: bash
         run: |
-          grcov $(find profiling -name "profile-*.profraw" -print) --source-dir . --binary-path ./target/debug/ --output-type lcov --branch --ignore-not-existing --llvm --keep-only 'src/**' --keep-only 'tests/**' --output-path ./reports/lcov.info
+          grcov $(find profiling -name "profile-*.profraw" -print) --source-dir . --binary-path ./target/debug/ --output-type lcov --branch --ignore-not-existing --llvm --keep-only "src/**" --keep-only "tests/**" --output-path ./reports/lcov.info
 
       - name: Upload to CodeCov
         uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70 # tag=v3.1.1
@@ -231,7 +331,8 @@ jobs:
     needs:
       - changes
     if: |
-      (github.event_name == 'pull_request' && needs.changes.outputs.code == 'true')
+      github.event_name == 'pull_request' &&
+      fromJSON(needs.changes.outputs.code) == true
     steps:
       - name: Checkout
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
@@ -263,6 +364,108 @@ jobs:
         with:
           args: --workspace --all-targets --all-features -- --deny clippy::all --deny clippy::pedantic --deny clippy::cargo
 
+  docker-build:
+    name: Build Docker container
+    runs-on: ubuntu-latest
+    needs:
+      - calculate-version
+    # if: ... is not needed because calculate-version will not run if we disable building the docker container
+    steps:
+      - name: Checkout
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Set the Cargo.toml version before we copy in the data into the Docker container
+        shell: bash
+        run: |
+          ./.github/scripts/update-version.sh ${{ needs.calculate-version.outputs.version }}
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@f03ac48505955848960e80bbb68046aa35c7b9e7 # v2.4.1
+
+      # TODO validate no changes between github.event.pull_request.head.sha and the actual current sha (representing the hypothetical merge)
+
+      # Extract metadata (tags, labels) for Docker
+      # https://github.com/docker/metadata-action
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96 # v4.3.0
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=pr,suffix=-latest
+            type=raw,value=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
+          labels: |
+            org.opencontainers.image.version=pr-${{ github.event.number }}
+            org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # tag=v2.1.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase the image name
+        shell: bash
+        run: |
+          echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+
+      - name: Build Docker image
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4.0.0
+        with:
+          context: .
+          # this container is THE PR's artifact, and we will re-tag it
+          # once the PR has been accepted
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
+          outputs: type=docker,dest=${{ env.DOCKER_IMAGE_TAR_LOCATION }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        with:
+          name: ${{ env.DOCKER_IMAGE_ARTIFACT_NAME }}
+          path: ${{ env.DOCKER_IMAGE_TAR_LOCATION }}
+
+  docker-publish:
+    name: Publish Docker container
+    runs-on: ubuntu-latest
+    needs:
+      - cargo-build
+      - cargo-fmt
+      - cargo-test-and-report
+      - cargo-clippy-and-report
+      - docker-build
+    if: github.repository == 'kristof-mattei/leet-code' && github.event_name == 'pull_request'
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f03ac48505955848960e80bbb68046aa35c7b9e7 # v2.4.1
+
+      - name: Download artifact
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+        with:
+          name: ${{ env.DOCKER_IMAGE_ARTIFACT_NAME }}
+          path: ${{ env.DOCKER_IMAGE_OUTPUT_LOCATION }}
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # tag=v2.1.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Load image from artifact
+        shell: bash
+        run: |
+          docker load --input ${{ env.DOCKER_IMAGE_TAR_LOCATION }}
+
+      - name: Push image with all tags
+        shell: bash
+        run: |
+          docker push ${REGISTRY,,}/${IMAGE_NAME,,} --all-tags
+
   all-done:
     name: All done
     # this is the job that should be marked as required on GitHub. It's the only one that'll reliably trigger
@@ -276,11 +479,13 @@ jobs:
       - cargo-fmt
       - cargo-clippy-and-report
       - cargo-test-and-report
-    if: ${{ always() }}
+      - docker-build
+      - docker-publish
+    if: always()
     steps:
       - name: Fail!
         shell: bash
-        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
         run: |
           echo "One / more upstream failed or was cancelled. Failing job..."
 

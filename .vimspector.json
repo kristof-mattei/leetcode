@@ -6,19 +6,10 @@
                 "type": "lldb",
                 "request": "launch",
                 "program": "${workspaceRoot}/target/debug/leetcode",
-                "args": [
-                    "*${Args}"
-                ],
-                "sourceLanguages": [
-                    "rust"
-                ],
+                "args": ["*${Args}"],
+                "sourceLanguages": ["rust"],
                 "cargo": {
-                    "args": [
-                        "test",
-                        "--no-run",
-                        "--lib",
-                        "--package=leetcode"
-                    ],
+                    "args": ["test", "--no-run", "--lib", "--package=leetcode"],
                     "filter": {
                         "name": "leetcode",
                         "kind": "lib"
@@ -37,9 +28,7 @@
             "configuration": {
                 "request": "launch",
                 "program": "${Executable}",
-                "args": [
-                    "*${Args}"
-                ],
+                "args": ["*${Args}"],
                 "externalConsole": true,
                 "stopOnEntry": true,
                 "MIMode": "gdb"

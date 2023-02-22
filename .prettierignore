@@ -1,1 +1,7 @@
+.git
 .github/actions/
+profiling
+reports
+src   # rust-fmt
+tests # rust-fmt
+target
