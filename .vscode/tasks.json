@@ -1,88 +1,70 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "cargo",
-			"command": "check",
-			"problemMatcher": [
-				"$rustc"
-			],
-			"group": "build",
-			"label": "Rust: cargo check"
-		},
-		{
-			"type": "cargo",
-			"command": "clean",
-			"problemMatcher": [
-				"$rustc"
-			],
-			"group": "build",
-			"label": "Rust: cargo clean"
-		},
-		{
-			"type": "cargo",
-			"command": "build",
-			"args": [],
-			"problemMatcher": [
-				"$rustc"
-			],
-			"group": "build",
-			"label": "Rust: cargo build"
-		},
-		{
-			"type": "cargo",
-			"command": "fmt",
-			"args": [
-				"--all",
-			],
-			"problemMatcher": [
-				"$rustc"
-			],
-			"group": "build",
-			"label": "Rust: cargo fmt"
-		},
-		{
-			"type": "cargo",
-			"command": "clippy",
-			"args": [
-				"--workspace",
-				"--all-targets",
-				"--all-features",
-				"--",
-				"--deny",
-				"clippy::all",
-				"--deny",
-				"clippy::pedantic",
-				"--deny",
-				"clippy::cargo",
-			],
-			"problemMatcher": [
-				"$rustc"
-			],
-			"group": "build",
-			"label": "Rust: cargo clippy"
-		},
-		{
-			"type": "cargo",
-			"command": "test",
-			"args": [],
-			"problemMatcher": [
-				"$rustc"
-			],
-			"group": "test",
-			"label": "Rust: cargo test"
-		},
-		{
-			"type": "cargo",
-			"command": "test",
-			"args": [
-				"--release"
-			],
-			"problemMatcher": [
-				"$rustc"
-			],
-			"group": "test",
-			"label": "Rust: cargo test release"
-		},
-	]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cargo",
+            "command": "check",
+            "problemMatcher": ["$rustc"],
+            "group": "build",
+            "label": "Rust: cargo check"
+        },
+        {
+            "type": "cargo",
+            "command": "clean",
+            "problemMatcher": ["$rustc"],
+            "group": "build",
+            "label": "Rust: cargo clean"
+        },
+        {
+            "type": "cargo",
+            "command": "build",
+            "args": [],
+            "problemMatcher": ["$rustc"],
+            "group": "build",
+            "label": "Rust: cargo build"
+        },
+        {
+            "type": "cargo",
+            "command": "fmt",
+            "args": ["--all"],
+            "problemMatcher": ["$rustc"],
+            "group": "build",
+            "label": "Rust: cargo fmt"
+        },
+        {
+            "type": "cargo",
+            "command": "clippy",
+            "args": [
+                "--workspace",
+                "--all-targets",
+                "--all-features",
+                "--",
+                "--deny",
+                "clippy::all",
+                "--deny",
+                "clippy::pedantic",
+                "--deny",
+                "clippy::cargo"
+            ],
+            "problemMatcher": ["$rustc"],
+            "group": "build",
+            "label": "Rust: cargo clippy"
+        },
+        {
+            "type": "cargo",
+            "command": "test",
+            "args": [],
+            "problemMatcher": ["$rustc"],
+            "group": "test",
+            "label": "Rust: cargo test"
+        },
+        {
+            "type": "cargo",
+            "command": "test",
+            "args": ["--release"],
+            "problemMatcher": ["$rustc"],
+            "group": "test",
+            "label": "Rust: cargo test release"
+        }
+    ]
 }

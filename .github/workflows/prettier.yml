@@ -1,21 +1,17 @@
-name: Lint Yaml
+name: Prettier
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
-    paths:
-      - "**/*.yml"
-      - "**/*.yaml"
   pull_request:
-    paths:
-      - "**/*.yml"
-      - "**/*.yaml"
+    branches:
+      - main
 
 jobs:
-  lint:
-    name: Lint
+  prettier:
+    name: Prettier
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
@@ -33,7 +29,7 @@ jobs:
         run: |
           npm ci --ignore-scripts
 
-      - name: Run linter
+      - name: Run Prettier
         shell: bash
         run: |
-          npx --no-install prettier -c "**/*.{yml,yaml}"
+          npx --no-install prettier --check .
