@@ -1,6 +1,8 @@
-FROM rust:1.68.1@sha256:516b40867bdc4431399b787f3b6143d5ae4fb50eee6156e10b83fd3bffee286f as builder
+FROM rust:1.68.0@sha256:daed493bfa86872311b82492a2084e0b029b52dc009f077c4108306f2eaf8c7c as builder
 
-ENV TARGET=x86_64-unknown-linux-musl
+ARG TARGET=x86_64-unknown-linux-musl
+ARG APPLICATION_NAME
+
 RUN rustup target add ${TARGET}
 
 RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
@@ -19,23 +21,26 @@ RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/
 # This allows us to copy in the source in a different layer which in turn allows us to leverage Docker's layer caching
 # That means that if our dependencies don't change rebuilding is much faster
 WORKDIR /build
-RUN cargo new rust-end-to-end-application
-WORKDIR /build/rust-end-to-end-application
+RUN cargo new ${APPLICATION_NAME}
+WORKDIR /build/${APPLICATION_NAME}
 COPY Cargo.toml Cargo.lock ./
-RUN --mount=type=cache,id=cargo-only,target=/build/rust-end-to-end-application/target \
+RUN --mount=type=cache,id=before-build,target=/build/${APPLICATION_NAME}/target \
     cargo build --release --target ${TARGET}
 
 # now we copy in the source which is more prone to changes and build it
 COPY src ./src
 # --release not needed, it is implied with install
-RUN --mount=type=cache,id=full-build,target=/build/rust-end-to-end-application/target \
+RUN --mount=type=cache,id=after-build,target=/build/${APPLICATION_NAME}/target \
     cargo install --path . --target ${TARGET} --root /output
 
 FROM alpine:3.17.2@sha256:ff6bdca1701f3a8a67e328815ff2346b0e4067d32ec36b7992c1fdc001dc8517
+
+ARG APPLICATION_NAME
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
 
 WORKDIR /app
-COPY --from=builder /output/bin/rust-end-to-end-application /app
-ENTRYPOINT ["/app/rust-end-to-end-application"]
+COPY --from=builder /output/bin/${APPLICATION_NAME} /app/entrypoint
+
+ENTRYPOINT ["/app/entrypoint"]
