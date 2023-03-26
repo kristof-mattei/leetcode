@@ -2,6 +2,7 @@
 #![deny(clippy::all)]
 #![deny(clippy::pedantic)]
 #![deny(clippy::cargo)]
+#![forbid(non_ascii_idents)]
 #![allow(clippy::uninlined_format_args)]
 
 // use std::path::PathBuf;
