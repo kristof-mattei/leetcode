@@ -1,6 +1,7 @@
 name: Retag containers after new push / PR
 
 env:
+  BUILD_DOCKER_CONTAINER: true
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
@@ -30,9 +31,23 @@ permissions:
   packages: write
 
 jobs:
+  produce-docker-container:
+    name: Should Docker container be built?
+    runs-on: ubuntu-latest
+    outputs:
+      should: ${{ fromJSON(env.BUILD_DOCKER_CONTAINER) }}
+
+    steps:
+      - name: Dummy
+        shell: bash
+        run: |
+          echo "These are not the steps you're looking for..."
+
   retag-containers:
     name: Retag the containers
     runs-on: ubuntu-latest
+    needs:
+      - produce-docker-container
     steps:
       - name: Checkout
         uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
