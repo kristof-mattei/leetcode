@@ -441,7 +441,7 @@ jobs:
       - cargo-test-and-report
       - cargo-clippy-and-report
       - docker-build
-      # Check if the event is not triggered by a fork
+    # Check if the event is not triggered by a fork
     if: github.event.pull_request.head.repo.full_name == github.repository && github.event_name == 'pull_request'
     steps:
       - name: Set up Docker Buildx
