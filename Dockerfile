@@ -24,13 +24,13 @@ WORKDIR /build
 RUN cargo new ${APPLICATION_NAME}
 WORKDIR /build/${APPLICATION_NAME}
 COPY Cargo.toml Cargo.lock ./
-RUN --mount=type=cache,id=before-build,target=/build/${APPLICATION_NAME}/target \
+RUN --mount=type=cache,id=cargo-dependencies,target=/build/${APPLICATION_NAME}/target \
     cargo build --release --target ${TARGET}
 
 # now we copy in the source which is more prone to changes and build it
 COPY src ./src
 # --release not needed, it is implied with install
-RUN --mount=type=cache,id=after-build,target=/build/${APPLICATION_NAME}/target \
+RUN --mount=type=cache,id=full-build,target=/build/${APPLICATION_NAME}/target \
     cargo install --path . --target ${TARGET} --root /output
 
 FROM alpine:3.17.2@sha256:ff6bdca1701f3a8a67e328815ff2346b0e4067d32ec36b7992c1fdc001dc8517
