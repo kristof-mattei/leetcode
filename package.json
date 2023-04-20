@@ -9,7 +9,7 @@
   },
   "engines": {
     "node": ">=v18.16.0",
-    "npm": ">=9.6.4"
+    "npm": ">=9.6.5"
   },
   "repository": {
     "type": "git",
