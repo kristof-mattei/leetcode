@@ -1,4 +1,4 @@
-FROM rust:1.68.2@sha256:346a6ecb2d445d27c70f4cc99c4a56aef75b47e62482c9734287cd6d98e061f0 as builder
+FROM rust:1.69.0@sha256:ed14c1091e5081566fd0486bc30fc6c1c1b68e0bdcdfce59e7f580135dddddb6 as builder
 
 ARG TARGET=x86_64-unknown-linux-musl
 ARG APPLICATION_NAME
