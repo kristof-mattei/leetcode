@@ -43,4 +43,5 @@ USER appuser
 WORKDIR /app
 COPY --from=builder /output/bin/${APPLICATION_NAME} /app/entrypoint
 
+ENV RUST_BACKTRACE=full
 ENTRYPOINT ["/app/entrypoint"]
