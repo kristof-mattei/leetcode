@@ -7,6 +7,7 @@
 #![allow(clippy::cast_sign_loss)]
 #![allow(clippy::too_many_lines)]
 #![allow(clippy::let_and_return)]
+#![forbid(non_ascii_idents)]
 #![allow(clippy::uninlined_format_args)]
 
 pub mod shared;
