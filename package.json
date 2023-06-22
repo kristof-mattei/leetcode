@@ -30,7 +30,7 @@
     "conventional-changelog-conventionalcommits": "^6.1.0",
     "prettier": "^2.8.8",
     "semantic-release": "^21.0.5",
-    "semver": "^7.5.2",
+    "semver": "^7.5.3",
     "serialize-error": "^11.0.0"
   },
   "publishConfig": {
