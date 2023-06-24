@@ -46,7 +46,7 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "full",
-                "RUST_LOG": "rust_end_to_end_application=trace"
+                "RUST_LOG": "trace,rust_end_to_end_application=trace"
             }
         }
     ]
