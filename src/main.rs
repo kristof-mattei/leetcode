@@ -73,7 +73,9 @@ fn quz() -> &'static str {
 //     run_app().await;
 // }
 
-fn main() {
+fn main() -> Result<(), color_eyre::Report> {
+    color_eyre::install()?;
+
     println!("{}", foo());
     println!("{}", bar());
     println!("{}", quz());
