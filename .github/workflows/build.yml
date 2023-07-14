@@ -308,12 +308,11 @@ jobs:
         run: |
           grcov $(find profiling -name "profile-*.profraw" -print) --source-dir . --binary-path ./target/debug/ --output-type lcov --branch --ignore-not-existing --llvm --keep-only "src/**" --keep-only "tests/**" --output-path ./reports/lcov.info
 
-      - name: Upload to CodeCov
-        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
+      - name: Upload to Coveralls
+        uses: coverallsapp/github-action@3284643be2c47fb6432518ecec17f1255e8a06a6
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          directory: reports
-          fail_ci_if_error: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: reports/lcov.info
 
       - name: Fail if tests failed
         shell: bash
