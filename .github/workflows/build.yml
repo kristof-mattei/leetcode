@@ -18,7 +18,8 @@ permissions:
 
 env:
   CARGO_TERM_COLOR: always
-  BUILD_DOCKER_CONTAINER: true
+  # set this to true in GitHub variables to enable building the container
+  # BUILD_DOCKER_CONTAINER: true
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   APPLICATION_NAME: rust-end-to-end-application
@@ -36,17 +37,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  produce-docker-container:
+  determine-build-container:
     name: Should Docker container be built?
     runs-on: ubuntu-latest
     outputs:
-      should: ${{ fromJSON(env.BUILD_DOCKER_CONTAINER) }}
+      build: ${{ steps.determine.outputs.build }}
 
     steps:
-      - name: Dummy
+      - name: Determine if container should be built
+        id: determine
         shell: bash
         run: |
-          echo "These are not the steps you're looking for..."
+          BUILD="${{ env.BUILD_DOCKER_CONTAINER }}"
+          echo "build=${BUILD:-false}" >> ${GITHUB_OUTPUT}
 
   changes:
     name: Detect changes
@@ -69,12 +72,12 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - changes
-      - produce-docker-container
+      - determine-build-container
     outputs:
       version: ${{ steps.version.outputs.nextversion }}
     if: |
       github.event_name == 'pull_request' &&
-      fromJSON(needs.produce-docker-container.outputs.should) == true &&
+      fromJSON(needs.determine-build-container.outputs.build) == true &&
       fromJSON(needs.changes.outputs.code) == true
     steps:
       - name: Checkout
