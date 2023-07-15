@@ -163,13 +163,11 @@ jobs:
       - name: Set full image name
         shell: bash
         run: |
-
           echo "FULL_IMAGE_NAME=${REGISTRY,,}/${IMAGE_NAME,,}" >> ${GITHUB_ENV}
 
       - name: Find all tags for ${{ env.FULL_IMAGE_NAME }}
         shell: bash
         run: |
-
           crane ls ${FULL_IMAGE_NAME} >> existing_tags
 
           echo "These are the existing tags on ${FULL_IMAGE_NAME}:"
