@@ -22,7 +22,6 @@ env:
   # HAS_CONTAINER: true
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
-  APPLICATION_NAME: rust-end-to-end-application
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
   # just a name, but storing it separately as we're nice people
@@ -413,6 +412,12 @@ jobs:
         shell: bash
         run: |
           echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+
+      - name: Set application name
+        shell: bash
+        run: |
+          APPLICATION_NAME=${{ github.repository }}
+          echo "APPLICATION_NAME=${APPLICATION_NAME##*/}" >> ${GITHUB_ENV}
 
       - name: Build Docker image
         uses: docker/build-push-action@2eb1c1961a95fc15694676618e422e8ba1d63825 # v4.1.1
