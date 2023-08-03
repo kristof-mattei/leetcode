@@ -28,7 +28,7 @@
     "@semantic-release/github": "^9.0.4",
     "@semantic-release/release-notes-generator": "^11.0.4",
     "conventional-changelog-conventionalcommits": "^6.1.0",
-    "prettier": "^3.0.0",
+    "prettier": "^3.0.1",
     "semantic-release": "^21.0.7",
     "semver": "^7.5.4",
     "serialize-error": "^11.0.1"
