@@ -31,8 +31,8 @@ fn solve(board: &mut Vec<Vec<char>>) {
 
     // lastly we mark all the remaining Zs as X, as we didn't hit them from an edge, ergo they are not touching an edge
 
-    for row in board.iter_mut() {
-        for col in row.iter_mut() {
+    for row in &mut *board {
+        for col in &mut *row {
             if *col == 'O' {
                 *col = 'Z';
             }
@@ -52,8 +52,8 @@ fn solve(board: &mut Vec<Vec<char>>) {
         mark_touching_o_s(board, r, c);
     }
 
-    for row in board.iter_mut() {
-        for col in row.iter_mut() {
+    for row in &mut *board {
+        for col in &mut *row {
             if *col == 'Z' {
                 *col = 'X';
             }

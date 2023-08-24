@@ -1,7 +1,7 @@
 fn sort_colors(nums: &mut [i32]) {
     let mut arr: [usize; 3] = [0; 3];
 
-    for n in nums.iter() {
+    for n in &*nums {
         arr[*n as usize] += 1;
     }
 
