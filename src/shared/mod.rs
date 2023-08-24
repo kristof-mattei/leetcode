@@ -84,7 +84,7 @@ pub fn sort_vec_of_vec<T>(vec: &mut [Vec<T>])
 where
     T: std::cmp::Ord,
 {
-    for inner_v in vec.iter_mut() {
+    for inner_v in &mut *vec {
         inner_v.sort_unstable();
     }
 

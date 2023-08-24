@@ -11,7 +11,7 @@ fn word_break_r<'a>(
 
     let mut result = Vec::new();
 
-    for word in word_dict.iter() {
+    for word in word_dict {
         if let Some(stripped) = s.strip_prefix(word) {
             for outer_word in word_break_r(cache, stripped, word_dict) {
                 result.push([word, " ", outer_word.as_str()].concat());

@@ -74,7 +74,7 @@ mod tests {
     fn test_2() {
         assert_eq!(
             longest_common_prefix(
-                vec!["dog", "racecar", "car"]
+                ["dog", "racecar", "car"]
                     .iter()
                     .map(std::string::ToString::to_string)
                     .collect::<Vec<_>>()
@@ -88,7 +88,7 @@ mod tests {
     fn test_3() {
         assert_eq!(
             longest_common_prefix(
-                vec!["a"]
+                ["a"]
                     .iter()
                     .map(std::string::ToString::to_string)
                     .collect::<Vec<_>>()

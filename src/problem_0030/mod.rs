@@ -84,7 +84,7 @@ mod tests {
         assert_eq!(
             find_substring(
                 "barfoothefoobarman",
-                &vec!["foo", "bar"]
+                &["foo", "bar"]
                     .iter()
                     .map(ToString::to_string)
                     .collect::<Vec<_>>()
@@ -98,7 +98,7 @@ mod tests {
         assert_eq!(
             find_substring(
                 "wordgoodgoodgoodbestword",
-                &vec!["word", "good", "best", "word"]
+                &["word", "good", "best", "word"]
                     .iter()
                     .map(ToString::to_string)
                     .collect::<Vec<_>>()
@@ -112,7 +112,7 @@ mod tests {
         assert_eq!(
             find_substring(
                 "barfoofoobarthefoobarman",
-                &vec!["bar", "foo", "the"]
+                &["bar", "foo", "the"]
                     .iter()
                     .map(ToString::to_string)
                     .collect::<Vec<_>>()
@@ -126,7 +126,7 @@ mod tests {
         assert_eq!(
             find_substring(
                 "a",
-                &vec!["a", "a"]
+                &["a", "a"]
                     .iter()
                     .map(ToString::to_string)
                     .collect::<Vec<_>>()
