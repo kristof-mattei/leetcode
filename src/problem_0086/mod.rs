@@ -6,7 +6,7 @@ fn add_to_end(head: &mut Option<Box<ListNode>>, to_add_to_end: Option<Box<ListNo
     while let Some(mut c) = current.take() {
         if c.next.is_none() {
             c.next = to_add_to_end;
-            let _: &mut Box<ListNode> = current.insert(c); // put it back
+            let _ = current.insert(c); // put it back
             break;
         }
 
