@@ -35,8 +35,7 @@ impl FreqStack {
         // pop guaranteed by exercise
         let top = value.pop().unwrap();
 
-        let _: std::collections::hash_map::Entry<i32, i32> =
-            self.frequency_map.entry(top).and_modify(|v| *v -= 1);
+        let _ = self.frequency_map.entry(top).and_modify(|v| *v -= 1);
 
         if value.is_empty() {
             self.maximum_frequency -= 1;

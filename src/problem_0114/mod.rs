@@ -11,13 +11,13 @@ fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
             match (b.left.take(), b.right.take()) {
                 (None, None) => {},
                 (Some(l), None) => {
-                    let _: &mut Rc<RefCell<TreeNode>> = b.right.insert(l);
+                    let _ = b.right.insert(l);
                 },
                 (None, Some(r)) => {
-                    let _: &mut Rc<RefCell<TreeNode>> = b.right.insert(r);
+                    let _ = b.right.insert(r);
                 },
                 (Some(l), Some(r)) => {
-                    let _: &mut Rc<RefCell<TreeNode>> = b.right.insert(l);
+                    let _ = b.right.insert(l);
 
                     let mut current = b.right.clone().unwrap();
 

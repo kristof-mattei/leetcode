@@ -8,7 +8,7 @@ fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
 
         match n.cmp(&previous) {
             std::cmp::Ordering::Equal => {
-                let _: i32 = nums.remove(index);
+                let _ = nums.remove(index);
                 length -= 1;
             },
             std::cmp::Ordering::Greater => {
