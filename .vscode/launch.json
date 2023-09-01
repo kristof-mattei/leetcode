@@ -22,9 +22,10 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "env": {
-                "RUST_BACKTRACE": "full",
-                "RUST_LOG": "trace,rust_end_to_end_application=trace"
-            }
+                "RUST_BACKTRACE": "1",
+                "RUST_LOG": "debug,rust_end_to_end_application=trace"
+            },
+            "terminal": "console"
         },
         {
             "type": "lldb",
@@ -45,9 +46,34 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "env": {
-                "RUST_BACKTRACE": "full",
-                "RUST_LOG": "trace,rust_end_to_end_application=trace"
-            }
+                "RUST_BACKTRACE": "1",
+                "RUST_LOG": "debug,rust_end_to_end_application=trace"
+            },
+            "terminal": "console"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'integration_tests'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=integration_tests",
+                    "--package=rust-end-to-end-application"
+                ],
+                "filter": {
+                    "name": "integration_tests",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "RUST_BACKTRACE": "1",
+                "RUST_LOG": "debug,rust_end_to_end_application=trace"
+            },
+            "terminal": "console"
         }
     ]
 }
