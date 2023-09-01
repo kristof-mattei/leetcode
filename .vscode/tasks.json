@@ -34,18 +34,7 @@
         {
             "type": "cargo",
             "command": "clippy",
-            "args": [
-                "--workspace",
-                "--all-targets",
-                "--all-features",
-                "--",
-                "--deny",
-                "clippy::all",
-                "--deny",
-                "clippy::pedantic",
-                "--deny",
-                "clippy::cargo"
-            ],
+            "args": ["--workspace", "--all-targets", "--all-features"],
             "problemMatcher": ["$rustc"],
             "group": "build",
             "label": "Rust: cargo clippy"

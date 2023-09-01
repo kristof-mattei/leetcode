@@ -1,8 +1,10 @@
-#![cfg_attr(not(debug_assertions), deny(warnings))]
 #![deny(clippy::all)]
 #![deny(clippy::pedantic)]
 #![deny(clippy::cargo)]
-#![forbid(non_ascii_idents)]
+#![deny(warnings)]
+// exceptions
+#![deny(let_underscore_drop)]
+#![deny(non_ascii_idents)]
 #![allow(clippy::uninlined_format_args)]
 
 // use std::path::PathBuf;
