@@ -311,7 +311,7 @@ jobs:
           grcov $(find profiling -name "profile-*.profraw" -print) --source-dir . --binary-path ./target/debug/ --output-type lcov --branch --ignore-not-existing --llvm --keep-only "src/**" --keep-only "tests/**" --output-path ./reports/lcov.info
 
       - name: Upload to Coveralls
-        uses: coverallsapp/github-action@95b1a2355bd0e526ad2fd62da9fd386ad4c98474 # v2.2.1
+        uses: coverallsapp/github-action@3b7078ee895f74fc267b7b267c88211df59fa816 # v2.2.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: reports/lcov.info
