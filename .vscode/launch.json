@@ -19,8 +19,9 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "RUST_LOG": "leetcode=trace"
-            }
+                "RUST_LOG": "debug,leetcode=trace"
+            },
+            "terminal": "console"
         },
         {
             "type": "lldb",
@@ -42,8 +43,33 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "RUST_LOG": "leetcode=trace"
-            }
+                "RUST_LOG": "debug,leetcode=trace"
+            },
+            "terminal": "console"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'integration_tests'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=integration_tests",
+                    "--package=leetcode"
+                ],
+                "filter": {
+                    "name": "integration_tests",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "RUST_BACKTRACE": "1",
+                "RUST_LOG": "debug,leetcode=trace"
+            },
+            "terminal": "console"
         }
     ]
 }
