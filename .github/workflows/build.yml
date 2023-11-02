@@ -133,12 +133,12 @@ jobs:
         run: |
           VERSION="$(cog bump --auto --dry-run || true)"
 
-          if [[ -z $VERSION ]]; then
+          if [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "New version: ${VERSION}"
+          else
               VERSION="$(git tag --points-at "$(git rev-list --tags --max-count=1)" | sort --reverse | head --lines 1)"
 
               echo "No version generated, defaulting to latest git tag: ${VERSION}"
-          else
-              echo "New version: ${VERSION}"
           fi
 
           # remove v
