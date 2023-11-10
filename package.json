@@ -31,7 +31,7 @@
     "prettier": "3.0.3",
     "semantic-release": "22.0.7",
     "semver": "7.5.4",
-    "serialize-error": "11.0.2"
+    "serialize-error": "11.0.3"
   },
   "publishConfig": {
     "access": "restricted"
