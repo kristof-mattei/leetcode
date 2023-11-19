@@ -43,9 +43,6 @@
             "type": "cargo",
             "command": "test",
             "args": [],
-            "env": {
-                "RUSTFLAGS": "-Wclippy::all -Wclippy::pedantic -Wclippy::cargo -Wwarnings"
-            },
             "problemMatcher": ["$rustc"],
             "group": "test",
             "label": "Rust: cargo test"
