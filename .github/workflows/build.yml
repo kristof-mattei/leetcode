@@ -28,7 +28,7 @@ env:
   DOCKER_IMAGE_ARTIFACT_NAME: Docker image
   DOCKER_IMAGE_OUTPUT_LOCATION: /tmp
   DOCKER_IMAGE_TAR_LOCATION: /tmp/docker-image.tar # notice /tmp same as DOCKER_IMAGE_OUTPUT_LOCATION
-  RUSTFLAGS: "-Dclippy::all -Dclippy::pedantic -Dclippy::cargo -Dwarnings"
+  RUSTFLAGS: -Dclippy::all -Dclippy::pedantic -Dclippy::cargo -Dwarnings
 
 concurrency:
   # each new commit to a PR runs this workflow
