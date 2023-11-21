@@ -399,6 +399,8 @@ jobs:
     needs:
       - calculate-version
     # if: ... is not needed because calculate-version will not run if we disable building the docker container
+    env:
+      APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1

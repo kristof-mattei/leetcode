@@ -72,6 +72,7 @@ fn main() -> Result<(), color_eyre::Report> {
     println!("{}", foo());
     println!("{}", bar());
     println!("{}", quz());
+
     todo!("TODO");
 }
 
