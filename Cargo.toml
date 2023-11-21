@@ -25,6 +25,9 @@ uninlined-format-args = { level = "allow", priority = 127 }
 let_underscore_drop = { level = "deny", priority = 127 }
 non_ascii_idents = { level = "deny", priority = 127 }
 
+[profile.dev.package.backtrace]
+opt-level = 3
+
 [features]
 coverage = []
 
