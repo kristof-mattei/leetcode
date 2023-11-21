@@ -12,18 +12,18 @@ keywords = ["integrity", "end-to-end", "starter", "docker", "release"]
 repository = "https://github.com/kristof-mattei/rust-end-to-end-application"
 
 [lints.clippy]
+# don't stop from compiling / running
 all = "warn"
 pedantic = "warn"
 cargo = "warn"
-uninlined_format_args = { level = "allow", priority = 100 }
+# this one causes confusion when combining variables (`foo`) and
+# dereferenced variables (`foo.bar`). The latter cannot be inlined
+# so we don't inline anything
+uninlined-format-args = { level = "allow", priority = 127 }
 
 [lints.rust]
-warnings = "warn"
-let_underscore_drop = "deny"
-non_ascii_idents = "deny"
-
-[profile.dev.package.backtrace]
-opt-level = 3
+let_underscore_drop = { level = "deny", priority = 127 }
+non_ascii_idents = { level = "deny", priority = 127 }
 
 [features]
 coverage = []

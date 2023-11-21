@@ -28,7 +28,7 @@ env:
   DOCKER_IMAGE_ARTIFACT_NAME: Docker image
   DOCKER_IMAGE_OUTPUT_LOCATION: /tmp
   DOCKER_IMAGE_TAR_LOCATION: /tmp/docker-image.tar # notice /tmp same as DOCKER_IMAGE_OUTPUT_LOCATION
-  RUSTFLAGS: -Dclippy::all -Dclippy::pedantic -Dclippy::cargo -Dwarnings
+  RUSTFLAGS: --deny=warnings
 
 concurrency:
   # each new commit to a PR runs this workflow
@@ -100,6 +100,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up mold
+        uses: rui314/setup-mold@v1
 
       - name: Set up toolchain
         shell: bash
@@ -175,6 +178,9 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
+      - name: set up mold
+        uses: rui314/setup-mold@v1
+
       - name: Set up toolchain
         shell: bash
         run: |
@@ -216,6 +222,9 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
+      - name: Set up mold
+        uses: rui314/setup-mold@v1
+
       - name: Set up toolchain
         shell: bash
         run: |
@@ -254,6 +263,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up mold
+        uses: rui314/setup-mold@v1
 
       - name: Set up toolchain
         shell: bash
@@ -364,6 +376,9 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
+      - name: Set up mold
+        uses: rui314/setup-mold@v1
+
       - name: Set up toolchain
         shell: bash
         run: |
@@ -376,7 +391,7 @@ jobs:
       - name: Run Clippy for GitHub Actions report
         uses: actions-rs-plus/clippy-check@30fef0f891edb491831cd248156cfb18d7d12fda # v2.2.0
         with:
-          args: --workspace --all-targets --all-features
+          args: --workspace --all-targets --all-features --no-deps
 
   docker-build:
     name: Build Docker container
