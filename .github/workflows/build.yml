@@ -178,7 +178,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
-      - name: set up mold
+      - name: Set up mold
         uses: rui314/setup-mold@v1
 
       - name: Set up toolchain
