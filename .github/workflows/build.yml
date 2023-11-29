@@ -76,7 +76,7 @@ jobs:
       - changes
       - repo-has-container
     outputs:
-      version: ${{ steps.version.outputs.nextversion }}
+      version: ${{ steps.version.outputs.next_version }}
     if: |
       github.event_name == 'pull_request' &&
       fromJSON(needs.repo-has-container.outputs.has_container) == true &&
@@ -149,7 +149,7 @@ jobs:
           VERSION="${VERSION//v/}"
 
           # store
-          echo "nextversion=${VERSION}" >> ${GITHUB_OUTPUT}
+          echo "next_version=${VERSION}" >> ${GITHUB_OUTPUT}
 
   cargo-build:
     name: Cargo build
