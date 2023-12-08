@@ -33,7 +33,7 @@ COPY src ./src
 RUN --mount=type=cache,id=full-build,target=/build/${APPLICATION_NAME}/target \
     cargo install --path . --target ${TARGET} --root /output
 
-FROM alpine:3.18.5@sha256:34871e7290500828b39e22294660bee86d966bc0017544e848dd9a255cdf59e0
+FROM alpine:3.19.0@sha256:421ce8fe2ad2af93ce2b12ac450a71dd7d521afb2c3370f63c63b6bccd86c8c5
 
 ARG APPLICATION_NAME
 
