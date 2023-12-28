@@ -26,7 +26,7 @@ fn unique_paths_with_obstacles_r(
     lc: usize,
 ) -> usize {
     let max_row = matrix.len() - 1;
-    let max_col = matrix.get(0).map_or(0, |r| r.len() - 1);
+    let max_col = matrix.first().map_or(0, |r| r.len() - 1);
 
     if matrix.get(lr).and_then(|r| r.get(lc)).unwrap_or(&1) == &1 {
         return 0; // invalid
