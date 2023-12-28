@@ -40,7 +40,7 @@ impl Neg for Direction {
 
 fn spiral_order(matrix: &[Vec<i32>]) -> Vec<i32> {
     let height = matrix.len();
-    let width = matrix.get(0).map_or(0, Vec::len);
+    let width = matrix.first().map_or(0, Vec::len);
     let mut found = vec![vec![false; width]; height];
 
     let mut results = Vec::new();
