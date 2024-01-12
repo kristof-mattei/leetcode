@@ -447,7 +447,7 @@ jobs:
           outputs: type=docker,dest=${{ env.DOCKER_IMAGE_TAR_LOCATION }}
 
       - name: Upload artifact
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4
+        uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4
         with:
           name: ${{ env.DOCKER_IMAGE_ARTIFACT_NAME }}
           path: ${{ env.DOCKER_IMAGE_TAR_LOCATION }}
