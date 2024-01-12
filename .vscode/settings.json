@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.runnables.extraEnv": {
+        "RUST_LOG": "DEBUG,rust_end_to_end_application=TRACE"
+    }
+}
