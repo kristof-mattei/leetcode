@@ -23,9 +23,9 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "RUST_LOG": "debug,rust_end_to_end_application=trace"
+                "RUST_LOG": "DEBUG,rust_end_to_end_application=TRACE"
             },
-            "terminal": "console"
+            "terminal": "integrated"
         },
         {
             "type": "lldb",
@@ -47,9 +47,9 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "RUST_LOG": "debug,rust_end_to_end_application=trace"
+                "RUST_LOG": "DEBUG,rust_end_to_end_application=TRACE"
             },
-            "terminal": "console"
+            "terminal": "integrated"
         },
         {
             "type": "lldb",
@@ -71,9 +71,9 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
-                "RUST_LOG": "debug,rust_end_to_end_application=trace"
+                "RUST_LOG": "DEBUG,rust_end_to_end_application=TRACE"
             },
-            "terminal": "console"
+            "terminal": "integrated"
         }
     ]
 }
