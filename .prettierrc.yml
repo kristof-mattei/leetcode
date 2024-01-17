@@ -8,7 +8,7 @@ overrides:
       - "**/*.json"
     options:
       tabWidth: 4
-      trailingComma: all
+      trailingComma: none
   - files:
       - "package.json"
       - "package-lock.json"
