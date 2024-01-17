@@ -28,7 +28,22 @@ debug = true
 [profile.test]
 debug = true
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lints.clippy]
+# don't stop from compiling / running
+all = "warn"
+pedantic = "warn"
+cargo = "warn"
+# this one causes confusion when combining variables (`foo`) and
+# dereferenced variables (`foo.bar`). The latter cannot be inlined
+# so we don't inline anything
+uninlined-format-args = { level = "allow", priority = 127 }
+
+[lints.rust]
+let_underscore_drop = { level = "deny", priority = 127 }
+non_ascii_idents = { level = "deny", priority = 127 }
+
+[profile.dev.package.backtrace]
+opt-level = 3
 
 [features]
 coverage = []
