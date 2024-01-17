@@ -28,6 +28,7 @@ env:
   DOCKER_IMAGE_ARTIFACT_NAME: Docker image
   DOCKER_IMAGE_OUTPUT_LOCATION: /tmp
   DOCKER_IMAGE_TAR_LOCATION: /tmp/docker-image.tar # notice /tmp same as DOCKER_IMAGE_OUTPUT_LOCATION
+  RUSTFLAGS: --deny=warnings
 
 concurrency:
   # each new commit to a PR runs this workflow
@@ -75,7 +76,7 @@ jobs:
       - changes
       - repo-has-container
     outputs:
-      version: ${{ steps.version.outputs.nextversion }}
+      version: ${{ steps.version.outputs.next_version }}
     if: |
       github.event_name == 'pull_request' &&
       fromJSON(needs.repo-has-container.outputs.has_container) == true &&
@@ -99,6 +100,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up mold
+        uses: rui314/setup-mold@a06ef6535ccec20261b6f58bbadf24d1ef0e5486 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -133,19 +137,19 @@ jobs:
         run: |
           VERSION="$(cog bump --auto --dry-run || true)"
 
-          if [[ -z $VERSION ]]; then
+          if [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "New version: ${VERSION}"
+          else
               VERSION="$(git tag --points-at "$(git rev-list --tags --max-count=1)" | sort --reverse | head --lines 1)"
 
               echo "No version generated, defaulting to latest git tag: ${VERSION}"
-          else
-              echo "New version: ${VERSION}"
           fi
 
           # remove v
           VERSION="${VERSION//v/}"
 
           # store
-          echo "nextversion=${VERSION}" >> ${GITHUB_OUTPUT}
+          echo "next_version=${VERSION}" >> ${GITHUB_OUTPUT}
 
   cargo-build:
     name: Cargo build
@@ -173,6 +177,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up mold
+        uses: rui314/setup-mold@a06ef6535ccec20261b6f58bbadf24d1ef0e5486 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -215,6 +222,9 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
+      - name: Set up mold
+        uses: rui314/setup-mold@a06ef6535ccec20261b6f58bbadf24d1ef0e5486 # v1
+
       - name: Set up toolchain
         shell: bash
         run: |
@@ -253,6 +263,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up mold
+        uses: rui314/setup-mold@a06ef6535ccec20261b6f58bbadf24d1ef0e5486 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -293,7 +306,7 @@ jobs:
       - name: Build with instrumentation support
         shell: bash
         env:
-          RUSTFLAGS: "-C instrument-coverage"
+          RUSTFLAGS: "${{ env.RUSTFLAGS }} -C instrument-coverage"
         run: |
           cargo build --all-targets --workspace --verbose
 
@@ -301,7 +314,7 @@ jobs:
         shell: bash
         id: tests
         env:
-          RUSTFLAGS: "-C instrument-coverage"
+          RUSTFLAGS: "${{ env.RUSTFLAGS }} -C instrument-coverage"
           LLVM_PROFILE_FILE: "profiling/profile-%p-%m.profraw"
         run: |
           cargo nextest run --profile ci --no-fail-fast --all-targets --workspace
@@ -363,6 +376,9 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
+      - name: Set up mold
+        uses: rui314/setup-mold@a06ef6535ccec20261b6f58bbadf24d1ef0e5486 # v1
+
       - name: Set up toolchain
         shell: bash
         run: |
@@ -375,7 +391,7 @@ jobs:
       - name: Run Clippy for GitHub Actions report
         uses: actions-rs-plus/clippy-check@30fef0f891edb491831cd248156cfb18d7d12fda # v2.2.0
         with:
-          args: --workspace --all-targets --all-features
+          args: --workspace --all-targets --all-features --no-deps
 
   docker-build:
     name: Build Docker container
@@ -383,6 +399,8 @@ jobs:
     needs:
       - calculate-version
     # if: ... is not needed because calculate-version will not run if we disable building the docker container
+    env:
+      APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1

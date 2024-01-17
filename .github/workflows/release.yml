@@ -12,7 +12,6 @@ concurrency:
 
 on:
   workflow_dispatch: # releasing is manual as we don't want to release every time
-    branches: [main]
 
 permissions:
   contents: write # to write tags
