@@ -25,7 +25,8 @@
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,rust_end_to_end_application=TRACE"
             },
-            "terminal": "integrated"
+            "internalConsoleOptions": "openOnSessionStart",
+            "terminal": "console"
         },
         {
             "type": "lldb",
@@ -49,7 +50,8 @@
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,rust_end_to_end_application=TRACE"
             },
-            "terminal": "integrated"
+            "internalConsoleOptions": "openOnSessionStart",
+            "terminal": "console"
         },
         {
             "type": "lldb",
@@ -73,7 +75,8 @@
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,rust_end_to_end_application=TRACE"
             },
-            "terminal": "integrated"
+            "internalConsoleOptions": "openOnSessionStart",
+            "terminal": "console"
         }
     ]
 }
