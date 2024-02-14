@@ -21,7 +21,8 @@
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,leetcode=TRACE"
             },
-            "terminal": "integrated"
+            "internalConsoleOptions": "openOnSessionStart",
+            "terminal": "console"
         },
         {
             "type": "lldb",
@@ -45,7 +46,8 @@
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,leetcode=TRACE"
             },
-            "terminal": "integrated"
+            "internalConsoleOptions": "openOnSessionStart",
+            "terminal": "console"
         },
         {
             "type": "lldb",
@@ -69,7 +71,8 @@
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,leetcode=TRACE"
             },
-            "terminal": "integrated"
+            "internalConsoleOptions": "openOnSessionStart",
+            "terminal": "console"
         }
     ]
 }

@@ -1,5 +1,13 @@
 {
     "rust-analyzer.runnables.extraEnv": {
         "RUST_LOG": "DEBUG,leetcode=TRACE"
-    }
+    },
+    "rust-analyzer.debug.openDebugPane": true,
+    "rust-analyzer.debug.engineSettings": {
+        "lldb": {
+            "internalConsoleOptions": "openOnSessionStart",
+            "terminal": "console"
+        }
+    },
+    "debug.internalConsoleOptions": "openOnSessionStart"
 }
