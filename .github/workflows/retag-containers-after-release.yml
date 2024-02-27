@@ -42,7 +42,7 @@ jobs:
     if: |
       fromJSON(needs.repo-has-container.outputs.has_container) == true
     steps:
-      - name: Check out repo
+      - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           show-progress: false
