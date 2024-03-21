@@ -46,6 +46,12 @@ jobs:
       - scan
 
     steps:
+      # this checkout satisfies github/codeql-action's need for certain variables to link the sarif to the right commit sha
+      - name: Checkout
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+        with:
+          show-progress: false
+
       - name: Download artifact
         uses: actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427 # v4.1.4
         with:
