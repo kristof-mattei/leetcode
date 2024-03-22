@@ -1,4 +1,5 @@
 enum RangeResult {
+    #[allow(dead_code)]
     Exact(usize),
     Close(usize),
 }
