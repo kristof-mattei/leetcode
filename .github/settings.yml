@@ -139,7 +139,7 @@ branches:
         checks:
           - context: "All done"
             app_id: 15368
-          - context: "coverage/coveralls (pull_request)"]
+          - context: "coverage/coveralls (pull_request)"
             app_id: -1
       # Required. Enforce all configured restrictions for administrators. Set to true to enforce required status checks for repository administrators. Set to null to disable.
       enforce_admins: false
