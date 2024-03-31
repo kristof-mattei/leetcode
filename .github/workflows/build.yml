@@ -338,6 +338,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: reports/lcov.info
 
+      - name: Upload coverage results (to Codecov.io)
+        uses: codecov/codecov-action@v3
+        with:
+          file: reports/lcov.info
+
       - name: Fail if tests failed
         shell: bash
         if: steps.tests.outcome != 'success'
