@@ -339,7 +339,7 @@ jobs:
           path-to-lcov: reports/lcov.info
 
       - name: Upload coverage results (to Codecov.io)
-        uses: codecov/codecov-action@ab904c41d6ece82784817410c45d8b8c02684457 # v3
+        uses: codecov/codecov-action@ab904c41d6ece82784817410c45d8b8c02684457 # v3.1.6
         with:
           file: reports/lcov.info
 
