@@ -399,18 +399,32 @@ jobs:
           args: --workspace --all-targets --all-features --no-deps
 
   docker-build:
-    name: Build Docker container
+    name: Build Docker container for ${{ matrix.platform.docker }}
     runs-on: ubuntu-latest
     needs:
       - calculate-version
     # if: ... is not needed because calculate-version will not run if we disable building the docker container
     env:
       APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
+      PLATFORM_PAIR: PLACEHOLDER # same ^
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - docker: linux/amd64
+            rust: x86_64-unknown-linux-musl
+          - docker: linux/arm64
+            rust: aarch64-unknown-linux-musl
     steps:
       - name: Checkout
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
         with:
           show-progress: false
+
+      - name: Prepare name
+        run: |
+          platform=${{ matrix.platform }}
+          echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
 
       - name: Set the Cargo.toml version before we copy in the data into the Docker container
         shell: bash
@@ -463,21 +477,24 @@ jobs:
         with:
           build-args: |
             APPLICATION_NAME=${{ env.APPLICATION_NAME }}
+            TARGET=${{ matrix.platform.rust }}
           context: .
           # this container is THE PR's artifact, and we will re-tag it
           # once the PR has been accepted
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
-          platforms: linux/amd64, linux/arm64
-          outputs: type=oci,dest=${{ env.DOCKER_IMAGE_TAR_LOCATION }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ env.PLATFORM_PAIR }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ env.PLATFORM_PAIR }}:buildcache,mode=max
+          platforms: ${{ matrix.platform.docker }}
+          outputs: type=oci,dest=/tmp/${{ env.PLATFORM_PAIR }}.tar
 
       - name: Upload artifact
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
-          name: ${{ env.DOCKER_IMAGE_ARTIFACT_NAME }}
-          path: ${{ env.DOCKER_IMAGE_TAR_LOCATION }}
+          name: containers-${{ env.PLATFORM_PAIR }}
+          path: /tmp/containers/${{ env.PLATFORM_PAIR }}.tar
+          if-no-files-found: error
+          retention-days: 1
 
   docker-publish:
     name: Publish Docker container
@@ -497,8 +514,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427 # v4.1.4
         with:
-          name: ${{ env.DOCKER_IMAGE_ARTIFACT_NAME }}
-          path: ${{ env.DOCKER_IMAGE_OUTPUT_LOCATION }}
+          name: containers-*
+          path: /tmp/containers
 
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
@@ -507,10 +524,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Load image from artifact
+      - name: Load images from artifacts
         shell: bash
         run: |
-          docker load --input ${{ env.DOCKER_IMAGE_TAR_LOCATION }}
+          for container in /tmp/containers/*
+          do
+            docker load --input $container
+          done
+
 
       - name: Push image with all tags
         shell: bash
