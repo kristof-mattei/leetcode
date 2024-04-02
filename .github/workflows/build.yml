@@ -399,7 +399,7 @@ jobs:
           args: --workspace --all-targets --all-features --no-deps
 
   docker-build:
-    name: Build Docker container for ${{ matrix.platform.docker }}
+    name: Build Docker container for ${{ matrix.platform.docker }}-${{ matrix.platform.rust }}
     runs-on: ubuntu-latest
     needs:
       - calculate-version
@@ -492,7 +492,7 @@ jobs:
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: containers-${{ env.PLATFORM_PAIR }}
-          path: /tmp/containers/${{ env.PLATFORM_PAIR }}.tar
+          path: /tmp/${{ env.PLATFORM_PAIR }}.tar
           if-no-files-found: error
           retention-days: 1
 
