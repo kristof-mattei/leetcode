@@ -423,7 +423,7 @@ jobs:
 
       - name: Prepare name
         run: |
-          platform=${{ matrix.platform.docker }}
+          platform=${{ matrix.platform.docker }}-${{ matrix.platform.rust }}
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
 
       - name: Set the Cargo.toml version before we copy in the data into the Docker container
