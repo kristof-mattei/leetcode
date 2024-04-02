@@ -417,6 +417,9 @@ jobs:
         run: |
           ./.github/scripts/update-version.sh ${{ needs.calculate-version.outputs.version }}
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.0.0
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@2b51285047da1547ffb1b2203d8be4c0af6b1f20 # v3.2.0
@@ -467,6 +470,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
           cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
+          platforms: linux/amd64, linux/arm64
           outputs: type=docker,dest=${{ env.DOCKER_IMAGE_TAR_LOCATION }}
 
       - name: Upload artifact
