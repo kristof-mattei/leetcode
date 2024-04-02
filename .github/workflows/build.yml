@@ -104,8 +104,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
-          rm ${HOME}/.cargo/bin/rustfmt
           rm ${HOME}/.cargo/bin/cargo-fmt
+          rm ${HOME}/.cargo/bin/rust-analyzer
+          rm ${HOME}/.cargo/bin/rustfmt
+
           rustup update
 
           cargo --version
@@ -181,8 +183,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
-          rm ${HOME}/.cargo/bin/rustfmt
           rm ${HOME}/.cargo/bin/cargo-fmt
+          rm ${HOME}/.cargo/bin/rust-analyzer
+          rm ${HOME}/.cargo/bin/rustfmt
+
           rustup update
 
           cargo --version
@@ -225,8 +229,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
-          rm ${HOME}/.cargo/bin/rustfmt
           rm ${HOME}/.cargo/bin/cargo-fmt
+          rm ${HOME}/.cargo/bin/rust-analyzer
+          rm ${HOME}/.cargo/bin/rustfmt
+
           rustup update
 
           cargo --version
@@ -267,8 +273,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
-          rm ${HOME}/.cargo/bin/rustfmt
           rm ${HOME}/.cargo/bin/cargo-fmt
+          rm ${HOME}/.cargo/bin/rust-analyzer
+          rm ${HOME}/.cargo/bin/rustfmt
+
           rustup update
 
           cargo --version
@@ -384,8 +392,10 @@ jobs:
       - name: Set up toolchain
         shell: bash
         run: |
-          rm ${HOME}/.cargo/bin/rustfmt
           rm ${HOME}/.cargo/bin/cargo-fmt
+          rm ${HOME}/.cargo/bin/rust-analyzer
+          rm ${HOME}/.cargo/bin/rustfmt
+
           rustup update
 
           cargo --version
@@ -483,7 +493,7 @@ jobs:
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ env.PLATFORM_PAIR }}:buildcache
           cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ env.PLATFORM_PAIR }}:buildcache,mode=max
           platforms: ${{ matrix.platform.docker }}
-          outputs: type=oci,dest=/tmp/${{ env.PLATFORM_PAIR }}.tar
+          outputs: type=docker,dest=/tmp/${{ env.PLATFORM_PAIR }}.tar
 
       - name: Upload artifact
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
