@@ -25,9 +25,6 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
   # just a name, but storing it separately as we're nice people
-  DOCKER_IMAGE_ARTIFACT_NAME: Docker image
-  DOCKER_IMAGE_OUTPUT_LOCATION: /tmp
-  DOCKER_IMAGE_TAR_LOCATION: /tmp/docker-image.tar # notice /tmp same as DOCKER_IMAGE_OUTPUT_LOCATION
   RUSTFLAGS: --deny=warnings
 
 concurrency:
@@ -528,8 +525,10 @@ jobs:
       - name: Load images from artifacts
         shell: bash
         run: |
+          ls -l /tmp/containers/
           for container in /tmp/containers/*
           do
+            echo $container
             docker load --input $container
           done
 
