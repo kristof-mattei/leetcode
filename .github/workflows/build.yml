@@ -42,8 +42,8 @@ jobs:
 
     steps:
       - name: Repo has docker container?
-        id: determine
         shell: bash
+        id: determine
         run: |
           HAS_CONTAINER="${{ vars.HAS_CONTAINER }}"
           echo "has_container=${HAS_CONTAINER:-false}" >> ${GITHUB_OUTPUT}
@@ -131,8 +131,8 @@ jobs:
           cargo binstall --no-confirm cocogitto --target x86_64-unknown-linux-musl --pkg-url "{ repo }/releases/download/{ version }/{ name }-{ version }-{ target }.tar.gz" --bin-dir "{ bin }" --pkg-fmt tgz
 
       - name: Calculate next version
-        id: version
         shell: bash
+        id: version
         run: |
           VERSION="$(cog bump --auto --dry-run || true)"
 
@@ -413,7 +413,9 @@ jobs:
     # if: ... is not needed because calculate-version will not run if we disable building the docker container
     env:
       APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
+      PATH_TO_TAR: PALCEHOLDER # same ^
       PLATFORM_PAIR: PLACEHOLDER # same ^
+      PLATFORM_UNIQUE_TAG: PLACEHOLDER # same ^
     strategy:
       fail-fast: false
       matrix:
@@ -431,7 +433,7 @@ jobs:
       - name: Prepare name
         run: |
           platform=${{ matrix.platform.docker }}-${{ matrix.platform.rust }}
-          echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
+          echo "PLATFORM_PAIR=${platform//\//-}" >> ${GITHUB_ENV}
 
       - name: Set the Cargo.toml version before we copy in the data into the Docker container
         shell: bash
@@ -442,21 +444,30 @@ jobs:
         uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
 
       - name: Set up Docker Buildx
-        id: buildx
         uses: docker/setup-buildx-action@2b51285047da1547ffb1b2203d8be4c0af6b1f20 # v3.2.0
 
       # TODO validate no changes between github.event.pull_request.head.sha and the actual current sha (representing the hypothetical merge)
 
+      - name: Lowercase the image name
+        shell: bash
+        run: |
+          echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+
+      - name: Set Docker tag
+        shell: bash
+        run: |
+          PLATFORM_UNIQUE_TAG=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}-${{ env.PLATFORM_PAIR }}
+          echo "PLATFORM_UNIQUE_TAG=${PLATFORM_UNIQUE_TAG##*/}" >> ${GITHUB_ENV}
+
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
-        id: meta
         uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5.5.1
+        id: meta
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=ref,event=pr,suffix=-latest
-            type=raw,value=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
+            type=raw,value=${{ env.PLATFORM_UNIQUE_TAG }}
           labels: |
             org.opencontainers.image.version=pr-${{ github.event.number }}
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
@@ -468,11 +479,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Lowercase the image name
-        shell: bash
-        run: |
-          echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
-
       - name: Set application name
         shell: bash
         run: |
@@ -481,6 +487,7 @@ jobs:
 
       - name: Build Docker image
         uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
+        id: build
         with:
           build-args: |
             APPLICATION_NAME=${{ env.APPLICATION_NAME }}
@@ -490,16 +497,16 @@ jobs:
           # once the PR has been accepted
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ env.PLATFORM_PAIR }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ env.PLATFORM_PAIR }}:buildcache,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ env.PLATFORM_PAIR }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ env.PLATFORM_PAIR }},mode=max
           platforms: ${{ matrix.platform.docker }}
-          outputs: type=docker,dest=/tmp/${{ env.PLATFORM_PAIR }}.tar
+          outputs: type=docker,dest=/tmp/${{ env.PLATFORM_UNIQUE_TAG }}.tar
 
       - name: Upload artifact
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: containers-${{ env.PLATFORM_PAIR }}
-          path: /tmp/${{ env.PLATFORM_PAIR }}.tar
+          path: /tmp/${{ env.PLATFORM_UNIQUE_TAG }}.tar
           if-no-files-found: error
           retention-days: 1
 
@@ -532,6 +539,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Lowercase the image name
+        shell: bash
+        run: |
+          echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+
       - name: Load images from artifacts
         shell: bash
         run: |
@@ -540,12 +552,40 @@ jobs:
           do
             echo $container
             docker load --input $container
+            tag=$(basename -- $container .tar)
+            echo ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:${tag}
+            docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${tag}
           done
 
-      - name: Push image with all tags
+      - name: Extract Docker metadata
+        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v5.5.1
+        id: meta
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=pr,suffix=-latest
+            type=raw,value=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
+
+      - name: Merge images
         shell: bash
+        working-directory: /tmp/containers
         run: |
-          docker push ${REGISTRY,,}/${IMAGE_NAME,,} --all-tags
+          # all files in dir
+          platform_tags=(*)
+
+          # yeet extension
+          platform_tags=${platform_tags[@]%.tar}
+
+          new_tags="${{ join(steps.meta.outputs.tags, ' ') }}"
+          new_tags=$(printf -- '--tag %s ' $new_tags)
+
+          expanded_platform_tags=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' $platform_tags)
+
+          docker buildx imagetools create $new_tags $expanded_platform_tags
+
+          for new_tag in $(echo "${{ join(steps.meta.outputs.tags, ' ') }}"); do
+            docker buildx imagetools inspect --raw $new_tag
+          done
 
   all-done:
     name: All done
