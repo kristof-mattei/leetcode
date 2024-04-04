@@ -343,7 +343,6 @@ jobs:
           file: reports/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
 
-
       - name: Fail if tests failed
         shell: bash
         if: steps.tests.outcome != 'success'
