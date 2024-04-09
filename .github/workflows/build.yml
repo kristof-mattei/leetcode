@@ -338,7 +338,7 @@ jobs:
           grcov $(find profiling -name "profile-*.profraw" -print) --source-dir . --binary-path ./target/debug/ --output-type lcov --branch --ignore-not-existing --llvm --keep-only "src/**" --keep-only "tests/**" --output-path ./reports/lcov.info
 
       - name: Upload coverage results (to Codecov.io)
-        uses: codecov/codecov-action@7afa10ed9b269c561c2336fd862446844e0cbf71 # v4.2.0
+        uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         with:
           file: reports/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
