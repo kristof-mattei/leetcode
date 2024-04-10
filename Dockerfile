@@ -29,6 +29,8 @@ RUN --mount=type=cache,id=cargo-dependencies,target=/build/${APPLICATION_NAME}/t
 
 # now we copy in the source which is more prone to changes and build it
 COPY src ./src
+COPY .cargo ./.cargo
+
 # --release not needed, it is implied with install
 RUN --mount=type=cache,id=full-build,target=/build/${APPLICATION_NAME}/target \
     cargo install --path . --target ${TARGET} --root /output
