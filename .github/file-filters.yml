@@ -6,6 +6,7 @@ code:
   - Dockerfile
   - "tests/**"
   - ".github/**"
+  - ".cargo/**"
   - "package.json"
   - "package-lock.json"
-  - ".codeclimate.yml"
+  - ".ci"
