@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM rust:1.77.1@sha256:e3d323070420270149fe65054f65bf680d7ddb3d66008a0549e6afe6b320c8eb as builder
+FROM --platform=$BUILDPLATFORM rust:1.77.2@sha256:da23629cc6826f0c395c8697994cdce0b5ac6850a695c448a101c3cc9cd6a59b as builder
 
 ARG TARGET=x86_64-unknown-linux-musl
 ARG APPLICATION_NAME
@@ -16,6 +16,7 @@ RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/
     build-essential \
     musl-dev \
     musl-tools \
+    libc6-dev-arm64-cross \
     gcc-aarch64-linux-gnu
 
 # The following block
