@@ -409,7 +409,7 @@ jobs:
     # if: ... is not needed because calculate-version will not run if we disable building the docker container
     env:
       APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
-      PATH_TO_TAR: PALCEHOLDER # same ^
+      PATH_TO_TAR: PLACEHOLDER # same ^
       PLATFORM_PAIR: PLACEHOLDER # same ^
       PLATFORM_UNIQUE_TAG: PLACEHOLDER # same ^
     strategy:
