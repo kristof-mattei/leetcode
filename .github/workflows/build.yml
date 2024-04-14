@@ -313,7 +313,7 @@ jobs:
         env:
           RUSTFLAGS: "${{ env.RUSTFLAGS }} --allow=warnings -C instrument-coverage"
         run: |
-          cargo build --all-targets --workspace --verbose
+          cargo build --all-targets --all-features --workspace --verbose
 
       - name: Run nextest
         shell: bash
@@ -322,7 +322,7 @@ jobs:
           RUSTFLAGS: "${{ env.RUSTFLAGS }} --allow=warnings -C instrument-coverage"
           LLVM_PROFILE_FILE: "profiling/profile-%p-%m.profraw"
         run: |
-          cargo nextest run --profile ci --no-fail-fast --all-targets --workspace
+          cargo nextest run --profile ci --no-fail-fast --all-targets --all-features --workspace
         continue-on-error: true
 
       - name: Upload test results
@@ -340,6 +340,7 @@ jobs:
       - name: Upload coverage results (to Codecov.io)
         uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         with:
+          fail_ci_if_error: true
           file: reports/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -408,7 +409,7 @@ jobs:
     # if: ... is not needed because calculate-version will not run if we disable building the docker container
     env:
       APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
-      PATH_TO_TAR: PALCEHOLDER # same ^
+      PATH_TO_TAR: PLACEHOLDER # same ^
       PLATFORM_PAIR: PLACEHOLDER # same ^
       PLATFORM_UNIQUE_TAG: PLACEHOLDER # same ^
     strategy:
@@ -434,9 +435,6 @@ jobs:
         shell: bash
         run: |
           ./.github/scripts/update-version.sh ${{ needs.calculate-version.outputs.version }}
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb # v3.3.0
