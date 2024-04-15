@@ -1,4 +1,5 @@
 code:
+  - ".nvmrc"
   - "src/**"
   - "TAG"
   - Cargo.lock
