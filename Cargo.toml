@@ -58,4 +58,7 @@ cargo-husky = { version = "1.5.0", default-features = false, features = [
 # Documentation on the syntax:
 # https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies
 [target.'cfg(all(target_arch = "x86_64", target_os="linux", target_env="musl"))'.dependencies]
+
+[dependencies]
+backtrace = "0.3.71"
 # openssl = { version = "0.10.36", features = ["vendored"] }
