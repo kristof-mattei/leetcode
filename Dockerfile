@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM rust:1.77.2@sha256:76b4fd33f4aafb756f240959fed63b2b9f7dfc29a668dd076f45f9b02fee07a0 as builder
+FROM --platform=$BUILDPLATFORM rust:1.77.2@sha256:660454d8f046a32e6cc3daeb26ca0572bc96bae8710f45cdc99535de5b6ffd67 as builder
 
 ARG TARGET=x86_64-unknown-linux-musl
 ARG APPLICATION_NAME
