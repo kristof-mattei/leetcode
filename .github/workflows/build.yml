@@ -245,9 +245,6 @@ jobs:
   cargo-test-and-report:
     name: Cargo test (and report)
     runs-on: ubuntu-latest
-    needs:
-      - changes
-    if: fromJSON(needs.changes.outputs.code) == true
     steps:
       - name: Checkout
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
