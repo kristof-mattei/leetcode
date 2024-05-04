@@ -33,6 +33,22 @@ debug = true
 all = "warn"
 pedantic = "warn"
 cargo = "warn"
+
+# this one is WAY too buggy
+assigning_clones = { level = "allow", priority = 127 }
+
+# general things we don't care about when writing code for points
+# as the input is narrowly defined
+cast_possible_truncation = { level = "allow", priority = 127 }
+cast_possible_wrap = { level = "allow", priority = 127 }
+cast_sign_loss = { level = "allow", priority = 127 }
+
+# easier debugging
+let_and_return = { level = "allow", priority = 127 }
+
+# yea, this one is debatable
+too_many_lines = { level = "allow", priority = 127 }
+
 # this one causes confusion when combining variables (`foo`) and
 # dereferenced variables (`foo.bar`). The latter cannot be inlined
 # so we don't inline anything
