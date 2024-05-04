@@ -85,7 +85,7 @@ impl Trie {
         word.as_bytes()
             .iter()
             .try_fold(0, |acc, curr| self.states[acc].next(*curr).ok_or(acc))
-            .map_or_else(|e| e, |o| o)
+            .unwrap_or_else(|e| e)
     }
 }
 
