@@ -99,7 +99,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Set up mold
-        uses: rui314/setup-mold@eaf386f9317492ea1e4322877ddcd198d8d97c2f # v1
+        uses: rui314/setup-mold@8de9eea54963d01c1a6c200606257d65bd53bea1 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -178,7 +178,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Set up mold
-        uses: rui314/setup-mold@eaf386f9317492ea1e4322877ddcd198d8d97c2f # v1
+        uses: rui314/setup-mold@8de9eea54963d01c1a6c200606257d65bd53bea1 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -224,7 +224,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Set up mold
-        uses: rui314/setup-mold@eaf386f9317492ea1e4322877ddcd198d8d97c2f # v1
+        uses: rui314/setup-mold@8de9eea54963d01c1a6c200606257d65bd53bea1 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -265,7 +265,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Set up mold
-        uses: rui314/setup-mold@eaf386f9317492ea1e4322877ddcd198d8d97c2f # v1
+        uses: rui314/setup-mold@8de9eea54963d01c1a6c200606257d65bd53bea1 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -380,7 +380,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Set up mold
-        uses: rui314/setup-mold@eaf386f9317492ea1e4322877ddcd198d8d97c2f # v1
+        uses: rui314/setup-mold@8de9eea54963d01c1a6c200606257d65bd53bea1 # v1
 
       - name: Set up toolchain
         shell: bash
