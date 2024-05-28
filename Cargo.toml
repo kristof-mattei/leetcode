@@ -76,5 +76,5 @@ cargo-husky = { version = "1.5.0", default-features = false, features = [
 [target.'cfg(all(target_arch = "x86_64", target_os="linux", target_env="musl"))'.dependencies]
 
 [dependencies]
-backtrace = "0.3.71"
+backtrace = "0.3.72"
 # openssl = { version = "0.10.36", features = ["vendored"] }
