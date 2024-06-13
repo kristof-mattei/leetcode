@@ -3,7 +3,7 @@ name = "leetcode"
 # don't change this, it's updated before an actual build by update-version.sh
 version = "0.0.0-development"
 edition = "2021"
-rust-version = "1.78.0"
+rust-version = "1.79.0"
 authors = ["Kristof Mattei"]
 license-file = "LICENSE"
 description = "Leet Code"
@@ -76,5 +76,5 @@ cargo-husky = { version = "1.5.0", default-features = false, features = [
 [target.'cfg(all(target_arch = "x86_64", target_os="linux", target_env="musl"))'.dependencies]
 
 [dependencies]
-backtrace = "0.3.71"
+backtrace = "0.3.73"
 # openssl = { version = "0.10.36", features = ["vendored"] }
