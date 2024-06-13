@@ -25,7 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Only on main
-        if: github.ref != 'refs/heads/main'
+        if: |
+          github.ref != 'refs/heads/main'
         shell: bash
         run: |
           echo "Only to be executed on main"
