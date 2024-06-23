@@ -1,4 +1,4 @@
-# Rust end-to-end application
+# Rust seed application
 
 It's written in Rust!
 

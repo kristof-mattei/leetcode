@@ -1,15 +1,15 @@
 [package]
-name = "rust-end-to-end-application"
+name = "rust-seed"
 # don't change this, it's updated before an actual build by update-version.sh
 version = "0.0.0-development"
 edition = "2021"
 rust-version = "1.79.0"
 authors = ["Kristof Mattei"]
-description = "Rust end-to-end application"
+description = "Rust seed application"
 license-file = "LICENSE"
-categories = ["starter", "end-to-end"]
-keywords = ["integrity", "end-to-end", "starter", "docker", "release"]
-repository = "https://github.com/kristof-mattei/rust-end-to-end-application"
+categories = ["starter", "seed"]
+keywords = ["integrity", "seed", "starter", "docker", "release"]
+repository = "https://github.com/kristof-mattei/rust-seed"
 
 [lints.clippy]
 # don't stop from compiling / running

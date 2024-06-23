@@ -1,5 +1,5 @@
 {
-  "name": "rust-end-to-end-application",
+  "name": "rust-seed",
   "version": "0.0.0-development",
   "description": "It's written in Rust!",
   "main": "src/main.rs",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kristof-mattei/rust-end-to-end-application.git"
+    "url": "https://github.com/kristof-mattei/rust-seed.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kristof-mattei/rust-end-to-end-application/issues"
+    "url": "https://github.com/kristof-mattei/rust-seed/issues"
   },
-  "homepage": "https://github.com/kristof-mattei/rust-end-to-end-application#readme",
+  "homepage": "https://github.com/kristof-mattei/rust-seed#readme",
   "devDependencies": {
     "@actions/tool-cache": "2.0.1",
     "@semantic-release/changelog": "6.0.3",
