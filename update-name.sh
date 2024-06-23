@@ -15,7 +15,8 @@ NEW_NAME_WITH_UNDERSCORE=$(echo "${NEW_NAME}" | sed -e "s/-/_/g")
 
 echo "New name with underscore = ${NEW_NAME_WITH_UNDERSCORE}"
 
-OLD_NAME="rust-seed"
+PART_NAME="rust-"
+OLD_NAME="${PART_NAME}seed"
 OLD_NAME_WITH_UNDERSCORE=$(echo "${OLD_NAME}" | sed -e "s/-/_/g")
 
 echo ${OLD_NAME_WITH_UNDERSCORE}
