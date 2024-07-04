@@ -5,11 +5,11 @@ version = "0.0.0-development"
 edition = "2021"
 rust-version = "1.79.0"
 authors = ["Kristof Mattei"]
+description = "Leetcode"
 license-file = "LICENSE"
-description = "Leet Code"
-repository = "https://github.com/kristof-mattei/leetcode"
-keywords = ["playground"]
 categories = ["playground"]
+keywords = ["playground"]
+repository = "https://github.com/kristof-mattei/leetcode"
 
 [lib]
 path = "src/lib.rs"
