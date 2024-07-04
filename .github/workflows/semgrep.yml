@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: "35 13 * * 2"
+    - cron: "41 3 * * 6"
 
 permissions:
   security-events: write
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: returntocorp/semgrep:1.75.0@sha256:550dfdac1ec5d4a757d1c2ac0197a6360ef3ac8e3d0a804731eab07242e91b4c
+      image: returntocorp/semgrep:1.78.0@sha256:4614ec53294cc63f086755157dfb108121c69087d15c3e8d4c7ac603fb0eaa54
 
     steps:
       - name: Checkout
@@ -34,7 +34,8 @@ jobs:
           semgrep ci --sarif --output=semgrep.sarif
 
       - name: Upload SARIF file for GitHub Advanced Security Dashboard
-        if: always()
-        uses: github/codeql-action/upload-sarif@23acc5c183826b7a8a97bce3cecc52db901f8251 # v3.25.10
+        if: |
+          always()
+        uses: github/codeql-action/upload-sarif@b611370bb5703a7efb587f9d136a52ea24c5c38c # v3.25.11
         with:
           sarif_file: semgrep.sarif
