@@ -9,11 +9,7 @@
             "request": "launch",
             "name": "Debug executable 'leetcode'",
             "cargo": {
-                "args": [
-                    "build",
-                    "--bin=leetcode",
-                    "--package=leetcode"
-                ],
+                "args": ["build", "--bin=leetcode", "--package=leetcode"],
                 "filter": {
                     "name": "leetcode",
                     "kind": "bin"
