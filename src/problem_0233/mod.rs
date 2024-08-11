@@ -1,5 +1,5 @@
 fn count_digit_one(n: i32) -> i32 {
-    let mut res = 0;
+    let mut ones = 0;
     let mut i = 1;
 
     while i <= n {
@@ -8,16 +8,17 @@ fn count_digit_one(n: i32) -> i32 {
         let suffix = n % i;
 
         if digit == 0 {
-            res += prefix * i;
+            ones += prefix * i;
         } else if digit == 1 {
-            res += prefix * i + suffix + 1;
+            ones += prefix * i + suffix + 1;
         } else {
-            res += (prefix + 1) * i;
+            ones += (prefix + 1) * i;
         }
 
         i *= 10;
     }
-    res
+
+    ones
 }
 
 impl Solution {
@@ -42,5 +43,10 @@ mod tests {
     #[test]
     fn test_2() {
         assert_eq!(count_digit_one(0), 0);
+    }
+
+    #[test]
+    fn test_3() {
+        assert_eq!(count_digit_one(11), 4);
     }
 }

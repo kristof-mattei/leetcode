@@ -3,7 +3,7 @@ use std::fmt::Write;
 impl Solution {
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
-    pub fn main_fn(input: String) -> i32 {
+    pub fn calculate(input: String) -> i32 {
         calculate(&input)
     }
 }
@@ -109,7 +109,7 @@ fn parse_term(tokens: &[Token]) -> (usize, Tree) {
             (advanced + 2, subtree)
         },
         Some(Token::Minus) => {
-            let (advanced, subtree) = parse_term(tokens);
+            let (advanced, subtree) = parse_term(&tokens[1..]);
 
             (advanced + 1, Tree::Negate(Box::new(subtree)))
         },
