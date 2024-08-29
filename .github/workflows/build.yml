@@ -351,7 +351,6 @@ jobs:
           files: reports/results.xml
           token: ${{ secrets.CODECOV_TOKEN }}
 
-
       - name: Fail if tests failed
         shell: bash
         if: |

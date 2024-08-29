@@ -4,7 +4,7 @@
   "description": "It's written in Rust!",
   "main": "src/main.rs",
   "scripts": {
-    "prettier": "prettier --write .",
+    "format": "prettier --write .",
     "release": "semantic-release"
   },
   "engines": {
