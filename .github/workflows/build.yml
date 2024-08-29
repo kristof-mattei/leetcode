@@ -99,7 +99,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Set up mold
-        uses: rui314/setup-mold@2e332a0b602c2fc65d2d3995941b1b29a5f554a0 # v1
+        uses: rui314/setup-mold@0bf4f07ef9048ec62a45f9dbf2f098afa49695f0 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -178,7 +178,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Set up mold
-        uses: rui314/setup-mold@2e332a0b602c2fc65d2d3995941b1b29a5f554a0 # v1
+        uses: rui314/setup-mold@0bf4f07ef9048ec62a45f9dbf2f098afa49695f0 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -224,7 +224,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Set up mold
-        uses: rui314/setup-mold@2e332a0b602c2fc65d2d3995941b1b29a5f554a0 # v1
+        uses: rui314/setup-mold@0bf4f07ef9048ec62a45f9dbf2f098afa49695f0 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -265,7 +265,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Set up mold
-        uses: rui314/setup-mold@2e332a0b602c2fc65d2d3995941b1b29a5f554a0 # v1
+        uses: rui314/setup-mold@0bf4f07ef9048ec62a45f9dbf2f098afa49695f0 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -343,6 +343,14 @@ jobs:
           plugins: ""
           token: ${{ secrets.CODECOV_TOKEN }}
 
+      - name: Upload test results to Codecov
+        uses: codecov/test-results-action@1b5b448b98e58ba90d1a1a1d9fcb72ca2263be46 # v1
+        with:
+          disable_search: true
+          fail_ci_if_error: true
+          files: reports/results.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Fail if tests failed
         shell: bash
         if: |
@@ -383,7 +391,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
 
       - name: Set up mold
-        uses: rui314/setup-mold@2e332a0b602c2fc65d2d3995941b1b29a5f554a0 # v1
+        uses: rui314/setup-mold@0bf4f07ef9048ec62a45f9dbf2f098afa49695f0 # v1
 
       - name: Set up toolchain
         shell: bash
@@ -480,7 +488,7 @@ jobs:
           echo "APPLICATION_NAME=${APPLICATION_NAME##*/}" >> ${GITHUB_ENV}
 
       - name: Build Docker image
-        uses: docker/build-push-action@16ebe778df0e7752d2cfcbd924afdbbd89c1a755 # v6.6.1
+        uses: docker/build-push-action@5cd11c3a4ced054e52742c5fd54dca954e0edd85 # v6.7.0
         with:
           build-args: |
             APPLICATION_NAME=${{ env.APPLICATION_NAME }}
