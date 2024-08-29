@@ -5,10 +5,14 @@ fn nth_ugly_number(n: i32) -> i32 {
     let mut p = [0, 0, 0];
 
     while v.len() < n as usize {
-        let nums = [v[p[0]] * 2, v[p[1]] * 3, v[p[2]] * 5];
+        let first = v[p[0]] * 2;
+        let second = v[p[1]] * 3;
+        let third = v[p[2]] * 5;
+
+        let nums = [first, second, third];
 
         let &min = nums.iter().min().unwrap();
-        println!("{nums:?}");
+
         v.push(min);
 
         for i in 0..nums.len() {
@@ -17,7 +21,8 @@ fn nth_ugly_number(n: i32) -> i32 {
             }
         }
     }
-    v[v.len() - 1]
+
+    v.pop().unwrap()
 }
 
 impl Solution {

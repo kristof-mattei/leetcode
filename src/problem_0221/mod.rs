@@ -1,3 +1,11 @@
+impl Solution {
+    #[must_use]
+    #[allow(clippy::needless_pass_by_value)]
+    pub fn maximal_square(matrix: Vec<Vec<char>>) -> i32 {
+        maximal_square(&matrix)
+    }
+}
+
 fn maximal_square(matrix: &[Vec<char>]) -> i32 {
     let rows = matrix.len();
     let cols = matrix[0].len();
@@ -23,14 +31,6 @@ fn maximal_square(matrix: &[Vec<char>]) -> i32 {
     }
 
     max * max
-}
-
-impl Solution {
-    #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
-    pub fn maximal_square(matrix: Vec<Vec<char>>) -> i32 {
-        maximal_square(&matrix)
-    }
 }
 
 pub struct Solution;
