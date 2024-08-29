@@ -6,9 +6,7 @@ fn num_squares(n: i32) -> i32 {
 
     let mut queue = VecDeque::from(vec![(0, 0)]);
 
-    while !queue.is_empty() {
-        let (val, step) = queue.pop_front().unwrap();
-
+    while let Some((val, step)) = queue.pop_front() {
         for i in 1..100 {
             let target = val + i * i;
 

@@ -47,7 +47,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0234::is_palindrome, shared::to_ll};
+    use crate::problem_0234::is_palindrome;
+    use crate::shared::to_ll;
 
     #[test]
     fn test_1() {

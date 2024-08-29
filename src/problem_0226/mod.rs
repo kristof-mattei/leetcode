@@ -1,4 +1,5 @@
-use std::{cell::RefCell, rc::Rc};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 use crate::shared::TreeNode;
 
@@ -27,7 +28,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0226::invert_tree, shared::to_bt};
+    use crate::problem_0226::invert_tree;
+    use crate::shared::to_bt;
 
     #[test]
     fn test_1() {

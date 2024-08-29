@@ -1,4 +1,5 @@
-use std::{cell::RefCell, rc::Rc};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 use crate::shared::TreeNode;
 
@@ -77,12 +78,11 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use std::{cell::RefCell, rc::Rc};
+    use std::cell::RefCell;
+    use std::rc::Rc;
 
-    use crate::{
-        problem_0236::{lowest_common_ancestor, LeastCommonAncestor},
-        shared::{to_bt, TreeNode},
-    };
+    use crate::problem_0236::{lowest_common_ancestor, LeastCommonAncestor};
+    use crate::shared::{to_bt, TreeNode};
 
     #[test]
     fn test_1() {
