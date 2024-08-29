@@ -343,6 +343,14 @@ jobs:
           plugins: ""
           token: ${{ secrets.CODECOV_TOKEN }}
 
+      - name: Upload test results to Codecov
+        uses: codecov/test-results-action@1b5b448b98e58ba90d1a1a1d9fcb72ca2263be46 # v1
+        with:
+          disable_search: true
+          fail_ci_if_error: true
+          files: reports/results.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Fail if tests failed
         shell: bash
         if: |
