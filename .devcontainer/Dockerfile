@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/rust:1-1-bullseye@sha256:61c9591c285a78c64a8c22dcd69ae7c0d94db160e1d22c3f222a1e9ca4b327fb
+FROM mcr.microsoft.com/devcontainers/rust:1-1-bullseye@sha256:f1d44e262c849c4812c0134bcdfe77a9b737d89f1af15aaf5aa2acbe7a749a80
 
 # [Optional] Uncomment this section to install additional packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
