@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: returntocorp/semgrep:1.87.0@sha256:355e32778c40679a3a02a0d2d5a74de8456cfde7a68f7e8022f819a4edc398c9
+      image: returntocorp/semgrep:1.88.0@sha256:4bfe603c1d1c9932e188c1fed1e7153f6ee8042fc3059f95d9d7d0b2e271df72
 
     steps:
       - name: Checkout
