@@ -46,7 +46,7 @@ impl MyStack {
     }
 
     fn top(&self) -> i32 {
-        return self.last.as_ref().unwrap().value;
+        self.last.as_ref().unwrap().value
     }
 
     fn empty(&self) -> bool {

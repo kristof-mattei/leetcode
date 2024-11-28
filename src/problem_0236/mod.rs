@@ -14,7 +14,7 @@ impl Solution {
         let p = p?;
         let q = q?;
 
-        if let LeastCommonAncestor::Found(v) = lowest_common_ancestor(&root, p, q) {
+        if let LeastCommonAncestor::Found(v) = lowest_common_ancestor(root.as_ref(), p, q) {
             v
         } else {
             None
@@ -30,7 +30,7 @@ enum LeastCommonAncestor {
 
 #[allow(clippy::needless_pass_by_value)]
 fn lowest_common_ancestor(
-    node: &Option<Rc<RefCell<TreeNode>>>,
+    node: Option<&Rc<RefCell<TreeNode>>>,
     p: Rc<RefCell<TreeNode>>,
     q: Rc<RefCell<TreeNode>>,
 ) -> LeastCommonAncestor {
@@ -42,13 +42,13 @@ fn lowest_common_ancestor(
 
     let node_borrowed = node.borrow();
 
-    let from_left = lowest_common_ancestor(&node_borrowed.left, p.clone(), q.clone());
+    let from_left = lowest_common_ancestor(node_borrowed.left.as_ref(), p.clone(), q.clone());
 
     if matches!(from_left, LeastCommonAncestor::Found(_)) {
         return from_left;
     }
 
-    let from_right = lowest_common_ancestor(&node_borrowed.right, p.clone(), q.clone());
+    let from_right = lowest_common_ancestor(node_borrowed.right.as_ref(), p.clone(), q.clone());
 
     if matches!(from_right, LeastCommonAncestor::Found(_)) {
         return from_right;
@@ -87,7 +87,7 @@ mod tests {
     #[test]
     fn test_1() {
         let result = lowest_common_ancestor(
-            &to_bt(&[
+            to_bt(&[
                 3.into(),
                 5.into(),
                 1.into(),
@@ -99,7 +99,8 @@ mod tests {
                 None,
                 7.into(),
                 4.into(),
-            ]),
+            ])
+            .as_ref(),
             Rc::new(RefCell::new(TreeNode {
                 val: 2,
                 left: None,
