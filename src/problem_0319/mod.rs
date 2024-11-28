@@ -33,6 +33,6 @@ mod tests {
 
     #[test]
     fn test_4() {
-        assert_eq!(bulb_switch(99999), 1316);
+        assert_eq!(bulb_switch(99999), 316);
     }
 }
