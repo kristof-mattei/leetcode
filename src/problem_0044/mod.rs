@@ -38,7 +38,7 @@ fn is_match_r(
     };
 
     match token {
-        '?' if remainder.first().is_some() => {
+        '?' if !remainder.is_empty() => {
             // here
             memoize(cache, &remainder[1..], &remaining_regex[1..])
         },

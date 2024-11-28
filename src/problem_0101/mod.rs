@@ -4,8 +4,8 @@ use std::rc::Rc;
 use crate::shared::TreeNode;
 
 fn is_symmetric_r(
-    left: &Option<Rc<RefCell<TreeNode>>>,
-    right: &Option<Rc<RefCell<TreeNode>>>,
+    left: Option<&Rc<RefCell<TreeNode>>>,
+    right: Option<&Rc<RefCell<TreeNode>>>,
 ) -> bool {
     match (left, right) {
         (None, None) => true,
@@ -17,8 +17,8 @@ fn is_symmetric_r(
                 return false;
             }
 
-            if is_symmetric_r(&l_borrow.left, &r_borrow.right) {
-                return is_symmetric_r(&l_borrow.right, &r_borrow.left);
+            if is_symmetric_r(l_borrow.left.as_ref(), r_borrow.right.as_ref()) {
+                return is_symmetric_r(l_borrow.right.as_ref(), r_borrow.left.as_ref());
             }
 
             false
@@ -31,7 +31,7 @@ fn is_symmetric(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
     if let Some(r) = root {
         let borrow = r.borrow();
 
-        return is_symmetric_r(&borrow.left, &borrow.right);
+        return is_symmetric_r(borrow.left.as_ref(), borrow.right.as_ref());
     }
 
     true

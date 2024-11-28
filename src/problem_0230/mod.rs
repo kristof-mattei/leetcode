@@ -7,18 +7,16 @@ impl Solution {
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
     pub fn kth_smallest(root: Option<Rc<RefCell<TreeNode>>>, k: i32) -> i32 {
-        kth_smallest(&root, k)
+        kth_smallest(root.as_ref(), k)
     }
 }
 
-fn kth_smallest_r(root: &Option<Rc<RefCell<TreeNode>>>, k: i32, rank: &mut i32) -> Option<i32> {
-    let Some(node) = root else {
-        return None;
-    };
+fn kth_smallest_r(root: Option<&Rc<RefCell<TreeNode>>>, k: i32, rank: &mut i32) -> Option<i32> {
+    let node = root?;
 
     let node = node.borrow();
 
-    if let Some(val) = kth_smallest_r(&node.left, k, rank) {
+    if let Some(val) = kth_smallest_r(node.left.as_ref(), k, rank) {
         return Some(val);
     }
 
@@ -28,14 +26,14 @@ fn kth_smallest_r(root: &Option<Rc<RefCell<TreeNode>>>, k: i32, rank: &mut i32) 
         return Some(node.val);
     }
 
-    if let Some(val) = kth_smallest_r(&node.right, k, rank) {
+    if let Some(val) = kth_smallest_r(node.right.as_ref(), k, rank) {
         return Some(val);
     }
 
     None
 }
 
-fn kth_smallest(root: &Option<Rc<RefCell<TreeNode>>>, k: i32) -> i32 {
+fn kth_smallest(root: Option<&Rc<RefCell<TreeNode>>>, k: i32) -> i32 {
     let mut rank = 0;
 
     kth_smallest_r(root, k, &mut rank).unwrap_or(0)
@@ -53,7 +51,7 @@ mod tests {
     fn test_1() {
         let input: Vec<Option<i32>> = vec![3.into(), 1.into(), 4.into(), None, 2.into()];
 
-        assert_eq!(kth_smallest(&to_bt(&input), 1), 1);
+        assert_eq!(kth_smallest(to_bt(&input).as_ref(), 1), 1);
     }
 
     #[test]
@@ -69,6 +67,6 @@ mod tests {
             1.into(),
         ];
 
-        assert_eq!(kth_smallest(&to_bt(&input), 3), 3);
+        assert_eq!(kth_smallest(to_bt(&input).as_ref(), 3), 3);
     }
 }
