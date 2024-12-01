@@ -1,6 +1,6 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
         product_except_self(&nums)
     }

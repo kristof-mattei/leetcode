@@ -31,7 +31,6 @@ fn sorted_list_to_bst_r(nums: &[i32]) -> Option<Rc<RefCell<TreeNode>>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn sorted_list_to_bst(head: Option<Box<ListNode>>) -> Option<Rc<RefCell<TreeNode>>> {
         sorted_list_to_bst(head)
     }

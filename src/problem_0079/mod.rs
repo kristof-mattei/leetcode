@@ -41,7 +41,7 @@ fn exist(mut board: Vec<Vec<char>>, word: &str) -> bool {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn exist(board: Vec<Vec<char>>, word: String) -> bool {
         exist(board, &word)
     }

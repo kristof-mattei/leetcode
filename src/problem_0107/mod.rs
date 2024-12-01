@@ -41,7 +41,7 @@ fn level_order_bottom(root: Option<&Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn level_order_bottom(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
         level_order_bottom(root.as_ref())
     }

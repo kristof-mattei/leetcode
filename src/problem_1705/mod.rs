@@ -58,7 +58,7 @@ fn eaten_apples(apples: &[i32], days: &[i32]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn eaten_apples(apples: Vec<i32>, days: Vec<i32>) -> i32 {
         eaten_apples(&apples, &days)
     }

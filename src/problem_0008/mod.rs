@@ -48,7 +48,7 @@ fn my_atoi(mut s: &str) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn my_atoi(s: String) -> i32 {
         my_atoi(&s)
     }

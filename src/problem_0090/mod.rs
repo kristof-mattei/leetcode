@@ -36,7 +36,6 @@ fn subsets_with_dup(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn subsets_with_dup(nums: Vec<i32>) -> Vec<Vec<i32>> {
         subsets_with_dup(nums)
     }

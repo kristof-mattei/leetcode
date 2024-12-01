@@ -19,7 +19,7 @@ fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {
 
     let mut order = Vec::with_capacity(num_courses);
 
-    #[allow(clippy::match_on_vec_items)]
+    #[expect(clippy::match_on_vec_items)]
     // courses go from 0 to num_courses - 1
     for v in 0..num_courses {
         if states[v] == State::NotVisited {
@@ -76,7 +76,6 @@ fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn find_order(num_courses: i32, prerequisits: Vec<Vec<i32>>) -> Vec<i32> {
         find_order(num_courses, prerequisits)
     }

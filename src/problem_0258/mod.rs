@@ -1,6 +1,5 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn add_digits(num: i32) -> i32 {
         add_digits(num)
     }

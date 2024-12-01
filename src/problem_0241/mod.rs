@@ -28,7 +28,7 @@ fn diff_ways_to_compute(expression: &str) -> Vec<i32> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn diff_ways_to_compute(expression: String) -> Vec<i32> {
         diff_ways_to_compute(&expression)
     }

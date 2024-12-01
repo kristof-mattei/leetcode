@@ -1,6 +1,6 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn contains_nearby_duplicate(nums: Vec<i32>, k: i32) -> bool {
         contains_nearby_duplicate(&nums, k)
     }

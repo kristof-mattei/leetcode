@@ -1,6 +1,6 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn max_product(words: Vec<String>) -> i32 {
         max_product(&words)
     }

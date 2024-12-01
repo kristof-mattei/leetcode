@@ -28,7 +28,7 @@ fn candy(ratings: &[i32]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn candy(ratings: Vec<i32>) -> i32 {
         candy(&ratings)
     }

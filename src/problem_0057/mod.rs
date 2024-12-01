@@ -90,7 +90,6 @@ fn insert(mut intervals: Vec<Vec<i32>>, new_interval: Vec<i32>) -> Vec<Vec<i32>>
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn insert(intervals: Vec<Vec<i32>>, new_interval: Vec<i32>) -> Vec<Vec<i32>> {
         insert(intervals, new_interval)
     }

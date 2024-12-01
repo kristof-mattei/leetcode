@@ -24,7 +24,7 @@ fn min_sub_array_len(target: i32, nums: &[i32]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn min_sub_array_len(target: i32, nums: Vec<i32>) -> i32 {
         min_sub_array_len(target, &nums)
     }

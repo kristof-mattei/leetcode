@@ -29,7 +29,7 @@ fn rotate(nums: &mut [i32], k: i32) {
 }
 
 impl Solution {
-    #[allow(clippy::ptr_arg)]
+    #[expect(clippy::ptr_arg)]
     pub fn rotate(nums: &mut Vec<i32>, k: i32) {
         rotate(nums, k);
     }

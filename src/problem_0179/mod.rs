@@ -11,7 +11,6 @@ fn largest_number(mut nums: Vec<i32>) -> String {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn largest_number(nums: Vec<i32>) -> String {
         largest_number(nums)
     }

@@ -51,7 +51,6 @@ fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
         three_sum(nums)
     }

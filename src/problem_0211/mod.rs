@@ -47,7 +47,7 @@ impl WordDictionary {
         }
     }
 
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     fn add_word(&mut self, word: String) {
         let (to_skip, mut last_matching_index) = self.follow(&word);
 
@@ -66,7 +66,6 @@ impl WordDictionary {
         self.states[last_matching_index].set_complete();
     }
 
-    #[allow(clippy::needless_pass_by_value)]
     fn search_r(&self, word: &[u8], mut acc: usize) -> bool {
         for (index, &letter) in word.iter().enumerate() {
             if letter == b'.' {
@@ -91,7 +90,7 @@ impl WordDictionary {
         self.states[acc].is_complete()
     }
 
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     fn search(&self, word: String) -> bool {
         self.search_r(word.as_bytes(), 0)
     }

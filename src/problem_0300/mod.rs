@@ -16,7 +16,7 @@ fn length_of_lis(nums: &[i32]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn length_of_lis(nums: Vec<i32>) -> i32 {
         length_of_lis(&nums)
     }

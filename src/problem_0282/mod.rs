@@ -1,6 +1,6 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn add_operators(num: String, target: i32) -> Vec<String> {
         add_operators(&num, target)
     }

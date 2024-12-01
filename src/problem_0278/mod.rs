@@ -5,7 +5,6 @@ impl Solution {
     }
 
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn first_bad_version(&self, n: i32) -> i32 {
         let mut low = 1;
         let mut high = n;

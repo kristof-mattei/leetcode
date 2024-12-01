@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn coin_change(coins: Vec<i32>, amount: i32) -> i32 {
         coin_change(&coins, amount)
     }

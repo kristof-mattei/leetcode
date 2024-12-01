@@ -13,7 +13,7 @@ fn count_nodes(root: Option<&Rc<RefCell<TreeNode>>>) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn count_nodes(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         count_nodes(root.as_ref())
     }

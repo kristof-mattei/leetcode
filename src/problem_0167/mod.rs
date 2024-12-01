@@ -19,7 +19,7 @@ fn two_sum(numbers: &[i32], target: i32) -> Vec<i32> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn two_sum(numbers: Vec<i32>, target: i32) -> Vec<i32> {
         two_sum(&numbers, target)
     }

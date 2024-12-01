@@ -7,7 +7,7 @@ where
 }
 
 // #[inline]
-// #[allow(clippy::needless_range_loop)]
+// #[expect(clippy::needless_range_loop)]
 // fn min_distance(word1: &str, word2: &str) -> i32 {
 //     let word1_len = word1.chars().count();
 //     let word2_len = word2.chars().count();
@@ -38,7 +38,7 @@ where
 // }
 
 #[inline]
-#[allow(clippy::range_plus_one)]
+#[expect(clippy::range_plus_one)]
 fn min_distance(word1: &str, word2: &str) -> i32 {
     let word1_char_len = word1.chars().count();
     let word2_char_len = word2.chars().count();
@@ -77,7 +77,7 @@ fn min_distance(word1: &str, word2: &str) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn min_distance(word1: String, word2: String) -> i32 {
         min_distance(&word1, &word2)
     }

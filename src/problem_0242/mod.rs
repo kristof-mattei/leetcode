@@ -1,6 +1,6 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn is_anagram(s: String, t: String) -> bool {
         is_anagram(&s, &t)
     }

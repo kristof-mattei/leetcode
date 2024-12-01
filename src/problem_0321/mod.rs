@@ -1,6 +1,6 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn main_fn(input: Vec<String>) -> i32 {
         // TODO
         sub_fn(&input)

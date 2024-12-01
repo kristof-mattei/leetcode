@@ -45,7 +45,7 @@ fn shortest_palindrome(s: &str) -> String {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn shortest_palindrome(s: String) -> String {
         shortest_palindrome(&s)
     }

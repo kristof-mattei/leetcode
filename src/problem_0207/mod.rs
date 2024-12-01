@@ -17,7 +17,7 @@ fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
     let mut stack: Vec<usize> = Vec::with_capacity(num_courses);
     let mut states = vec![State::NotVisited; num_courses];
 
-    #[allow(clippy::match_on_vec_items)]
+    #[expect(clippy::match_on_vec_items)]
     // courses go from 0 to num_courses - 1
     for v in 0..num_courses {
         if states[v] == State::NotVisited {
@@ -71,7 +71,6 @@ fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn can_finish(num_courses: i32, prerequisits: Vec<Vec<i32>>) -> bool {
         can_finish(num_courses, prerequisits)
     }

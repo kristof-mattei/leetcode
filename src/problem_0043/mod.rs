@@ -42,7 +42,7 @@ fn multiply(num1: &str, num2: &str) -> String {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn multiply(num1: String, num2: String) -> String {
         multiply(&num1, &num2)
     }

@@ -14,7 +14,7 @@ fn can_jump(nums: &[i32]) -> bool {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn can_jump(nums: Vec<i32>) -> bool {
         can_jump(&nums)
     }

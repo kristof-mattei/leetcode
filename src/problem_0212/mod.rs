@@ -90,7 +90,6 @@ fn find_words(mut board: Vec<Vec<char>>, mut words: Vec<String>) -> Vec<String> 
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn find_words(board: Vec<Vec<char>>, words: Vec<String>) -> Vec<String> {
         find_words(board, words)
     }

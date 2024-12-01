@@ -23,7 +23,7 @@ fn sort_colors(nums: &mut [i32]) {
 }
 
 impl Solution {
-    #[allow(clippy::ptr_arg)]
+    #[expect(clippy::ptr_arg)]
     pub fn sort_colors(nums: &mut Vec<i32>) {
         sort_colors(nums);
     }

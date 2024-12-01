@@ -44,7 +44,7 @@ fn longest_common_prefix_a_z(strs: &[String]) -> String {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn longest_common_prefix(strs: Vec<String>) -> String {
         longest_common_prefix(&strs)
     }

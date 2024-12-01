@@ -39,7 +39,7 @@ fn rotate(matrix: &mut [Vec<i32>]) {
 }
 
 impl Solution {
-    #[allow(clippy::ptr_arg)]
+    #[expect(clippy::ptr_arg)]
     pub fn rotate(matrix: &mut Vec<Vec<i32>>) {
         rotate(matrix);
     }

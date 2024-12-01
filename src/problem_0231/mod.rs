@@ -1,6 +1,5 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn is_power_of_two(n: i32) -> bool {
         is_power_of_two(n)
     }

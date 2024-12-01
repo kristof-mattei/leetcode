@@ -45,7 +45,6 @@ fn combination_sum2(mut candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn combination_sum2(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
         combination_sum2(candidates, target)
     }

@@ -1,6 +1,5 @@
 impl Solution {
-    #[allow(clippy::ptr_arg)]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::ptr_arg)]
     pub fn game_of_life(input: &mut Vec<Vec<i32>>) {
         game_of_life(input);
     }

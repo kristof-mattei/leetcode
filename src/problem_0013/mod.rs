@@ -39,7 +39,7 @@ fn roman_to_int(s: &str) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn roman_to_int(s: String) -> i32 {
         roman_to_int(&s)
     }

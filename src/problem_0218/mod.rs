@@ -84,7 +84,7 @@ fn get_skyline(raw_buildings: &[Vec<i32>]) -> Vec<Vec<i32>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn get_skyline(buildings: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         get_skyline(&buildings)
     }

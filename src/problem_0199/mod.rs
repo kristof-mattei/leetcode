@@ -28,7 +28,6 @@ fn right_side_view_r(
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn right_side_view(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
         right_side_view(root)
     }

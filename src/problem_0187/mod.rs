@@ -21,7 +21,7 @@ fn find_repeated_dna_sequences(s: &str) -> Vec<String> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn find_repeated_dna_sequences(s: String) -> Vec<String> {
         find_repeated_dna_sequences(&s)
     }

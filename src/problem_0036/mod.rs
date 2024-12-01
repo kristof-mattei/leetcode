@@ -64,7 +64,7 @@ fn check_hashmap(hash_map: &mut HashSet<char>, c: char) -> bool {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
         is_valid_sudoku(&board)
     }

@@ -110,7 +110,6 @@ pub(crate) fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
         solve_n_queens(n)
     }

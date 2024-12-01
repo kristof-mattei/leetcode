@@ -42,7 +42,7 @@ fn search(nums: &[i32], target: i32) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn search(nums: Vec<i32>, target: i32) -> i32 {
         search(&nums, target)
     }

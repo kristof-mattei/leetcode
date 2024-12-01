@@ -46,7 +46,7 @@ fn find_median_sorted_arrays(nums1: &[i32], nums2: &[i32]) -> f64 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
         find_median_sorted_arrays(&nums1, &nums2)
     }

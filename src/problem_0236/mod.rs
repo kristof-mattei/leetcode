@@ -5,7 +5,7 @@ use crate::shared::TreeNode;
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn lowest_common_ancestor(
         root: Option<Rc<RefCell<TreeNode>>>,
         p: Option<Rc<RefCell<TreeNode>>>,
@@ -28,7 +28,7 @@ enum LeastCommonAncestor {
     Found(Option<Rc<RefCell<TreeNode>>>),
 }
 
-#[allow(clippy::needless_pass_by_value)]
+#[expect(clippy::needless_pass_by_value)]
 fn lowest_common_ancestor(
     node: Option<&Rc<RefCell<TreeNode>>>,
     p: Rc<RefCell<TreeNode>>,

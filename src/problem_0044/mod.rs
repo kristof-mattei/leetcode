@@ -82,7 +82,7 @@ fn is_match_r(
 }
 
 impl Solution {
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     #[must_use]
     pub fn is_match(s: String, p: String) -> bool {
         is_match(&s, &p)

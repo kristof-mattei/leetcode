@@ -25,7 +25,6 @@ fn largest_rectangle_area(mut heights: Vec<i32>) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
         largest_rectangle_area(heights)
     }

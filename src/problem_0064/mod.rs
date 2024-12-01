@@ -36,7 +36,7 @@ fn min_path_sum(grid: &[Vec<i32>]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn min_path_sum(grid: Vec<Vec<i32>>) -> i32 {
         min_path_sum(&grid)
     }

@@ -18,7 +18,7 @@ fn can_complete_circuit(gas: &[i32], cost: &[i32]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {
         can_complete_circuit(&gas, &cost)
     }

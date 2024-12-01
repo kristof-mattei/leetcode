@@ -8,7 +8,6 @@ fn count_primes(n: i32) -> i32 {
     is_prime[0] = false;
     is_prime[1] = false;
 
-    #[allow(clippy::range_plus_one)]
     for i in 2..f64::sqrt(f64::from(n)).ceil() as usize {
         if is_prime[i] {
             for j in ((i * i)..n as usize).step_by(i) {

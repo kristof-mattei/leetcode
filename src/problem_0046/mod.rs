@@ -26,7 +26,6 @@ fn permute(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {
         permute(nums)
     }

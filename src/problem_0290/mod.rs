@@ -3,7 +3,7 @@ use std::collections::HashMap;
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn word_pattern(pattern: String, s: String) -> bool {
         word_pattern(&pattern, &s)
     }

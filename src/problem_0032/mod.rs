@@ -26,7 +26,7 @@ fn longest_valid_parentheses(s: &str) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn longest_valid_parentheses(s: String) -> i32 {
         longest_valid_parentheses(&s)
     }

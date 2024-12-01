@@ -13,7 +13,7 @@ fn minimum_total(triangle: &[Vec<i32>]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn minimum_total(triangle: Vec<Vec<i32>>) -> i32 {
         minimum_total(&triangle)
     }

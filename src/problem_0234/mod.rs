@@ -2,7 +2,6 @@ use crate::shared::ListNode;
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn is_palindrome(head: Option<Box<ListNode>>) -> bool {
         is_palindrome(head)
     }
@@ -38,7 +37,7 @@ fn is_palindrome_r(
     true
 }
 
-#[allow(clippy::needless_pass_by_value)]
+#[expect(clippy::needless_pass_by_value)]
 fn is_palindrome(head: Option<Box<ListNode>>) -> bool {
     is_palindrome_r(0, &mut 0, &mut &head, head.as_deref())
 }

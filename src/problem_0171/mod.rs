@@ -11,7 +11,7 @@ fn title_to_number(column_title: &str) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn title_to_number(column_title: String) -> i32 {
         title_to_number(&column_title)
     }

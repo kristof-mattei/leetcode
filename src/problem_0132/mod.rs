@@ -23,7 +23,7 @@ fn min_cut(s: &[u8]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn min_cut(s: String) -> i32 {
         min_cut(s.as_bytes())
     }

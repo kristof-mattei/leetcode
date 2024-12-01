@@ -1,6 +1,5 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn number_to_words(num: i32) -> String {
         number_to_words(num)
     }

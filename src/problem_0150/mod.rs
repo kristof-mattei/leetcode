@@ -26,7 +26,7 @@ where
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn eval_rpn(tokens: Vec<String>) -> i32 {
         eval_rpn(&tokens)
     }

@@ -34,7 +34,7 @@ fn calc(
     Rc::new(RefCell::new(node))
 }
 
-#[allow(clippy::unnecessary_wraps)]
+#[expect(clippy::unnecessary_wraps)]
 fn build_tree(preorder: Vec<i32>, inorder: &[i32]) -> Option<Rc<RefCell<TreeNode>>> {
     let inorder_val_to_index = inorder
         .iter()
@@ -52,7 +52,7 @@ fn build_tree(preorder: Vec<i32>, inorder: &[i32]) -> Option<Rc<RefCell<TreeNode
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn build_tree(preorder: Vec<i32>, inorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
         build_tree(preorder, &inorder)
     }

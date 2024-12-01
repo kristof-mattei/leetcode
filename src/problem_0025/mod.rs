@@ -1,6 +1,6 @@
 use crate::shared::ListNode;
 
-#[allow(clippy::vec_box)]
+#[expect(clippy::vec_box)]
 fn reverse_list(
     mut list: Vec<Box<ListNode>>,
     next: Option<Box<ListNode>>,

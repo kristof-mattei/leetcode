@@ -33,7 +33,7 @@ fn is_interleave_r(cache: &mut [Vec<Option<bool>>], s1: &[u8], s2: &[u8], s3: &[
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn is_interleave(s1: String, s2: String, s3: String) -> bool {
         is_interleave(&s1, &s2, &s3)
     }

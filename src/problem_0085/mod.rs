@@ -54,7 +54,7 @@ fn maximal_rectangle(matrix: &[Vec<char>]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn maximal_rectangle(matrix: Vec<Vec<char>>) -> i32 {
         maximal_rectangle(&matrix)
     }

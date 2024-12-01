@@ -21,7 +21,6 @@ fn maximum_gap(mut nums: Vec<i32>) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn maximum_gap(nums: Vec<i32>) -> i32 {
         maximum_gap(nums)
     }

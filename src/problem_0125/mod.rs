@@ -41,7 +41,7 @@ fn is_palindrome(s: &str) -> bool {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn is_palindrome_s(s: String) -> bool {
         is_palindrome(&s)
     }

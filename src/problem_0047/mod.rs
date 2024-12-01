@@ -30,7 +30,6 @@ fn permute_unique(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn permute_unique(nums: Vec<i32>) -> Vec<Vec<i32>> {
         permute_unique(nums)
     }

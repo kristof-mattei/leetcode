@@ -30,7 +30,7 @@ fn simplify_path(path: &str) -> String {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn simplify_path(path: String) -> String {
         simplify_path(&path)
     }

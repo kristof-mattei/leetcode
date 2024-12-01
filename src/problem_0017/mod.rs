@@ -46,7 +46,7 @@ fn get_letters(number_char: char) -> Vec<char> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn letter_combinations(digits: String) -> Vec<String> {
         letter_combinations(&digits)
     }

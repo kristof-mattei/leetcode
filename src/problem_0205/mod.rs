@@ -31,7 +31,6 @@ fn is_isomorphic<T: AsRef<str>>(s: T, t: T) -> bool {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn is_isomorphic(s: String, t: String) -> bool {
         is_isomorphic(s, t)
     }

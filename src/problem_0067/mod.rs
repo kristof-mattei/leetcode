@@ -50,7 +50,7 @@ fn add_binary(a: &str, b: &str) -> String {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn add_binary(a: String, b: String) -> String {
         add_binary(&a, &b)
     }

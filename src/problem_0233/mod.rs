@@ -23,7 +23,6 @@ fn count_digit_one(n: i32) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn count_digit_one(n: i32) -> i32 {
         count_digit_one(n)
     }

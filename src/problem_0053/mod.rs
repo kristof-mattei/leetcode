@@ -41,7 +41,7 @@ fn max_sub_array(nums: &[i32]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn max_sub_array(nums: Vec<i32>) -> i32 {
         max_sub_array(&nums)
     }

@@ -30,7 +30,7 @@ fn convert(s: &str, num_rows: usize) -> String {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn convert(s: String, num_rows: i32) -> String {
         convert(&s, num_rows as usize)
     }

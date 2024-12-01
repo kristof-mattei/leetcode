@@ -49,7 +49,7 @@ fn word_break(s: &str, word_dict: &[&str]) -> bool {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn word_break(s: String, word_dict: Vec<String>) -> bool {
         let strs = word_dict.iter().map(String::as_str).collect::<Vec<_>>();
 

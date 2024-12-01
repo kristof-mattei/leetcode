@@ -1,6 +1,5 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn bulb_switch(n: i32) -> i32 {
         bulb_switch(n)
     }

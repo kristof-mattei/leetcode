@@ -46,7 +46,6 @@ fn fraction_to_decimal(numerator: i32, denominator: i32) -> String {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn fraction_to_decimal(numerator: i32, denominator: i32) -> String {
         fraction_to_decimal(numerator, denominator)
     }

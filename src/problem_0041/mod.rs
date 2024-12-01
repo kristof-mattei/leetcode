@@ -22,7 +22,6 @@ fn first_missing_positive(mut nums: Vec<i32>) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn first_missing_positive(nums: Vec<i32>) -> i32 {
         first_missing_positive(nums)
     }

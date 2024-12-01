@@ -2,7 +2,7 @@ use std::collections::VecDeque;
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn max_sliding_window(nums: Vec<i32>, k: i32) -> Vec<i32> {
         max_sliding_window(&nums, k)
     }

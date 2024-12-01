@@ -15,7 +15,7 @@ fn max_profit(prices: &[i32]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn max_profit(prices: Vec<i32>) -> i32 {
         max_profit(&prices)
     }

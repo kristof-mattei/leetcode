@@ -1,6 +1,5 @@
 impl Solution {
-    #[allow(clippy::needless_pass_by_value)]
-    #[allow(clippy::ptr_arg)]
+    #[expect(clippy::ptr_arg)]
     pub fn move_zeroes(nums: &mut Vec<i32>) {
         move_zeroes(nums);
     }

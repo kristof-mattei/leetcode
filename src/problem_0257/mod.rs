@@ -5,7 +5,6 @@ use crate::shared::TreeNode;
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn binary_tree_paths(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<String> {
         binary_tree_paths(root)
     }

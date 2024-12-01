@@ -7,7 +7,7 @@ fn max_profit(prices: &[i32]) -> i32 {
     // max profit if not sold on a give date
     let mut max_overal_profit_not_sold = 0;
 
-    #[allow(clippy::needless_range_loop)]
+    #[expect(clippy::needless_range_loop)]
     for i in 1..prices.len() {
         // Total profit if bought today;
         let current = max_overal_profit_not_sold - prices[i];
@@ -25,7 +25,7 @@ fn max_profit(prices: &[i32]) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn max_profit(prices: Vec<i32>) -> i32 {
         max_profit(&prices)
     }

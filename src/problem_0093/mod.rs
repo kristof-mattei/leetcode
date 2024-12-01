@@ -59,7 +59,7 @@ fn restore_ip_addresses(s: &str) -> Vec<String> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn restore_ip_addresses(s: String) -> Vec<String> {
         restore_ip_addresses(&s)
     }

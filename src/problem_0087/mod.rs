@@ -138,7 +138,7 @@ fn is_scramble(s1: &str, s2: &str) -> bool {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn is_scramble(s1: String, s2: String) -> bool {
         is_scramble(&s1, &s2)
     }

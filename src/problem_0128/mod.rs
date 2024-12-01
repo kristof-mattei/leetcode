@@ -23,7 +23,6 @@ fn longest_consecutive(nums: Vec<i32>) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
         longest_consecutive(nums)
     }

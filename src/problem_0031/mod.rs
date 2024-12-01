@@ -44,7 +44,7 @@ fn next_permutation(nums: &mut [i32]) {
 }
 
 impl Solution {
-    #[allow(clippy::ptr_arg)]
+    #[expect(clippy::ptr_arg)]
     pub fn next_permutation(nums: &mut Vec<i32>) {
         next_permutation(nums);
     }

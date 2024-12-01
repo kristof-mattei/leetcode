@@ -24,7 +24,7 @@ fn is_balanced(root: Option<&Rc<RefCell<TreeNode>>>) -> bool {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn is_balanced(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
         is_balanced(root.as_ref())
     }

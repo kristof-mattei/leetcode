@@ -1,6 +1,6 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn single_number(nums: Vec<i32>) -> Vec<i32> {
         single_number(&nums)
     }

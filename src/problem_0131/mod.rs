@@ -88,7 +88,7 @@ fn partition(s: &str) -> Vec<Vec<String>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn partition(s: String) -> Vec<Vec<String>> {
         partition(&s)
     }

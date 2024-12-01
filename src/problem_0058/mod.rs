@@ -11,7 +11,7 @@ fn length_of_last_word(s: &str) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn length_of_last_word(s: String) -> i32 {
         length_of_last_word(&s)
     }

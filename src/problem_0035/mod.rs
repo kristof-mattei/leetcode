@@ -28,7 +28,7 @@ fn search_insert(nums: &[i32], target: i32) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
         search_insert(&nums, target)
     }

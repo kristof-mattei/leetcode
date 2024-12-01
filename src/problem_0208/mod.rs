@@ -48,7 +48,7 @@ impl Trie {
         }
     }
 
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     fn insert(&mut self, word: String) {
         let mut last_matching_index = self.follow(&word);
 
@@ -67,13 +67,13 @@ impl Trie {
         self.states[last_matching_index].set_complete();
     }
 
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     fn search(&self, word: String) -> bool {
         let index = self.follow(&word);
         word.as_bytes().get(index + 1).is_none() && self.states[index].is_complete()
     }
 
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     fn starts_with(&self, prefix: String) -> bool {
         let index = self.follow(&prefix);
         prefix.as_bytes().get(index + 1).is_none()

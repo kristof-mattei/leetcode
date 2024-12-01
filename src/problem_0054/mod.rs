@@ -70,7 +70,7 @@ fn spiral_order(matrix: &[Vec<i32>]) -> Vec<i32> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn spiral_order(matrix: Vec<Vec<i32>>) -> Vec<i32> {
         spiral_order(&matrix)
     }

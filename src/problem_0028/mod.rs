@@ -6,7 +6,7 @@ fn str_str(haystack: &str, needle: &str) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn str_str(haystack: String, needle: String) -> i32 {
         str_str(&haystack, &needle)
     }

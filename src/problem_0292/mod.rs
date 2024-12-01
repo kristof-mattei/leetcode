@@ -1,6 +1,5 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn can_win_nim(n: i32) -> bool {
         can_win_nim(n)
     }

@@ -24,7 +24,7 @@ fn set_zeroes(matrix: &mut [Vec<i32>]) {
 }
 
 impl Solution {
-    #[allow(clippy::ptr_arg)]
+    #[expect(clippy::ptr_arg)]
     pub fn set_zeroes(matrix: &mut Vec<Vec<i32>>) {
         set_zeroes(matrix);
     }

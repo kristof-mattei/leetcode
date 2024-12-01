@@ -40,7 +40,6 @@ fn num_islands(grid: &mut Vec<Vec<char>>) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn num_islands(mut grid: Vec<Vec<char>>) -> i32 {
         num_islands(&mut grid)
     }

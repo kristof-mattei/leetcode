@@ -20,7 +20,6 @@ fn reverse_list(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         reverse_list(head)
     }

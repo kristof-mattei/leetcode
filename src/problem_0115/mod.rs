@@ -6,7 +6,7 @@ fn num_distinct_r(s: &[u8], t: &[u8]) -> i32 {
 
     dp[0] = 1;
 
-    #[allow(clippy::needless_range_loop)]
+    #[expect(clippy::needless_range_loop)]
     for i in 0..n {
         for j in ((i.saturating_sub(n + m) + 1)..=m.min(i + 1)).rev() {
             dp[j] = dp[j].wrapping_add(if s[i] == t[j - 1] { dp[j - 1] } else { 0 });
@@ -22,7 +22,7 @@ fn num_distinct(s: &str, t: &str) -> i32 {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn num_distinct(s: String, t: String) -> i32 {
         num_distinct(&s, &t)
     }

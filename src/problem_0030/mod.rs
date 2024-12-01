@@ -67,7 +67,7 @@ fn find_substring(s: &str, words: &[String]) -> Vec<i32> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn find_substring(s: String, words: Vec<String>) -> Vec<i32> {
         find_substring(&s, &words)
     }

@@ -2,7 +2,6 @@ use std::cmp::Reverse;
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn h_index(citations: Vec<i32>) -> i32 {
         h_index(citations)
     }

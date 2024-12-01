@@ -1,6 +1,6 @@
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn maximal_square(matrix: Vec<Vec<char>>) -> i32 {
         maximal_square(&matrix)
     }

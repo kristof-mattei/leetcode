@@ -4,7 +4,7 @@ pub(crate) fn nearly_equal(a: f64, b: f64, epsilon: f64) -> bool {
     let abs_b = (b).abs();
     let diff = (a - b).abs();
 
-    #[allow(clippy::float_cmp)]
+    #[expect(clippy::float_cmp)]
     if a == b {
         // shortcut, handles infinities
         true

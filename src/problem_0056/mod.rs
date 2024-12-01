@@ -82,13 +82,11 @@ fn merge(mut intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn merge(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         merge(intervals)
     }
 
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
     pub fn merge_alt(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         merge_alt(intervals)
     }

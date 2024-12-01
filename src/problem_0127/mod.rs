@@ -2,7 +2,7 @@ use std::collections::VecDeque;
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -> i32 {
         ladder_length(begin_word, &end_word, word_list)
     }

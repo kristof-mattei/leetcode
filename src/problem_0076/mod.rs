@@ -74,7 +74,7 @@ fn min_window(s: &str, t: &str) -> String {
 
 impl Solution {
     #[must_use]
-    #[allow(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value)]
     pub fn min_window(s: String, t: String) -> String {
         min_window(&s, &t)
     }
