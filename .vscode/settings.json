@@ -5,8 +5,8 @@
     "rust-analyzer.debug.engineSettings": {
         "lldb": {
             "internalConsoleOptions": "openOnSessionStart",
-            "terminal": "console",
-        },
+            "terminal": "console"
+        }
     },
     "rust-analyzer.debug.openDebugPane": true,
     "lldb.launch.expressions": "simple",
