@@ -8,7 +8,7 @@
     "release": "semantic-release"
   },
   "engines": {
-    "node": ">=22.11.0",
+    "node": ">=22.12.0",
     "npm": ">=10.9.1"
   },
   "repository": {
