@@ -410,7 +410,7 @@ jobs:
           args: --workspace --all-targets --all-features --no-deps
 
   docker-build:
-    name: Build Docker container for ${{ matrix.platform.docker }}-${{ matrix.platform.rust }}
+    name: Build Docker container
     runs-on: ubuntu-latest
     needs:
       - calculate-version
@@ -419,26 +419,12 @@ jobs:
     env:
       APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
       PATH_TO_TAR: PLACEHOLDER # same ^
-      PLATFORM_PAIR: PLACEHOLDER # same ^
-      PLATFORM_UNIQUE_TAG: PLACEHOLDER # same ^
-    strategy:
-      fail-fast: false
-      matrix:
-        platform:
-          - docker: linux/amd64
-            rust: x86_64-unknown-linux-musl
-          - docker: linux/arm64
-            rust: aarch64-unknown-linux-musl
+      UNIQUE_TAG: PLACEHOLDER # same ^
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           show-progress: false
-
-      - name: Prepare name
-        run: |
-          platform=${{ matrix.platform.docker }}-${{ matrix.platform.rust }}
-          echo "PLATFORM_PAIR=${platform//\//-}" >> ${GITHUB_ENV}
 
       - name: Set the Cargo.toml version before we copy in the data into the Docker container
         shell: bash
@@ -458,8 +444,8 @@ jobs:
       - name: Set Docker tag
         shell: bash
         run: |
-          PLATFORM_UNIQUE_TAG=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}-${{ env.PLATFORM_PAIR }}
-          echo "PLATFORM_UNIQUE_TAG=${PLATFORM_UNIQUE_TAG##*/}" >> ${GITHUB_ENV}
+          UNIQUE_TAG=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
+          echo "UNIQUE_TAG=${UNIQUE_TAG##*/}" >> ${GITHUB_ENV}
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
@@ -469,7 +455,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ env.PLATFORM_UNIQUE_TAG }}
+            type=raw,value=${{ env.UNIQUE_TAG }}
           labels: |
             org.opencontainers.image.version=pr-${{ github.event.number }}
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
@@ -492,22 +478,21 @@ jobs:
         with:
           build-args: |
             APPLICATION_NAME=${{ env.APPLICATION_NAME }}
-            TARGET=${{ matrix.platform.rust }}
           context: .
           # this container is THE PR's artifact, and we will re-tag it
           # once the PR has been accepted
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ env.PLATFORM_PAIR }}
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ env.PLATFORM_PAIR }},mode=max
-          platforms: ${{ matrix.platform.docker }}
-          outputs: type=docker,dest=/tmp/${{ env.PLATFORM_UNIQUE_TAG }}.tar
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ env.APPLICATION_NAME }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ env.APPLICATION_NAME }},mode=max
+          platforms: linux/amd64, linux/arm64
+          outputs: type=oci,dest=/tmp/${{ env.UNIQUE_TAG }}.tar
 
       - name: Upload artifact
         uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
         with:
-          name: containers-${{ env.PLATFORM_PAIR }}
-          path: /tmp/${{ env.PLATFORM_UNIQUE_TAG }}.tar
+          name: containers-${{ env.APPLICATION_NAME }}
+          path: /tmp/${{ env.UNIQUE_TAG }}.tar
           if-no-files-found: error
           retention-days: 1
 
@@ -515,15 +500,13 @@ jobs:
     name: Publish Docker container
     runs-on: ubuntu-latest
     needs:
-      - cargo-build
-      - cargo-fmt
-      - cargo-test-and-report
-      - cargo-clippy-and-report
       - docker-build
     # Check if the event is not triggered by a fork
     if: |
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event_name == 'pull_request'
+    env:
+      APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@6524bf65af31da8d45b59e8c27de4bd072b392f5 # v3.8.0
@@ -542,6 +525,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set application name
+        shell: bash
+        run: |
+          APPLICATION_NAME=${{ github.repository }}
+          echo "APPLICATION_NAME=${APPLICATION_NAME##*/}" >> ${GITHUB_ENV}
+
       - name: Lowercase the image name
         shell: bash
         run: |
@@ -549,15 +538,18 @@ jobs:
 
       - name: Load images from artifacts
         shell: bash
+        id: image
+        working-directory: /tmp/containers
         run: |
-          ls -l /tmp/containers/
+          echo "${{ secrets.GITHUB_TOKEN }}" | oras login -u "${{ github.actor }}" --password-stdin ${{ env.REGISTRY }}
+
+          ls -l /tmp/containers
           for container in /tmp/containers/*
           do
-            echo $container
-            docker load --input $container
+            echo "Found ${container}"
             tag=$(basename -- $container .tar)
-            echo ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:${tag}
-            docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${tag}
+
+            oras copy --from-oci-layout "${container}:${tag}" "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${tag}"
           done
 
       - name: Extract Docker metadata
@@ -574,18 +566,13 @@ jobs:
         working-directory: /tmp/containers
         run: |
           # all files in dir
-          platform_tags=(*)
-
+          containers=(*)
           # yeet extension
-          platform_tags=${platform_tags[@]%.tar}
-
+          containers=${containers[@]%.tar}
           new_tags="${{ join(steps.meta.outputs.tags, ' ') }}"
           new_tags=$(printf -- '--tag %s ' $new_tags)
-
-          expanded_platform_tags=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' $platform_tags)
-
-          docker buildx imagetools create $new_tags $expanded_platform_tags
-
+          expanded_containters_tags=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' ${containers})
+          docker buildx imagetools create $new_tags $expanded_containters_tags
           for new_tag in $(echo "${{ join(steps.meta.outputs.tags, ' ') }}"); do
             docker buildx imagetools inspect --raw $new_tag
           done
