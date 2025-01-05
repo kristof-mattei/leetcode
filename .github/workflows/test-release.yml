@@ -1,4 +1,4 @@
-name: Test Release (do a dry run)
+name: Test Release
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -15,8 +15,8 @@ permissions:
   pull-requests: read
 
 jobs:
-  release:
-    name: Release
+  test-release:
+    name: Test Release
     runs-on: ubuntu-latest
     steps:
       - name: Only on main
@@ -30,25 +30,67 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
+          fetch-depth: 0
           show-progress: false
 
-      - name: Setup Node.js
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
-        with:
-          node-version-file: ".nvmrc"
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-
-      - name: Install dependencies
-        shell: bash
-        run: |
-          npm ci --ignore-scripts
-
-      - name: Release
-        shell: bash
+      - name: Cache dependencies
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CACHE_NAME: cargo-cache-dependencies
+        with:
+          path: |
+            ~/.cargo
+            ./target
+          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-cocogitto
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
+            ${{ runner.os }}-build-${{ env.CACHE_NAME }}-
+
+      - name: Set up toolchain
+        shell: bash
         run: |
-          echo "::group::Release dry run output"
-          npm run release -- --dry-run
-          echo "::endgroup::"
+          rm ${HOME}/.cargo/bin/cargo-fmt
+          rm ${HOME}/.cargo/bin/rust-analyzer
+          rm ${HOME}/.cargo/bin/rustfmt
+
+          rustup update
+
+          cargo --version
+
+      - name: Get binstall
+        shell: bash
+        run: |
+          cd /tmp
+          archive="cargo-binstall-x86_64-unknown-linux-musl.tgz"
+          wget "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/${archive}"
+
+          tar -xvf "./${archive}"
+
+          rm "./${archive}"
+
+          mv ./cargo-binstall ~/.cargo/bin/
+
+      - name: Install cocogitto to get the next version number
+        shell: bash
+        run: |
+          cargo binstall --no-confirm cocogitto --target x86_64-unknown-linux-musl --pkg-url "{ repo }/releases/download/{ version }/{ name }-{ version }-{ target }.tar.gz" --bin-dir "{ bin }" --pkg-fmt tgz
+
+      - name: Bump
+        shell: bash
+        id: release
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+
+          cog bump --auto
+
+          VERSION="v$(cog -v get-version)"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+          cog changelog --at ${VERSION} > GITHUB_CHANGELOG.md
+
+          echo "New version: ${VERSION}"
+
+          echo "Changelog: "
+
+          cat GITHUB_CHANGELOG.md
