@@ -533,7 +533,7 @@ jobs:
           outputs: type=oci,dest=/tmp/${{ env.UNIQUE_TAG }}.tar
 
       - name: Upload artifact
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         with:
           name: containers-${{ env.APPLICATION_NAME }}
           path: /tmp/${{ env.UNIQUE_TAG }}.tar
@@ -579,6 +579,9 @@ jobs:
         shell: bash
         run: |
           echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+
+      - name: Ensure we have oras
+        uses: oras-project/setup-oras@9c92598691bfef1424de2f8fae81941568f5889c # v1.2.1
 
       - name: Load images from artifacts
         shell: bash
