@@ -581,7 +581,7 @@ jobs:
           echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
 
       - name: Ensure we have oras
-        uses: oras-project/setup-oras@v1
+        uses: oras-project/setup-oras@9c92598691bfef1424de2f8fae81941568f5889c # v1
 
       - name: Load images from artifacts
         shell: bash
