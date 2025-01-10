@@ -13,7 +13,7 @@ fn insertion_sort_list(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>>
             .unwrap()
             .next
             .as_ref()
-            .map_or(false, |n| n.val < c.val)
+            .is_some_and(|n| n.val < c.val)
         {
             previous = &mut previous.as_mut().unwrap().next;
         }

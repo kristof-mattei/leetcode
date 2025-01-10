@@ -10,7 +10,7 @@ fn eaten_apples(apples: &[i32], days: &[i32]) -> i32 {
         // pop the rotten ones
         while fresh_days_and_apples
             .peek()
-            .map_or(false, |p| p.0 .0 <= current_day)
+            .is_some_and(|p| p.0 .0 <= current_day)
         {
             fresh_days_and_apples.pop();
         }

@@ -39,9 +39,10 @@ fn recover_tree(root: &mut Option<Rc<RefCell<TreeNode>>>) {
         }
 
         // test if we have mismatch
-        if previous_node.as_ref().map_or(false, |p| {
-            current_node.as_ref().unwrap().borrow().val < p.borrow().val
-        }) {
+        if previous_node
+            .as_ref()
+            .is_some_and(|p| current_node.as_ref().unwrap().borrow().val < p.borrow().val)
+        {
             // if it's the first mismatch, store in first_node
             if first_node.is_none() {
                 first_node = previous_node;

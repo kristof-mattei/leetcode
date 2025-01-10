@@ -7,10 +7,7 @@ fn when_letter_add(
 ) {
     let len = in_roman.len();
 
-    while letters
-        .get(*index..(*index + len))
-        .map_or(false, |s| s == in_roman)
-    {
+    while letters.get(*index..(*index + len)) == Some(in_roman) {
         *index += len;
         *num += in_decimal;
     }
