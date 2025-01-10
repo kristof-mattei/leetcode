@@ -14,8 +14,15 @@ repository = "https://github.com/kristof-mattei/rust-seed"
 [lints.clippy]
 # don't stop from compiling / running
 all = "warn"
-pedantic = "warn"
 cargo = "warn"
+complexity = "warn"
+correctness = "warn"
+pedantic = "warn"
+perf = "warn"
+# restriction = "warn"
+style = "warn"
+suspicious = "warn"
+
 # this one causes confusion when combining variables (`foo`) and
 # dereferenced variables (`foo.bar`). The latter cannot be inlined
 # so we don't inline anything
