@@ -465,7 +465,7 @@ jobs:
 
           mv ./cargo-binstall ~/.cargo/bin/
 
-      - name: Install binstall to do set-version
+      - name: Install cargo-edit to do set-version
         shell: bash
         run: |
           cargo binstall cargo-edit
