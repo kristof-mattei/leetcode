@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/kristof-mattei/leetcode#readme",
   "devDependencies": {
-    "@actions/tool-cache": "2.0.1",
+    "@actions/tool-cache": "2.0.2",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/commit-analyzer": "13.0.1",
     "@semantic-release/github": "11.0.1",
