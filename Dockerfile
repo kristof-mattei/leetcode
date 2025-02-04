@@ -10,7 +10,7 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean \
 RUN --mount=type=cache,id=apt-cache-amd64,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,id=apt-lib-amd64,target=/var/lib/apt,sharing=locked \
     apt-get update && \
-    apt-get --no-install-recommends install -y \
+    apt-get --no-install-recommends install --yes \
     build-essential \
     musl-dev \
     musl-tools
@@ -24,7 +24,7 @@ RUN --mount=type=cache,id=apt-cache-arm64,from=rust-base,source=/var/cache/apt,t
     --mount=type=cache,id=apt-lib-arm64,from=rust-base,source=/var/lib/apt,target=/var/lib/apt,sharing=locked \
     dpkg --add-architecture arm64 && \
     apt-get update && \
-    apt-get --no-install-recommends install -y \
+    apt-get --no-install-recommends install --yes \
     libc6-dev-arm64-cross \
     gcc-aarch64-linux-gnu
 
@@ -63,16 +63,27 @@ RUN --mount=type=cache,target=/build/${APPLICATION_NAME}/target \
     --mount=type=cache,id=cargo-registery,target=/usr/local/cargo/registry/,sharing=locked \
     cargo install --path . --target ${TARGET} --root /output
 
-FROM alpine:3.21.2@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099
+FROM alpine:3.21.2@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099 AS passwd-build
+
+RUN addgroup --gid 900 appgroup && \
+    # setting `--system` prevents prompting for a password
+    adduser --ingroup appgroup --uid 900 --system --shell /bin/false appuser
+
+RUN cat /etc/group | grep appuser > /tmp/group_appuser
+RUN cat /etc/passwd | grep appuser > /tmp/passwd_appuser
+
+FROM scratch
 
 ARG APPLICATION_NAME
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+COPY --from=passwd-build /tmp/group_appuser /etc/group
+COPY --from=passwd-build /tmp/passwd_appuser /etc/passwd
+
 USER appuser
 
 WORKDIR /app
 
-COPY --from=rust-build /output/bin/* /app/entrypoint
+COPY --from=rust-build /output/bin/${APPLICATION_NAME} /app/entrypoint
 
 ENV RUST_BACKTRACE=full
 ENTRYPOINT ["/app/entrypoint"]
