@@ -23,13 +23,7 @@
   "homepage": "https://github.com/kristof-mattei/leetcode#readme",
   "devDependencies": {
     "@actions/tool-cache": "2.0.2",
-    "@semantic-release/changelog": "6.0.3",
-    "@semantic-release/commit-analyzer": "13.0.1",
-    "@semantic-release/github": "11.0.1",
-    "@semantic-release/release-notes-generator": "14.0.3",
-    "conventional-changelog-conventionalcommits": "8.0.0",
-    "prettier": "3.4.2",
-    "semantic-release": "24.2.2"
+    "prettier": "3.5.0"
   },
   "publishConfig": {
     "access": "restricted"

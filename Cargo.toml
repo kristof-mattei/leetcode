@@ -31,8 +31,14 @@ debug = true
 [lints.clippy]
 # don't stop from compiling / running
 all = "warn"
-pedantic = "warn"
 cargo = "warn"
+complexity = "warn"
+correctness = "warn"
+pedantic = "warn"
+perf = "warn"
+# restriction = "warn"
+style = "warn"
+suspicious = "warn"
 
 # this one is WAY too buggy
 assigning_clones = { level = "allow", priority = 127 }
@@ -58,18 +64,8 @@ uninlined-format-args = { level = "allow", priority = 127 }
 let_underscore_drop = { level = "deny", priority = 127 }
 non_ascii_idents = { level = "deny", priority = 127 }
 
-[profile.dev.package.backtrace]
-opt-level = 3
-
-[features]
-coverage = []
-
-# We compile the Docker container with musl to get a static library. Smaller, faster.
-# BUT that means that we need to include openssl
-# Documentation on the syntax:
-# https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies
-[target.'cfg(all(target_arch = "x86_64", target_os="linux", target_env="musl"))'.dependencies]
-
 [dependencies]
-backtrace = "0.3.74"
+
+# OpenSSL for musl
+# [target.'cfg(all(any(target_arch="x86_64", target_arch="aarch64"), target_os="linux", target_env="musl"))'.dependencies]
 # openssl = { version = "0.10.36", features = ["vendored"] }
