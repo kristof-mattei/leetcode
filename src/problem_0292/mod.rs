@@ -6,7 +6,7 @@ impl Solution {
 }
 
 fn can_win_nim(n: i32) -> bool {
-    n % 4 == 0
+    n % 4 != 0
 }
 
 pub struct Solution;
@@ -17,6 +17,6 @@ mod tests {
 
     #[test]
     fn test_1() {
-        assert!(can_win_nim(4));
+        assert!(can_win_nim(3));
     }
 }

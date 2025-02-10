@@ -68,7 +68,8 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use crate::{problem_0328::odd_even_list, shared::to_ll};
+    use crate::problem_0328::odd_even_list;
+    use crate::shared::to_ll;
 
     #[test]
     fn test_1() {
