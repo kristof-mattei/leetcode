@@ -8,12 +8,12 @@ fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
 }
 
 fn is_valid_bst_r(root: Option<Rc<RefCell<TreeNode>>>, min: Option<i32>, max: Option<i32>) -> bool {
-    root.map_or(true, |r| {
+    root.is_none_or(|r| {
         let borrowed = r.borrow();
         let middle = borrowed.val;
 
-        max.map_or(true, |m| middle < m)
-            && min.map_or(true, |m| middle > m)
+        max.is_none_or(|m| middle < m)
+            && min.is_none_or(|m| middle > m)
             && is_valid_bst_r(borrowed.left.clone(), min, Some(middle))
             && is_valid_bst_r(borrowed.right.clone(), Some(middle), max)
     })

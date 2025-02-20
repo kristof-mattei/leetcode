@@ -51,7 +51,7 @@ fn two_sum(nums: &[i32], target: i32) -> Vec<Vec<i32>> {
     let mut hash_set = HashSet::new();
 
     for num in nums {
-        if result.last().map_or(true, |v: &Vec<i32>| &v[0] != num)
+        if result.last().is_none_or(|v: &Vec<i32>| &v[0] != num)
             && hash_set.contains(&(target - num))
         {
             result.push(vec![*num, target - num]);

@@ -1,5 +1,5 @@
 fn range_bitwise_and(left: i32, right: i32) -> i32 {
-    left & right & i32::MAX << (32 - (left - right).abs().leading_zeros())
+    left & right & (i32::MAX << (32 - (left - right).abs().leading_zeros()))
 }
 
 impl Solution {
