@@ -613,7 +613,7 @@ jobs:
       - name: Push image to register
         shell: bash
         run: |
-          docker ${{ steps.artifact.outputs.download-path }}/${{ env.UNIQUE_TAG }}
+          docker push ${{ steps.artifact.outputs.download-path }}/${{ env.UNIQUE_TAG }}
 
       - name: Set new tags on pushed register
         shell: bash
