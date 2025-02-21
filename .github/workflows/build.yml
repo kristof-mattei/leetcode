@@ -613,7 +613,9 @@ jobs:
       - name: Push image to register
         shell: bash
         run: |
-          docker push ${{ steps.artifact.outputs.download-path }}/${{ env.UNIQUE_TAG }}
+          base_tag=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' ${{ env.UNIQUE_TAG }})
+
+          docker push ${base_tag}
 
       - name: Set new tags on pushed register
         shell: bash
@@ -622,9 +624,9 @@ jobs:
           new_tags="${{ join(steps.meta.outputs.tags, ' ') }}"
           new_tags=$(printf -- '--tag %s ' $new_tags)
 
-          expanded_containter_tags=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' ${{ env.UNIQUE_TAG }})
+          base_tag=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' ${{ env.UNIQUE_TAG }})
 
-          docker buildx imagetools create $new_tags $expanded_containter_tags
+          docker buildx imagetools create $new_tags $base_tag
 
           for new_tag in $(echo "${{ join(steps.meta.outputs.tags, ' ') }}"); do
             docker buildx imagetools inspect --raw $new_tag
