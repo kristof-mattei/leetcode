@@ -35,7 +35,7 @@ fn reverse_k_group(mut head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNo
                     }
 
                     previous
-                }
+                };
             },
         }
     }
