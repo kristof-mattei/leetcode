@@ -1,5 +1,5 @@
-use std::collections::hash_map::Entry;
 use std::collections::HashMap;
+use std::collections::hash_map::Entry;
 
 impl Solution {
     #[must_use]
@@ -30,7 +30,7 @@ fn word_pattern(pattern: &str, s: &str) -> bool {
                 }
             },
             (Entry::Occupied(_), Entry::Vacant(_)) | (Entry::Vacant(_), Entry::Occupied(_)) => {
-                return false
+                return false;
             },
             (Entry::Vacant(v1), Entry::Vacant(v2)) => {
                 v1.insert(s);

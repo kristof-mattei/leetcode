@@ -12,11 +12,7 @@ fn add_digits(num: i32) -> i32 {
 
     let result = num % 9;
 
-    if result == 0 {
-        9
-    } else {
-        result
-    }
+    if result == 0 { 9 } else { result }
 }
 
 pub struct Solution;

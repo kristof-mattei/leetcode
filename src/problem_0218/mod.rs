@@ -1,5 +1,5 @@
-use std::collections::binary_heap::PeekMut;
 use std::collections::BinaryHeap;
+use std::collections::binary_heap::PeekMut;
 
 #[derive(PartialEq, Eq)]
 struct XY {
