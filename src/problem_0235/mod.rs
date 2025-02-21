@@ -47,7 +47,7 @@ mod tests {
     use std::rc::Rc;
 
     use crate::problem_0235::lowest_common_ancestor;
-    use crate::shared::{to_bt, TreeNode};
+    use crate::shared::{TreeNode, to_bt};
 
     #[test]
     fn test_1() {

@@ -10,7 +10,7 @@ fn eaten_apples(apples: &[i32], days: &[i32]) -> i32 {
         // pop the rotten ones
         while fresh_days_and_apples
             .peek()
-            .is_some_and(|p| p.0 .0 <= current_day)
+            .is_some_and(|p| p.0.0 <= current_day)
         {
             fresh_days_and_apples.pop();
         }
@@ -29,7 +29,7 @@ fn eaten_apples(apples: &[i32], days: &[i32]) -> i32 {
 
             // if that basket still has left, put it back (minus the one we ate)
             if a.1 > 1 {
-                fresh_days_and_apples.push((Reverse(a.0 .0), (a.1 - 1)));
+                fresh_days_and_apples.push((Reverse(a.0.0), (a.1 - 1)));
             }
         }
     }
@@ -40,16 +40,16 @@ fn eaten_apples(apples: &[i32], days: &[i32]) -> i32 {
     // code because we don't need to add apples anymore
     while let Some(a) = fresh_days_and_apples.pop() {
         // only eat if they haven't expired
-        if a.0 .0 > day {
+        if a.0.0 > day {
             // calculate the apples we can eat, e.g.:
             // we're at day 10, the current apples are fresh for 12 days (i.e. 2 more days), and we have 3 apples in that basket.
             // we can only eat 2 of them, the last one will rot before we can eat it
-            let can_eat_coming_days = a.1.min(a.0 .0 - day);
+            let can_eat_coming_days = a.1.min(a.0.0 - day);
 
             eaten += can_eat_coming_days;
 
             // move to the next day that we don't have apples... yet (?) I guess we'll see next loop!
-            day = a.0 .0.min(day + can_eat_coming_days);
+            day = a.0.0.min(day + can_eat_coming_days);
         }
     }
 
