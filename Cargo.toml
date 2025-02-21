@@ -32,13 +32,6 @@ debug = true
 # don't stop from compiling / running
 all = "warn"
 cargo = "warn"
-complexity = "warn"
-correctness = "warn"
-pedantic = "warn"
-perf = "warn"
-# restriction = "warn"
-style = "warn"
-suspicious = "warn"
 
 # this one is WAY too buggy
 assigning_clones = { level = "allow", priority = 127 }
