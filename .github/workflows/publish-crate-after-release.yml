@@ -66,6 +66,8 @@ jobs:
           rm ${HOME}/.cargo/bin/rustfmt
 
           rustup update
+          rustup show active-toolchain || rustup toolchain install
+          rustup show
 
           cargo --version
 
