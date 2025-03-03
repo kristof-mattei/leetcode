@@ -23,7 +23,7 @@
   "homepage": "https://github.com/kristof-mattei/leetcode#readme",
   "devDependencies": {
     "@actions/tool-cache": "2.0.2",
-    "prettier": "3.5.2",
+    "prettier": "3.5.3",
     "prettier-plugin-sh": "0.15.0"
   },
   "publishConfig": {
