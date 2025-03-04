@@ -242,6 +242,11 @@ jobs:
 
           cargo --version
 
+      - name: Install rustfmt
+        shell: bash
+        run: |
+          rustup component add rustfmt
+
       - name: Check formatting
         shell: bash
         run: |
