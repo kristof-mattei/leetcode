@@ -46,7 +46,6 @@ jobs:
           rustup show active-toolchain || rustup toolchain install
           rustup show
 
-
           cargo --version
 
       - name: Get binstall
