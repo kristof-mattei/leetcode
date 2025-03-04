@@ -43,6 +43,7 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
           rustup show active-toolchain || rustup toolchain install
           rustup show

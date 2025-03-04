@@ -107,6 +107,7 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
           rustup show active-toolchain || rustup toolchain install
           rustup show
@@ -188,6 +189,7 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
           rustup show active-toolchain || rustup toolchain install
           rustup show
@@ -236,6 +238,7 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
           rustup show active-toolchain || rustup toolchain install
           rustup show
@@ -246,6 +249,9 @@ jobs:
         shell: bash
         run: |
           rustup component add rustfmt
+
+          # restore symlinks
+          rustup update
 
       - name: Check formatting
         shell: bash
@@ -284,6 +290,7 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
           rustup show active-toolchain || rustup toolchain install
           rustup show
@@ -294,6 +301,9 @@ jobs:
         shell: bash
         run: |
           rustup component add llvm-tools-preview
+
+          # restore symlinks
+          rustup update
 
       - name: Get binstall
         shell: bash
@@ -413,6 +423,7 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
           rustup show active-toolchain || rustup toolchain install
           rustup show
@@ -464,6 +475,7 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
           rustup show active-toolchain || rustup toolchain install
           rustup show
