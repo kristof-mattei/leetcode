@@ -17,7 +17,6 @@ permissions:
   packages: write
 
 env:
-  CARGO_TERM_COLOR: always
   # set this to true in GitHub variables to enable building the container
   # HAS_CONTAINER: true
   # Use docker.io for Docker Hub if empty
@@ -108,14 +107,17 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
+          rustup show active-toolchain || rustup toolchain install
+          rustup show
 
           cargo --version
 
       - name: Get binstall
         shell: bash
+        working-directory: /tmp
         run: |
-          cd /tmp
           archive="cargo-binstall-x86_64-unknown-linux-musl.tgz"
           wget "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/${archive}"
 
@@ -187,7 +189,10 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
+          rustup show active-toolchain || rustup toolchain install
+          rustup show
 
           cargo --version
 
@@ -233,9 +238,20 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
+          rustup show active-toolchain || rustup toolchain install
+          rustup show
 
           cargo --version
+
+      - name: Install rustfmt
+        shell: bash
+        run: |
+          rustup component add rustfmt
+
+          # restore symlinks
+          rustup update
 
       - name: Check formatting
         shell: bash
@@ -274,7 +290,10 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
+          rustup show active-toolchain || rustup toolchain install
+          rustup show
 
           cargo --version
 
@@ -283,8 +302,12 @@ jobs:
         run: |
           rustup component add llvm-tools-preview
 
+          # restore symlinks
+          rustup update
+
       - name: Get binstall
         shell: bash
+        working-directory: /tmp
         run: |
           archive="cargo-binstall-x86_64-unknown-linux-musl.tgz"
           wget "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/${archive}"
@@ -400,7 +423,10 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
+          rustup show active-toolchain || rustup toolchain install
+          rustup show
 
           cargo --version
 
@@ -449,12 +475,16 @@ jobs:
           rm ${HOME}/.cargo/bin/rust-analyzer
           rm ${HOME}/.cargo/bin/rustfmt
 
+          rustup self update
           rustup update
+          rustup show active-toolchain || rustup toolchain install
+          rustup show
 
           cargo --version
 
       - name: Get binstall
         shell: bash
+        working-directory: /tmp
         run: |
           archive="cargo-binstall-x86_64-unknown-linux-musl.tgz"
           wget "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/${archive}"
@@ -535,7 +565,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         with:
-          name: containers-${{ env.APPLICATION_NAME }}
+          name: container-${{ env.APPLICATION_NAME }}
           path: /tmp/${{ env.UNIQUE_TAG }}.tar
           if-no-files-found: error
           retention-days: 1
@@ -545,22 +575,23 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - docker-build
+    env:
+      APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
+      UNIQUE_TAG: PLACEHOLDER # same ^
     # Check if the event is not triggered by a fork
     if: |
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event_name == 'pull_request'
-    env:
-      APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
     steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3.10.0
-
-      - name: Download artifact
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+      - name: Set up Docker
+        uses: docker/setup-docker-action@c2d73c1a11a9b44be6d855121d75c3e0dac814c1 # v4.2.0
         with:
-          path: /tmp/containers
-          pattern: containers-*
-          merge-multiple: true
+          daemon-config: |
+            {
+              "features": {
+                "containerd-snapshotter": true
+              }
+            }
 
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
@@ -569,35 +600,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Lowercase the image name
+        shell: bash
+        run: |
+          echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+
       - name: Set application name
         shell: bash
         run: |
           APPLICATION_NAME=${{ github.repository }}
           echo "APPLICATION_NAME=${APPLICATION_NAME##*/}" >> ${GITHUB_ENV}
 
-      - name: Lowercase the image name
+      - name: Set Docker tag (which is also the filename.tar)
         shell: bash
         run: |
-          echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
-
-      - name: Ensure we have oras
-        uses: oras-project/setup-oras@5c0b487ce3fe0ce3ab0d034e63669e426e294e4d # v1.2.2
-
-      - name: Load images from artifacts
-        shell: bash
-        id: image
-        working-directory: /tmp/containers
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | oras login -u "${{ github.actor }}" --password-stdin ${{ env.REGISTRY }}
-
-          ls -l /tmp/containers
-          for container in /tmp/containers/*
-          do
-            echo "Found ${container}"
-            tag=$(basename -- $container .tar)
-
-            oras copy --from-oci-layout "${container}:${tag}" "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${tag}"
-          done
+          UNIQUE_TAG=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
+          echo "UNIQUE_TAG=${UNIQUE_TAG##*/}" >> ${GITHUB_ENV}
 
       - name: Extract Docker metadata
         uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
@@ -606,22 +624,42 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=pr,suffix=-latest
-            type=raw,value=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
+            type=raw,value=${{ env.UNIQUE_TAG }}
 
-      - name: Merge images
+      - name: Download artifact
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        id: artifact
+        with:
+          path: /tmp/container/
+          name: container-${{ env.APPLICATION_NAME }}
+
+      - name: Load images from artifacts
         shell: bash
-        working-directory: /tmp/containers
         run: |
-          # all files in dir
-          containers=(*)
-          # yeet extension
-          containers=${containers[@]%.tar}
+          docker load --input ${{ steps.artifact.outputs.download-path }}/${{ env.UNIQUE_TAG }}.tar
+
+      - name: Push image to register
+        shell: bash
+        run: |
+          base_tag=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' ${{ env.UNIQUE_TAG }})
+
+          docker push ${base_tag}
+
+      - name: Set new tags on pushed image
+        shell: bash
+        working-directory: /tmp/container/
+        run: |
           new_tags="${{ join(steps.meta.outputs.tags, ' ') }}"
           new_tags=$(printf -- '--tag %s ' $new_tags)
-          expanded_containters_tags=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' ${containers})
-          docker buildx imagetools create $new_tags $expanded_containters_tags
+
+          base_tag=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' ${{ env.UNIQUE_TAG }})
+
+          docker buildx imagetools create $new_tags $base_tag
+
           for new_tag in $(echo "${{ join(steps.meta.outputs.tags, ' ') }}"); do
+            echo "${new_tag}:"
             docker buildx imagetools inspect --raw $new_tag
+            echo "" # newline
           done
 
   all-done:
