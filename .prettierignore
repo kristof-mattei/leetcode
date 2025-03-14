@@ -1,5 +1,6 @@
 .git
 .github/actions/
+CHANGELOG.md
 profiling
 reports
 src   # rust-fmt
