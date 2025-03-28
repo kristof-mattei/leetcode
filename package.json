@@ -24,7 +24,7 @@
   "devDependencies": {
     "@actions/tool-cache": "2.0.2",
     "prettier": "3.5.3",
-    "prettier-plugin-sh": "0.15.0"
+    "prettier-plugin-sh": "0.16.0"
   },
   "publishConfig": {
     "access": "restricted"
