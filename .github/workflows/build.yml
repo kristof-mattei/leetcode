@@ -23,7 +23,6 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-  # just a name, but storing it separately as we're nice people
   RUSTFLAGS: --deny=warnings
 
 concurrency:
