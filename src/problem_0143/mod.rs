@@ -5,7 +5,7 @@ use crate::shared::ListNode;
 fn reorder_list(mut head: &mut Option<Box<ListNode>>) {
     let length = iter::successors(head.as_ref(), |node| node.next.as_ref()).count();
 
-    let half = (length + 1) / 2;
+    let half = length.div_ceil(2);
 
     let mut node = &mut *head;
 

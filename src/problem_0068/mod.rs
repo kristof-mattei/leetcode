@@ -18,9 +18,7 @@ fn full_justify_one_line(words: &[String], max_width: usize) -> String {
 
         // don't add spaces for the last word
         if i != gaps_to_fill {
-            std::iter::repeat(' ')
-                .take(spaces_per_word)
-                .for_each(|c| s.push(c));
+            std::iter::repeat_n(' ', spaces_per_word).for_each(|c| s.push(c));
 
             if excess_space > 0 {
                 excess_space -= 1;
@@ -35,9 +33,7 @@ fn full_justify_one_line(words: &[String], max_width: usize) -> String {
 fn left_justify(words: &[String], max_width: usize) -> String {
     let mut s = words.join(" ");
 
-    std::iter::repeat(' ')
-        .take(max_width - s.len())
-        .for_each(|c| s.push(c));
+    std::iter::repeat_n(' ', max_width - s.len()).for_each(|c| s.push(c));
 
     s
 }

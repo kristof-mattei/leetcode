@@ -28,7 +28,7 @@ fn rotate(matrix: &mut [Vec<i32>]) {
     let n = matrix.len();
 
     for x in 0..n / 2 {
-        for y in 0..(n + 1) / 2 {
+        for y in 0..n.div_ceil(2) {
             swap_ord(matrix, (x, y), (n - y - 1, x));
 
             swap(matrix, (n - y - 1, x), (n - x - 1, n - y - 1));
