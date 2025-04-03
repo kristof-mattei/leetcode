@@ -2,7 +2,7 @@ fn eval_rpn<T>(tokens: &[T]) -> i32
 where
     T: AsRef<str>,
 {
-    let mut stack = Vec::with_capacity((tokens.len() + 1) / 2);
+    let mut stack = Vec::with_capacity(tokens.len().div_ceil(2));
 
     for token in tokens {
         if let Ok(digit) = token.as_ref().parse::<i32>() {
