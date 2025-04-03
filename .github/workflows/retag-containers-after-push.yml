@@ -78,39 +78,52 @@ jobs:
             echo "The incoming push isn't a merge, ergo it's not a PR"
           fi
 
-      - name: Setup Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
-        with:
-          node-version-file: ".nvmrc"
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-
-      - name: Install dependencies
+      - name: Download crane tar, extract, and add folder to path.
         shell: bash
         run: |
-          npm ci --ignore-scripts
+          # name of the file in releases we're looking for
+          file_name=go-containerregistry_Linux_x86_64.tar.gz
 
-      - name: Download crane tar, extract, and add folder to path.
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
-        with:
-          script: |
-            const tc = require("@actions/tool-cache");
+          # temp location
+          temp_path=$(mktemp --directory --tmpdir=${RUNNER_TEMP})
 
-            const release = await github.rest.repos.getLatestRelease({
-                owner: "google",
-                repo: "go-containerregistry"
-            });
+          # where to download the releases to
+          json_path=${temp_path}/releases.json
 
-            const asset = release.data.assets.find(asset => {
-                return asset["content_type"] === "application/gzip" && asset.name === "go-containerregistry_Linux_x86_64.tar.gz";
-            });
+          # where to download the archive to
+          archive_path=${temp_path}/${file_name}
 
-            const urlToCraneTar = asset.browser_download_url
+          # fetch releases
+          curl \
+            --silent \
+            --location \
+            --output ${json_path}\
+            https://api.github.com/repos/google/go-containerregistry/releases/latest
 
-            const craneTarPath = await tc.downloadTool(urlToCraneTar);
-            const craneExtractedFolder = await tc.extractTar(craneTarPath, null, ["--extract", "--gzip"]);
+          url_to_krane=$(cat ${json_path} |\
+            jq \
+              --raw-output \
+              ".assets.[] | select(.browser_download_url | contains(\"${file_name}\")) | .browser_download_url"
+          )
 
-            core.addPath(craneExtractedFolder);
+          # Download archive
+          curl \
+            --silent \
+            --location \
+            --output ${archive_path} \
+            $url_to_krane
+
+          cd ${temp_path}
+
+          # extract archive
+          tar \
+            --verbose \
+            --extract \
+            --gunzip \
+            --file ./${file_name}
+
+          # append to path
+          echo "${temp_path}" >> ${GITHUB_PATH}
 
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
