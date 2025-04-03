@@ -23,6 +23,9 @@ perf = "warn"
 style = "warn"
 suspicious = "warn"
 
+# this one is debatable. continue is used in places to be explicit, and to guard against
+# issues when refactoring
+needless_continue = { level = "allow", priority = 127 }
 # this one causes confusion when combining variables (`foo`) and
 # dereferenced variables (`foo.bar`). The latter cannot be inlined
 # so we don't inline anything
