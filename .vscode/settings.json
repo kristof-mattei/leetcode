@@ -1,16 +1,11 @@
 {
     "debug.internalConsoleOptions": "openOnSessionStart",
+    "lldb.launch.terminal": "console",
+    "lldb.launch.expressions": "simple",
+    "lldb.launch.preRunCommands": [
+        "command script import ${workspaceFolder}/.vscode/rust_prettifier_for_lldb.py"
+    ],
     "prettier.configPath": "./.prettierrc.cjs",
-    "rust-analyzer.debug.engineSettings": {
-        "lldb": {
-            "internalConsoleOptions": "openOnSessionStart",
-            "terminal": "console",
-            "expressions": "simple",
-            "preRunCommands": [
-                "command script import ${workspaceFolder}/.vscode/rust_prettifier_for_lldb.py"
-            ]
-        }
-    },
     "rust-analyzer.runnables.extraEnv": {
         "RUST_LOG": "DEBUG,rust_seed=TRACE"
     }
