@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 struct NumArray {
     nums: Vec<i32>,
     prefix_sums: Vec<i32>,
