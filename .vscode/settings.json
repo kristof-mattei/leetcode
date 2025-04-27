@@ -1,6 +1,6 @@
 {
-    "debug.internalConsoleOptions": "openOnSessionStart",
-    "lldb.launch.terminal": "console",
+    "debug.internalConsoleOptions": "neverOpen",
+    "lldb.launch.terminal": "integrated",
     "lldb.launch.expressions": "simple",
     "lldb.launch.preRunCommands": [
         "command script import ${workspaceFolder}/.vscode/rust_prettifier_for_lldb.py"
