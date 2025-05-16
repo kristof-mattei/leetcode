@@ -23,7 +23,7 @@ perf = "warn"
 style = "warn"
 suspicious = "warn"
 
-# this has 0 performance issues, the binding is compiled away, and it could cause issues
+# this has 0 performance implications, the binding is compiled away, and it could cause issues
 # when done blindly, plus it makes it harder to debug as you cannot put breakpoints on return
 # values of functions (yet)
 let_and_return = { level = "allow", priority = 127 }
