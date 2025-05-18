@@ -481,23 +481,10 @@ jobs:
 
           cargo --version
 
-      - name: Get binstall
-        shell: bash
-        working-directory: /tmp
-        run: |
-          archive="cargo-binstall-x86_64-unknown-linux-musl.tgz"
-          wget "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/${archive}"
-
-          tar -xvf "./${archive}"
-
-          rm "./${archive}"
-
-          mv ./cargo-binstall ~/.cargo/bin/
-
       - name: Install cargo-edit to do set-version
         shell: bash
         run: |
-          cargo binstall cargo-edit
+          cargo install cargo-edit
 
       - name: Set the Cargo.toml version before we copy in the data into the Docker container
         shell: bash
