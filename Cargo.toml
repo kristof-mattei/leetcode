@@ -43,5 +43,5 @@ non_ascii_idents = { level = "deny", priority = 127 }
 color-eyre = "0.6.4"
 
 # OpenSSL for musl
-# [target.'cfg(all(any(target_arch="x86_64", target_arch="aarch64"), target_os="linux", target_env="musl"))'.dependencies]
-# openssl = { version = "0.10.36", features = ["vendored"] }
+[target.'cfg(all(any(target_arch="x86_64", target_arch="aarch64"), target_os="linux", target_env="musl"))'.dependencies]
+openssl = { version = "0.10.72", features = ["vendored"] }
