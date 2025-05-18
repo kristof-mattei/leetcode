@@ -296,10 +296,10 @@ jobs:
 
           cargo --version
 
-      - name: Install llvm-tools-preview
+      - name: Install llvm-tools
         shell: bash
         run: |
-          rustup component add llvm-tools-preview
+          rustup component add llvm-tools
 
           # restore symlinks
           rustup update
@@ -435,8 +435,13 @@ jobs:
           args: --workspace --all-targets --all-features --no-deps
 
   docker-build:
-    name: Build Docker container
-    runs-on: ubuntu-latest
+    name: Build Docker container on ${{ matrix.runs-on }}
+    strategy:
+      matrix:
+        runs-on:
+          - "ubuntu-latest"
+          - "ubuntu-24.04-arm"
+    runs-on: ${{ matrix.runs-on }}
     needs:
       - calculate-version
     # if:
@@ -550,6 +555,8 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: |
+          matrix.runs-on == 'ubuntu-latest'
         with:
           name: container-${{ env.APPLICATION_NAME }}
           path: /tmp/${{ env.UNIQUE_TAG }}.tar
