@@ -42,12 +42,13 @@ cast_possible_truncation = { level = "allow", priority = 127 }
 cast_possible_wrap = { level = "allow", priority = 127 }
 cast_sign_loss = { level = "allow", priority = 127 }
 
-# easier debugging
-let_and_return = { level = "allow", priority = 127 }
-
 # yea, this one is debatable
 too_many_lines = { level = "allow", priority = 127 }
 
+# this has 0 performance implications, the binding is compiled away, and it could cause issues
+# when done blindly, plus it makes it harder to debug as you cannot put breakpoints on return
+# values of functions (yet)
+let_and_return = { level = "allow", priority = 127 }
 # this one is debatable. continue is used in places to be explicit, and to guard against
 # issues when refactoring
 needless_continue = { level = "allow", priority = 127 }
@@ -59,7 +60,3 @@ uninlined-format-args = { level = "allow", priority = 127 }
 [lints.rust]
 let_underscore_drop = { level = "deny", priority = 127 }
 non_ascii_idents = { level = "deny", priority = 127 }
-
-# OpenSSL for musl
-# [target.'cfg(all(any(target_arch="x86_64", target_arch="aarch64"), target_os="linux", target_env="musl"))'.dependencies]
-# openssl = { version = "0.10.36", features = ["vendored"] }
