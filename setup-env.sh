@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 dpkg_add_arch() {
-    # mind the space between the [ and "
-    if [[ "$BUILDPLATFORM" != "$TARGETPLATFORM" ]]; then
+    # are we cross compiling?
+    if ! dpkg-architecture -eq "$1"; then
         dpkg --add-architecture $1
     fi
     apt-get update

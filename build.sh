@@ -7,18 +7,18 @@ cpp_compiler="g++"
 rust_flags="-Clink-self-contained=yes -Clinker=rust-lld"
 
 case $TARGET in
-x86_64-unknown-linux-*)
-    c_compiler="x86_64-linux-gnu-gcc-12"
-    cpp_compiler="x86_64-linux-gnu-g++-12"
-    ;;
-aarch64-unknown-linux-*)
-    c_compiler="aarch64-linux-gnu-gcc"
-    cpp_compiler="aarch64-linux-gnu-g++"
-    ;;
-*)
-    echo "INVALID CONFIGURATION"
-    exit 1
-    ;;
+    x86_64-unknown-linux-*)
+        c_compiler="x86_64-linux-gnu-gcc-12"
+        cpp_compiler="x86_64-linux-gnu-g++-12"
+        ;;
+    aarch64-unknown-linux-*)
+        c_compiler="aarch64-linux-gnu-gcc"
+        cpp_compiler="aarch64-linux-gnu-g++"
+        ;;
+    *)
+        echo "INVALID CONFIGURATION"
+        exit 1
+        ;;
 esac
 
 # replace - with _ in the Rust target

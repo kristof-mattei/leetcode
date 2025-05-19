@@ -24,11 +24,6 @@ ARG TARGET=aarch64-unknown-linux-musl
 
 FROM rust-${TARGETPLATFORM//\//-} AS rust-cargo-build
 
-# expose (used in ./setup.sh and ./build.sh)
-ARG BUILDPLATFORM
-ARG TARGETPLATFORM
-ARG TARGETARCH
-
 COPY ./setup-env.sh .
 RUN --mount=type=cache,id=apt-cache,from=rust-base,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,id=apt-lib,from=rust-base,target=/var/lib/apt,sharing=locked \
@@ -57,11 +52,6 @@ RUN --mount=type=cache,target=/build/${APPLICATION_NAME}/target \
 
 # Rust full build
 FROM rust-cargo-build AS rust-build
-
-# expose (used in ./build.sh)
-ARG BUILDPLATFORM
-ARG TARGETPLATFORM
-ARG TARGETARCH
 
 WORKDIR /build/${APPLICATION_NAME}
 
