@@ -317,20 +317,17 @@ jobs:
 
           mv ./cargo-binstall ~/.cargo/bin/
 
-      - name: Install nextest, custom test runner, with native support for junit
+      - name: Install nextest, custom test runner, with native support for junit and grcov
         shell: bash
         run: |
-          cargo binstall --no-confirm cargo-nextest;
-
-      - name: Install grcov
-        shell: bash
-        run: |
-          cargo binstall --no-confirm grcov --pkg-url "{ repo }/releases/download/v{ version }/{ name }-{ target }.tar.bz2" --pkg-fmt tbz2 --bin-dir "{ bin }";
+          cargo binstall --no-confirm cargo-nextest grcov
 
       - name: Build with instrumentation support
         shell: bash
         env:
-          RUSTFLAGS: "${{ env.RUSTFLAGS }} --allow=warnings -C instrument-coverage"
+          RUSTFLAGS: "${{ env.RUSTFLAGS }} --allow=warnings -Cinstrument-coverage"
+          # build-* ones are not parsed by grcov
+          LLVM_PROFILE_FILE: "profiling/build-%p-%m.profraw"
         run: |
           cargo build --all-targets --all-features --workspace --verbose
 
@@ -338,7 +335,7 @@ jobs:
         shell: bash
         id: tests
         env:
-          RUSTFLAGS: "${{ env.RUSTFLAGS }} --allow=warnings -C instrument-coverage"
+          RUSTFLAGS: "${{ env.RUSTFLAGS }} --allow=warnings -Cinstrument-coverage"
           LLVM_PROFILE_FILE: "profiling/profile-%p-%m.profraw"
         run: |
           cargo nextest run --profile ci --no-fail-fast --all-targets --all-features --workspace
@@ -354,7 +351,7 @@ jobs:
       - name: Run grcov
         shell: bash
         run: |
-          grcov $(find profiling -name "profile-*.profraw" -print) --source-dir . --binary-path ./target/debug/ --output-type lcov --branch --ignore-not-existing --llvm --keep-only "src/**" --keep-only "tests/**" --output-path ./reports/lcov.info
+          grcov $(find . -name "profile-*.profraw" -print) --source-dir . --binary-path ./target/debug/ --output-type lcov --branch --ignore-not-existing --llvm --keep-only "src/**" --output-path ./reports/lcov.info
 
       - name: Upload coverage results (to Codecov.io)
         uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
@@ -383,7 +380,7 @@ jobs:
           # we don't know which subsection it belongs in GitHub
           # so we explicitly fail this one
           # which will fail All Done
-          exit 1;
+          exit 1
 
   cargo-clippy-and-report:
     name: Cargo clippy (and report)
