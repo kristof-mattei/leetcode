@@ -455,15 +455,17 @@ jobs:
         runs-on:
           - "ubuntu-latest"
           - "ubuntu-24.04-arm"
+    outputs:
+      application_name: ${{ steps.application_name.outputs.application_name }}
+      image_name: ${{ steps.image_name.outputs.image_name }}
+      full_image_name: ${{ steps.full_image_name.outputs.full_image_name }}
+      registry: ${{ steps.registry.outputs.registry }}
+      unique_tag: ${{ steps.unique_tag.outputs.unique_tag }}
     runs-on: ${{ matrix.runs-on }}
     needs:
       - calculate-version
     # if:
     # ... is not needed because calculate-version will not run if we disable building the docker container
-    env:
-      APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
-      PATH_TO_TAR: PLACEHOLDER # same ^
-      UNIQUE_TAG: PLACEHOLDER # same ^
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -517,14 +519,38 @@ jobs:
 
       - name: Lowercase the image name
         shell: bash
+        id: image_name
         run: |
-          echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+          echo "image_name=${IMAGE_NAME,,}" >> ${GITHUB_OUTPUT}
 
       - name: Set Docker tag
         shell: bash
+        id: unique_tag
         run: |
           unique_tag=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
-          echo "UNIQUE_TAG=${unique_tag##*/}" >> ${GITHUB_ENV}
+          echo "unique_tag=${unique_tag##*/}" >> ${GITHUB_OUTPUT}
+
+      - name: Set application name
+        shell: bash
+        id: application_name
+        run: |
+          application_name=${{ github.repository }}
+          echo "application_name=${application_name##*/}" >> ${GITHUB_OUTPUT}
+
+      - name: Set registry
+        shell: bash
+        id: registry
+        run: |
+          registry=${{ env.REGISTRY }}
+          echo "registry=${registry}" >> ${GITHUB_OUTPUT}
+
+      - name: Set full image name
+        shell: bash
+        id: full_image_name
+        run: |
+          registry=${{ steps.registry.outputs.registry }}
+          image_name=${{ steps.image_name.outputs.image_name }}
+          echo "full_image_name=${registry,,}/${image_name,,}" >> ${GITHUB_OUTPUT}
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
@@ -532,48 +558,42 @@ jobs:
         uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
         id: meta
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ steps.full_image_name.outputs.full_image_name }}
           tags: |
-            type=raw,value=${{ env.UNIQUE_TAG }}
+            type=raw,value=${{ steps.unique_tag.outputs.unique_tag }}
           labels: |
             org.opencontainers.image.version=pr-${{ github.event.number }}
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
 
-      - name: Log into registry ${{ env.REGISTRY }}
+      - name: Log into registry ${{ steps.registry.outputs.registry }}
         uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ${{ steps.registry.outputs.registry }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set application name
-        shell: bash
-        run: |
-          application_name=${{ github.repository }}
-          echo "APPLICATION_NAME=${application_name##*/}" >> ${GITHUB_ENV}
 
       - name: Build Docker image
         uses: docker/build-push-action@1dc73863535b631f98b2378be8619f83b136f4a0 # v6.17.0
         with:
           build-args: |
-            APPLICATION_NAME=${{ env.APPLICATION_NAME }}
+            APPLICATION_NAME=${{ steps.application_name.outputs.application_name }}
           context: .
           # this container is THE PR's artifact, and we will re-tag it
           # once the PR has been accepted
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ env.APPLICATION_NAME }}
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ env.APPLICATION_NAME }},mode=max
+          cache-from: type=registry,ref=${{ steps.full_image_name.outputs.full_image_name }}:buildcache-${{ steps.application_name.outputs.application_name }}
+          cache-to: type=registry,ref=${{ steps.full_image_name.outputs.full_image_name }}:buildcache-${{ steps.application_name.outputs.application_name }},mode=max
           platforms: linux/amd64, linux/arm64
-          outputs: type=oci,dest=/tmp/${{ env.UNIQUE_TAG }}.tar
+          outputs: type=oci,dest=/tmp/${{ steps.unique_tag.outputs.unique_tag }}.tar
 
       - name: Upload artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: |
           matrix.runs-on == 'ubuntu-latest'
         with:
-          name: container-${{ env.APPLICATION_NAME }}
-          path: /tmp/${{ env.UNIQUE_TAG }}.tar
+          name: container-${{ steps.application_name.outputs.application_name }}
+          path: /tmp/${{ steps.unique_tag.outputs.unique_tag }}.tar
           if-no-files-found: error
           retention-days: 1
 
@@ -582,9 +602,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - docker-build
-    env:
-      APPLICATION_NAME: PLACEHOLDER # overridden in step 'Set application name', this is merely to satisfy the linter
-      UNIQUE_TAG: PLACEHOLDER # same ^
     # Check if the event is not triggered by a fork
     if: |
       github.event.pull_request.head.repo.full_name == github.repository &&
@@ -600,55 +617,38 @@ jobs:
               }
             }
 
-      - name: Log into registry ${{ env.REGISTRY }}
+      - name: Log into registry ${{ needs.docker-build.outputs.registry }}
         uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ${{ needs.docker-build.outputs.registry }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Lowercase the image name
-        shell: bash
-        run: |
-          echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
-
-      - name: Set application name
-        shell: bash
-        run: |
-          application_name=${{ github.repository }}
-          echo "APPLICATION_NAME=${application_name##*/}" >> ${GITHUB_ENV}
-
-      - name: Set Docker tag (which is also the filename.tar)
-        shell: bash
-        run: |
-          unique_tag=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
-          echo "UNIQUE_TAG=${unique_tag##*/}" >> ${GITHUB_ENV}
 
       - name: Extract Docker metadata
         uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
         id: meta
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ needs.docker-build.outputs.full_image_name }}
           tags: |
             type=ref,event=pr,suffix=-latest
-            type=raw,value=${{ env.UNIQUE_TAG }}
+            type=raw,value=${{ needs.docker-build.outputs.unique_tag }}
 
       - name: Download artifact
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         id: artifact
         with:
           path: /tmp/container/
-          name: container-${{ env.APPLICATION_NAME }}
+          name: container-${{ needs.docker-build.outputs.application_name }}
 
       - name: Load images from artifacts
         shell: bash
         run: |
-          docker load --input ${{ steps.artifact.outputs.download-path }}/${{ env.UNIQUE_TAG }}.tar
+          docker load --input ${{ steps.artifact.outputs.download-path }}/${{ needs.docker-build.outputs.unique_tag }}.tar
 
       - name: Push image to register
         shell: bash
         run: |
-          base_tag=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' ${{ env.UNIQUE_TAG }})
+          base_tag=$(printf '${{ needs.docker-build.outputs.full_image_name }}:%s ' ${{ needs.docker-build.outputs.unique_tag }})
 
           docker push ${base_tag}
 
@@ -659,7 +659,7 @@ jobs:
           new_tags="${{ join(steps.meta.outputs.tags, ' ') }}"
           new_tags=$(printf -- '--tag %s ' $new_tags)
 
-          base_tag=$(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:%s ' ${{ env.UNIQUE_TAG }})
+          base_tag=$(printf '${{ needs.docker-build.outputs.full_image_name }}:%s ' ${{ needs.docker-build.outputs.unique_tag }})
 
           docker buildx imagetools create $new_tags $base_tag
 
