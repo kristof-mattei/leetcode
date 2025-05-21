@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v1.3.1](https://github.com/kristof-mattei/rust-seed/compare/379138240224b860cf69d1249f93cacc8c847b6e..v1.3.1) - 2025-05-21
+#### Bug Fixes
+- remove incorrec exit - ([3791382](https://github.com/kristof-mattei/rust-seed/commit/379138240224b860cf69d1249f93cacc8c847b6e)) - [@kristof-mattei](https://github.com/kristof-mattei)
+#### Miscellaneous Chores
+- **(deps)** lock file maintenance - ([ec6075e](https://github.com/kristof-mattei/rust-seed/commit/ec6075edb53838bfde94e8ec73ac3bec85368356)) - renovate[bot]
+
+- - -
+
 ## [v1.3.0](https://github.com/kristof-mattei/rust-seed/compare/9084f3fe60d2794d98ca6fff47428c169a8f3f80..v1.3.0) - 2025-05-21
 #### Bug Fixes
 - don't install binstall, cargo-edit doesn't have a package anyway - ([377a21e](https://github.com/kristof-mattei/rust-seed/commit/377a21ec73fd822d22099945fb196dcb89b75cc4)) - [@kristof-mattei](https://github.com/kristof-mattei)
