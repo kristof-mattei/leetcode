@@ -77,7 +77,6 @@ jobs:
 
           else
             echo "The incoming push isn't a merge, ergo it's not a PR"
-            exit 1
           fi
 
       - name: Download crane tar, extract, and add folder to path.
