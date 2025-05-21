@@ -550,7 +550,7 @@ jobs:
         run: |
           registry=${{ steps.registry.outputs.registry }}
           image_name=${{ steps.image_name.outputs.image_name }}
-          echo "FULL_IMAGE_NAME=${registry,,}/${image_name,,}" >> ${GITHUB_ENV}
+          echo "full_image_name=${registry,,}/${image_name,,}" >> ${GITHUB_OUTPUT}
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
