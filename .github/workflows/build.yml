@@ -43,8 +43,8 @@ jobs:
         shell: bash
         id: determine
         run: |
-          HAS_CONTAINER="${{ vars.HAS_CONTAINER }}"
-          echo "has_container=${HAS_CONTAINER:-false}" >> ${GITHUB_OUTPUT}
+          has_container="${{ vars.HAS_CONTAINER }}"
+          echo "has_container=${has_container:-false}" >> ${GITHUB_OUTPUT}
 
   changes:
     name: Detect changes
@@ -143,18 +143,18 @@ jobs:
         shell: bash
         id: version
         run: |
-          VERSION="$(cog bump --auto --dry-run || true)"
+          version="$(cog bump --auto --dry-run || true)"
 
-          if [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-              echo "New version: ${VERSION}"
+          if [[ "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "New version: ${version}"
           else
-              VERSION="v$(cog -v get-version)"
+              version="v$(cog -v get-version)"
 
-              echo "No version generated, defaulting to latest tag: ${VERSION}"
+              echo "No version generated, defaulting to latest tag: ${version}"
           fi
 
           # remove v
-          VERSION="${VERSION//v/}"
+          version="${version//v/}"
 
           # store
           echo "version=${VERSION}" >> ${GITHUB_OUTPUT}
@@ -522,8 +522,8 @@ jobs:
       - name: Set Docker tag
         shell: bash
         run: |
-          UNIQUE_TAG=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
-          echo "UNIQUE_TAG=${UNIQUE_TAG##*/}" >> ${GITHUB_ENV}
+          unique_tag=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
+          echo "UNIQUE_TAG=${unique_tag##*/}" >> ${GITHUB_ENV}
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
@@ -548,8 +548,8 @@ jobs:
       - name: Set application name
         shell: bash
         run: |
-          APPLICATION_NAME=${{ github.repository }}
-          echo "APPLICATION_NAME=${APPLICATION_NAME##*/}" >> ${GITHUB_ENV}
+          application_name=${{ github.repository }}
+          echo "APPLICATION_NAME=${application_name##*/}" >> ${GITHUB_ENV}
 
       - name: Build Docker image
         uses: docker/build-push-action@1dc73863535b631f98b2378be8619f83b136f4a0 # v6.17.0
@@ -614,14 +614,14 @@ jobs:
       - name: Set application name
         shell: bash
         run: |
-          APPLICATION_NAME=${{ github.repository }}
-          echo "APPLICATION_NAME=${APPLICATION_NAME##*/}" >> ${GITHUB_ENV}
+          application_name=${{ github.repository }}
+          echo "APPLICATION_NAME=${application_name##*/}" >> ${GITHUB_ENV}
 
       - name: Set Docker tag (which is also the filename.tar)
         shell: bash
         run: |
-          UNIQUE_TAG=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
-          echo "UNIQUE_TAG=${UNIQUE_TAG##*/}" >> ${GITHUB_ENV}
+          unique_tag=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
+          echo "UNIQUE_TAG=${unique_tag##*/}" >> ${GITHUB_ENV}
 
       - name: Extract Docker metadata
         uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
