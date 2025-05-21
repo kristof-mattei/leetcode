@@ -95,12 +95,12 @@ jobs:
 
           cog bump --auto
 
-          VERSION="v$(cog -v get-version)"
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          version="v$(cog -v get-version)"
+          echo "version=${version}" >> ${GITHUB_OUTPUT}
 
-          cog changelog --at ${VERSION} > GITHUB_CHANGELOG.md
+          cog changelog --at ${version} > GITHUB_CHANGELOG.md
 
-          echo "New version: ${VERSION}"
+          echo "New version: ${version}"
 
           echo "Changelog: "
 
