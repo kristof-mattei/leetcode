@@ -549,8 +549,9 @@ jobs:
         id: meta
         with:
           labels: |
-            org.opencontainers.image.version=pr-${{ github.event.number }}
+            org.opencontainers.image.revision=${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
+            org.opencontainers.image.version=pr-${{ github.event.number }}
           images: ${{ steps.variables.outputs.full_image_name }}
           tags: |
             type=raw,value=${{ steps.variables.outputs.unique_tag }}
