@@ -456,10 +456,11 @@ jobs:
           - "ubuntu-latest"
           - "ubuntu-24.04-arm"
     outputs:
-      image_name: ${{ steps.image_name.outputs.image_name }}
-      unique_tag: ${{ steps.unique_tag.outputs.unique_tag }}
       application_name: ${{ steps.application_name.outputs.application_name }}
-      registry: ${{ env.REGISTRY }}
+      image_name: ${{ steps.image_name.outputs.image_name }}
+      full_image_name: ${{ steps.full_image_name.outputs.full_image_name }}
+      registry: ${{ steps.registry.outputs.registry }}
+      unique_tag: ${{ steps.unique_tag.outputs.unique_tag }}
     runs-on: ${{ matrix.runs-on }}
     needs:
       - calculate-version
@@ -536,23 +537,38 @@ jobs:
           application_name=${{ github.repository }}
           echo "application_name=${application_name##*/}" >> ${GITHUB_OUTPUT}
 
+      - name: Set registry
+        shell: bash
+        id: registry
+        run: |
+          registry=${{ env.REGISTRY }}
+          echo "registry=${registry}" >> ${GITHUB_OUTPUT}
+
+      - name: Set full image name
+        shell: bash
+        id: full_image_name
+        run: |
+          registry=${{ steps.registry.outputs.registry }}
+          image_name=${{ steps.image_name.outputs.image_name }}
+          echo "FULL_IMAGE_NAME=${registry,,}/${image_name,,}" >> ${GITHUB_ENV}
+
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
         uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
         id: meta
         with:
-          images: ${{ env.REGISTRY }}/${{ steps.image_name.outputs.image_name }}
+          images: ${{ steps.full_image_name.outputs.full_image_name }}
           tags: |
             type=raw,value=${{ steps.unique_tag.outputs.unique_tag }}
           labels: |
             org.opencontainers.image.version=pr-${{ github.event.number }}
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
 
-      - name: Log into registry ${{ env.REGISTRY }}
+      - name: Log into registry ${{ steps.registry.outputs.registry }}
         uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ${{ steps.registry.outputs.registry }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -566,8 +582,8 @@ jobs:
           # once the PR has been accepted
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.image_name.outputs.image_name }}:buildcache-${{ steps.application_name.outputs.application_name }}
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ steps.image_name.outputs.image_name }}:buildcache-${{ steps.application_name.outputs.application_name }},mode=max
+          cache-from: type=registry,ref=${{ steps.full_image_name.outputs.full_image_name }}:buildcache-${{ steps.application_name.outputs.application_name }}
+          cache-to: type=registry,ref=${{ steps.full_image_name.outputs.full_image_name }}:buildcache-${{ steps.application_name.outputs.application_name }},mode=max
           platforms: linux/amd64, linux/arm64
           outputs: type=oci,dest=/tmp/${{ steps.unique_tag.outputs.unique_tag }}.tar
 
@@ -612,7 +628,7 @@ jobs:
         uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
         id: meta
         with:
-          images: ${{ needs.docker-build.outputs.registry }}/${{ needs.docker-build.outputs.image_name }}
+          images: ${{ needs.docker-build.outputs.full_image_name }}
           tags: |
             type=ref,event=pr,suffix=-latest
             type=raw,value=${{ needs.docker-build.outputs.unique_tag }}
@@ -632,7 +648,7 @@ jobs:
       - name: Push image to register
         shell: bash
         run: |
-          base_tag=$(printf '${{ needs.docker-build.outputs.registry }}/${{ needs.docker-build.outputs.image_name }}:%s ' ${{ needs.docker-build.outputs.unique_tag }})
+          base_tag=$(printf '${{ needs.docker-build.outputs.full_image_name }}:%s ' ${{ needs.docker-build.outputs.unique_tag }})
 
           docker push ${base_tag}
 
@@ -643,7 +659,7 @@ jobs:
           new_tags="${{ join(steps.meta.outputs.tags, ' ') }}"
           new_tags=$(printf -- '--tag %s ' $new_tags)
 
-          base_tag=$(printf '${{ needs.docker-build.outputs.registry }}/${{ needs.docker-build.outputs.image_name }}:%s ' ${{ needs.docker-build.outputs.unique_tag }})
+          base_tag=$(printf '${{ needs.docker-build.outputs.full_image_name }}:%s ' ${{ needs.docker-build.outputs.unique_tag }})
 
           docker buildx imagetools create $new_tags $base_tag
 
