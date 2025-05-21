@@ -17,6 +17,7 @@ permissions:
   packages: write
 
 env:
+  CARGO_TERM_COLOR: always
   # set this to true in GitHub variables to enable building the container
   # HAS_CONTAINER: true
   # Use docker.io for Docker Hub if empty
@@ -145,7 +146,7 @@ jobs:
         run: |
           version="$(cog bump --auto --dry-run || true)"
 
-          if [[ "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          if [[ "${version}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
               echo "New version: ${version}"
           else
               version="v$(cog -v get-version)"
