@@ -128,7 +128,7 @@ jobs:
             "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/${archive}" \
             | tar \
                 --directory=${HOME}/.cargo/bin/ \
-                --strip-components=1 \
+                --strip-components=0 \
                 --no-overwrite-dir \
                 --extract \
                 --verbose \
@@ -327,7 +327,7 @@ jobs:
             "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/${archive}" \
             | tar \
                 --directory=${HOME}/.cargo/bin/ \
-                --strip-components=1 \
+                --strip-components=0 \
                 --no-overwrite-dir \
                 --extract \
                 --verbose \
