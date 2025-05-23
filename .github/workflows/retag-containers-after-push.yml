@@ -1,13 +1,5 @@
 name: Retag containers after new push / PR
 
-env:
-  # set this to true in GitHub variables to enable building the container
-  # HAS_CONTAINER: true
-  # Use docker.io for Docker Hub if empty
-  REGISTRY: ghcr.io
-  # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
-
 concurrency:
   group: "${{ github.workflow }}" # last one must win
   cancel-in-progress: false # no we need them
@@ -31,6 +23,15 @@ permissions:
   contents: write
   packages: write
 
+env:
+  CARGO_TERM_COLOR: always
+  # set this to true in GitHub variables to enable building the container
+  # HAS_CONTAINER: true
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   repo-has-container:
     name: Repo has container?
@@ -43,8 +44,8 @@ jobs:
         id: determine
         shell: bash
         run: |
-          HAS_CONTAINER="${{ vars.HAS_CONTAINER }}"
-          echo "has_container=${HAS_CONTAINER:-false}" >> ${GITHUB_OUTPUT}
+          has_container="${{ vars.HAS_CONTAINER }}"
+          echo "has_container=${has_container:-false}" >> ${GITHUB_OUTPUT}
 
   retag-containers:
     name: Retag the containers
@@ -67,12 +68,12 @@ jobs:
           # a commit always has a parent, but if it has 2, the commit is a merge
           # so lets see if we have one
           # since we're listening to the push event we have to do this manually
-          PARENT2=$(git rev-parse "HEAD^2" --quiet 2>/dev/null) || EXIT_CODE=$?
+          parent2=$(git rev-parse "HEAD^2" --quiet 2>/dev/null) || EXIT_CODE=$?
 
           if [ ${EXIT_CODE} -eq 0 ]
           then
-            echo "The head of the incoming PR is ${PARENT2}"
-            echo "INCOMING_PR_HEAD_COMMIT=${PARENT2}" >> ${GITHUB_ENV}
+            echo "The head of the incoming PR is ${parent2}"
+            echo "INCOMING_PR_HEAD_COMMIT=${parent2}" >> ${GITHUB_ENV}
 
           else
             echo "The incoming push isn't a merge, ergo it's not a PR"
@@ -152,13 +153,13 @@ jobs:
         run: |
           # search for the tag, there can only be zero or one match
           # we need the || true because otherwise grep returns exit code 1 and github actions then dies
-          pr_tag_found=$(cat existing_tags | grep -c "^${PR_TAG}\$") || true
+          pr_tag_found=$(cat existing_tags | grep -c "^${{ env.PR_TAG }}\$") || true
 
           if [ $pr_tag_found -eq 1 ]
           then
             echo "Incoming PR produced a Docker image"
 
-            echo "OLD_TAG=${PR_TAG}" >> ${GITHUB_ENV}
+            echo "OLD_TAG=${{ env.PR_TAG }}" >> ${GITHUB_ENV}
             echo "SUFFIX=actual" >> ${GITHUB_ENV}
           else
             # If we don't have an old tag, then the incoming PR didn't produce a container.
