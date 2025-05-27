@@ -24,7 +24,7 @@ ARG TARGET=aarch64-unknown-linux-musl
 
 FROM rust-${TARGETPLATFORM//\//-} AS rust-cargo-build
 
-COPY ./setup-env.sh .
+COPY ./build-scripts/setup-env.sh .
 RUN --mount=type=cache,id=apt-cache,from=rust-base,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,id=apt-lib,from=rust-base,target=/var/lib/apt,sharing=locked \
     ./setup-env.sh
@@ -40,7 +40,7 @@ RUN cargo new ${APPLICATION_NAME}
 
 WORKDIR /build/${APPLICATION_NAME}
 
-COPY ./build.sh .
+COPY ./build-scripts/build.sh .
 
 COPY .cargo ./.cargo
 COPY Cargo.toml Cargo.lock ./
