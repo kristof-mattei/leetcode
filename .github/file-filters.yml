@@ -3,7 +3,7 @@ code:
   - ".github/**"
   - ".nvmrc"
   - "*.toml"
-  - "build-scripst/**"
+  - "build-scripts/**"
   - Cargo.lock
   - Dockerfile
   - "src/**"
