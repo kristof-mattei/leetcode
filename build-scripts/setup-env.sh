@@ -2,7 +2,7 @@
 
 dpkg_add_arch() {
     # are we cross compiling?
-    if ! dpkg-architecture -eq "$1"; then
+    if ! dpkg-architecture --equal "$1"; then
         dpkg --add-architecture $1
     fi
     apt-get update
