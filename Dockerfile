@@ -65,7 +65,7 @@ RUN touch ./src/main.rs
 RUN --mount=type=cache,target=/build/${APPLICATION_NAME}/target \
     --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db,sharing=locked \
     --mount=type=cache,id=cargo-registery,target=/usr/local/cargo/registry/,sharing=locked \
-    ./build.sh install --path . --target ${TARGET} --root /output
+    ./build.sh install --path . --locked --target ${TARGET} --root /output
 
 # Container user setup
 FROM --platform=${BUILDPLATFORM} alpine:3.22.0@sha256:8a1f59ffb675680d47db6337b49d22281a139e9d709335b492be023728e11715 AS passwd-build
