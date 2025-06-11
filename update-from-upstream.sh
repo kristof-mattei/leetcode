@@ -17,7 +17,7 @@ git checkout -b update-from-upstream origin/main
 git push --set-upstream origin update-from-upstream
 
 # merge in the changes from upstream
-git merge upstream/main
+git merge upstream/main --no-edit
 
 # fix stuff and ...
 # git push
