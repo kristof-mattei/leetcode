@@ -11,7 +11,8 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean \
 RUN --mount=type=cache,id=apt-cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,id=apt-lib,target=/var/lib/apt,sharing=locked \
     apt-get update \
-    && apt-get --no-install-recommends install --yes \
+    && apt-get upgrade --yes \
+    && apt-get install --no-install-recommends --yes \
         build-essential \
         musl-dev \
         musl-tools
