@@ -392,6 +392,11 @@ jobs:
           files: reports/results.xml
           use_oidc: true
 
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          files: reports/lcov.info
+
       - name: Fail if tests failed
         shell: bash
         if: |
