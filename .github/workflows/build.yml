@@ -378,7 +378,7 @@ jobs:
             --ignore-not-existing \
             --output-path ./reports/lcov.info \
             --output-type lcov \
-            --prefix-path ${PWD}
+            --prefix-dir ${PWD}
             --source-dir .
 
       - name: Upload coverage results (to Codecov.io)
