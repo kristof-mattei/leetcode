@@ -76,7 +76,7 @@ jobs:
       - name: Install cargo-edit to do set-version
         shell: bash
         run: |
-          cargo install cargo-edit
+          cargo install --locked cargo-edit
 
       - name: Set version in Cargo.toml / Cargo.lock
         shell: bash
