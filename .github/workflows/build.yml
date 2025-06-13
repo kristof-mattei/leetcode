@@ -551,9 +551,7 @@ jobs:
       - name: Install cargo-edit to do set-version, and cargo-get to get the description
         shell: bash
         run: |
-          cargo install --locked cargo-edit
-
-          cargo binstall --no-confirm cargo-get
+          cargo binstall --no-confirm cargo-edit cargo-get
 
       - name: Set the Cargo.toml version before we copy in the data into the Docker container
         shell: bash
