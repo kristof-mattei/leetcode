@@ -1,4 +1,4 @@
-#![allow(dead_code)]
+#![cfg_attr(not(test), expect(unused))]
 
 #[derive(Default, Debug)]
 struct Trie {

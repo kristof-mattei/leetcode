@@ -18,7 +18,7 @@ fn hamming_weight(mut n: u32) -> i32 {
 }
 impl Solution {
     #[must_use]
-    #[allow(non_snake_case)]
+    #[expect(non_snake_case)]
     pub fn hammingWeight(n: u32) -> i32 {
         hamming_weight(n)
     }

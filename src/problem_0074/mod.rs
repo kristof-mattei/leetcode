@@ -1,6 +1,5 @@
 enum RangeResult {
-    #[allow(dead_code)]
-    Exact(usize),
+    Exact(#[expect(unused)] usize),
     Close(usize),
 }
 
