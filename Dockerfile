@@ -83,12 +83,12 @@ ARG APPLICATION_NAME
 COPY --from=passwd-build /tmp/group_appuser /etc/group
 COPY --from=passwd-build /tmp/passwd_appuser /etc/passwd
 
-USER appuser
-
-WORKDIR /app
-
 COPY --from=rust-build /output/bin/${APPLICATION_NAME} /app/entrypoint
 
+USER appuser
+
 ENV RUST_BACKTRACE=full
+
+WORKDIR /app
 
 ENTRYPOINT ["/app/entrypoint"]
