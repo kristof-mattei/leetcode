@@ -22,7 +22,7 @@ fn longest_common_prefix(strs: &[String]) -> String {
 }
 
 /// this one only works on strings constructed with characters represented in one byte.
-#[allow(dead_code)]
+#[expect(dead_code)]
 fn longest_common_prefix_a_z(strs: &[String]) -> String {
     let mut prefix = Vec::new();
     let mut index: usize = 0;

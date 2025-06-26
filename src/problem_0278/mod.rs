@@ -1,5 +1,5 @@
 impl Solution {
-    #[allow(non_snake_case)]
+    #[expect(non_snake_case)]
     fn isBadVersion(&self, v: i32) -> bool {
         v >= self.bad
     }
@@ -24,7 +24,6 @@ impl Solution {
     }
 }
 
-#[allow(dead_code)]
 pub struct Solution {
     bad: i32,
 }

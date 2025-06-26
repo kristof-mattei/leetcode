@@ -1,28 +1,3 @@
-#[allow(dead_code)]
-fn generate_parenthesis_r(n: i32, opens: i32, closes: i32) -> Vec<Vec<u8>> {
-    if n == opens && n == closes {
-        return vec![vec![]];
-    }
-    let mut result = Vec::new();
-    if opens < n {
-        for mut part in generate_parenthesis_r(n, opens + 1, closes) {
-            let mut new = vec![b'('];
-            new.append(&mut part);
-            result.push(new);
-        }
-    }
-
-    if closes < n {
-        for mut part in generate_parenthesis_r(n, opens, closes + 1) {
-            let mut new = vec![b')'];
-            new.append(&mut part);
-            result.push(new);
-        }
-    }
-
-    result
-}
-
 fn generate_parenthesis_reversed_r(n: i32, opens: i32, closes: i32) -> Vec<String> {
     if n == opens && n == closes {
         return vec![String::new()];

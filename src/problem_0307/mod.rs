@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 struct NumArray {
     nums: Vec<i32>,
     prefix_sums: Vec<i32>,
@@ -19,6 +17,7 @@ impl NumArray {
         Self { nums, prefix_sums }
     }
 
+    #[cfg_attr(not(test), expect(unused))]
     fn update(&mut self, index: i32, val: i32) {
         let index = index as usize;
 
