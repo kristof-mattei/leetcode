@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/kristof-mattei/rust-seed#readme",
   "devDependencies": {
-    "prettier": "3.6.1",
+    "prettier": "3.6.2",
     "prettier-plugin-sh": "0.18.0"
   },
   "publishConfig": {
