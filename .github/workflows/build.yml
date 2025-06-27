@@ -651,6 +651,10 @@ jobs:
     name: Publish Docker container
     runs-on: ubuntu-latest
     needs:
+      - cargo-build
+      - cargo-clippy-and-report
+      - cargo-fmt
+      - cargo-test-and-report
       - docker-build
     # Check if the event is not triggered by a fork
     if: |
@@ -744,8 +748,8 @@ jobs:
     needs:
       - calculate-version
       - cargo-build
-      - cargo-fmt
       - cargo-clippy-and-report
+      - cargo-fmt
       - cargo-test-and-report
       - docker-build
       - docker-publish
