@@ -1,5 +1,5 @@
 # Rust toolchain setup
-FROM --platform=${BUILDPLATFORM} rust:1.87.0@sha256:251cec8da4689d180f124ef00024c2f83f79d9bf984e43c180a598119e326b84 AS rust-base
+FROM --platform=${BUILDPLATFORM} rust:1.88.0@sha256:1928f85f204effc91fddc53875afd042b651552fde6ee11acaafde641942dd70 AS rust-base
 
 ARG APPLICATION_NAME
 
@@ -25,10 +25,11 @@ ARG TARGET=aarch64-unknown-linux-musl
 
 FROM rust-${TARGETPLATFORM//\//-} AS rust-cargo-build
 
-COPY ./build-scripts/setup-env.sh .
+COPY ./build-scripts /build-scripts
+
 RUN --mount=type=cache,id=apt-cache,from=rust-base,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,id=apt-lib,from=rust-base,target=/var/lib/apt,sharing=locked \
-    ./setup-env.sh
+    /build-scripts/setup-env.sh
 
 RUN rustup target add ${TARGET}
 
@@ -37,36 +38,32 @@ RUN rustup target add ${TARGET}
 # This allows us to copy in the source in a different layer which in turn allows us to leverage Docker's layer caching
 # That means that if our dependencies don't change rebuilding is much faster
 WORKDIR /build
-RUN cargo new ${APPLICATION_NAME}
 
-WORKDIR /build/${APPLICATION_NAME}
+RUN cargo init --name ${APPLICATION_NAME}
 
-COPY ./build-scripts/build.sh .
+COPY ./.cargo ./Cargo.toml ./Cargo.lock ./
 
-COPY .cargo ./.cargo
-COPY Cargo.toml Cargo.lock ./
-
-RUN --mount=type=cache,target=/build/${APPLICATION_NAME}/target \
-    --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db,sharing=locked \
-    --mount=type=cache,id=cargo-registery,target=/usr/local/cargo/registry/,sharing=locked \
-    ./build.sh build --release --target ${TARGET}
+RUN --mount=type=cache,target=/build/target,sharing=locked \
+    --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db \
+    --mount=type=cache,id=cargo-registry,target=/usr/local/cargo/registry \
+    /build-scripts/build.sh build --release --target ${TARGET}
 
 # Rust full build
 FROM rust-cargo-build AS rust-build
 
-WORKDIR /build/${APPLICATION_NAME}
+WORKDIR /build
 
 # now we copy in the source which is more prone to changes and build it
-COPY src ./src
+COPY ./src ./src
 
 # ensure cargo picks up on the change
 RUN touch ./src/main.rs
 
 # --release not needed, it is implied with install
-RUN --mount=type=cache,target=/build/${APPLICATION_NAME}/target \
-    --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db,sharing=locked \
-    --mount=type=cache,id=cargo-registery,target=/usr/local/cargo/registry/,sharing=locked \
-    ./build.sh install --path . --locked --target ${TARGET} --root /output
+RUN --mount=type=cache,target=/build/target,sharing=locked \
+    --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db \
+    --mount=type=cache,id=cargo-registry,target=/usr/local/cargo/registry \
+    /build-scripts/build.sh install --path . --locked --target ${TARGET} --root /output
 
 # Container user setup
 FROM --platform=${BUILDPLATFORM} alpine:3.22.0@sha256:8a1f59ffb675680d47db6337b49d22281a139e9d709335b492be023728e11715 AS passwd-build
@@ -86,12 +83,12 @@ ARG APPLICATION_NAME
 COPY --from=passwd-build /tmp/group_appuser /etc/group
 COPY --from=passwd-build /tmp/passwd_appuser /etc/passwd
 
-USER appuser
-
-WORKDIR /app
-
 COPY --from=rust-build /output/bin/${APPLICATION_NAME} /app/entrypoint
 
+USER appuser
+
 ENV RUST_BACKTRACE=full
+
+WORKDIR /app
 
 ENTRYPOINT ["/app/entrypoint"]
