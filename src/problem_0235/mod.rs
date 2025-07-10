@@ -30,9 +30,9 @@ fn lowest_common_ancestor(
     let q_value = q.borrow().val;
 
     if root_value < p_value && root_value < q_value {
-        lowest_common_ancestor(root_borrowed.right.as_ref().unwrap().clone(), p, q)
+        lowest_common_ancestor(Rc::clone(root_borrowed.right.as_ref().unwrap()), p, q)
     } else if root_value > p_value && root_value > q_value {
-        lowest_common_ancestor(root_borrowed.left.as_ref().unwrap().clone(), p, q)
+        lowest_common_ancestor(Rc::clone(root_borrowed.left.as_ref().unwrap()), p, q)
     } else {
         drop(root_borrowed);
         Some(root)

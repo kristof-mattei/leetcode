@@ -26,7 +26,7 @@ fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
                         let right_ref = borrow.right.as_ref();
 
                         if let Some(r) = right_ref {
-                            r.clone()
+                            Rc::clone(r)
                         } else {
                             break;
                         }

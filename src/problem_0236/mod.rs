@@ -42,13 +42,15 @@ fn lowest_common_ancestor(
 
     let node_borrowed = node.borrow();
 
-    let from_left = lowest_common_ancestor(node_borrowed.left.as_ref(), p.clone(), q.clone());
+    let from_left =
+        lowest_common_ancestor(node_borrowed.left.as_ref(), Rc::clone(&p), Rc::clone(&q));
 
     if matches!(from_left, LeastCommonAncestor::Found(_)) {
         return from_left;
     }
 
-    let from_right = lowest_common_ancestor(node_borrowed.right.as_ref(), p.clone(), q.clone());
+    let from_right =
+        lowest_common_ancestor(node_borrowed.right.as_ref(), Rc::clone(&p), Rc::clone(&q));
 
     if matches!(from_right, LeastCommonAncestor::Found(_)) {
         return from_right;

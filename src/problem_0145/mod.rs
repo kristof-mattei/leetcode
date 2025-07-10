@@ -16,15 +16,15 @@ fn postorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
                     results.push(borrow.val);
                 },
                 (Some(l), None) => {
-                    queue.push(node.clone());
+                    queue.push(Rc::clone(&node));
                     queue.push(l);
                 },
                 (None, Some(r)) => {
-                    queue.push(node.clone());
+                    queue.push(Rc::clone(&node));
                     queue.push(r);
                 },
                 (Some(l), Some(r)) => {
-                    queue.push(node.clone());
+                    queue.push(Rc::clone(&node));
                     queue.push(r);
 
                     queue.push(l);
