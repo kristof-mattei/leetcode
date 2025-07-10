@@ -9,7 +9,7 @@ fn max_path_sum(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 
         let mut answer = b.val;
 
-        max_sub_path_sum(Some(r.clone()), &mut answer);
+        max_sub_path_sum(Some(Rc::clone(&r)), &mut answer);
 
         answer
     } else {
