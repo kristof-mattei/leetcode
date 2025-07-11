@@ -1,10 +1,10 @@
-.git
-.mypy_cache
-.vscode/rust-prettifier-for-lldb
-CHANGELOG.md
-profiling
-reports
-src   # rust-fmt
-tests # rust-fmt
-target
-pnpm-lock.yaml
+/.git
+/.mypy_cache
+/.vscode/rust-prettifier-for-lldb
+/CHANGELOG.md
+/profiling
+/reports
+/src   # rust-fmt
+/tests # rust-fmt
+/target
+/pnpm-lock.yaml
