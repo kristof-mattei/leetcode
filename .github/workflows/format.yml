@@ -1,4 +1,5 @@
-name: Prettier
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Format
 
 on:
   workflow_dispatch:
@@ -13,8 +14,8 @@ permissions:
   contents: read
 
 jobs:
-  prettier:
-    name: Prettier
+  format:
+    name: Format
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,4 +41,4 @@ jobs:
       - name: Run Prettier
         shell: bash
         run: |
-          pnpm exec prettier --check .
+          pnpm prettier --check .
