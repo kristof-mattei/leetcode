@@ -1,4 +1,4 @@
-/target
 /node_modules
-/reports
 /profiling
+/reports
+/target
