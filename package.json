@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "rust-seed",
   "version": "0.0.0-development",
   "description": "It's written in Rust!",
