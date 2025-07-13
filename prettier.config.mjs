@@ -11,6 +11,13 @@ export default {
     useTabs: false,
     overrides: [
         {
+            files: ["*.json"],
+            options: {
+                trailingComma: "none",
+                printWidth: 80,
+            },
+        },
+        {
             files: ["*.toml"],
             options: {
                 printWidth: 80,
@@ -20,13 +27,6 @@ export default {
             files: ["*.ts", "*.tsx"],
             options: {
                 parser: "typescript",
-            },
-        },
-        {
-            files: ["*.json"],
-            options: {
-                trailingComma: "none",
-                printWidth: 80,
             },
         },
         {
