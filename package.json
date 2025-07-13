@@ -1,31 +1,17 @@
 {
   "name": "leetcode",
-  "version": "0.0.0-development",
-  "description": "It's written in Rust!",
-  "main": "src/main.rs",
+  "type": "module",
   "packageManager": "pnpm@10.13.1",
-  "scripts": {
-    "format": "prettier --write ."
-  },
   "engines": {
     "node": "22.17.0",
     "pnpm": "10.13.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kristof-mattei/leetcode.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kristof-mattei/leetcode/issues"
-  },
-  "homepage": "https://github.com/kristof-mattei/leetcode#readme",
-  "publishConfig": {
-    "access": "restricted"
+  "scripts": {
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "prettier": "3.6.2",
-    "prettier-plugin-sh": "0.18.0"
+    "prettier-plugin-sh": "0.18.0",
+    "prettier-plugin-toml": "2.0.6"
   }
 }
