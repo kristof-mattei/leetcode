@@ -1,16 +1,26 @@
 # Rust seed application
 
-It's written in Rust!
+This is a framework for building Rust applications
 
-This is a framework for building Rust applications in combination with building Docker containers and never rebuilding code on release, instead we promote existing code.
+It supports:
 
-## TODO and done
+- Building multi-platform images
+- Reusing images when merging in PRs to preserve provenance
+    - Support for tags like `pr-${PR_NUMBER}-latest` (last build on PR), `edge` (last build on `main`), `pr-${SHA_MAIN_HEAD}-${SHA_PR_HEAD}` (uniquely identifying the merge result of a PR)
+- Container attestation
+- Crate publishing
+- Release publishing
+    - Crate publishing to crates.io
+    - Container retagging to `:latest`
 
-- [x] Figure out how to deal with PRs pushing too many Docker containers<br />
-    > We only build containers on the tip of the PR, so even if you're pushing 10 commits, we'll only build one.
+## TODO
+
 - [ ] Remove old containers when the new one gets build for a PR?<br />
       Or rely on a general weekly untagged cleanup?
 - [ ] Remove PR containers when PR closed<br />
-    > API currently unavailable
-- [x] How do we deal with older containers on `main`?<br />
-    > We move tags, so we'll need to wait for the API to clean up untagged versions
+
+## License
+
+MIT, see [LICENSE](./LICENSE)
+
+`SPDX-License-Identifier: MIT`

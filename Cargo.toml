@@ -5,11 +5,11 @@ edition = "2024"
 rust-version = "1.88.0"
 authors = ["Kristof Mattei"]
 description = "Rust seed application"
-license-file = "LICENSE"
+license= "MIT"
 categories = ["starter", "seed"]
 keywords = ["integrity", "seed", "starter", "docker", "release"]
 repository = "https://github.com/kristof-mattei/rust-seed"
-include = [".cargo/**", ".config/**", "src/**", "tests/**"]
+include = ["src/**", "/LICENSE", "/LICENSE-*"]
 
 [lints.clippy]
 # don't stop from compiling / running
