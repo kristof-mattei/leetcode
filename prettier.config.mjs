@@ -36,5 +36,5 @@ export default {
             },
         },
     ],
-    plugins: ["prettier-plugin-sh"],
+    plugins: ["prettier-plugin-sh", "prettier-plugin-toml"],
 };
