@@ -35,6 +35,12 @@ export default {
                 tabWidth: 2,
             },
         },
+        {
+            files: ["package.json"],
+            options: {
+                tabWidth: 2,
+            },
+        },
     ],
     plugins: ["prettier-plugin-sh", "prettier-plugin-toml"],
 };
