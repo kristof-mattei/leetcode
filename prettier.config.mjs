@@ -11,13 +11,19 @@ export default {
     useTabs: false,
     overrides: [
         {
-            files: ["**/*.ts", "**/*.tsx"],
+            files: ["*.toml"],
+            options: {
+                printWidth: 80,
+            },
+        },
+        {
+            files: ["*.ts", "*.tsx"],
             options: {
                 parser: "typescript",
             },
         },
         {
-            files: ["**/*.json"],
+            files: ["*.json"],
             options: {
                 trailingComma: "none",
                 printWidth: 80,
@@ -25,12 +31,6 @@ export default {
         },
         {
             files: ["*.yaml", "*.yml"],
-            options: {
-                tabWidth: 2,
-            },
-        },
-        {
-            files: ["package.json", "package-lock.json"],
             options: {
                 tabWidth: 2,
             },
