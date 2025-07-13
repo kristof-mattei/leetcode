@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "prettier": "3.6.2",
-    "prettier-plugin-sh": "0.18.0"
+    "prettier-plugin-sh": "0.18.0",
+    "prettier-plugin-toml": "2.0.6"
   }
 }
