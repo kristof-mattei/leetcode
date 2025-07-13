@@ -1,10 +1,13 @@
 /.git
 /.mypy_cache
 /.vscode/rust-prettifier-for-lldb
-/CHANGELOG.md
+
 /profiling
 /reports
 /src   # rust-fmt
 /tests # rust-fmt
 /target
+
+/Cargo.lock
+/CHANGELOG.md
 /pnpm-lock.yaml
