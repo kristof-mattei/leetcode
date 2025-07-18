@@ -33,6 +33,7 @@ fn quz() -> &'static str {
     "Quz"
 }
 
+#[expect(clippy::todo, reason = "Seed code")]
 fn main() -> Result<(), color_eyre::Report> {
     color_eyre::install()?;
 
