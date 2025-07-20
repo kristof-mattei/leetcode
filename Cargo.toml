@@ -39,7 +39,6 @@ perf = "warn"
 style = "warn"
 suspicious = "warn"
 
-
 # this one is WAY too buggy
 assigning_clones = { level = "allow", priority = 127 }
 
@@ -148,7 +147,7 @@ pub_without_shorthand = { level = "deny", priority = 127 }
 rc_buffer = { level = "deny", priority = 127 }
 rc_mutex = { level = "deny", priority = 127 }
 # Disabled
- # redundant_test_prefix = { level = "deny", priority = 127 }
+# redundant_test_prefix = { level = "deny", priority = 127 }
 renamed_function_params = { level = "deny", priority = 127 }
 rest_pat_in_fully_bound_structs = { level = "deny", priority = 127 }
 return_and_then = { level = "deny", priority = 127 }
