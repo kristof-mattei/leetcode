@@ -140,7 +140,7 @@ fn is_scramble(s1: &str, s2: &str) -> bool {
 
 impl Solution {
     #[must_use]
-    #[expect(clippy::needless_pass_by_value)]
+    #[expect(clippy::needless_pass_by_value, reason = "External invocation")]
     pub fn is_scramble_vec_char_char(s1: String, s2: String) -> bool {
         is_scramble(&s1, &s2)
     }

@@ -1,3 +1,5 @@
+#![expect(clippy::tests_outside_test_module, reason = "Integration tests")]
+
 #[test]
 fn assert_world_ok() {
     let cls1 = || true;
