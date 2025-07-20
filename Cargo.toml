@@ -11,23 +11,6 @@ categories = ["playground"]
 keywords = ["playground"]
 repository = "https://github.com/kristof-mattei/leetcode"
 
-[lib]
-path = "src/lib.rs"
-test = true
-crate-type = ["lib"]
-
-[profile.dev]
-debug = true
-
-[profile.release]
-debug = true
-
-[profile.bench]
-debug = true
-
-[profile.test]
-debug = true
-
 [lints.clippy]
 # don't stop from compiling / running
 all = "warn"
@@ -69,7 +52,7 @@ allow_attributes = { level = "deny", priority = 127 }
 # allow_attributes_without_reason = { level = "deny", priority = 127 }
 # Debatable
 # arithmetic_side_effects = { level = "deny", priority = 127 }
-# Disabled in leetcode
+# Debatable
 # as_conversions = { level = "deny", priority = 127 }
 as_pointer_underscore = { level = "deny", priority = 127 }
 as_underscore = { level = "deny", priority = 127 }
