@@ -6,7 +6,7 @@ enum Direction {
 
 impl Direction {
     fn next(&self, u: usize) -> usize {
-        match self {
+        match *self {
             Direction::Decrease => u.wrapping_sub(1),
             Direction::Standstill => u,
             Direction::Increase => u + 1,

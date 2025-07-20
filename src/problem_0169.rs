@@ -19,7 +19,7 @@ fn majority_element(nums: Vec<i32>) -> i32 {
         }
     }
 
-    *hm.iter().max_by_key(|(_, c)| *c).unwrap().0
+    *hm.iter().max_by_key(|&(_, c)| *c).unwrap().0
 }
 
 pub struct Solution;

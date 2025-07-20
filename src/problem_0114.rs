@@ -4,19 +4,19 @@ use std::rc::Rc;
 use crate::shared::TreeNode;
 
 fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
-    if let Some(r) = root {
+    if let &mut Some(ref r) = root {
         let mut b = r.borrow_mut();
 
         match (b.left.take(), b.right.take()) {
             (None, None) => {},
-            (Some(l), None) => {
-                let _ = b.right.insert(l);
+            (l @ Some(_), None) => {
+                b.right = l;
             },
-            (None, Some(r)) => {
-                let _ = b.right.insert(r);
+            (None, r @ Some(_)) => {
+                b.right = r;
             },
-            (Some(l), Some(r)) => {
-                let _ = b.right.insert(l);
+            (l @ Some(_), r @ Some(_)) => {
+                b.right = l;
 
                 let mut current = b.right.clone().unwrap();
 
@@ -32,7 +32,7 @@ fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
                         }
                     };
                 }
-                current.borrow_mut().right = Some(r);
+                current.borrow_mut().right = r;
             },
         }
 

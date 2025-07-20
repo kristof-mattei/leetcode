@@ -13,7 +13,7 @@ impl std::fmt::Debug for ListNode {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.val)?;
 
-        if let Some(n) = &self.next {
+        if let &Some(ref n) = &self.next {
             write!(f, ",{n:?}")?;
         }
 
@@ -50,9 +50,9 @@ impl TreeNode {
 
 #[must_use]
 pub fn to_ll(input: &[i32]) -> Option<Box<ListNode>> {
-    if let [head, rest @ ..] = input {
+    if let &[head, ref rest @ ..] = input {
         Some(Box::new(ListNode {
-            val: *head,
+            val: head,
             next: to_ll(rest),
         }))
     } else {

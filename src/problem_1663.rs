@@ -21,7 +21,7 @@ fn get_smallest_string(n: i32, k: i32) -> String {
 
     result.resize(result.len() + z as usize, b'z');
 
-    unsafe { String::from_utf8_unchecked(result) }
+    String::from_utf8(result).unwrap()
 }
 
 impl Solution {

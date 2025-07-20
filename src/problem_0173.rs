@@ -40,8 +40,8 @@ impl BSTIterator {
 impl Solution {
     pub fn problem() {
         let mut iterator = BSTIterator::new(None);
-        let _ = iterator.next();
-        let _ = iterator.has_next();
+        iterator.next();
+        iterator.has_next();
     }
 }
 

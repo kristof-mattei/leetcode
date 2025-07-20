@@ -1,7 +1,7 @@
 use crate::shared::ListNode;
 
 fn delete_duplicates_r(head: &mut Option<Box<ListNode>>) {
-    let Some(h) = head else {
+    let &mut Some(ref mut h) = head else {
         return;
     };
 

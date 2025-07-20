@@ -5,14 +5,14 @@ fn largest_rectangle_area(mut heights: Vec<i32>) -> i32 {
     let mut max = heights[0];
 
     for (i, height) in heights.into_iter().enumerate().skip(1) {
-        while let Some(prev_height) = stack.last().map(|(_, p)| *p) {
+        while let Some(prev_height) = stack.last().map(|&(_, p)| p) {
             if prev_height <= height {
                 break;
             }
 
             stack.pop();
 
-            let last_idx = stack.last().map_or(-1, |(i, _)| *i);
+            let last_idx = stack.last().map_or(-1, |&(i, _)| i);
 
             max = i32::max(max, prev_height * ((i as i32) - last_idx - 1));
         }

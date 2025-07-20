@@ -42,7 +42,7 @@ fn word_break(s: &str, word_dict: &[&str]) -> bool {
         }
     }
 
-    let max = unsafe { word_dict.iter().map(|s| s.len()).max().unwrap_unchecked() };
+    let max = word_dict.iter().map(|s| s.len()).max().unwrap();
 
     word_break_r(&mut HashMap::new(), s, max, word_dict)
 }

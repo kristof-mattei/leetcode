@@ -37,7 +37,7 @@ fn is_match_r(
         return remainder.is_empty() && remaining_regex.is_empty();
     };
 
-    match token {
+    match *token {
         '?' if !remainder.is_empty() => {
             // here
             memoize(cache, &remainder[1..], &remaining_regex[1..])
@@ -45,7 +45,7 @@ fn is_match_r(
         '?' => false,
         c @ 'a'..='z' => {
             if let Some(e_c) = remainder.first() {
-                if e_c == c {
+                if *e_c == c {
                     return memoize(cache, &remainder[1..], &remaining_regex[1..]);
                 }
             }

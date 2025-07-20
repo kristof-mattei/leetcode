@@ -49,11 +49,11 @@ fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
     let mut index: usize = 0;
     let mut regex_index: usize = 0;
     while let Some(token) = remaining_regex.get(regex_index) {
-        match token {
-            Token::SingleToken(t) => {
+        match *token {
+            Token::SingleToken(ref t) => {
                 match remainder.get(index) {
                     Some(c) => {
-                        if let SingleToken::Char(expected_char) = t {
+                        if let &SingleToken::Char(ref expected_char) = t {
                             if expected_char != c {
                                 return false;
                             }
@@ -63,8 +63,8 @@ fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
                 }
                 index += 1;
             },
-            Token::ZeroOrMore(st) => {
-                match st {
+            Token::ZeroOrMore(ref st) => {
+                match *st {
                     SingleToken::Char(expected_char) => {
                         // we walk for as long as we find
                         // our current character, and once at the end
@@ -72,7 +72,7 @@ fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
                         let mut highest_continuation = index;
 
                         while let Some(c) = remainder.get(highest_continuation) {
-                            if expected_char == c {
+                            if expected_char == *c {
                                 highest_continuation += 1;
                             } else {
                                 break;

@@ -29,6 +29,8 @@ fn rob(nums: &[i32]) -> i32 {
         return nums[0];
     } else if len == 2 {
         return i32::max(nums[0], nums[1]);
+    } else {
+        // ...
     }
 
     i32::max(

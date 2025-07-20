@@ -14,7 +14,7 @@ fn find_repeated_dna_sequences(s: &str) -> Vec<String> {
 
     counts
         .into_iter()
-        .filter(|(_, c)| *c >= 2)
+        .filter(|&(_, c)| c >= 2)
         .map(|(w, _)| String::from_utf8(w.to_vec()).unwrap())
         .collect::<Vec<_>>()
 }

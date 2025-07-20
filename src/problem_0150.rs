@@ -8,8 +8,8 @@ where
         if let Ok(digit) = token.as_ref().parse::<i32>() {
             stack.push(digit);
         } else {
-            let second = unsafe { stack.pop().unwrap_unchecked() };
-            let first = unsafe { stack.pop().unwrap_unchecked() };
+            let second = stack.pop().unwrap();
+            let first = stack.pop().unwrap();
 
             stack.push(match token.as_ref() {
                 "+" => first + second,

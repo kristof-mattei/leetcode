@@ -15,7 +15,7 @@ fn is_palindrome_r(
 ) -> bool {
     let node = node.unwrap();
 
-    if let Some(next) = &node.next {
+    if let &Some(ref next) = &node.next {
         if !is_palindrome_r(length + 1, max_length, left, Some(next)) {
             return false;
         }

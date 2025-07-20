@@ -40,6 +40,8 @@ fn majority_element(nums: &[i32]) -> Vec<i32> {
             value_1_count += 1;
         } else if *v == value_2 {
             value_2_count += 1;
+        } else {
+            // ...
         }
     }
 

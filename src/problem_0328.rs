@@ -33,7 +33,7 @@ fn odd_even_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     loop {
         match even_odd {
             EvenOdd::Odd => {
-                let Some(n) = list1_tail else {
+                let &mut Some(ref mut n) = list1_tail else {
                     break;
                 };
 
@@ -42,7 +42,7 @@ fn odd_even_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
                 std::mem::swap(list1_tail, list2_tail);
             },
             EvenOdd::Even => {
-                let Some(n) = list2_tail else {
+                let &mut Some(ref mut n) = list2_tail else {
                     break;
                 };
 

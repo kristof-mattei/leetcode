@@ -5,8 +5,8 @@ fn get_last_n(
     rotate_places: usize,
     depth_counter: usize,
 ) -> (Option<Box<ListNode>>, usize, usize) {
-    match head {
-        Some(n) => {
+    match *head {
+        Some(ref mut n) => {
             let (r, depth, max_depth) = get_last_n(&mut n.next, rotate_places, depth_counter + 1);
 
             if (rotate_places % max_depth) == depth {

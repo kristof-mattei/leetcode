@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 fn is_palindrome(chars: &[char]) -> bool {
-    match chars {
+    match *chars {
         [] | [_] => true,
         [..] => {
             let mut start = 0;

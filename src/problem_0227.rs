@@ -30,7 +30,7 @@ enum Token {
 
 impl std::fmt::Display for Token {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
+        match *self {
             Token::Number(n) => write!(f, "{}", n),
             Token::Divide => write!(f, "/"),
             Token::Times => write!(f, "*"),
@@ -125,14 +125,18 @@ fn parse_primary_expression(tokens: &mut Peekable<IntoIter<Token>>) -> Tree {
 fn parse_multiply_expression(tokens: &mut Peekable<IntoIter<Token>>) -> Tree {
     let mut left = parse_primary_expression(tokens);
 
-    while let Some(operation) = tokens.next_if(|t| matches!(t, Token::Divide | Token::Times)) {
+    while let Some(operation) = tokens.next_if(|t| matches!(*t, Token::Divide | Token::Times)) {
         // index + 1 as we're skipping the current token
         let right = parse_primary_expression(tokens);
 
         left = match operation {
             Token::Times => Tree::Times(left.into(), right.into()),
             Token::Divide => Tree::Divide(left.into(), right.into()),
-            _ => panic!("Invalid token"),
+            Token::Number(_)
+            | Token::Plus
+            | Token::Minus
+            | Token::LeftParenteses
+            | Token::RightParenteses => panic!("Invalid token"),
         };
     }
 
@@ -143,14 +147,18 @@ fn parse_expression(tokens: &mut Peekable<IntoIter<Token>>) -> Tree {
     let mut left = parse_multiply_expression(tokens);
 
     // make sure the parser is left associative by solving until we hit parenteses (in reality, this line should never hit a number)
-    while let Some(operation) = tokens.next_if(|t| matches!(t, Token::Plus | Token::Minus)) {
+    while let Some(operation) = tokens.next_if(|t| matches!(*t, Token::Plus | Token::Minus)) {
         // index + 1 as we're skipping the current token
         let right = parse_multiply_expression(tokens);
 
         left = match operation {
             Token::Plus => Tree::Add(left.into(), right.into()),
             Token::Minus => Tree::Subtract(left.into(), right.into()),
-            _ => panic!("Invalid token"),
+            Token::Number(_)
+            | Token::Divide
+            | Token::Times
+            | Token::LeftParenteses
+            | Token::RightParenteses => panic!("Invalid token"),
         };
     }
 

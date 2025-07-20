@@ -3,7 +3,7 @@ struct NumArray {
 }
 
 impl NumArray {
-    fn new(nums: Vec<i32>) -> Self {
+    fn new(nums: &[i32]) -> Self {
         let prefix_sums =
             nums.iter()
                 .enumerate()
@@ -26,7 +26,7 @@ impl NumArray {
 }
 
 fn sum_ranges(input: &[i32], regions: &[(i32, i32)]) -> Vec<i32> {
-    let num_array = NumArray::new(input.to_vec());
+    let num_array = NumArray::new(input);
 
     let mut result = Vec::with_capacity(regions.len());
 

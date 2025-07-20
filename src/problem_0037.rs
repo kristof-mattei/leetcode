@@ -8,7 +8,7 @@ fn solve_sudoku(board: &mut Vec<Vec<char>>) -> bool {
     for c in mask
         .iter()
         .enumerate()
-        .filter(|(_, x)| **x)
+        .filter(|&(_, x)| *x)
         .map(|(i, _)| (i as u8 + b'0') as char)
     {
         board[i][j] = c;

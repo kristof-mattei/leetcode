@@ -6,7 +6,7 @@ fn longest_valid_parentheses(s: &str) -> i32 {
 
     for (index, symbol) in s.as_bytes().iter().enumerate() {
         let index = index as i32;
-        match symbol {
+        match *symbol {
             b'(' => stack.push(index),
             b')' => {
                 stack.pop();

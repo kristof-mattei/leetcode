@@ -43,7 +43,7 @@ fn is_valid_sudoku(board: &[Vec<char>]) -> bool {
 
             if left_top
                 .iter()
-                .map(|(row, col)| board[row + (3 * row_quadrant)][col + (3 * col_quadrant)])
+                .map(|&(row, col)| board[row + (3 * row_quadrant)][col + (3 * col_quadrant)])
                 .any(|c| !check_hashmap(&mut h, c))
             {
                 return false;

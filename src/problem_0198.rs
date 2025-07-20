@@ -5,6 +5,8 @@ fn rob(nums: &[i32]) -> i32 {
         return 0;
     } else if len == 1 {
         return nums[0];
+    } else {
+        // ...
     }
 
     let mut neighbor_2_to_left_acc = nums[0];

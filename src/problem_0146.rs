@@ -35,17 +35,30 @@ impl NodeList {
     }
 
     fn move_first(&mut self, node: &mut Node) {
+        // SAFETY: we ensure next is always something
         unsafe {
             (*node.next).prev = node.prev;
+        }
+
+        // SAFETY: we ensure prev is always something
+        unsafe {
             (*node.prev).next = node.next;
         }
+
         self.push_first(node);
     }
 
     fn drop_last(&mut self) -> i32 {
+        // SAFETY: we ensure prev is always something
         let last_key = unsafe { (*self.last.prev).key };
+
+        // SAFETY: we ensure prev is always something
         unsafe {
             self.last.prev = (*self.last.prev).prev;
+        }
+
+        // SAFETY: we ensure prev is always something
+        unsafe {
             (*self.last.prev).next = self.last.as_mut();
         }
         last_key
@@ -54,6 +67,8 @@ impl NodeList {
     fn push_first(&mut self, node: &mut Node) {
         node.prev = self.first.as_mut();
         node.next = self.first.next;
+
+        // SAFETY: we ensure next is always something
         unsafe {
             (*self.first.next).prev = node;
         }

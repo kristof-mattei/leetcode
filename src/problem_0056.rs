@@ -18,7 +18,7 @@ fn merge_alt(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         if int_start == int_end {
             // single, ugh
             let single = &mut arr[int_start];
-            if let R::Empty = single {
+            if let R::Empty = *single {
                 *single = R::Single;
             }
 
@@ -26,10 +26,10 @@ fn merge_alt(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         }
 
         let start = &mut arr[int_start];
-        match start {
+        match *start {
             R::Empty | R::Single => *start = R::Start,
             R::End => *start = R::Occupied,
-            _ => {},
+            R::Start | R::Occupied => {},
         }
 
         for item in arr.iter_mut().take(int_end).skip(int_start + 1) {
@@ -37,23 +37,23 @@ fn merge_alt(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         }
 
         let end = &mut arr[int_end];
-        match end {
+        match *end {
             R::Empty | R::Single => *end = R::End,
             R::Start => *end = R::Occupied,
-            _ => {},
+            R::Occupied | R::End => {},
         }
     }
 
     let mut min = 0;
     let mut result = Vec::new();
     for (i, r) in arr.iter().enumerate() {
-        match r {
+        match *r {
             R::Start => {
                 min = i;
             },
             R::End => result.push(vec![min as i32, i as i32]),
             R::Single => result.push(vec![i as i32, i as i32]),
-            _ => {},
+            R::Empty | R::Occupied => {},
         }
     }
 

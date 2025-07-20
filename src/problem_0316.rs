@@ -29,8 +29,8 @@ fn remove_duplicate_letters(s: &str) -> String {
             visited[(s_bytes[i] - b'a') as usize] = true;
         }
     }
-    // return resultant string
-    unsafe { String::from_utf8_unchecked(result) }
+
+    String::from_utf8(result).unwrap()
 }
 
 impl Solution {

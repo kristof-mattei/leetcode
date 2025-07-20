@@ -30,8 +30,8 @@ impl Solution {
 
         min_stack.push(1);
         min_stack.pop();
-        let _ = min_stack.top();
-        let _ = min_stack.get_min();
+        min_stack.top();
+        min_stack.get_min();
     }
 }
 

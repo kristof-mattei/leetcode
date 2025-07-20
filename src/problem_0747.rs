@@ -9,6 +9,8 @@ fn dominant_index(nums: &[i32]) -> i32 {
             largest = (i, num);
         } else if num * 2 > largest.1 {
             is_largest = false;
+        } else {
+            // ...
         }
     }
 

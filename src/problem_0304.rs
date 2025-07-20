@@ -3,7 +3,7 @@ struct NumMatrix {
 }
 
 impl NumMatrix {
-    fn new(matrix: Vec<Vec<i32>>) -> Self {
+    fn new(matrix: &[Vec<i32>]) -> Self {
         let rows = matrix.len();
         let columns = matrix.first().map_or(0, std::vec::Vec::len);
 
@@ -35,7 +35,12 @@ impl NumMatrix {
 }
 
 fn sum_regions(input: &[&[i32]], regions: &[(i32, i32, i32, i32)]) -> Vec<i32> {
-    let num_matrix = NumMatrix::new(input.iter().map(|row| row.to_vec()).collect());
+    let num_matrix = NumMatrix::new(
+        &input
+            .iter()
+            .map(|row| row.to_vec())
+            .collect::<Vec<Vec<i32>>>(),
+    );
 
     let mut result = Vec::with_capacity(regions.len());
 

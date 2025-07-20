@@ -66,7 +66,8 @@ too_many_lines = { level = "allow", priority = 127 }
 
 absolute_paths = { level = "deny", priority = 127 }
 allow_attributes = { level = "deny", priority = 127 }
-allow_attributes_without_reason = { level = "deny", priority = 127 }
+# Disabled in leetcode
+# allow_attributes_without_reason = { level = "deny", priority = 127 }
 # Debatable
 # arithmetic_side_effects = { level = "deny", priority = 127 }
 # Disabled in leetcode
@@ -80,7 +81,8 @@ cfg_not_test = { level = "deny", priority = 127 }
 clone_on_ref_ptr = { level = "deny", priority = 127 }
 create_dir = { level = "deny", priority = 127 }
 dbg_macro = { level = "deny", priority = 127 }
-decimal_literal_representation = { level = "deny", priority = 127 }
+# Disabled in leetcode
+# decimal_literal_representation = { level = "deny", priority = 127 }
 # Debatable
 # default_numeric_fallback = { level = "deny", priority = 127 }
 default_union_representation = { level = "deny", priority = 127 }
@@ -110,7 +112,6 @@ inline_asm_x86_att_syntax = { level = "deny", priority = 127 }
 # integer_division = { level = "deny", priority = 127 }
 # Debatable
 # integer_division_remainder_used = { level = "deny", priority = 127 }
-iter_over_hash_type = { level = "deny", priority = 127 }
 large_include_file = { level = "deny", priority = 127 }
 let_underscore_must_use = { level = "deny", priority = 127 }
 let_underscore_untyped = { level = "deny", priority = 127 }
@@ -119,12 +120,14 @@ lossy_float_literal = { level = "deny", priority = 127 }
 # Debatable
 # map_err_ignore = { level = "deny", priority = 127 }
 map_with_unused_argument_over_ranges = { level = "deny", priority = 127 }
-missing_assert_message = { level = "deny", priority = 127 }
+# Disabled in leetcode
+# missing_assert_message = { level = "deny", priority = 127 }
 mixed_read_write_in_expression = { level = "deny", priority = 127 }
 mod_module_files = { level = "deny", priority = 127 }
 # Debatable
 # module_name_repetitions = { level = "deny", priority = 127 }
-modulo_arithmetic = { level = "deny", priority = 127 }
+# Disabled in leetcode
+# modulo_arithmetic = { level = "deny", priority = 127 }
 multiple_inherent_impl = { level = "deny", priority = 127 }
 multiple_unsafe_ops_per_block = { level = "deny", priority = 127 }
 mutex_atomic = { level = "deny", priority = 127 }

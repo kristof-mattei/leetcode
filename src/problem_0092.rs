@@ -38,7 +38,7 @@ fn reverse_between(
     } else if section1.is_none() {
         let mut connector = &mut previous;
 
-        while let Some(c) = connector {
+        while let &mut Some(ref mut c) = connector {
             connector = &mut c.next;
         }
 
@@ -55,13 +55,13 @@ fn reverse_between(
         }
 
         let mut connector = &mut orig_section1;
-        while let Some(c) = connector {
+        while let &mut Some(ref mut c) = connector {
             connector = &mut c.next;
         }
 
         *connector = previous;
 
-        while let Some(c) = connector {
+        while let &mut Some(ref mut c) = connector {
             connector = &mut c.next;
         }
         *connector = section3;

@@ -20,7 +20,7 @@ fn is_anagram(s: &str, t: &str) -> bool {
 
     for c in t.chars() {
         match frequencies_s.get_mut(c as usize - A) {
-            None | Some(0) => return false,
+            None | Some(&mut 0) => return false,
             Some(c) => {
                 *c -= 1;
             },
