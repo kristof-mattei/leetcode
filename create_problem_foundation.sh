@@ -11,8 +11,7 @@ mkdir "src/${folder_name}"
 cat > "src/${folder_name}/mod.rs" << EOF
 impl Solution {
     #[must_use]
-    #[expect(clippy::needless_pass_by_value)]
-    pub fn main_fn(input: Vec<String>) -> i32 {
+        #[expect(clippy::needless_pass_by_value, reason = "External invocation")] pub fn  main_fn(input: Vec<String>) -> i32 {
         sub_fn(&input)
     }
 }
