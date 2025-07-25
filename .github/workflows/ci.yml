@@ -271,6 +271,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       checks: write
+      contents: read
       id-token: write
       pull-requests: write
     steps:
