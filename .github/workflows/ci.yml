@@ -20,12 +20,12 @@ permissions:
 
 env:
   CARGO_TERM_COLOR: always
-  CARGO_FEATURES: --all-feaures
+  CARGO_FEATURES: --all-features
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-  RUSTFLAGS: --deny=warnings --cfg tokio_unstable
+  RUSTFLAGS: --deny=warnings
 
 jobs:
   repo-has-container:
