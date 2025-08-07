@@ -44,10 +44,10 @@ fn is_match_r(
         },
         '?' => false,
         c @ 'a'..='z' => {
-            if let Some(e_c) = remainder.first() {
-                if *e_c == c {
-                    return memoize(cache, &remainder[1..], &remaining_regex[1..]);
-                }
+            if let Some(e_c) = remainder.first()
+                && *e_c == c
+            {
+                return memoize(cache, &remainder[1..], &remaining_regex[1..]);
             }
             false
         },

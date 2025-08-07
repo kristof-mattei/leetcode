@@ -23,15 +23,14 @@ fn count_neighbors(matrix: &[Vec<i32>], coordinates: (usize, usize)) -> usize {
         let new_row = coordinates.0.checked_add_signed(direction.0);
         let new_column = coordinates.1.checked_add_signed(direction.1);
 
-        if let Some((new_row, new_column)) = new_row.zip(new_column) {
-            if matrix
+        if let Some((new_row, new_column)) = new_row.zip(new_column)
+            && matrix
                 .get(new_row)
                 .and_then(|row| row.get(new_column))
                 .map(|v| without_flag(*v))
                 == Some(1)
-            {
-                count += 1;
-            }
+        {
+            count += 1;
         }
     }
 

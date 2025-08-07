@@ -53,10 +53,10 @@ fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
             Token::SingleToken(ref t) => {
                 match remainder.get(index) {
                     Some(c) => {
-                        if let &SingleToken::Char(ref expected_char) = t {
-                            if expected_char != c {
-                                return false;
-                            }
+                        if let &SingleToken::Char(ref expected_char) = t
+                            && expected_char != c
+                        {
+                            return false;
                         }
                     },
                     None => return false,
