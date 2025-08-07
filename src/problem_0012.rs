@@ -1,6 +1,8 @@
 fn when_over_add(letters: &mut Vec<char>, num: &mut i32, over: i32, add: &[char]) {
     while *num >= over {
-        add.iter().for_each(|c| letters.push(*c));
+        for c in add {
+            letters.push(*c);
+        }
 
         *num -= over;
     }

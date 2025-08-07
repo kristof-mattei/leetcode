@@ -17,11 +17,11 @@ fn recover_tree(root: &mut Option<Rc<RefCell<TreeNode>>>) {
             loop {
                 let right_node = n.borrow().right.clone();
 
-                if let Some(right) = right_node {
-                    if &right != current_node.as_ref().unwrap() {
-                        n = right;
-                        continue;
-                    }
+                if let Some(right) = right_node
+                    && &right != current_node.as_ref().unwrap()
+                {
+                    n = right;
+                    continue;
                 }
 
                 break;

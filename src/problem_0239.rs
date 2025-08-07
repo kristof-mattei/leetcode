@@ -18,10 +18,11 @@ fn max_sliding_window(nums: &[i32], k: i32) -> Vec<i32> {
 
     for (index, num) in nums.iter().enumerate() {
         // remove the indexes that we don't consider in our window anymore
-        if let Some(&old_index) = window_indexes.front() {
-            if index >= window_size && old_index <= index - window_size {
-                window_indexes.pop_front();
-            }
+        if let Some(&old_index) = window_indexes.front()
+            && index >= window_size
+            && old_index <= index - window_size
+        {
+            window_indexes.pop_front();
         }
 
         // remove all indexes with values smaller than current value

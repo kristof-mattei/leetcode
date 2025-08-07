@@ -19,7 +19,9 @@ fn set_zeroes(matrix: &mut [Vec<i32>]) {
     }
     for col in cols_to_zero {
         // zero out col
-        matrix.iter_mut().for_each(|r| r[col] = 0);
+        for r in matrix.iter_mut() {
+            r[col] = 0;
+        }
     }
 }
 
