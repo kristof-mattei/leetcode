@@ -46,10 +46,10 @@ RUN cargo init --name ${APPLICATION_NAME}
 
 COPY ./.cargo ./Cargo.toml ./Cargo.lock ./
 
-RUN --mount=type=cache,target=/build/target,sharing=locked \
+RUN --mount=type=cache,target=/build/target/${TARGET},sharing=locked \
     --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db \
     --mount=type=cache,id=cargo-registry,target=/usr/local/cargo/registry \
-    /build-scripts/build.sh build --release --target ${TARGET}
+    /build-scripts/build.sh build --release --target ${TARGET} --target-dir ./target/${TARGET}
 
 # Rust full build
 FROM rust-cargo-build AS rust-build
@@ -63,10 +63,10 @@ COPY ./src ./src
 RUN touch ./src/main.rs
 
 # --release not needed, it is implied with install
-RUN --mount=type=cache,target=/build/target,sharing=locked \
+RUN --mount=type=cache,target=/build/target/${TARGET},sharing=locked \
     --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db \
     --mount=type=cache,id=cargo-registry,target=/usr/local/cargo/registry \
-    /build-scripts/build.sh install --path . --locked --target ${TARGET} --root /output
+    /build-scripts/build.sh install --path . --locked --target ${TARGET} --target-dir ./target/${TARGET} --root /output
 
 # Container user setup
 FROM --platform=${BUILDPLATFORM} alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1 AS passwd-build
