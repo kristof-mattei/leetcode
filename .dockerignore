@@ -1,7 +1,7 @@
 # Ignore all
 *
 
-# And explicitely allow...
+# And explicitly include...
 !/.cargo
 !/build-scripts
 !/Cargo.lock
