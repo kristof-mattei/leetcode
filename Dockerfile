@@ -54,8 +54,8 @@ COPY ./.cargo ./Cargo.toml ./Cargo.lock ./
 # both target platforms. It doesn't matter, as after unlocking the other one
 # just validates, but doesn't need to download anything
 RUN --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db,sharing=locked \
-    --mount=type=cache,id=cargo-registry-index,target=/usr/local/cargo/registry/index \
-    --mount=type=cache,id=cargo-registry-cache,target=/usr/local/cargo/registry/cache \
+    --mount=type=cache,id=cargo-registry-index,target=/usr/local/cargo/registry/index,sharing=locked \
+    --mount=type=cache,id=cargo-registry-cache,target=/usr/local/cargo/registry/cache,sharing=locked \
     cargo fetch
 
 RUN --mount=type=cache,target=/build/target/${TARGET},sharing=locked \
