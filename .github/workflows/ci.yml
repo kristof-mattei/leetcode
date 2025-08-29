@@ -126,11 +126,11 @@ jobs:
         shell: bash
         working-directory: /tmp
         run: |
-          case ${{ github.runner.name }} in
-            ubuntu-latest)
+          case ${{ runner.arch }} in
+            X64)
               full_platform="x86_64"
               ;;
-            ubuntu-24.04-arm)
+            ARM64)
               full_platform="aarch64"
               ;;
           esac
