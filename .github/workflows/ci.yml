@@ -233,8 +233,6 @@ jobs:
 
       - *cache_cargo
 
-      - *cache_target
-
       - *set_up_mold
 
       - *set_up_toolchain
