@@ -18,6 +18,21 @@ RUN --mount=type=cache,id=apt-cache,target=/var/cache/apt,sharing=locked \
         build-essential \
         musl-dev
 
+# The following block
+# creates an empty app, and we copy in Cargo.toml and Cargo.lock as they represent our dependencies
+# This allows us to copy in the source in a different layer which in turn allows us to leverage Docker's layer caching
+# That means that if our dependencies don't change rebuilding is much faster
+WORKDIR /build
+
+RUN cargo init --name ${APPLICATION_NAME}
+
+COPY ./.cargo ./Cargo.toml ./Cargo.lock ./
+
+# We use `fetch` to pre-download the files to the cache
+RUN --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db,sharing=locked \
+    --mount=type=cache,id=cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
+    cargo fetch
+
 FROM rust-base AS rust-linux-amd64
 ARG TARGET=x86_64-unknown-linux-musl
 
@@ -35,16 +50,6 @@ RUN --mount=type=cache,id=apt-cache-${TARGET},from=rust-base,target=/var/cache/a
     /build-scripts/setup-env.sh
 
 RUN rustup target add ${TARGET}
-
-# The following block
-# creates an empty app, and we copy in Cargo.toml and Cargo.lock as they represent our dependencies
-# This allows us to copy in the source in a different layer which in turn allows us to leverage Docker's layer caching
-# That means that if our dependencies don't change rebuilding is much faster
-WORKDIR /build
-
-RUN cargo init --name ${APPLICATION_NAME}
-
-COPY ./.cargo ./Cargo.toml ./Cargo.lock ./
 
 RUN --mount=type=cache,target=/build/target/${TARGET},sharing=locked \
     --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db \
