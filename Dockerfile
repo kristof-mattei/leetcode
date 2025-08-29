@@ -2,11 +2,10 @@
 FROM --platform=${BUILDPLATFORM} rust:1.89.0-trixie@sha256:26318aeddc7e7335b55ab32f943ec2d400bcc024649f8dbdee569bfa85f0c11d AS rust-base
 
 ARG APPLICATION_NAME
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN rm -f /etc/apt/apt.conf.d/docker-clean \
     && echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
-
-ARG DEBIAN_FRONTEND=noninteractive
 
 # borrowed (Ba Dum Tss!) from
 # https://github.com/pablodeymo/rust-musl-builder/blob/7a7ea3e909b1ef00c177d9eeac32d8c9d7d6a08c/Dockerfile#L48-L49
@@ -26,9 +25,9 @@ ARG TARGET=aarch64-unknown-linux-musl
 
 FROM rust-${TARGETPLATFORM//\//-} AS rust-cargo-build
 
-COPY ./build-scripts /build-scripts
-
 ARG DEBIAN_FRONTEND=noninteractive
+
+COPY ./build-scripts /build-scripts
 
 RUN --mount=type=cache,id=apt-cache-${TARGET},from=rust-base,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,id=apt-lib-${TARGET},from=rust-base,target=/var/lib/apt,sharing=locked \
@@ -54,8 +53,8 @@ COPY ./.cargo ./Cargo.toml ./Cargo.lock ./
 # both target platforms. It doesn't matter, as after unlocking the other one
 # just validates, but doesn't need to download anything
 RUN --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db,sharing=locked \
-    --mount=type=cache,id=cargo-registry-index,target=/usr/local/cargo/registry/index \
-    --mount=type=cache,id=cargo-registry-cache,target=/usr/local/cargo/registry/cache \
+    --mount=type=cache,id=cargo-registry-index,target=/usr/local/cargo/registry/index,sharing=locked \
+    --mount=type=cache,id=cargo-registry-cache,target=/usr/local/cargo/registry/cache,sharing=locked \
     cargo fetch
 
 RUN --mount=type=cache,target=/build/target/${TARGET},sharing=locked \
