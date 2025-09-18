@@ -2,6 +2,258 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v1.4.0](https://github.com/kristof-mattei/rust-seed/compare/f6e2ad9ef43c26ca22674cf31580bae7e84322f1..v1.4.0) - 2025-09-18
+#### Bug Fixes
+- **(deps)** update rust crate color-eyre to 0.6.5 - ([6cbb98d](https://github.com/kristof-mattei/rust-seed/commit/6cbb98dc877f5d2785ceb938f3fca30172c21bbe)) - renovate[bot]
+- **(deps)** update rust crate openssl to 0.10.73 - ([818d5d7](https://github.com/kristof-mattei/rust-seed/commit/818d5d763e04fc8e3f0638a9264e9c8f1aecc4cb)) - renovate[bot]
+- image as well because renovate is slow - ([b2a2c2d](https://github.com/kristof-mattei/rust-seed/commit/b2a2c2d675d902775baa61a96ee7c47e9ab0106c)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- admin can bypass - ([872a8bf](https://github.com/kristof-mattei/rust-seed/commit/872a8bf3a220c13f61cfaed5fc72862363e033ce)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- set sha for pnpm - ([eb3e312](https://github.com/kristof-mattei/rust-seed/commit/eb3e3126b017db2a4482f00cb5097f53cd852a1e)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- use semver version. - ([f7fa495](https://github.com/kristof-mattei/rust-seed/commit/f7fa495682e4910b99bf39850988cecd6eb6e7c2)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- separate cache package - ([b14d54a](https://github.com/kristof-mattei/rust-seed/commit/b14d54ac88e7ff177857235b4d0067b86aa7b202)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- restore missed raw tag - ([cc2ea20](https://github.com/kristof-mattei/rust-seed/commit/cc2ea20087e8ec53794c650a0c330b23f69fb589)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- we lost the pr-<number>-latest tag - ([78eb251](https://github.com/kristof-mattei/rust-seed/commit/78eb2517abc67f51409de808583dcacf75544dd8)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- download binstall based on runner arch - ([1307db8](https://github.com/kristof-mattei/rust-seed/commit/1307db8f053679f68b0ace029d056730980eedda)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- fmt doesn't need target - ([0d9005c](https://github.com/kristof-mattei/rust-seed/commit/0d9005c5f324e604141694007df0b24bfc2cff61)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- shrink what we cache - ([a71972a](https://github.com/kristof-mattei/rust-seed/commit/a71972a001a23b800efb383affc9bc0c5356da7c)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- disable cache dependencies for docker build, the downloading of ./target takes up too much space, and we're not building anyway - ([a6b9b6f](https://github.com/kristof-mattei/rust-seed/commit/a6b9b6fd4afc687635b0c2dd4f2be81c19476344)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- bring ARG together - ([cc62162](https://github.com/kristof-mattei/rust-seed/commit/cc621629fd8c447546f8bb2391bda7cf1ff7e858)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- lock fetch - ([d7ac9da](https://github.com/kristof-mattei/rust-seed/commit/d7ac9da6eba1e8c34be075a95a107496f24f7181)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- src in registry should not be cached - ([5c4d96c](https://github.com/kristof-mattei/rust-seed/commit/5c4d96cd47b47d95fce5e7bdf614c73ccb193f05)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- fetch per arch, locked, and explicit import - ([399084a](https://github.com/kristof-mattei/rust-seed/commit/399084afecc27cbc36fe204c6804d036d4a98834)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- copilot instructions - ([a494929](https://github.com/kristof-mattei/rust-seed/commit/a4949293d72a56254fd14699807855ee539a787e)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- pre-cache - ([e35eb20](https://github.com/kristof-mattei/rust-seed/commit/e35eb2015728b1f7e1c210e89bacbbc18ff96c2e)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- build multi-platform docker images - ([5342da1](https://github.com/kristof-mattei/rust-seed/commit/5342da175081a5dd495b3039e06cea73011ee475)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- set full version - ([5535b81](https://github.com/kristof-mattei/rust-seed/commit/5535b81f32546a474b3efcc5a96158bf47311133)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- use the github token to ensure we can download - ([f6ecce7](https://github.com/kristof-mattei/rust-seed/commit/f6ecce72871eba2bd3d8386da8afc525f803942d)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- missing read permissions in test and report - ([3f8f6a5](https://github.com/kristof-mattei/rust-seed/commit/3f8f6a51b3ce1be82b2c165f75353c4e9b222ae4)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- feaTures - ([6372af0](https://github.com/kristof-mattei/rust-seed/commit/6372af04da9b9ce338e2ec2d12e00f3fedbb2ec5)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- allow cargo features selection - ([bb52f2f](https://github.com/kristof-mattei/rust-seed/commit/bb52f2fe772f0cbed2ae63ebcd109f7b10d08597)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- we know that sort order when iterating over hash-type isn't guaranteed - ([82a22ac](https://github.com/kristof-mattei/rust-seed/commit/82a22acb0bf4caf05e96785c69f69db94a7f07fa)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- cleanup unused lints - ([5a38041](https://github.com/kristof-mattei/rust-seed/commit/5a38041fe40daa98087753ea9c3a2a4cab2a842e)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- set correct guard name - ([3131d66](https://github.com/kristof-mattei/rust-seed/commit/3131d663eac696ac0d1ed2aa522051f1218e8067)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- remove unused env that comes in via variables - ([adf0cd7](https://github.com/kristof-mattei/rust-seed/commit/adf0cd7117034c106eac21c2384bfa282d4271b8)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- reorder - ([d0080cd](https://github.com/kristof-mattei/rust-seed/commit/d0080cde013c86eab0087d897024be4ab18df1ae)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- restore package.json 2 tab width - ([f8851e3](https://github.com/kristof-mattei/rust-seed/commit/f8851e36b4f0f8795b4a945211e673f3aa8dcb55)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- ignore Cargo.lock from being formatted - ([e721512](https://github.com/kristof-mattei/rust-seed/commit/e72151217ff0eb6b92d4a15dfd11aeba8ee2687d)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- validate toml & sh & ... formatting as part of PR process - ([69f84c6](https://github.com/kristof-mattei/rust-seed/commit/69f84c6436c864b272611f8629b1dbda46560e45)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- simplify license, use MIT license instead of BSD, simplify package.json - ([da64573](https://github.com/kristof-mattei/rust-seed/commit/da64573e286744b1e812856b7d8cb8e27d600447)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- also ignore samply output - ([87357c9](https://github.com/kristof-mattei/rust-seed/commit/87357c9d0439fd731cb818c830898947a3735025)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- schema - ([df22c46](https://github.com/kristof-mattei/rust-seed/commit/df22c4616102dd6af00cd2f8993cf6d955467c99)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- infer edition from Cargo.toml - ([f1d0742](https://github.com/kristof-mattei/rust-seed/commit/f1d0742fa46c850b4c983d5c6e378108bd22e942)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- also set style_edition - ([172d6ab](https://github.com/kristof-mattei/rust-seed/commit/172d6ab04a50b2f19415ec0b64726b6d6d773db5)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- remove unused script - ([f8aa057](https://github.com/kristof-mattei/rust-seed/commit/f8aa05727ba3a31d557bb9287eccf147edc8827d)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- ensure cargo.lock is up to date - ([75f241b](https://github.com/kristof-mattei/rust-seed/commit/75f241bf01868d419fa383572650b891c06cacc6)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- ignore pnpm-lock.yaml format - ([34ee806](https://github.com/kristof-mattei/rust-seed/commit/34ee80670cf28b511be17ca61fdb52d0eb463ce4)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- pnpm - ([229ffad](https://github.com/kristof-mattei/rust-seed/commit/229ffad2a4bb0deb7f0c2d4fa954c84691262494)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- build-mode `manual` is not supported for Rust - ([7659499](https://github.com/kristof-mattei/rust-seed/commit/76594994e616ebef734f5a7c275c5a19249d5d52)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- manually build Rust for codeql as per our standard build - ([af9390e](https://github.com/kristof-mattei/rust-seed/commit/af9390ee873ba6968417c2749569cc630214ca7e)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- reduce permissions - ([54b4398](https://github.com/kristof-mattei/rust-seed/commit/54b4398e66ee00c3e8f2254b9479d7ff79b29026)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- remove no-deps - ([80518c0](https://github.com/kristof-mattei/rust-seed/commit/80518c0b1875c34158846e16e7de58d7b422b6e9)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- uppercase - ([e70a0ca](https://github.com/kristof-mattei/rust-seed/commit/e70a0ca8dda3bc0126f539a945a0477ab6c8c875)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- line continuation - ([8239c41](https://github.com/kristof-mattei/rust-seed/commit/8239c4108c487acea05461ebe09f69887a3bd597)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- dir, path, I don't know anymore - ([4bfa22d](https://github.com/kristof-mattei/rust-seed/commit/4bfa22d121e114bb8fbb8435ec90735f4f30466c)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- cache per arch, as these overwrite each other - ([90bb69a](https://github.com/kristof-mattei/rust-seed/commit/90bb69af3c0d082b4cea18a161b99e34d61cd5fc)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- install with locked to prevent cargo from updating deps during cargo install - ([bdb7e91](https://github.com/kristof-mattei/rust-seed/commit/bdb7e91b3054f6ef902f1c87870118ff035638e3)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- correct dpkg-architecture architecture check - ([83055c9](https://github.com/kristof-mattei/rust-seed/commit/83055c9bba144255202d4d12658323903be69d53)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- switch to prettier's mjs setup, widen limit for non-json files - ([15954b2](https://github.com/kristof-mattei/rust-seed/commit/15954b23a004049eb88cbce34cc69bd231dce81e)) - [@kristof-mattei](https://github.com/kristof-mattei)
+#### Features
+- write output to per-target folder, otherwise caches overwrite each other causing recompilation in the install step - ([aabbed1](https://github.com/kristof-mattei/rust-seed/commit/aabbed1fd86be610b46a911d2d1cf7231b0ec5ac)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- separate cache based on target to allow for more efficient caching - ([89bcb9b](https://github.com/kristof-mattei/rust-seed/commit/89bcb9be9680fa5d0df610d93fb9b978a3362202)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- pin to trixie, use gcc-14 from trixie - ([e0ea2a2](https://github.com/kristof-mattei/rust-seed/commit/e0ea2a212118b3a24d52bb86ae8bb5ed8e6582bd)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- use anchors to dedup build - ([f6cafa4](https://github.com/kristof-mattei/rust-seed/commit/f6cafa45b7e0bfd4c29dc2f7f0e57ba258a96922)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- I rule(set) - ([37253e2](https://github.com/kristof-mattei/rust-seed/commit/37253e288eefd5b1e8f7c40184fcf7b9acd90ec4)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- restrict ALL - ([28544d3](https://github.com/kristof-mattei/rust-seed/commit/28544d39a362f8b2e9066f1a4ba89e8f9a6e3941)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- attest individual and multiplatform images - ([b2393c1](https://github.com/kristof-mattei/rust-seed/commit/b2393c1478174e162e13e33ac06c4d3ccf028e84)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- ensure formatting works - ([a7ae4c6](https://github.com/kristof-mattei/rust-seed/commit/a7ae4c6870fcd124a76741003d4dce3773f7a056)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- update publish defaults - ([406e06c](https://github.com/kristof-mattei/rust-seed/commit/406e06cae013094a6e2995e2c49158b1677b814e)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- enable codeql - ([9d22fa5](https://github.com/kristof-mattei/rust-seed/commit/9d22fa5261061d03a3c63a9fa5f5599e374b36ed)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- multiplatform with caching - ([6c5188b](https://github.com/kristof-mattei/rust-seed/commit/6c5188b32d43e0f8ae0bd1d9082871b23e244116)) - [@kristof-mattei](https://github.com/kristof-mattei)
+#### Miscellaneous Chores
+- **(deps)** update rust to v1.90.0 - ([7780a0d](https://github.com/kristof-mattei/rust-seed/commit/7780a0dc2fbd8a69dfb027684fe83593475070c0)) - renovate[bot]
+- **(deps)** update rust to v1.90.0 - ([a164a0b](https://github.com/kristof-mattei/rust-seed/commit/a164a0b12810c370ff68cce282cac3b678e4c4cd)) - renovate[bot]
+- **(deps)** update rust:1.89.0-trixie docker digest to 57407b3 - ([c215618](https://github.com/kristof-mattei/rust-seed/commit/c215618f20a868a0ce9bde899d750b60a2f76d03)) - renovate[bot]
+- **(deps)** update pnpm to v10.16.1 - ([85087c7](https://github.com/kristof-mattei/rust-seed/commit/85087c790e31bbf5521b574ce5432bd2af49359a)) - renovate[bot]
+- **(deps)** update pnpm to v10.16.0 - ([6fed3cb](https://github.com/kristof-mattei/rust-seed/commit/6fed3cb6021a614ca08e3ebb766455f335953156)) - renovate[bot]
+- **(deps)** update node.js to v24.8.0 - ([827bca5](https://github.com/kristof-mattei/rust-seed/commit/827bca524ed48ee23b2f5e2816eef2b699db05d6)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.30.3 - ([824996f](https://github.com/kristof-mattei/rust-seed/commit/824996f93296be15ea297a1613c75bc6c09da878)) - renovate[bot]
+- **(deps)** update rust:1.89.0-trixie docker digest to 9e1b362 - ([e586cbf](https://github.com/kristof-mattei/rust-seed/commit/e586cbf096b1833ffbf00f2c538ea58f4d65a4c9)) - renovate[bot]
+- **(deps)** update rust:1.89.0-trixie docker digest to 85456cd - ([aabcbe3](https://github.com/kristof-mattei/rust-seed/commit/aabcbe30b6159a631770cf11aae1ee0d2861306e)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.136.0 - ([b75c279](https://github.com/kristof-mattei/rust-seed/commit/b75c279458c4a0731ab18c1b3078552cf705dd1f)) - renovate[bot]
+- **(deps)** update rust:1.89.0-trixie docker digest to 1ca9500 - ([2e07c07](https://github.com/kristof-mattei/rust-seed/commit/2e07c0744f7eda9dd7aaf38a85d066c279c4cfc9)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.30.2 - ([8d876d7](https://github.com/kristof-mattei/rust-seed/commit/8d876d704bcb5ab355f070f1fd67f09e03e4e71c)) - renovate[bot]
+- **(deps)** update rust:1.89.0-trixie docker digest to 02a86ff - ([0cac033](https://github.com/kristof-mattei/rust-seed/commit/0cac03397f9709ccae18cc9db10c6e6b90867fa3)) - renovate[bot]
+- **(deps)** update rust:1.89.0-trixie docker digest to ed61687 - ([009bff0](https://github.com/kristof-mattei/rust-seed/commit/009bff069c47a1031f7a408a5b3785c509fd28b1)) - renovate[bot]
+- **(deps)** update softprops/action-gh-release action to v2.3.3 - ([c9f4686](https://github.com/kristof-mattei/rust-seed/commit/c9f46866dca7e6d3e3510b97e5286b67153565ae)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.30.1 - ([d5226b8](https://github.com/kristof-mattei/rust-seed/commit/d5226b8baa5d10d0e3bb8745b7ec08279b6f815e)) - renovate[bot]
+- **(deps)** update codecov/codecov-action action to v5.5.1 - ([2f893d2](https://github.com/kristof-mattei/rust-seed/commit/2f893d2a96b1a7fd908fb0249914f4c7e8eabd1d)) - renovate[bot]
+- **(deps)** update actions/setup-node action to v5 - ([cf5d4d8](https://github.com/kristof-mattei/rust-seed/commit/cf5d4d88a8169ffc290ea10debe6b60ae457d6e5)) - renovate[bot]
+- **(deps)** update mcr.microsoft.com/devcontainers/rust docker tag to v2 - ([6e6bd0f](https://github.com/kristof-mattei/rust-seed/commit/6e6bd0fdf195eaa4d2152dd0a27f3b132901652f)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.135.0 - ([2019f8d](https://github.com/kristof-mattei/rust-seed/commit/2019f8d13858c00f8b6ff9ec432cbbedbf4825bb)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.30.0 - ([bd3a8f7](https://github.com/kristof-mattei/rust-seed/commit/bd3a8f7f6715e9d138a47c8237566cabcb002a6c)) - renovate[bot]
+- **(deps)** update pnpm to v10.15.1 - ([29d44db](https://github.com/kristof-mattei/rust-seed/commit/29d44db1367040f284479896fc42cd89d2fd90a2)) - renovate[bot]
+- **(deps)** lock file maintenance - ([a323fff](https://github.com/kristof-mattei/rust-seed/commit/a323fff431984c1f1fd3443431ca3c41d8da1ce2)) - renovate[bot]
+- **(deps)** update rust:1.89.0-trixie docker digest to 3329e2d - ([843d664](https://github.com/kristof-mattei/rust-seed/commit/843d664893cd62b35193b4ab92b13146e6cf83c8)) - renovate[bot]
+- **(deps)** update actions/attest-build-provenance action to v3 - ([b2c425a](https://github.com/kristof-mattei/rust-seed/commit/b2c425a43db8ab20110209af965068ac81680c91)) - renovate[bot]
+- **(deps)** update node.js to v22.19.0 - ([8b8630a](https://github.com/kristof-mattei/rust-seed/commit/8b8630a7a196115edd6820df97e8729b72fec18e)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.134.0 - ([937a357](https://github.com/kristof-mattei/rust-seed/commit/937a357eb8cd96842a1c2e6e316295ed7123b9c4)) - renovate[bot]
+- **(deps)** update rust:1.89.0-trixie docker digest to 26318ae - ([704425d](https://github.com/kristof-mattei/rust-seed/commit/704425d8864abe6fbc5ec1bdf66a4ca665c406d8)) - renovate[bot]
+- **(deps)** update rui314/setup-mold digest to 725a879 - ([0471be4](https://github.com/kristof-mattei/rust-seed/commit/0471be4b6dcc82a9dfbb695e0488f1cc22a538c4)) - renovate[bot]
+- **(deps)** lock file maintenance - ([d23d127](https://github.com/kristof-mattei/rust-seed/commit/d23d127222b774129b376b33c719838f9a1bb8ce)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.133.0 - ([57b6d36](https://github.com/kristof-mattei/rust-seed/commit/57b6d36a28e74b840cd0a2a8e3ba20694b4926e5)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.11 - ([a5d35c9](https://github.com/kristof-mattei/rust-seed/commit/a5d35c99e3bef57003a4199d7ba4e406ff32d4e8)) - renovate[bot]
+- **(deps)** update codecov/codecov-action action to v5.5.0 - ([78fa667](https://github.com/kristof-mattei/rust-seed/commit/78fa667ea8a7d1c6bcf8c3324d20c51fdf2f03c0)) - renovate[bot]
+- **(deps)** update rust:1.89.0 docker digest to 6e6d04b - ([a1d6030](https://github.com/kristof-mattei/rust-seed/commit/a1d60304409de64e9c5a199573544956372dda7e)) - renovate[bot]
+- **(deps)** update pnpm to v10.15.0 - ([26d6c14](https://github.com/kristof-mattei/rust-seed/commit/26d6c147b6fe4f949297eb01f7d198ccf5442696)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.10 - ([0db6841](https://github.com/kristof-mattei/rust-seed/commit/0db6841f7a603b7f340e34ed31403a41dd911cb3)) - renovate[bot]
+- **(deps)** lock file maintenance - ([992955c](https://github.com/kristof-mattei/rust-seed/commit/992955c2e2d56355d5fe113244e5045e0217cb84)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.132.1 - ([f9ff8c0](https://github.com/kristof-mattei/rust-seed/commit/f9ff8c08f8404ae056d8634394467a7bb6fabe6c)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.132.0 - ([31c3305](https://github.com/kristof-mattei/rust-seed/commit/31c3305f9b7714cb9accd6ff23412530789f6fc8)) - renovate[bot]
+- **(deps)** update rust:1.89.0 docker digest to e090f7b - ([c88fb12](https://github.com/kristof-mattei/rust-seed/commit/c88fb12382efc21b8e4e5808951db0d047444555)) - renovate[bot]
+- **(deps)** update rust:1.89.0 docker digest to ded0544 - ([b3850ed](https://github.com/kristof-mattei/rust-seed/commit/b3850ede068ab02b2dbe51bec4788660420294f5)) - renovate[bot]
+- **(deps)** update rust:1.89.0 docker digest to 5fa1490 - ([f0b4718](https://github.com/kristof-mattei/rust-seed/commit/f0b47189378036cca99254b26a3364bc06bd6a64)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.9 - ([9e51466](https://github.com/kristof-mattei/rust-seed/commit/9e514666c0641a1f9fd57fe3b4db65e9e7776359)) - renovate[bot]
+- **(deps)** update actions/checkout action to v5 - ([ee2ebe0](https://github.com/kristof-mattei/rust-seed/commit/ee2ebe0e5ff435b4bed3e062f484d94660815f83)) - renovate[bot]
+- **(deps)** update actions/checkout action to v4.3.0 - ([726d1ad](https://github.com/kristof-mattei/rust-seed/commit/726d1ad089f726050f1449c51e86434d71737566)) - renovate[bot]
+- **(deps)** lock file maintenance - ([a58a12a](https://github.com/kristof-mattei/rust-seed/commit/a58a12ae54a41123821d2cd3dfa3a2ec4c4e9050)) - renovate[bot]
+- **(deps)** update rust to v1.89.0 - ([e990cc2](https://github.com/kristof-mattei/rust-seed/commit/e990cc21b5206c3c9a4204a777b69304ef04696a)) - renovate[bot]
+- **(deps)** update rust docker tag to v1.89.0 - ([725d0eb](https://github.com/kristof-mattei/rust-seed/commit/725d0eb95c986d4cdb92a1fd77684f7e6f3170a0)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.8 - ([8b63f17](https://github.com/kristof-mattei/rust-seed/commit/8b63f17065450db6d3dd79636e594b6de945900b)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.7 - ([38ac5ab](https://github.com/kristof-mattei/rust-seed/commit/38ac5abc97c3a3ab3b6dba99ea64d57210c485d6)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.6 - ([f73cca1](https://github.com/kristof-mattei/rust-seed/commit/f73cca1cb2b0e225eedb3698702d80a27d6773f7)) - renovate[bot]
+- **(deps)** update actions/cache action to v4.2.4 - ([be42d5b](https://github.com/kristof-mattei/rust-seed/commit/be42d5bbfd846d448cf1b8092dd99796cac9d152)) - renovate[bot]
+- **(deps)** update rui314/setup-mold digest to 7344740 - ([081b68f](https://github.com/kristof-mattei/rust-seed/commit/081b68f40aefcb27970caeb4e029f24774ebf6da)) - renovate[bot]
+- **(deps)** update actions/download-artifact action to v5 - ([22da96a](https://github.com/kristof-mattei/rust-seed/commit/22da96a1b42359c3c412da674edb21c1936e370e)) - renovate[bot]
+- **(deps)** update docker/login-action action to v3.5.0 - ([cb8ef0c](https://github.com/kristof-mattei/rust-seed/commit/cb8ef0c709c76ca057bcbb34c4b50f3b679d49b6)) - renovate[bot]
+- **(deps)** update docker/metadata-action action to v5.8.0 - ([62b932a](https://github.com/kristof-mattei/rust-seed/commit/62b932a7f5545d5ad5ad3d877a6a1f43ecfdfb35)) - renovate[bot]
+- **(deps)** update node.js to v22.18.0 - ([758d4a2](https://github.com/kristof-mattei/rust-seed/commit/758d4a21e7190a6fbcc5be3283007cbcec82a6fb)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.131.0 - ([699d3c4](https://github.com/kristof-mattei/rust-seed/commit/699d3c4e8de5baf2eb49b247e23165ae79270fee)) - renovate[bot]
+- **(deps)** update pnpm to v10.14.0 - ([24bba4b](https://github.com/kristof-mattei/rust-seed/commit/24bba4b1fc81409415c6e5c23601d1b1668f3e51)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.5 - ([603785e](https://github.com/kristof-mattei/rust-seed/commit/603785ef3893e008c8a8f35eb84a2f7aa22b6062)) - renovate[bot]
+- **(deps)** lock file maintenance - ([6be5680](https://github.com/kristof-mattei/rust-seed/commit/6be56805074e7cfe0ae6771c751a0227f478df8c)) - renovate[bot]
+- **(deps)** update rust:1.88.0 docker digest to af306cf - ([e5aa7da](https://github.com/kristof-mattei/rust-seed/commit/e5aa7da7aad1e247ca7d7bb8847f85fc5a04d90c)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.130.0 - ([d8824e5](https://github.com/kristof-mattei/rust-seed/commit/d8824e5cef256945a557c23debce82a7130f152e)) - renovate[bot]
+- **(deps)** update rust:1.88.0 docker digest to d8fb475 - ([ec52207](https://github.com/kristof-mattei/rust-seed/commit/ec52207d287b583c116bb1b91c0ef87fa896d824)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.4 - ([4404182](https://github.com/kristof-mattei/rust-seed/commit/4404182baf4f2d70ccc6657a2457f21890ed51fe)) - renovate[bot]
+- **(deps)** update rust:1.88.0 docker digest to 4f63ef8 - ([f85cacc](https://github.com/kristof-mattei/rust-seed/commit/f85cacc8f60189ca5a70aa9987257dba6b4be3ad)) - renovate[bot]
+- **(deps)** update rust:1.88.0 docker digest to a5c5c4b - ([7e9c415](https://github.com/kristof-mattei/rust-seed/commit/7e9c415b2151044eb46c6fc9831b2581da71dddd)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.3 - ([be7c61e](https://github.com/kristof-mattei/rust-seed/commit/be7c61ebdd149d0848e08337ecd2a46b7b4c6b38)) - renovate[bot]
+- **(deps)** update rui314/setup-mold digest to 702b190 - ([0895c08](https://github.com/kristof-mattei/rust-seed/commit/0895c08dfa9e5b4850a70db83e238a541bdeaaf1)) - renovate[bot]
+- **(deps)** update registry:3 docker digest to 3725021 - ([ddc9e10](https://github.com/kristof-mattei/rust-seed/commit/ddc9e10210fd3a339c48cf25485ed7354bc37173)) - renovate[bot]
+- **(deps)** update registry:3 docker digest to 45fbac2 - ([fe0c52f](https://github.com/kristof-mattei/rust-seed/commit/fe0c52f27b4f1a40d5b67b73f92253901184de9b)) - renovate[bot]
+- **(deps)** update alpine docker tag to v3.22.1 - ([0c3e584](https://github.com/kristof-mattei/rust-seed/commit/0c3e584a394b199d0c7451dd2a2716a5adf94d30)) - renovate[bot]
+- **(deps)** update node.js to v22.17.1 - ([a0885e7](https://github.com/kristof-mattei/rust-seed/commit/a0885e76152b3f0bbf879e50df13e2b07a701237)) - renovate[bot]
+- **(deps)** update registry:3 docker digest to eeb2e8e - ([61eff3b](https://github.com/kristof-mattei/rust-seed/commit/61eff3ba2230cb89df6723ab4880f43dd50b3885)) - renovate[bot]
+- **(deps)** pin registry docker tag to 1fc7de6 - ([28a7ca3](https://github.com/kristof-mattei/rust-seed/commit/28a7ca36050985f986a00045706c72ad8bdc3b81)) - renovate[bot]
+- **(deps)** update actions/attest-build-provenance action to v2.4.0 - ([32a7582](https://github.com/kristof-mattei/rust-seed/commit/32a758264a1831e6c81e9be9ba91ac31699ed4a9)) - renovate[bot]
+- **(deps)** update mcr.microsoft.com/devcontainers/rust:1-1-bullseye docker digest to 6817e2f - ([ab61eb3](https://github.com/kristof-mattei/rust-seed/commit/ab61eb38932d0178a68b01283bf88cbefb50abaa)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.128.1 - ([9cdcee8](https://github.com/kristof-mattei/rust-seed/commit/9cdcee88a2192857beb919ccff04e1064dcd78b1)) - renovate[bot]
+- **(deps)** update pnpm to v10 - ([d784411](https://github.com/kristof-mattei/rust-seed/commit/d784411ec0904aeace8a3a66fbbad1f3f7e3e084)) - renovate[bot]
+- **(deps)** lock file maintenance - ([78e8cf5](https://github.com/kristof-mattei/rust-seed/commit/78e8cf5c6fb7b3cd40f804ef1ce93d89648fa6c3)) - renovate[bot]
+- **(deps)** update pnpm to v9.15.9 - ([cd30c4d](https://github.com/kristof-mattei/rust-seed/commit/cd30c4d33a93ea2d2c8428c7cd12bfc89acb95a3)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.128.0 - ([c5a7e9d](https://github.com/kristof-mattei/rust-seed/commit/c5a7e9df937b3c054950dc3d018d3dad1e15a4bf)) - renovate[bot]
+- **(deps)** update rust:1.88.0 docker digest to 5771a3c - ([b2e0a38](https://github.com/kristof-mattei/rust-seed/commit/b2e0a380ecc7c6c8490c3c265b9b52c4bab8a9b9)) - renovate[bot]
+- **(deps)** update rust:1.88.0 docker digest to 526343c - ([390b2bd](https://github.com/kristof-mattei/rust-seed/commit/390b2bd55b29e46a846ef5c3ff40cbe1e6b46436)) - renovate[bot]
+- **(deps)** lock file maintenance - ([a2e4b78](https://github.com/kristof-mattei/rust-seed/commit/a2e4b78ccf14d54f37ce19b0f226cb6fbcbe6fea)) - renovate[bot]
+- **(deps)** update rust:1.88.0 docker digest to fb1b9e6 - ([b450d8a](https://github.com/kristof-mattei/rust-seed/commit/b450d8a1ddb75da5234bf7fe1529f12c1f8bbfb6)) - renovate[bot]
+- **(deps)** update actions/checkout action to v4.2.2 - ([f449064](https://github.com/kristof-mattei/rust-seed/commit/f449064e7567fb1fdd3e30142cda56e017d3d5cf)) - renovate[bot]
+- **(deps)** pin actions/checkout action to 11bd719 - ([d16c477](https://github.com/kristof-mattei/rust-seed/commit/d16c4772e72bcb101715c2f0b78df61cb1be49a9)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.2 - ([c421102](https://github.com/kristof-mattei/rust-seed/commit/c4211027af898dff71a24191ad9cd7a2b1ac2f05)) - renovate[bot]
+- **(deps)** update rust:1.88.0 docker digest to 749d5f1 - ([ffd59f1](https://github.com/kristof-mattei/rust-seed/commit/ffd59f1ae9585493048e4d79dbba9f8d434f0a32)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.2 - ([4db9dc8](https://github.com/kristof-mattei/rust-seed/commit/4db9dc83559d73f30b347b49f1186e47a6a28719)) - renovate[bot]
+- **(deps)** lock file maintenance - ([7c8e53a](https://github.com/kristof-mattei/rust-seed/commit/7c8e53aa61a6db0f6ecbf4646cbae8f64f8b354e)) - renovate[bot]
+- **(deps)** update actions-rs-plus/clippy-check action to v2.3.0 - ([5a71cf7](https://github.com/kristof-mattei/rust-seed/commit/5a71cf7645c70a87b9a198aa5140e50bf92b3ef2)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.1 - ([a6e8b8f](https://github.com/kristof-mattei/rust-seed/commit/a6e8b8f8d9082d353302a9047459c46c675b278e)) - renovate[bot]
+- **(deps)** update prettier (npm) to v3.6.2 - ([9d436e4](https://github.com/kristof-mattei/rust-seed/commit/9d436e4594b4de30c431ec8a531ec8b9d5b4417a)) - renovate[bot]
+- **(deps)** update rust to v1.88.0 - ([da980d7](https://github.com/kristof-mattei/rust-seed/commit/da980d771f2c510d70042fa4ee4ace07411195d0)) - renovate[bot]
+- **(deps)** update rust docker tag to v1.88.0 - ([1c033b1](https://github.com/kristof-mattei/rust-seed/commit/1c033b16c8487788b8cc541902141d24aa2a5913)) - renovate[bot]
+- **(deps)** update prettier-plugin-sh (npm) to v0.18.0 - ([173429f](https://github.com/kristof-mattei/rust-seed/commit/173429f3199503a774b8c3b5ba0fa35ebbdf5411)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.127.1 - ([78e8d7e](https://github.com/kristof-mattei/rust-seed/commit/78e8d7e0084d9d4f830a2a0af2c7a40e0aabdc80)) - renovate[bot]
+- **(deps)** update dependency prettier to v3.6.1 - ([bf37c94](https://github.com/kristof-mattei/rust-seed/commit/bf37c9481fca076f048b3f6536b256dafc0cbd6b)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.127.0 - ([715d29e](https://github.com/kristof-mattei/rust-seed/commit/715d29ec0941bb3e9acecf1df59e4bc51d25bfb2)) - renovate[bot]
+- **(deps)** update node.js to v22.17.0 - ([d03539c](https://github.com/kristof-mattei/rust-seed/commit/d03539cb18dbb5916b7ce8599a5a57f578303b5f)) - renovate[bot]
+- **(deps)** lock file maintenance - ([ed1dab2](https://github.com/kristof-mattei/rust-seed/commit/ed1dab242b06c593fef00317e5ed2e69bf1ac38f)) - renovate[bot]
+- **(deps)** update dependency prettier to v3.6.0 - ([8d1cb1b](https://github.com/kristof-mattei/rust-seed/commit/8d1cb1bc2a337c36c905388c310402e7406545f7)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.126.0 - ([e29d24a](https://github.com/kristof-mattei/rust-seed/commit/e29d24ab8edb5afc47996be9c2e0ed53ca576ba8)) - renovate[bot]
+- **(deps)** update docker/setup-buildx-action action to v3.11.1 - ([1d13636](https://github.com/kristof-mattei/rust-seed/commit/1d136360b115a7fea99f001029954cecceca28d5)) - renovate[bot]
+- **(deps)** update rui314/setup-mold digest to 85c79d0 - ([fa40e2b](https://github.com/kristof-mattei/rust-seed/commit/fa40e2b95810b093bbf0e4e461918b651819bf97)) - renovate[bot]
+- **(deps)** update docker/setup-buildx-action action to v3.11.0 - ([754aa07](https://github.com/kristof-mattei/rust-seed/commit/754aa0721f8c04c6051b24f2a36ef282e1611024)) - renovate[bot]
+- **(deps)** lock file maintenance - ([a7bbd1e](https://github.com/kristof-mattei/rust-seed/commit/a7bbd1e52cfc230084e4c069b2f5e0b1209e926a)) - renovate[bot]
+- **(deps)** update docker/setup-qemu-action action to v3.6.0 - ([995fe5c](https://github.com/kristof-mattei/rust-seed/commit/995fe5c9a7251670113b400478cd153fe44ec3c2)) - renovate[bot]
+- **(deps)** update coverallsapp/github-action action to v2.3.6 - ([8952261](https://github.com/kristof-mattei/rust-seed/commit/89522616988b5999583702dc6f47c57b66c9bb86)) - renovate[bot]
+- **(deps)** update npm to >=11.4.2 - ([2118ec2](https://github.com/kristof-mattei/rust-seed/commit/2118ec22b11fc212a7ccb7b11afd0d840c0d9713)) - renovate[bot]
+- **(deps)** update rust:1.87.0 docker digest to 251cec8 - ([82687c3](https://github.com/kristof-mattei/rust-seed/commit/82687c38c8961515b440f35310912a8691a3d6bd)) - renovate[bot]
+- **(deps)** update rust:1.87.0 docker digest to d0f16cc - ([3c97b38](https://github.com/kristof-mattei/rust-seed/commit/3c97b389847e3c3ff8ad059c50831ece3e6dd10f)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.125.0 - ([f33ffd2](https://github.com/kristof-mattei/rust-seed/commit/f33ffd267abce1d98fb9ba1304fc6770d5433991)) - renovate[bot]
+- **(deps)** update rust:1.87.0 docker digest to d592668 - ([14b5002](https://github.com/kristof-mattei/rust-seed/commit/14b50023a09b3447186fbbcc07116765f88a7c6a)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.29.0 - ([173e0a9](https://github.com/kristof-mattei/rust-seed/commit/173e0a9c09d43005e28736f9b573f8a5c397d22c)) - renovate[bot]
+- **(deps)** update rust:1.87.0 docker digest to b571d7b - ([7a40b24](https://github.com/kristof-mattei/rust-seed/commit/7a40b244da926f53263ec6ce96b075a85b27d2f7)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.124.1 - ([ea87f97](https://github.com/kristof-mattei/rust-seed/commit/ea87f979f0ae25a0da9fa8bb6ee82877add14ee5)) - renovate[bot]
+- **(deps)** update softprops/action-gh-release action to v2.3.2 - ([3487f3c](https://github.com/kristof-mattei/rust-seed/commit/3487f3c17043944c86c1cfc56747b59889d7c601)) - renovate[bot]
+- **(deps)** update softprops/action-gh-release action to v2.3.0 - ([5bf3aa9](https://github.com/kristof-mattei/rust-seed/commit/5bf3aa9b1b8a96743b824680b173b7957b8ed539)) - renovate[bot]
+- **(deps)** lock file maintenance - ([c07f273](https://github.com/kristof-mattei/rust-seed/commit/c07f2731fcf87a04c5a964e0ab23bbe51e3e67a8)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.124.0 - ([b629d05](https://github.com/kristof-mattei/rust-seed/commit/b629d0528840a46ee00df9fa419a002574285887)) - renovate[bot]
+- **(deps)** update github/codeql-action action to v3.28.19 - ([d477335](https://github.com/kristof-mattei/rust-seed/commit/d477335f393220f1fb304e9bfc8ecc59ee609146)) - renovate[bot]
+- **(deps)** update rui314/setup-mold digest to b395809 - ([35f6eaa](https://github.com/kristof-mattei/rust-seed/commit/35f6eaaaac08840a010fad19978fafd968600104)) - renovate[bot]
+- **(deps)** lock file maintenance - ([5bf1e80](https://github.com/kristof-mattei/rust-seed/commit/5bf1e80e45c04d59e38962d367f70ef5bf89cb6d)) - renovate[bot]
+- **(deps)** update alpine docker tag to v3.22.0 - ([47ac94e](https://github.com/kristof-mattei/rust-seed/commit/47ac94ec7fe4957ed1a32c42a9982c5178c66bbc)) - renovate[bot]
+- **(deps)** update mcr.microsoft.com/devcontainers/rust:1-1-bullseye docker digest to 6a2d391 - ([fc2e722](https://github.com/kristof-mattei/rust-seed/commit/fc2e722c865f6b4522ecc5748afb2349845d2137)) - renovate[bot]
+- **(deps)** update returntocorp/semgrep docker tag to v1.123.0 - ([efa7aea](https://github.com/kristof-mattei/rust-seed/commit/efa7aea81eef2c2f9902c3890f099ef58606d50d)) - renovate[bot]
+- **(deps)** update docker/build-push-action action to v6.18.0 - ([2da7fca](https://github.com/kristof-mattei/rust-seed/commit/2da7fcad71e7e752030048c95a97ac669de4db9d)) - renovate[bot]
+- **(deps)** update enricomi/publish-unit-test-result-action action to v2.20.0 - ([10febc4](https://github.com/kristof-mattei/rust-seed/commit/10febc40d3a3bb072b8364877d7d385f0f74417a)) - renovate[bot]
+- **(deps)** lock file maintenance - ([3f12767](https://github.com/kristof-mattei/rust-seed/commit/3f1276741f4b8d6c5bc952b02babb5ac6e991792)) - renovate[bot]
+- **(deps)** update rust:1.87.0 docker digest to 25038aa - ([33d242e](https://github.com/kristof-mattei/rust-seed/commit/33d242ee1c5c0b641a622dd98d698934a73f07a8)) - renovate[bot]
+- **(deps)** update rust:1.87.0 docker digest to 171cfe2 - ([0d32259](https://github.com/kristof-mattei/rust-seed/commit/0d32259c59ba22067d1c62e3c4b238a81f0e0793)) - renovate[bot]
+- **(deps)** update rust:1.87.0 docker digest to cfd9d33 - ([e8cfd8d](https://github.com/kristof-mattei/rust-seed/commit/e8cfd8d061f0282a444e32c0cef4b018d0040c2f)) - renovate[bot]
+- **(deps)** update codecov/test-results-action action to v1.1.1 - ([94f04e2](https://github.com/kristof-mattei/rust-seed/commit/94f04e29ca113371f17aa266fbafe16f56ec53c2)) - renovate[bot]
+- **(deps)** update rust:1.87.0 docker digest to 893a03d - ([2d7448c](https://github.com/kristof-mattei/rust-seed/commit/2d7448cfe13f9a4721043df79878a2b55f04007c)) - renovate[bot]
+- **(deps)** update npm to >=11.4.1 - ([f6e2ad9](https://github.com/kristof-mattei/rust-seed/commit/f6e2ad9ef43c26ca22674cf31580bae7e84322f1)) - renovate[bot]
+- typo - ([cded012](https://github.com/kristof-mattei/rust-seed/commit/cded012f14f816d0e1878e4abf0225bbc22b5925)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- sort - ([c757c8d](https://github.com/kristof-mattei/rust-seed/commit/c757c8de56467f6c8f45b8825684605c4435da47)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- remove submodule folder - ([f6e5d3a](https://github.com/kristof-mattei/rust-seed/commit/f6e5d3a28c8efe2dcae9575945860a54e710d410)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- fmt - ([3d4e946](https://github.com/kristof-mattei/rust-seed/commit/3d4e9462ada1800d8c22b210ba56ce28758770ec)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- remove lldb-prettifier built as part of repo, use shared config - ([8a7e110](https://github.com/kristof-mattei/rust-seed/commit/8a7e110376c9a57b26a0a3ab9540b466394a8290)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- use musl all the way - ([828d679](https://github.com/kristof-mattei/rust-seed/commit/828d67953e2be358e3565197feb91ec127cb2da2)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- delete old-style protection - ([a754f7d](https://github.com/kristof-mattei/rust-seed/commit/a754f7dce43b3d534a364df25fcec53df3196f96)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- disable oldstyle branch protection - ([a6a851a](https://github.com/kristof-mattei/rust-seed/commit/a6a851a1f84c80ee58e3294c132601bb4f330892)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- pass download format to binstall for cocogitto - ([2e173f6](https://github.com/kristof-mattei/rust-seed/commit/2e173f61f09b1b338bff01edee10e1fed0f63540)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- more robust downloading of crane - ([c306637](https://github.com/kristof-mattei/rust-seed/commit/c3066375bd8abf949146bc69e873acd4c4ca99a5)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- remove unneeded newline - ([66e19b3](https://github.com/kristof-mattei/rust-seed/commit/66e19b3bfb7a4371b072ac7c8dc51db797bfa730)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- disable codecov, fails too often - ([252a089](https://github.com/kristof-mattei/rust-seed/commit/252a089765ee5872923b20f2d3b26f8e6b5dc41c)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- don't cache in lint-configs - ([ab37d2f](https://github.com/kristof-mattei/rust-seed/commit/ab37d2fb61fef6b4a462c1686faa77fbdcccb6f9)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- move deps, disable as_conversions, too broad - ([4a48efe](https://github.com/kristof-mattei/rust-seed/commit/4a48efeafbb4224b6ef154e50a203e5696263c6d)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- simplify prettierconfig - ([15da060](https://github.com/kristof-mattei/rust-seed/commit/15da060278add228c90f65f822279a0f93e43ed2)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- also format toml - ([aebaeae](https://github.com/kristof-mattei/rust-seed/commit/aebaeae7a9cd79ead5a4bd64e7c5f5633bca43a8)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- fmt - ([e28e2d9](https://github.com/kristof-mattei/rust-seed/commit/e28e2d9467de13ed7431bbcd0bed16f960057b69)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- cleanup - ([146c27d](https://github.com/kristof-mattei/rust-seed/commit/146c27dc94d80bb1a3dfc3fa2a3459c3ea29d7cd)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- enable clone_on_ref_ptr - ([1afa75c](https://github.com/kristof-mattei/rust-seed/commit/1afa75c15ffd8409cacab55724fbdeb171bef55e)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- settings update - ([be03d72](https://github.com/kristof-mattei/rust-seed/commit/be03d72b4def3a601986845cd063edd915e71daa)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- remove glob from path - ([faf30f8](https://github.com/kristof-mattei/rust-seed/commit/faf30f8f10ecc0d43c0d07f1fed5883694f5ef2d)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- rust doesn't support manual mode, no need to pre-build - ([e932a61](https://github.com/kristof-mattei/rust-seed/commit/e932a6182bc42113faf8ff9aecc9a3c551897236)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- cleanup - ([1135c86](https://github.com/kristof-mattei/rust-seed/commit/1135c86230b38095743a9cb189064872fcb3a51a)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- fix dockerfile instruction order - ([6013577](https://github.com/kristof-mattei/rust-seed/commit/6013577f1f0615e0cf8d1c861c5b3bcc0d421df9)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- don't push image cargo build/test/... failed - ([bbc21d0](https://github.com/kristof-mattei/rust-seed/commit/bbc21d076d767fe5fa393f782b7dcc43b63d831d)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- cleanup - ([f113c99](https://github.com/kristof-mattei/rust-seed/commit/f113c99f22a429bf6f743289129a5d0a3ea69f15)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- update comment - ([0ddb54f](https://github.com/kristof-mattei/rust-seed/commit/0ddb54f6ec28a11d5839f9d47f7cb0732b4b16b7)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- disable multiple_crate_versions, it's just noise - ([c9dee4b](https://github.com/kristof-mattei/rust-seed/commit/c9dee4bc1e7e8d99750843b3883ed8b327062655)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- shuffle stuff around - ([cd283f4](https://github.com/kristof-mattei/rust-seed/commit/cd283f4470b10eb7509b6c4634e20548b4d74f43)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- formatting - ([6fb033f](https://github.com/kristof-mattei/rust-seed/commit/6fb033fbb4458100673639f29835a6af0496b5a0)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- alphabet - ([e6d1bef](https://github.com/kristof-mattei/rust-seed/commit/e6d1beffdac232a3f25358804bd22539db56cca5)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- cargo binstall defaults to cargo install when not found - ([61cf619](https://github.com/kristof-mattei/rust-seed/commit/61cf6192a81156d3e81026058d4f4e8c0cdf54b8)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- testing - ([3de7372](https://github.com/kristof-mattei/rust-seed/commit/3de73727c81184cd5f2f492d27a6664d4519a314)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- split command, remove prefix - ([61fb123](https://github.com/kristof-mattei/rust-seed/commit/61fb1236d3451146507548f0efab8e5a4eb590c5)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- add coveralls - ([e9fe37b](https://github.com/kristof-mattei/rust-seed/commit/e9fe37b857938501c790abd7c63eb99633a73b8e)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- disable telemetry, use oidc - ([0b862de](https://github.com/kristof-mattei/rust-seed/commit/0b862dea6cb59aa90c377cdf2a622c68a4a1e57a)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- caching doesn't need the runner's OS - ([f6c6e07](https://github.com/kristof-mattei/rust-seed/commit/f6c6e07f96ef39a9927b6959976115a69d1a4c88)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- don't prompt to accept commit when no conflicts - ([e0677f8](https://github.com/kristof-mattei/rust-seed/commit/e0677f83c9c49b189b96f5136b327f722de0e85c)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- fix deprecation warning - ([837157b](https://github.com/kristof-mattei/rust-seed/commit/837157b57a19dfefa416576f38b7d597030d9d83)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- upgrade before installing - ([8887b23](https://github.com/kristof-mattei/rust-seed/commit/8887b2380320aaf84268ac9f199b6b453b47c893)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- fix typo - ([0ac7ffb](https://github.com/kristof-mattei/rust-seed/commit/0ac7ffb096832c33b15a2369f9a101849c342ffb)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- move scripts - ([242ce77](https://github.com/kristof-mattei/rust-seed/commit/242ce77b6b07062f09cecc116df82720af27fb2f)) - [@kristof-mattei](https://github.com/kristof-mattei)
+- fix strip-components, it caused nothing to be placed - ([b88f13c](https://github.com/kristof-mattei/rust-seed/commit/b88f13c48b7a68493819786d1c7e3ddf70e81526)) - [@kristof-mattei](https://github.com/kristof-mattei)
+
+- - -
+
 ## [v1.3.1](https://github.com/kristof-mattei/rust-seed/compare/379138240224b860cf69d1249f93cacc8c847b6e..v1.3.1) - 2025-05-21
 #### Bug Fixes
 - remove incorrec exit - ([3791382](https://github.com/kristof-mattei/rust-seed/commit/379138240224b860cf69d1249f93cacc8c847b6e)) - [@kristof-mattei](https://github.com/kristof-mattei)
