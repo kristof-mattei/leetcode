@@ -23,7 +23,7 @@ impl MedianFinder {
 
     fn find_median(&self) -> f64 {
         let len_divided_by_2 = self.v.len() / 2;
-        if self.v.len() % 2 == 0 {
+        if self.v.len().is_multiple_of(2) {
             f64::midpoint(
                 f64::from(self.v[len_divided_by_2 - 1]),
                 f64::from(self.v[len_divided_by_2]),

@@ -21,7 +21,7 @@ fn count_and_say_r(n: i32) -> Vec<u32> {
 fn count_and_say(n: i32) -> String {
     count_and_say_r(n)
         .iter()
-        .map(|&v| ((v as u8 + b'0') as char))
+        .map(|&v| (v as u8 + b'0') as char)
         .collect::<String>()
 }
 

@@ -37,7 +37,7 @@ fn find_median_sorted_arrays(nums1: &[i32], nums2: &[i32]) -> f64 {
         last = current;
     }
 
-    if len % 2 == 0 {
+    if len.is_multiple_of(2) {
         f64::midpoint(f64::from(last_before_last), f64::from(last))
     } else {
         f64::from(last)
