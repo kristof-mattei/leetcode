@@ -104,7 +104,12 @@ jobs:
           # split at the last / and keep that (kristof-mattei/repo-name -> repo-name)
           repository=${repository##*/}
 
-          git-cliff --output diff-CHANGELOG.md --bump --unreleased --latest --github-token ${{ secrets.GITHUB_TOKEN }}
+          version=$(git-cliff --bumped-version --unreleased --github-token ${{ secrets.GITHUB_TOKEN }})
+          echo "version=$version" >> ${GITHUB_OUTPUT}
+
+          commit_message="chore(release): Release ${version}"
+
+          git-cliff --output diff-CHANGELOG.md --bump --unreleased --latest --with-commit "${commit_message}" --github-token ${{ secrets.GITHUB_TOKEN }}
 
           echo "# Next release changelog:" >> ${GITHUB_STEP_SUMMARY}
           cat diff-CHANGELOG.md >> ${GITHUB_STEP_SUMMARY}
