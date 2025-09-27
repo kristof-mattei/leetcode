@@ -364,6 +364,30 @@ jobs:
         with:
           args: ${{ env.CARGO_FEATURES }} --all-targets --locked --workspace --verbose
 
+  prebuild-cargo-edit-cargo-get:
+    name: Prebuild cargo-edit and cargo-get for ${{ matrix.runs-on }}
+    strategy:
+      matrix:
+        runs-on:
+          - "ubuntu-latest"
+          - "ubuntu-24.04-arm"
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - *checkout
+
+      - *cache_cargo
+
+      - *set_up_mold
+
+      - *set_up_toolchain
+
+      - *get_binstall
+
+      - name: Install cargo-edit to do set-version, and cargo-get to get the description
+        shell: bash
+        run: |
+          cargo binstall --github-token ${{ secrets.GITHUB_TOKEN }} --no-confirm cargo-edit cargo-get
+
   # this name is also used in `publish-crate-after-release.yml`
   docker-build:
     name: Build Docker container on ${{ matrix.runs-on }}
@@ -385,12 +409,30 @@ jobs:
       packages: write
     needs:
       - calculate-version
+      # ensures cache of cargo-edit and cargo-get
+      - prebuild-cargo-edit-cargo-get
     # if:
     # ... is not needed because calculate-version will not run if we disable building the docker container
     steps:
       - *checkout
 
-      - *cache_cargo
+      - name: Cache cargo
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        env:
+          CACHE_NAME: cargo
+        with:
+          path: |
+            ~/.cargo/.crates.toml
+            ~/.cargo/.crates2.json
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+          key: ${{ runner.os }}-${{ runner.arch }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-${{ github.job }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-prebuild-cargo-edit-cargo-get
+            ${{ runner.os }}-${{ runner.arch }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
+            ${{ runner.os }}-${{ runner.arch }}-build-${{ env.CACHE_NAME }}-
 
       - *set_up_mold
 
