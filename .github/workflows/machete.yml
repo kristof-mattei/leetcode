@@ -13,8 +13,8 @@ permissions:
   contents: read
 
 jobs:
-  format:
-    name: Format
+  machete:
+    name: Machete
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
