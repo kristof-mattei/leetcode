@@ -26,6 +26,8 @@ ARG TARGET=aarch64-unknown-linux-musl
 FROM rust-linux-${TARGETARCH//\//-} AS rust-cargo-build
 
 ARG DEBIAN_FRONTEND=noninteractive
+# expose into `build.sh`
+ARG TARGETVARIANT
 
 COPY ./build-scripts /build-scripts
 
@@ -95,6 +97,8 @@ RUN cat /etc/passwd | grep appuser > /tmp/passwd_appuser
 FROM scratch
 
 ARG APPLICATION_NAME
+ARG TARGETARCH
+ARG TARGETVARIANT
 
 COPY --from=passwd-build /tmp/group_appuser /etc/group
 COPY --from=passwd-build /tmp/passwd_appuser /etc/passwd
@@ -104,6 +108,8 @@ COPY --from=rust-build /output/bin/${APPLICATION_NAME} /app/entrypoint
 USER appuser
 
 ENV RUST_BACKTRACE=full
+ENV TARGETARCH=${TARGETARCH}
+ENV TARGETVARIANT=${TARGETVARIANT}
 
 WORKDIR /app
 

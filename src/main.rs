@@ -41,6 +41,12 @@ fn main() -> Result<(), color_eyre::Report> {
     println!("{}", bar());
     println!("{}", quz());
 
+    println!(
+        "BUILT FOR {} {}",
+        std::env::var("TARGETARCH").unwrap(),
+        std::env::var("TARGETVARIANT").unwrap()
+    );
+
     todo!("TODO");
 }
 
