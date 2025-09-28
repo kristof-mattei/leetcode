@@ -6,7 +6,7 @@ build() {
     PLATFORM=$2
     docker build \
         --file Dockerfile . \
-        --tag $APPLICATION_NAME:latest \
+        --tag $APPLICATION_NAME:latest-${2//\//-} \
         --build-arg APPLICATION_NAME=$APPLICATION_NAME \
         --platform $PLATFORM \
         --progress=plain
