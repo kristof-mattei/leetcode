@@ -21,13 +21,35 @@ permissions:
 env:
   CARGO_TERM_COLOR: always
   CARGO_FEATURES: --all-features
-  # Use docker.io for Docker Hub if empty
-  REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
+  IMAGE_VARIANTS: |-
+    arm64
+    amd64
+    amd64/v2
+    amd64/v3
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
   RUSTFLAGS: --deny=warnings
 
 jobs:
+  architectures:
+    name: Build matrix
+    runs-on: ubuntu-latest
+    outputs:
+      architectures: ${{ steps.matrix.outputs.architectures }}
+    steps:
+      - name: Build matrix
+        uses: actions/github-script@v7
+        id: matrix
+        with:
+          script: |
+            const architectures = process.env.IMAGE_VARIANTS.trim().split("\n").map((a) => a.trim());
+
+            const json = JSON.stringify(architectures);
+
+            core.setOutput("architectures", json);
+
   repo-has-container:
     name: Repo has container?
     runs-on: ubuntu-latest
@@ -397,9 +419,7 @@ jobs:
         runs-on:
           - "ubuntu-latest"
           - "ubuntu-24.04-arm"
-        platform:
-          - "amd64"
-          - "arm64"
+        platform: ${{ fromJSON(needs.architectures.outputs.architectures) }}
     outputs:
       application_name: ${{ steps.variables.outputs.application_name }}
       description: ${{ steps.variables.outputs.description }}
@@ -413,6 +433,7 @@ jobs:
       packages: write
     needs:
       - calculate-version
+      - architectures
       # ensures cache of cargo-edit and cargo-get
       - prebuild-cargo-edit-cargo-get
     # if:
@@ -465,8 +486,13 @@ jobs:
           unique_tag=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
           echo "unique_tag=${unique_tag}" >> ${GITHUB_OUTPUT}
 
+          # remove slashes from platform (`amd64/v3` -> `amd64-v3`)
+          platform_no_slashes=${{ matrix.platform }}
+          platform_no_slashes=${platform_no_slashes//\//-}
+          echo "platform_no_slashes=${platform_no_slashes}" >> ${GITHUB_OUTPUT}
+
           # but we're only building 1 arch here, so we need to identify that container (we'll merge them later)
-          unique_tag_arch=${unique_tag}-${{ matrix.platform }}
+          unique_tag_arch=${unique_tag}-${platform_no_slashes}
           echo "unique_tag_arch=${unique_tag_arch}" >> ${GITHUB_OUTPUT}
 
           # The application name, used in the Dockerfile
@@ -522,7 +548,9 @@ jobs:
         shell: bash
         id: setup_qemu
         run: |
-          if ! dpkg-architecture --equal "${{ matrix.platform }}"; then
+          base_platform="${{ matrix.platform }}"
+
+          if ! dpkg-architecture --equal "${base_platform%/*}"; then
             echo "setup_qemu=true" >> ${GITHUB_OUTPUT}
           else
             echo "setup_qemu=false" >> ${GITHUB_OUTPUT}
@@ -545,8 +573,8 @@ jobs:
           context: .
           # this container is THE PR's artifact, and we will re-tag it
           # once the PR has been accepted
-          cache-from: type=registry,ref=${{ steps.variables.outputs.full_image_name_remote_registry }}-cache:${{ steps.variables.outputs.application_name }}-buildcache-${{ runner.arch }}-${{ matrix.platform }}
-          cache-to: type=registry,ref=${{ steps.variables.outputs.full_image_name_remote_registry }}-cache:${{ steps.variables.outputs.application_name }}-buildcache-${{ runner.arch }}-${{ matrix.platform }},mode=max
+          cache-from: type=registry,ref=${{ steps.variables.outputs.full_image_name_remote_registry }}-cache:${{ steps.variables.outputs.application_name }}-buildcache-${{ runner.arch }}-${{ steps.variables.outputs.platform_no_slashes }}
+          cache-to: type=registry,ref=${{ steps.variables.outputs.full_image_name_remote_registry }}-cache:${{ steps.variables.outputs.application_name }}-buildcache-${{ runner.arch }}-${{ steps.variables.outputs.platform_no_slashes }},mode=max
           labels: ${{ steps.meta.outputs.labels }}
           outputs: type=oci,dest=/tmp/${{ steps.variables.outputs.unique_tag_arch }}.tar
           platforms: linux/${{ matrix.platform }}
@@ -558,7 +586,7 @@ jobs:
           matrix.runs-on == 'ubuntu-latest'
         with:
           if-no-files-found: error
-          name: container-${{ steps.variables.outputs.application_name }}-${{ matrix.platform }}
+          name: container-${{ steps.variables.outputs.application_name }}-${{ steps.variables.outputs.platform_no_slashes }}
           path: /tmp/${{ steps.variables.outputs.unique_tag_arch }}.tar
           retention-days: 1
 
@@ -628,28 +656,29 @@ jobs:
         shell: bash
         working-directory: ${{ steps.artifact.outputs.download-path }}
         run: |
-          docker load --input ./${{ needs.docker-build.outputs.unique_tag }}-amd64.tar
-          echo "Pushing amd64:"
-          docker push ${{ needs.docker-build.outputs.full_image_name_local_registry }}:${{ needs.docker-build.outputs.unique_tag }}-amd64
+          platforms=()
+          while IFS= read -r platform; do
+            echo "Loading ${platform//\//-}:"
+            docker load --input ./${{ needs.docker-build.outputs.unique_tag }}-${platform//\//-}.tar
 
-          docker load --input ./${{ needs.docker-build.outputs.unique_tag }}-arm64.tar
-          echo "Pushing arm64:"
-          docker push ${{ needs.docker-build.outputs.full_image_name_local_registry }}:${{ needs.docker-build.outputs.unique_tag }}-arm64
+            full_name_with_platform=${{ needs.docker-build.outputs.full_image_name_local_registry }}:${{ needs.docker-build.outputs.unique_tag }}-${platform//\//-}
 
-      - name: Create multiplatform image in local registry
-        shell: bash
-        run: |
+            echo "Pushing ${platform//\//-}:"
+            docker push $full_name_with_platform
+
+            platforms+=("$full_name_with_platform")
+          done <<< "${{ env.IMAGE_VARIANTS }}"
+
           new_labels=()
           while IFS= read -r label; do
             new_labels+=(--annotation)
             new_labels+=("index:${label}")
           done <<< "${{ steps.meta.outputs.labels }}"
 
-          # merge the amd64 and arm64 containers in a new multiplatform one
+          # merge the platform containers in a new multiplatform one
           # with the new labels, and push it to our local registry
           docker buildx imagetools create "${new_labels[@]}" --tag "${{ needs.docker-build.outputs.full_image_name_local_registry }}:${{ needs.docker-build.outputs.unique_tag }}" \
-            ${{ needs.docker-build.outputs.full_image_name_local_registry }}:${{ needs.docker-build.outputs.unique_tag }}-amd64 \
-            ${{ needs.docker-build.outputs.full_image_name_local_registry }}:${{ needs.docker-build.outputs.unique_tag }}-arm64
+            "${platforms[@]}"
 
           echo "Inspecting ${{ needs.docker-build.outputs.full_image_name_local_registry }}:${{ needs.docker-build.outputs.unique_tag }}:"
           docker buildx imagetools inspect --raw ${{ needs.docker-build.outputs.full_image_name_local_registry }}:${{ needs.docker-build.outputs.unique_tag }}
