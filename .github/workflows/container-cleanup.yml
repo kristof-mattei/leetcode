@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   cleanup:
+    name: Cleanup
     runs-on: ubuntu-latest
 
     steps:
@@ -27,4 +28,4 @@ jobs:
           ./.github/scripts/cleanup.sh \
             --user ${{ github.repository_owner }} \
             --package ${{ github.event.repository.name }} \
-            -- yes
+            --yes
