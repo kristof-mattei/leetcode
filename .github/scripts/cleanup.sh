@@ -129,7 +129,7 @@ is_older_than_days() {
     local days="$2"
 
     # Convert date to epoch timestamp
-    local date_epoch=$(date -d "$date_str" +%s 2>/dev/null)
+    local date_epoch=$(date -d "$date_str" +%s 2> /dev/null)
     if [[ $? -ne 0 ]]; then
         echo "Warning: Could not parse date: $date_str" >&2
         return 1
@@ -396,7 +396,7 @@ echo "=== SECOND PASS: ATTESTATION CLEANUP ==="
 echo "Looking for orphaned attestations..."
 
 # Collect all existing image SHA256s and all attestations
-declare -A existing_images  # sha256 -> 1
+declare -A existing_images # sha256 -> 1
 attestation_versions=()
 attestation_descriptions=()
 page=1
