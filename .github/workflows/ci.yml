@@ -397,8 +397,7 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     needs:
       - repo-has-container
-    if:
-      fromJSON(needs.repo-has-container.outputs.has_container) == true
+    if: fromJSON(needs.repo-has-container.outputs.has_container) == true
     steps:
       - *checkout
 
