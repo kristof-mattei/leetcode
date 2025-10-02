@@ -395,6 +395,8 @@ jobs:
           - "ubuntu-latest"
           - "ubuntu-24.04-arm"
     runs-on: ${{ matrix.runs-on }}
+    needs:
+      - repo-has-container
     steps:
       - *checkout
 
