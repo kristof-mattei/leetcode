@@ -14,11 +14,11 @@ LLVM_PROFILE_FILE="profiling/profile-%p-%m.profraw"
 cargo nextest run --profile ci --no-fail-fast ${CARGO_FEATURES} --all-targets --workspace
 
 grcov $(find . -name "profile-*.profraw" -print) \
-  --binary-path ./target/debug/ \
-  --branch \
-  --ignore-not-existing \
-  --keep-only "src/**" \
-  --llvm \
-  --output-type html \
-  --output-path ./reports/ \
-  --source-dir .
+    --binary-path ./target/debug/ \
+    --branch \
+    --ignore-not-existing \
+    --keep-only "src/**" \
+    --llvm \
+    --output-type html \
+    --output-path ./reports/ \
+    --source-dir .
