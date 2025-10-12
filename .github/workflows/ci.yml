@@ -242,23 +242,12 @@ jobs:
 
       - *set_up_mold
 
-      - name: Set up toolchain
-        shell: bash
-        run: |
-          rm ${HOME}/.cargo/bin/cargo-fmt
-          rm ${HOME}/.cargo/bin/rust-analyzer
-          rm ${HOME}/.cargo/bin/rustfmt
-
-          rustup self update
-          rustup update
-          rustup install nightly
-
-          cargo --version
+      - *set_up_toolchain
 
       - name: Install rustfmt
         shell: bash
         run: |
-          rustup component add --toolchain nightly rustfmt
+          rustup component add rustfmt
 
           # restore symlinks
           rustup update
@@ -266,7 +255,7 @@ jobs:
       - name: Check formatting
         shell: bash
         run: |
-          cargo +nightly fmt --all -- --check --verbose
+          cargo fmt --all -- --check --verbose
 
   cargo-test-and-report:
     name: Cargo test (and report)
