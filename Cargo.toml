@@ -10,6 +10,7 @@ license = "MIT"
 categories = ["playground"]
 keywords = ["playground"]
 repository = "https://github.com/kristof-mattei/leetcode"
+include = ["src/**", "/LICENSE", "/LICENSE-*"]
 
 [lints.clippy]
 # don't stop from compiling / running
