@@ -9,14 +9,9 @@
             "request": "launch",
             "name": "Debug executable 'rust-seed'",
             "cargo": {
-                "args": ["build", "--bin=rust-seed", "--package=rust-seed"],
-                "filter": {
-                    "name": "rust-seed",
-                    "kind": "bin"
-                }
+                "args": ["run", "--bin=rust-seed"]
             },
             "args": [],
-            "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,rust_seed=TRACE"
@@ -29,19 +24,8 @@
             "request": "launch",
             "name": "Debug unit tests in executable 'rust-seed'",
             "cargo": {
-                "args": [
-                    "test",
-                    "--no-run",
-                    "--bin=rust-seed",
-                    "--package=rust-seed"
-                ],
-                "filter": {
-                    "name": "rust-seed",
-                    "kind": "bin"
-                }
+                "args": ["test", "--bin=rust-seed"]
             },
-            "args": [],
-            "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,rust_seed=TRACE"
@@ -54,19 +38,8 @@
             "request": "launch",
             "name": "Debug integration test 'integration_tests'",
             "cargo": {
-                "args": [
-                    "test",
-                    "--no-run",
-                    "--test=integration_tests",
-                    "--package=rust-seed"
-                ],
-                "filter": {
-                    "name": "integration_tests",
-                    "kind": "test"
-                }
+                "args": ["test", "--test=integration_tests"]
             },
-            "args": [],
-            "cwd": "${workspaceFolder}",
             "env": {
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,rust_seed=TRACE"
