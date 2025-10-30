@@ -136,7 +136,6 @@ string_add = { level = "deny", priority = 127 }
 string_lit_chars_any = { level = "deny", priority = 127 }
 # Debatable, but no
 # string_slice = { level = "deny", priority = 127 }
-string_to_string = { level = "deny", priority = 127 }
 suspicious_xor_used_as_pow = { level = "deny", priority = 127 }
 tests_outside_test_module = { level = "deny", priority = 127 }
 todo = { level = "deny", priority = 127 }
