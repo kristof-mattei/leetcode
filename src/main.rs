@@ -23,16 +23,31 @@ fn i_will_error() -> Result<(), eyre::Report> {
     Err(eyre::Report::msg("I promised you, I'd error!"))
 }
 
+fn print_header() {
+    const NAME: &str = env!("CARGO_PKG_NAME");
+    const VERSION: &str = env!("CARGO_PKG_VERSION");
+
+    let build_env = get_build_env();
+
+    println!(
+        "{} v{} - built for {} ({})",
+        NAME,
+        VERSION,
+        build_env.get_target(),
+        build_env.get_target_cpu().unwrap_or("base cpu variant"),
+    );
+}
+
 fn main() -> Result<(), eyre::Report> {
     HookBuilder::default()
         .capture_span_trace_by_default(true)
         .install()?;
 
+    print_header();
+
     println!("{}", foo());
     println!("{}", bar());
     println!("{}", quz());
-
-    println!("Build setup: {}", get_build_env());
 
     i_will_error()
 }

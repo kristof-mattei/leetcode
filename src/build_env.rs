@@ -12,6 +12,21 @@ pub struct BuildEnv {
     target_cpu: Option<&'static str>,
 }
 
+impl BuildEnv {
+    #[expect(unused, reason = "Library code")]
+    pub fn get_host(&self) -> &'static str {
+        self.host
+    }
+
+    pub fn get_target(&self) -> &'static str {
+        self.target
+    }
+
+    pub fn get_target_cpu(&self) -> Option<&str> {
+        self.target_cpu
+    }
+}
+
 pub fn get_build_env() -> BuildEnv {
     BuildEnv {
         host: COMPILE_TIME_HOST,
