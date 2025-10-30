@@ -1,3 +1,9 @@
+use color_eyre::config::HookBuilder;
+use color_eyre::eyre;
+
+use crate::build_env::get_build_env;
+mod build_env;
+
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
@@ -13,21 +19,22 @@ fn quz() -> &'static str {
     "Quz"
 }
 
-#[expect(clippy::todo, reason = "Seed code")]
-fn main() -> Result<(), color_eyre::Report> {
-    color_eyre::install()?;
+fn i_will_error() -> Result<(), eyre::Report> {
+    Err(eyre::Report::msg("I promised you, I'd error!"))
+}
+
+fn main() -> Result<(), eyre::Report> {
+    HookBuilder::default()
+        .capture_span_trace_by_default(true)
+        .install()?;
 
     println!("{}", foo());
     println!("{}", bar());
     println!("{}", quz());
 
-    println!(
-        "BUILT FOR {} {}",
-        std::env::var("TARGETARCH").unwrap(),
-        std::env::var("TARGETVARIANT").unwrap()
-    );
+    println!("Build setup: {}", get_build_env());
 
-    todo!("TODO");
+    i_will_error()
 }
 
 #[cfg(test)]

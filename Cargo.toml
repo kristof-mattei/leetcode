@@ -10,6 +10,7 @@ categories = ["starter", "seed"]
 keywords = ["integrity", "seed", "starter", "docker", "release"]
 repository = "https://github.com/kristof-mattei/rust-seed"
 include = ["src/**", "/LICENSE", "/LICENSE-*"]
+build = "src/build.rs"
 
 [dependencies]
 color-eyre = "0.6.5"
