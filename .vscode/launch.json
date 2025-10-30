@@ -5,9 +5,9 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug executable 'rust-seed'",
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'rust-seed'",
             "cargo": {
                 "args": ["run", "--bin=rust-seed"]
             },
@@ -20,9 +20,9 @@
             "terminal": "integrated"
         },
         {
+            "name": "Debug unit tests in executable 'rust-seed'",
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'rust-seed'",
             "cargo": {
                 "args": ["test", "--bin=rust-seed"]
             },
@@ -34,9 +34,9 @@
             "terminal": "integrated"
         },
         {
+            "name": "Debug integration test 'integration_tests'",
             "type": "lldb",
             "request": "launch",
-            "name": "Debug integration test 'integration_tests'",
             "cargo": {
                 "args": ["test", "--test=integration_tests"]
             },
