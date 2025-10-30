@@ -1,7 +1,6 @@
 impl Solution {
     #[must_use]
     #[expect(clippy::too_many_arguments)]
-    #[expect(clippy::similar_names)]
     pub fn compute_area(
         ax1: i32,
         ay1: i32,
@@ -17,7 +16,6 @@ impl Solution {
 }
 
 #[expect(clippy::too_many_arguments)]
-#[expect(clippy::similar_names)]
 fn compute_area(
     ax1: i32,
     ay1: i32,
