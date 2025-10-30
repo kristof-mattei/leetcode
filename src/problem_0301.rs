@@ -31,6 +31,7 @@ fn remove_invalid_parentheses_r(set: HashSet<Vec<char>>) -> HashSet<Vec<char>> {
     let mut valid = HashSet::new();
     let mut invalid = HashSet::new();
 
+    #[expect(clippy::iter_over_hash_type, reason = "Not relevant")]
     for s in set {
         for i in 0..s.len() {
             let mut s = s.clone();

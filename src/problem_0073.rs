@@ -13,10 +13,13 @@ fn set_zeroes(matrix: &mut [Vec<i32>]) {
         }
     }
 
+    #[expect(clippy::iter_over_hash_type, reason = "Not relevant")]
     for row in rows_to_zero {
         // zero out row
         matrix[row].iter_mut().for_each(|v| *v = 0);
     }
+
+    #[expect(clippy::iter_over_hash_type, reason = "Not relevant")]
     for col in cols_to_zero {
         // zero out col
         for r in matrix.iter_mut() {
