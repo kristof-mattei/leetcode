@@ -94,7 +94,8 @@ inline_asm_x86_att_syntax = { level = "deny", priority = 127 }
 # inline_asm_x86_intel_syntax = { level = "deny", priority = 127 }
 # Debatable
 # integer_division = { level = "deny", priority = 127 }
-integer_division_remainder_used = { level = "deny", priority = 127 }
+# Debatable
+# integer_division_remainder_used = { level = "deny", priority = 127 }
 iter_over_hash_type = { level = "deny", priority = 127 }
 large_include_file = { level = "deny", priority = 127 }
 let_underscore_must_use = { level = "deny", priority = 127 }
