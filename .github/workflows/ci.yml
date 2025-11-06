@@ -418,7 +418,6 @@ jobs:
   docker-build:
     name: Build Docker container on ${{ matrix.runs-on }} for ${{ matrix.platform }}
     strategy:
-      max-parallel: 2
       matrix:
         runs-on:
           - "ubuntu-latest"
