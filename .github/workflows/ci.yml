@@ -721,8 +721,9 @@ jobs:
             sleep 2
           done
 
-          echo "Process exited with: $?"
-
+      - name: Inspect new remote tags
+        shell: bash
+        run: |
           for new_tag in $(echo "${{ join(steps.meta.outputs.tags, ' ') }}"); do
             echo "Inspecting ${new_tag}:"
             while timeout --kill-after=70 60 docker buildx imagetools inspect --raw ${new_tag}; [[ ! $? -eq 0 ]]; do
@@ -730,6 +731,7 @@ jobs:
 
               sleep 2
             done
+
             # empty to get newline
             echo ""
           done
