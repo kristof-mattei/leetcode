@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 struct FreqStack {
     frequency_map: HashMap<i32, i32>,

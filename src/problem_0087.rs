@@ -1,5 +1,6 @@
-use std::collections::HashMap;
 use std::rc::Rc;
+
+use hashbrown::HashMap;
 
 pub mod vec_char_char;
 

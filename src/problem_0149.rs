@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn greatest_common_divisor(mut x: i32, mut y: i32) -> i32 {
     if x < y {

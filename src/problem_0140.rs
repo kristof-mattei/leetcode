@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn word_break_r<'a>(
     cache: &mut HashMap<&'a str, Vec<String>>,

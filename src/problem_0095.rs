@@ -43,7 +43,7 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
+    use hashbrown::HashSet;
 
     use crate::problem_0095::generate_trees;
     use crate::shared::{from_bt, vec_eq};

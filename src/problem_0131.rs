@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn is_palindrome(chars: &[char]) -> bool {
     match *chars {

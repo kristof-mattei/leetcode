@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use hashbrown::HashSet;
 
 fn four_sums(mut nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
     nums.sort_unstable();

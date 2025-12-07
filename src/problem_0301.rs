@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use hashbrown::HashSet;
 
 impl Solution {
     #[must_use]
@@ -31,7 +31,6 @@ fn remove_invalid_parentheses_r(set: HashSet<Vec<char>>) -> HashSet<Vec<char>> {
     let mut valid = HashSet::new();
     let mut invalid = HashSet::new();
 
-    #[expect(clippy::iter_over_hash_type, reason = "Not relevant")]
     for s in set {
         for i in 0..s.len() {
             let mut s = s.clone();
@@ -78,7 +77,7 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
+    use hashbrown::HashSet;
 
     use crate::problem_0301::remove_invalid_parentheses;
 

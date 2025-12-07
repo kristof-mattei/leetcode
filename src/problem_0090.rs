@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use hashbrown::HashSet;
 
 fn subsets_with_dup_r(nums: &[i32]) -> Vec<Vec<i32>> {
     if nums.is_empty() {

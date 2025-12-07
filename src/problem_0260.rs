@@ -32,7 +32,7 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
+    use hashbrown::HashSet;
 
     use crate::problem_0260::single_number;
 

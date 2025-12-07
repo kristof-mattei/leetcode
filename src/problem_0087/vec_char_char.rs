@@ -1,5 +1,6 @@
-use std::collections::HashMap;
 use std::{cmp, hash};
+
+use hashbrown::HashMap;
 
 type Cache = HashMap<(Vec<char>, Vec<char>), Vec<Vec<char>>>;
 

@@ -1,5 +1,5 @@
-use std::collections::HashMap;
-use std::collections::hash_map::Entry;
+use hashbrown::HashMap;
+use hashbrown::hash_map::Entry;
 
 // this one is cool too:
 // https://leetcode.com/submissions/detail/678459562/

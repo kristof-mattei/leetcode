@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn is_match(s: &str, p: &str) -> bool {
     is_match_r(

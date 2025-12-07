@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use hashbrown::HashSet;
 
 fn is_valid_sudoku(board: &[Vec<char>]) -> bool {
     let mut h = HashSet::<char>::with_capacity(9);

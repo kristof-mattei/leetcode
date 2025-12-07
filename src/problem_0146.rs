@@ -1,3 +1,6 @@
+use hashbrown::HashMap;
+use hashbrown::hash_map::Entry;
+
 struct Node {
     key: i32,
     value: i32,
@@ -77,7 +80,7 @@ impl NodeList {
 }
 
 struct LRUCache {
-    map: std::collections::HashMap<i32, Box<Node>>,
+    map: HashMap<i32, Box<Node>>,
     list: NodeList,
     capacity: usize,
 }
@@ -85,14 +88,14 @@ struct LRUCache {
 impl LRUCache {
     fn new(capacity: i32) -> Self {
         Self {
-            map: std::collections::HashMap::with_capacity(capacity as usize),
+            map: HashMap::with_capacity(capacity as usize),
             list: NodeList::new(),
             capacity: capacity as usize,
         }
     }
 
     fn get(&mut self, key: i32) -> i32 {
-        if let std::collections::hash_map::Entry::Occupied(mut e) = self.map.entry(key) {
+        if let Entry::Occupied(mut e) = self.map.entry(key) {
             let node = e.get_mut().as_mut();
             self.list.move_first(node);
             node.value
@@ -102,7 +105,7 @@ impl LRUCache {
     }
 
     fn put(&mut self, key: i32, value: i32) {
-        if let std::collections::hash_map::Entry::Occupied(mut e) = self.map.entry(key) {
+        if let Entry::Occupied(mut e) = self.map.entry(key) {
             let node = e.get_mut().as_mut();
             self.list.move_first(node);
             node.value = value;

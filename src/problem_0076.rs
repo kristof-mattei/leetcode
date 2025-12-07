@@ -1,4 +1,6 @@
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::VecDeque;
+
+use hashbrown::{HashMap, HashSet};
 
 fn min_window(s: &str, t: &str) -> String {
     if t.is_empty() {

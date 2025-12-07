@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn find_repeated_dna_sequences(s: &str) -> Vec<String> {
     if s.len() <= 10 {
@@ -31,7 +31,7 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
+    use hashbrown::HashSet;
 
     use super::find_repeated_dna_sequences;
 

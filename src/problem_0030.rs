@@ -1,6 +1,7 @@
-use std::collections::HashMap;
 use std::string::String;
 use std::vec::Vec;
+
+use hashbrown::HashMap;
 
 fn find_substring(s: &str, words: &[String]) -> Vec<i32> {
     let mut indexes = vec![];
@@ -58,10 +59,6 @@ fn find_substring(s: &str, words: &[String]) -> Vec<i32> {
                 end_of_chunk = window_size + (end_of_chunk - word_count * word_size);
             }
 
-            #[expect(
-                clippy::iter_over_hash_type,
-                reason = "We're modifying all, sort order not relevant"
-            )]
             for v in seen.values_mut() {
                 *v = 0;
             }

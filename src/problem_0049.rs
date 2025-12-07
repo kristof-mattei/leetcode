@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
     let mut counts = HashMap::<[u8; 26], usize>::new();

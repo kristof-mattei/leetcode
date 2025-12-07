@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn two_sum(nums: &[i32], target: i32) -> Vec<i32> {
     let mut hash_set = HashMap::<i32, usize>::new();

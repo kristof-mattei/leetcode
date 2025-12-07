@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn fraction_to_decimal(numerator: i32, denominator: i32) -> String {
     let result_is_negative = (numerator.signum() * denominator.signum()) < 0;

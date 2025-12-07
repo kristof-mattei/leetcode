@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use hashbrown::{HashMap, HashSet};
 
 fn is_isomorphic<T: AsRef<str>>(s: T, t: T) -> bool {
     if s.as_ref().len() != t.as_ref().len() {

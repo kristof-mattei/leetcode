@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn climb_stairs_r(cache: &mut HashMap<i32, i32>, n: i32) -> i32 {
     if cache.contains_key(&n) {
