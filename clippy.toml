@@ -4,9 +4,15 @@ disallowed-methods = [
     "serde_json::from_reader",
 ]
 disallowed-types = [
+<<<<<<< HEAD
     # doesn't apply in leetcode as we need to be able to paste it in in the online editor
     # { path = "std::collections::HashMap", replacement = "hashbrown::HashMap", reason = "The standard library version sacrificies performance for HashDos resistance, which should be chosen explicitly" },
     # { path = "std::collections::HashSet", replacement = "hashbrown::HashSet", reason = "The standard library version sacrificies performance for HashDos resistance, which should be chosen explicitly" },
+||||||| c2dc841d
+=======
+    { path = "std::collections::HashMap", replacement = "hashbrown::HashMap", reason = "The standard library version sacrificies performance for HashDos resistance, which should be chosen explicitly" },
+    { path = "std::collections::HashSet", replacement = "hashbrown::HashSet", reason = "The standard library version sacrificies performance for HashDos resistance, which should be chosen explicitly" },
+>>>>>>> upstream/main
 ]
 enforced-import-renames = [
     { path = "serde_json::from_slice", rename = "from_json_slice" },
