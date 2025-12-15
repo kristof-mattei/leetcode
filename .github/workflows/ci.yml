@@ -800,6 +800,7 @@ jobs:
       - cargo-clippy-and-report
       - cargo-fmt
       - cargo-test-and-report
+      - pre-build-cargo-edit
       - docker-build
       - docker-publish
       - docker-attest
