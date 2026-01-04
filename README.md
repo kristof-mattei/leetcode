@@ -11,7 +11,7 @@ It supports:
 - Crate publishing
 - Release publishing
     - Crate publishing to crates.io
-    - Container retagging to `:latest`
+    - Container re-tagging to `:latest`
 
 ## TODO
 
