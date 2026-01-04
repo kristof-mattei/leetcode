@@ -43,7 +43,7 @@ fn k_sum(nums: &[i32], target: i32, k: usize) -> Vec<Vec<i32>> {
     result
 }
 
-/// nums needs to be sorted!
+/// `nums` needs to be sorted!
 fn two_sum(nums: &[i32], target: i32) -> Vec<Vec<i32>> {
     // assert!(nums.is_sorted());
 
