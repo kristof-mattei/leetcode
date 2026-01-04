@@ -97,7 +97,7 @@ enum Side {
     Right,
 }
 
-/// Converts a slice of &[Option<T>] to a Binary tree
+/// Converts a slice of `&[Option<T>]` to a Binary tree
 ///
 /// # Examples
 ///
@@ -111,7 +111,7 @@ enum Side {
 ///
 /// # Panics
 ///
-/// Panics if cannot borrow Rc
+/// Panics if cannot borrow `Rc`
 #[must_use]
 pub fn to_bt(input: &[Option<i32>]) -> Option<Rc<RefCell<TreeNode>>> {
     if input.is_empty() {
@@ -167,7 +167,7 @@ pub fn to_bt(input: &[Option<i32>]) -> Option<Rc<RefCell<TreeNode>>> {
 ///
 /// # Panics
 ///
-/// Panics if cannot borrow Rc
+/// Panics if cannot borrow `Rc`
 #[must_use]
 pub fn from_bt(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Option<i32>> {
     if root.is_none() {

@@ -12,6 +12,9 @@ keywords = ["playground"]
 repository = "https://github.com/kristof-mattei/leetcode"
 include = ["src/**", "/LICENSE", "/LICENSE-*"]
 
+[package.metadata.spellcheck]
+config = "spellcheck.toml"
+
 [lints.clippy]
 # don't stop from compiling / running
 all = "warn"
