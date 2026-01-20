@@ -14,13 +14,11 @@ fn remove_duplicate_letters(s: &str) -> String {
         char_count[(s_bytes[i] - b'a') as usize] -= 1;
 
         if !visited[(s_bytes[i] - b'a') as usize] {
-            while result
-                .last()
-                .is_some_and(|&v| v > s_bytes[i] && char_count[(v - b'a') as usize] > 0)
+            while let Some(last) = result
+                .pop_if(|&mut v: &mut u8| v > s_bytes[i] && char_count[(v - b'a') as usize] > 0)
             {
                 // marking letter visited
-                visited[result.last().map(|v| v - b'a').unwrap() as usize] = false;
-                result.pop();
+                visited[(last - b'a') as usize] = false;
             }
 
             // Add s[i] in res and

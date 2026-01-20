@@ -5,8 +5,8 @@ fn area(heights: &[usize]) -> usize {
     let mut max_area = 0;
 
     for (i, &h) in heights.iter().enumerate() {
-        while seen.last().is_some_and(|&l| h < heights[l]) {
-            let height = heights[seen.pop().unwrap()];
+        while let Some(last) = seen.pop_if(|&mut l: &mut _| h < heights[l]) {
+            let height = heights[last];
 
             let start = seen.last().map_or(0, |&l| l + 1);
 
