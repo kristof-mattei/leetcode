@@ -80,7 +80,7 @@ impl Trie {
     }
 
     /// Follows the bytes in `word` against `self.states`
-    /// and returns the last matching index
+    /// and returns the last matching index.
     fn follow(&self, word: &str) -> usize {
         word.as_bytes()
             .iter()

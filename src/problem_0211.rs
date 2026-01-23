@@ -97,7 +97,7 @@ impl WordDictionary {
     }
 
     /// Follows the bytes in `word` against `self.states`
-    /// and returns the last matching index
+    /// and returns the last matching index.
     fn follow(&self, word: &str) -> (usize, usize) {
         let mut acc = 0;
 

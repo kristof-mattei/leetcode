@@ -1,8 +1,8 @@
-/// used to turn a char into a 0-based index
+/// Used to turn a char into a 0-based index.
 const LETTER_OFFSET: u8 = b'a';
-/// letters in the alphabet
+/// Letters in the alphabet.
 const NUM_LETTERS: usize = 26;
-/// replacement character to define processing of current i,j
+/// Replacement character to define processing of current i,j.
 const PROCESSING_PLACEHOLDER: char = '*';
 
 #[derive(Default)]

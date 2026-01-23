@@ -1,7 +1,7 @@
 impl Solution {
     ///
     /// # Panics
-    /// when `nums` is empty
+    /// When `nums` is empty.
     #[must_use]
     pub fn find_kth_largest(nums: Vec<i32>, k: i32) -> i32 {
         let mut h = std::collections::BinaryHeap::new();
