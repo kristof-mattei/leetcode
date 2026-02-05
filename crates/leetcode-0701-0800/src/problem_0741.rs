@@ -8,17 +8,17 @@ impl Solution {
 
 /// Solves the Cherry Pickup problem using dynamic programming.
 ///
-/// Key insight: Instead of simulating one person going (0,0) -> (n-1,n-1) -> (0,0),
-/// we simulate TWO people BOTH starting at (0,0) and BOTH moving to (n-1,n-1) simultaneously.
+/// Key insight: Instead of simulating one person going `(0, 0) -> (n-1, n-1) -> (0, 0)`,
+/// we simulate TWO people BOTH starting at `(0, 0)` and BOTH moving to `(n-1, n-1)` simultaneously.
 /// This is equivalent because:
-/// - Path A->B->A can be split into A->B (person 1) and B->A (person 2, reversed = A->B)
-/// - Both people move at the same "step", so after k steps, x1+y1 == x2+y2 == k
+/// - Path `A->B->A` can be split into `A->B` (person 1) and `B->A` (person 2, reverse of `A->B`)
+/// - Both people move at the same "step", so after `k` steps, `x1 + y1 == x2 + y2  == k`
 ///
-/// dp[x1][y1][x2] = maximum cherries collected when:
-/// - Person 1 is at (x1, y1)
-/// - Person 2 is at (x2, y2) where y2 = x1 + y1 - x2 (derived from the invariant)
+/// `dp[x1][y1][x2]` represents maximum cherries collected when:
+/// - Person 1 is at `(x1, y1)`
+/// - Person 2 is at `(x2, y2)` where `y2 = x1 + y1 - x2`
 ///
-/// Since both move together, we only need 3 dimensions (y2 is computed).
+/// We don't need to store `y2` because for each `x1, x2, y1` there is only 1 `y2` combination possible.
 fn cherry_pickup(grid: &[Vec<i32>]) -> i32 {
     let n = grid.len();
 
