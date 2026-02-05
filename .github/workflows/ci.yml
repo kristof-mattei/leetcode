@@ -285,7 +285,7 @@ jobs:
             --binary-path ./target/debug/ \
             --branch \
             --ignore-not-existing \
-            --keep-only "src/**" \
+            --keep-only "crates/**/src/**" \
             --llvm \
             --output-path ./reports/lcov.info \
             --output-type lcov \
