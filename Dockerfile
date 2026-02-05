@@ -41,14 +41,19 @@ RUN rustup target add ${TARGET}
 # creates an empty app, and we copy in Cargo.toml and Cargo.lock as they represent our dependencies
 # This allows us to copy in the source in a different layer which in turn allows us to leverage Docker's layer caching
 # That means that if our dependencies don't change rebuilding is much faster
-WORKDIR /build
-
+WORKDIR /build/crates/${APPLICATION_NAME}
 RUN cargo init --name ${APPLICATION_NAME}
+COPY ./crates/${APPLICATION_NAME}/Cargo.toml ./
+RUN echo "fn main() {}" > ./src/build.rs
 
+# repeat this for each crate
+WORKDIR /build/crates/shared
+RUN cargo init --name shared
+COPY ./crates/shared/Cargo.toml ./
+
+WORKDIR /build
 COPY ./.cargo ./.cargo
 COPY ./Cargo.toml ./Cargo.lock ./
-
-RUN echo "fn main() {}" > ./src/build.rs
 
 # We use `fetch` to pre-download the files to the cache
 # Notice we do this in the target arch specific branch
@@ -77,10 +82,10 @@ ARG TARGETVARIANT
 WORKDIR /build
 
 # now we copy in the source which is more prone to changes and build it
-COPY ./src ./src
+COPY ./crates ./crates
 
 # ensure cargo picks up on the fact that we copied in our code
-RUN touch ./src/main.rs ./src/build.rs
+RUN touch ./crates/${APPLICATION_NAME}/src/main.rs ./crates/${APPLICATION_NAME}/src/build.rs
 
 ENV PATH="/output/bin:$PATH"
 
@@ -89,7 +94,7 @@ RUN --mount=type=cache,target=/build/target/${TARGET},sharing=locked \
     --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db \
     --mount=type=cache,id=cargo-registry-index,target=/usr/local/cargo/registry/index \
     --mount=type=cache,id=cargo-registry-cache,target=/usr/local/cargo/registry/cache \
-    /build-scripts/build.sh install --path . --locked --target-dir ./target/${TARGET} --root /output
+    /build-scripts/build.sh install --path ./crates/${APPLICATION_NAME}/ --locked --target-dir ./target/${TARGET} --root /output
 
 # Container user setup
 FROM --platform=${BUILDPLATFORM} alpine:3.23.3@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659 AS passwd-build
