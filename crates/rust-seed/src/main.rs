@@ -54,6 +54,8 @@ fn main() -> Result<(), eyre::Report> {
 
 #[cfg(test)]
 mod tests {
+    use pretty_assertions::assert_eq;
+
     use super::{bar, foo, quz};
 
     #[test]
