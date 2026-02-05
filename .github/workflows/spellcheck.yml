@@ -79,7 +79,7 @@ jobs:
       - name: Install cargo-spellcheck to check the spelling
         uses: taiki-e/install-action@7c40b3573dcb8b05d44e41e0311df2007b230d2e # v2.67.21
         with:
-          tool: cargo-spellcheck
+          tool: cargo-spellcheck@0.15.5
 
       - name: Run cargo-spellcheck
         run: |
