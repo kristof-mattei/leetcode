@@ -19,6 +19,9 @@ include = ["crates/**", "/LICENSE", "/LICENSE-*"]
 [workspace.metadata.spellcheck]
 config = "spellcheck.toml"
 
+[workspace.metadata.cargo-machete]
+ignored = ["shared"]
+
 [workspace.lints.clippy]
 # don't stop from compiling / running
 all = "warn"
