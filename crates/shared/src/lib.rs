@@ -106,8 +106,8 @@ enum Side {
 /// # Examples
 ///
 /// ```
-/// use leetcode::shared::to_bt;
-/// use leetcode::shared::tn;
+/// use shared::to_bt;
+/// use shared::tn;
 ///
 /// let input = [1.into(), None, 3.into()];
 /// assert_eq!(to_bt(&input), tn(1, None, tn(3, None, None)));
@@ -162,8 +162,8 @@ pub fn to_bt(input: &[Option<i32>]) -> Option<Rc<RefCell<TreeNode>>> {
 /// # Examples
 ///
 /// ```
-/// use leetcode::shared::from_bt;
-/// use leetcode::shared::tn;
+/// use shared::from_bt;
+/// use shared::tn;
 ///
 /// let input = tn(1, None, tn(3, None, None));
 /// assert_eq!(from_bt(input), [1.into(), None, 3.into()]);
