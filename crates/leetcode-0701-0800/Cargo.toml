@@ -1,0 +1,23 @@
+[package]
+name = "leetcode-0701-0800"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+description.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+repository.workspace = true
+include.workspace = true
+
+[features]
+default = []
+
+[dependencies]
+shared = { path = "../shared" }
+
+[dev-dependencies]
+
+[lints]
+workspace = true
