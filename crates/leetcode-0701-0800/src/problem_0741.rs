@@ -23,11 +23,12 @@ fn cherry_pickup(grid: &[Vec<i32>]) -> i32 {
     let n = grid.len();
 
     // dp[x1][y1][x2] = max cherries when person 1 at (x1,y1), person 2 at (x2, y2)
-    // Initialize with i32::MIN to represent "unreachable" states
     let mut dp = vec![vec![vec![i32::MIN; n]; n]; n];
 
-    // Base case: both people start at (0, 0)
-    // They can only pick the cherry once even if both are on the same cell
+    // base case: both people start at (0, 0)
+    // they can only pick the cherry once even if both are on the same cell
+    // we can't do this inline because then our invalid state check will not pass
+    // due to this being `i32::MIN`, and no past cheries
     dp[0][0][0] = grid[0][0];
 
     // Iterate through all possible positions
@@ -36,14 +37,14 @@ fn cherry_pickup(grid: &[Vec<i32>]) -> i32 {
     for x1 in 0..n {
         for y1 in 0..n {
             for x2 in 0..n {
-                // Skip base case - already initialized above
+                // skip base case - already initialized above
                 if x1 == 0 && y1 == 0 && x2 == 0 {
                     continue;
                 }
 
-                // Derive y2 from the invariant: both people have taken the same number of steps
+                // derive y2 from the invariant: both people have taken the same number of steps
                 // steps = x1 + y1 = x2 + y2, therefore y2 = x1 + y1 - x2
-                // Use checked_sub to handle the case where x2 > x1 + y1 (invalid state)
+                // but y2 can't be negative
                 let Some(y2) = (x1 + y1).checked_sub(x2) else {
                     continue;
                 };
@@ -53,25 +54,25 @@ fn cherry_pickup(grid: &[Vec<i32>]) -> i32 {
                     continue;
                 }
 
-                // If either person is on a thorn (-1), this state is invalid
+                // if either person is on a thorn (-1), this state is invalid
                 if grid[x1][y1] == -1 || grid[x2][y2] == -1 {
                     continue;
                 }
 
-                // Find the maximum cherries from all possible previous states
-                // Each person could have come from either:
-                // - The cell above (moved down, so previous was x-1)
-                // - The cell to the left (moved right, so previous was y-1)
+                // find the maximum cherries from all possible previous states
+                // each person could have come from either:
+                // - cell to the left (moved right, so previous was y-1)
+                // - cell above (moved down, so previous was x-1)
                 let mut past_cheries = i32::MIN;
 
                 // (dx1, dy1) represents where person 1 came from
-                // (0, 1) means they moved right (previous y was y1-1)
                 // (1, 0) means they moved down (previous x was x1-1)
+                // (0, 1) means they moved right (previous y was y1-1)
                 for (dx1, dy1) in [(0, 1), (1, 0)] {
                     // (dx2, _) represents where person 2 came from
                     // no need to calculate dy2 as there is only 1 possible dy2
                     for dx2 in [0, 1] {
-                        // Calculate previous positions using checked_sub to avoid underflow
+                        // previous 'from' max for our current positions, taking care not to go negative
                         if let Some(px1) = x1.checked_sub(dx1)
                             && let Some(py1) = y1.checked_sub(dy1)
                             && let Some(px2) = x2.checked_sub(dx2)
@@ -81,28 +82,28 @@ fn cherry_pickup(grid: &[Vec<i32>]) -> i32 {
                     }
                 }
 
-                // If no valid previous state exists, skip this state
+                // This combination was invalid, (bushes everywhere!)
                 if past_cheries == i32::MIN {
                     continue;
                 }
 
-                // Calculate cherries collected at current positions
+                // cheries at current positions, remember, either 0 or 1, as we skipped over -1 above
                 let mut cherries = grid[x1][y1];
 
-                // If both people are on different cells, person 2 also collects a cherry
-                // If they're on the same cell, the cherry is only counted once
+                // both people are on different cells, person 2 also collects a cherry
+                // if on the same cell, the cherry is only counted once
                 if (x1, y1) != (x2, y2) {
                     cherries += grid[x2][y2];
                 }
 
-                // This is the max from any combination until we're here
+                // this is the max from any combination until we're here
                 dp[x1][y1][x2] = past_cheries + cherries;
             }
         }
     }
 
-    // Return the answer: both people meet at (n-1, n-1)
-    // Use max(0) because if no valid path exists, we return 0 (not negative)
+    // both people meet at (n-1, n-1)
+    // no path means return 0 as per instrutions
     dp[n - 1][n - 1][n - 1].max(0)
 }
 
