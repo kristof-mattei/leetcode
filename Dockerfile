@@ -93,8 +93,6 @@ RUN touch ./crates/${APPLICATION_NAME}/src/build.rs
 
 ENV PATH="/output/bin:$PATH"
 
-RUN find /build
-
 # --release not needed, it is implied with install
 RUN --mount=type=cache,target=/build/target/${TARGET},sharing=locked \
     --mount=type=cache,id=cargo-git,target=/usr/local/cargo/git/db \
