@@ -61,7 +61,7 @@ jobs:
         id: determine
         run: |
           has_container="${{ vars.HAS_CONTAINER }}"
-          echo "has_container=${has_container:-false}" >> ${GITHUB_OUTPUT}
+          echo "has_container=${has_container:-false}" >> "${GITHUB_OUTPUT}"
 
   changes:
     name: Detect changes
@@ -121,7 +121,7 @@ jobs:
           version="${version//v/}"
 
           # store
-          echo "version=${VERSION}" >> ${GITHUB_OUTPUT}
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
 
   cargo-build:
     name: Cargo build
@@ -447,16 +447,16 @@ jobs:
         run: |
           # This is the unique docker tag
           unique_tag=pr-${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
-          echo "unique_tag=${unique_tag}" >> ${GITHUB_OUTPUT}
+          echo "unique_tag=${unique_tag}" >> "${GITHUB_OUTPUT}"
 
           # remove slashes from platform (`amd64/v3` -> `amd64-v3`)
           platform_no_slashes=${{ matrix.platform }}
           platform_no_slashes=${platform_no_slashes//\//-}
-          echo "platform_no_slashes=${platform_no_slashes}" >> ${GITHUB_OUTPUT}
+          echo "platform_no_slashes=${platform_no_slashes}" >> "${GITHUB_OUTPUT}"
 
           # but we're only building 1 arch here, so we need to identify that container (we'll merge them later)
           unique_tag_arch=${unique_tag}-${platform_no_slashes}
-          echo "unique_tag_arch=${unique_tag_arch}" >> ${GITHUB_OUTPUT}
+          echo "unique_tag_arch=${unique_tag_arch}" >> "${GITHUB_OUTPUT}"
 
           # The application name, used in the Dockerfile
           application_name=${{ env.IMAGE_NAME }}
@@ -464,26 +464,26 @@ jobs:
           application_name=${application_name##*/}
           # lowercase
           application_name=${application_name,,}
-          echo "application_name=${application_name}" >> ${GITHUB_OUTPUT}
+          echo "application_name=${application_name}" >> "${GITHUB_OUTPUT}"
 
           # The registry to which we'll push
           registry=${{ env.REGISTRY }}
           registry=${registry,,}
-          echo "registry=${registry}" >> ${GITHUB_OUTPUT}
+          echo "registry=${registry}" >> "${GITHUB_OUTPUT}"
 
           # The final full image name, which is the registry, the owner and the repo name
           image_name=${{ env.IMAGE_NAME }}
           image_name=${image_name,,}
-          echo "full_image_name_remote_registry=${registry}/${image_name}" >> ${GITHUB_OUTPUT}
+          echo "full_image_name_remote_registry=${registry}/${image_name}" >> "${GITHUB_OUTPUT}"
 
           # The local registry to which we'll push
           local_registry=localhost:5000
           local_registry=${local_registry,,}
-          echo "full_image_name_local_registry=${local_registry}/${image_name}" >> ${GITHUB_OUTPUT}
+          echo "full_image_name_local_registry=${local_registry}/${image_name}" >> "${GITHUB_OUTPUT}"
 
           # The application's description, from Cargo.toml
           description=$(cargo metadata --format-version 1 --no-deps | jq ".packages.[] | select(.name == \"${application_name}\") | .description" --raw-output)
-          echo "description=${description}" >> ${GITHUB_OUTPUT}
+          echo "description=${description}" >> "${GITHUB_OUTPUT}"
 
       - name: Set up Docker
         uses: docker/setup-docker-action@e43656e248c0bd0647d3f5c195d116aacf6fcaf4 # v4.7.0
@@ -512,9 +512,9 @@ jobs:
           base_platform="${{ matrix.platform }}"
 
           if ! dpkg-architecture --equal "${base_platform%/*}"; then
-            echo "setup_qemu=true" >> ${GITHUB_OUTPUT}
+            echo "setup_qemu=true" >> "${GITHUB_OUTPUT}"
           else
-            echo "setup_qemu=false" >> ${GITHUB_OUTPUT}
+            echo "setup_qemu=false" >> "${GITHUB_OUTPUT}"
           fi
 
       - name: Set up QEMU
@@ -663,7 +663,7 @@ jobs:
         run: |
           digest=$(docker buildx imagetools inspect ${{ needs.docker-build.outputs.full_image_name_local_registry }}:${{ needs.docker-build.outputs.unique_tag }} --format "{{json .}}" | jq --raw-output ".manifest.digest")
 
-          echo "digest=${digest}" >> ${GITHUB_OUTPUT}
+          echo "digest=${digest}" >> "${GITHUB_OUTPUT}"
 
       - name: Push from local registry to remote with new tags
         shell: bash
