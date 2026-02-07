@@ -121,7 +121,7 @@ jobs:
           version="${version//v/}"
 
           # store
-          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
 
   cargo-build:
     name: Cargo build
