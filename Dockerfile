@@ -23,7 +23,7 @@ ARG TARGET=x86_64-unknown-linux-musl
 FROM rust-base AS rust-linux-arm64
 ARG TARGET=aarch64-unknown-linux-musl
 
-FROM rust-linux-${TARGETARCH//\//-} AS rust-cargo-build
+FROM rust-linux-${TARGETARCH} AS rust-cargo-build
 
 ARG DEBIAN_FRONTEND=noninteractive
 # expose into `build.sh`
@@ -41,19 +41,22 @@ RUN rustup target add ${TARGET}
 # creates an empty app, and we copy in Cargo.toml and Cargo.lock as they represent our dependencies
 # This allows us to copy in the source in a different layer which in turn allows us to leverage Docker's layer caching
 # That means that if our dependencies don't change rebuilding is much faster
-WORKDIR /build/crates/${APPLICATION_NAME}
-RUN cargo init --name ${APPLICATION_NAME}
-COPY ./crates/${APPLICATION_NAME}/Cargo.toml ./
-RUN echo "fn main() {}" > ./src/build.rs
-
-# repeat this for each crate
-WORKDIR /build/crates/shared
-RUN cargo init --name shared
-COPY ./crates/shared/Cargo.toml ./
-
 WORKDIR /build
 COPY ./.cargo ./.cargo
 COPY ./Cargo.toml ./Cargo.lock ./
+
+# main crate
+WORKDIR /build/crates/
+RUN cargo new --bin --vcs none ${APPLICATION_NAME}
+COPY ./crates/${APPLICATION_NAME}/Cargo.toml ./${APPLICATION_NAME}
+RUN echo "fn main() {}" > ./${APPLICATION_NAME}/src/build.rs
+
+# repeat this for each crate
+WORKDIR /build/crates/
+RUN cargo new --lib --vcs none shared
+COPY ./crates/shared/Cargo.toml ./shared
+
+WORKDIR /build
 
 # We use `fetch` to pre-download the files to the cache
 # Notice we do this in the target arch specific branch
@@ -85,9 +88,12 @@ WORKDIR /build
 COPY ./crates ./crates
 
 # ensure cargo picks up on the fact that we copied in our code
-RUN touch ./crates/${APPLICATION_NAME}/src/main.rs ./crates/${APPLICATION_NAME}/src/build.rs
+RUN touch ./crates/${APPLICATION_NAME}/src/main.rs
+RUN touch ./crates/${APPLICATION_NAME}/src/build.rs
 
 ENV PATH="/output/bin:$PATH"
+
+RUN find /build
 
 # --release not needed, it is implied with install
 RUN --mount=type=cache,target=/build/target/${TARGET},sharing=locked \
