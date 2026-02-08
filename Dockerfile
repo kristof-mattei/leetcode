@@ -88,8 +88,7 @@ WORKDIR /build
 COPY ./crates ./crates
 
 # ensure cargo picks up on the fact that we copied in our code
-RUN touch ./crates/${APPLICATION_NAME}/src/main.rs
-RUN touch ./crates/${APPLICATION_NAME}/src/build.rs
+RUN touch ./crates/**/src/*.rs
 
 ENV PATH="/output/bin:$PATH"
 
