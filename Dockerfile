@@ -88,7 +88,7 @@ WORKDIR /build
 COPY ./crates ./crates
 
 # ensure cargo picks up on the fact that we copied in our code
-RUN touch ./crates/**/src/*.rs
+RUN find ./crates -type f -name '*.rs' -exec touch {} +
 
 ENV PATH="/output/bin:$PATH"
 
