@@ -17,8 +17,8 @@ grcov $(find . -name "profile-*.profraw" -print) \
     --binary-path ./target/debug/ \
     --branch \
     --ignore-not-existing \
-    --keep-only "src/**" \
+    --keep-only "crates/**" \
     --llvm \
-    --output-type html \
+    --output-type html,lcov \
     --output-path ./reports/ \
     --source-dir .
