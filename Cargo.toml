@@ -75,7 +75,7 @@ dbg_macro = { level = "deny", priority = 127 }
 # default_numeric_fallback = { level = "deny", priority = 127 }
 default_union_representation = { level = "deny", priority = 127 }
 deref_by_slicing = { level = "deny", priority = 127 }
-# No, we already have `non_ascii_idents` which is even bette
+# No, we already have `non_ascii_idents` which is even better
 # disallowed_script_idents = { level = "deny", priority = 127 }
 doc_include_without_cfg = { level = "deny", priority = 127 }
 doc_paragraphs_missing_punctuation = { level = "deny", priority = 127 }
