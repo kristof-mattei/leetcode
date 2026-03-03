@@ -7,7 +7,8 @@ on:
       prerelease:
         description: "Pre-release type"
         type: choice
-        default: rc
+        # default: rc
+        default: none
         options:
           - none
           # - alpha
