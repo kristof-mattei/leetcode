@@ -10,9 +10,9 @@ on:
         default: rc
         options:
           - none
-          - alpha
-          - beta
-          - rc
+          # - alpha
+          # - beta
+          # - rc
       force-bump:
         description: "Select the version increment level"
         type: choice
