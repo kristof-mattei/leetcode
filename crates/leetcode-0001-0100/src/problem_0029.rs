@@ -25,10 +25,9 @@ fn divide(mut dividend: i32, mut divisor: i32) -> i32 {
     dividend = dividend.abs();
     divisor = divisor.abs();
 
-    let shift = (divisor
+    let shift = divisor
         .leading_zeros()
-        .checked_sub(dividend.leading_zeros()))
-    .unwrap_or_default();
+        .saturating_sub(dividend.leading_zeros());
 
     for i in (0..=shift).rev() {
         if (divisor << i) <= dividend {
