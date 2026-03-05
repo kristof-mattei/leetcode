@@ -3,7 +3,7 @@ fn maximum_gap(mut nums: Vec<i32>) -> i32 {
 
     let mut max = 0;
 
-    for w in nums.windows(2) {
+    for w in nums.array_windows::<2>() {
         let left = w[0] as u32;
         let right = w[1] as u32;
 

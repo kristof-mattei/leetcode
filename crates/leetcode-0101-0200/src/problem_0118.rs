@@ -3,7 +3,7 @@ fn generate(num_rows: usize) -> Vec<Vec<i32>> {
     for i in 1..num_rows {
         let mut temp = vec![1];
 
-        for w in result[i - 1].windows(2) {
+        for w in result[i - 1].array_windows::<2>() {
             temp.push(w[0] + w[1]);
         }
 
