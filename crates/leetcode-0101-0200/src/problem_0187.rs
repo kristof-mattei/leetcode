@@ -8,7 +8,7 @@ fn find_repeated_dna_sequences(s: &str) -> Vec<String> {
     let bytes = s.as_bytes();
     let mut counts = HashMap::new();
 
-    for w in bytes.windows(10) {
+    for w in bytes.array_windows::<10>() {
         counts.entry(w).and_modify(|c| *c += 1).or_insert(1_usize);
     }
 
