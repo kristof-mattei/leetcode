@@ -289,7 +289,7 @@ jobs:
       - name: Apply version bump patch
         shell: bash
         run: |
-          git apply /tmp/version-bump.patch
+          git apply --allow-empty /tmp/version-bump.patch
 
           echo "Applied patch:"
           git diff
