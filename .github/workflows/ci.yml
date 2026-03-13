@@ -91,7 +91,7 @@ jobs:
           show-progress: false
 
       - name: Check if we actually made changes
-        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        uses: dorny/paths-filter@9d7afb8d214ad99e78fbd4247752c4caed2b6e4c # v4.0.0
         id: filter
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -356,7 +356,7 @@ jobs:
             org.opencontainers.image.description=${{ needs.docker-prepare-variables.outputs.description }} (${{ matrix.platform }})
             org.opencontainers.image.revision=${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
-            org.opencontainers.image.version=pr-${{ github.event.number }}
+            org.opencontainers.image.version=v${{ needs.calculate-version.outputs.version }}
           images: ${{ needs.docker-prepare-variables.outputs.full_image_name_local_registry }}
           tags: |
             type=raw,value=${{ steps.variables.outputs.unique_tag_arch }}
@@ -399,6 +399,7 @@ jobs:
     permissions:
       packages: write
     needs:
+      - calculate-version
       - docker-prepare-variables
       - docker-build
       - rust-build
@@ -431,12 +432,12 @@ jobs:
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
         id: meta
         with:
-          images: ${{ needs.docker-prepare-variables.outputs.full_image_name_remote_registry }}
           labels: |
             org.opencontainers.image.description=${{ needs.docker-prepare-variables.outputs.description }}
             org.opencontainers.image.revision=${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
-            org.opencontainers.image.version=pr-${{ github.event.number }}
+            org.opencontainers.image.version=v${{ needs.calculate-version.outputs.version }}
+          images: ${{ needs.docker-prepare-variables.outputs.full_image_name_remote_registry }}
           tags: |
             type=raw,value=${{ needs.docker-prepare-variables.outputs.unique_tag }}
             type=ref,event=pr,suffix=-latest
