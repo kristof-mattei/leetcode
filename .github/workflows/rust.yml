@@ -23,6 +23,10 @@ jobs:
         with:
           show-progress: false
 
+      - &set_up_mold
+        name: Set up mold
+        uses: rui314/setup-mold@725a8794d15fc7563f59595bd9556495c0564878 # v1
+
       - name: Cache cargo
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         env:
@@ -40,10 +44,6 @@ jobs:
             ${{ runner.os }}-${{ runner.arch }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-${{ github.workflow }}-
             ${{ runner.os }}-${{ runner.arch }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-${{ runner.arch }}-build-${{ env.CACHE_NAME }}-
-
-      - &set_up_mold
-        name: Set up mold
-        uses: rui314/setup-mold@725a8794d15fc7563f59595bd9556495c0564878 # v1
 
       - &set_up_toolchain
         name: Set up toolchain
@@ -95,6 +95,8 @@ jobs:
     steps:
       - *checkout
 
+      - *set_up_mold
+
       - &cache_cargo
         name: Cache cargo
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
@@ -123,8 +125,6 @@ jobs:
             ${{ runner.os }}-${{ runner.arch }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-${{ github.workflow }}-
             ${{ runner.os }}-${{ runner.arch }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
             ${{ runner.os }}-${{ runner.arch }}-build-${{ env.CACHE_NAME }}-
-
-      - *set_up_mold
 
       - *set_up_toolchain
 
@@ -297,11 +297,11 @@ jobs:
     steps:
       - *checkout
 
+      - *set_up_mold
+
       - *cache_cargo
 
       - *cache_target
-
-      - *set_up_mold
 
       - *set_up_toolchain
 
