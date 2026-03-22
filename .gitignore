@@ -1,4 +1,6 @@
 # only in root
+/coverage
+/dist
 /node_modules
 /reports
 /target
@@ -8,3 +10,5 @@ profiling/
 
 # samply output
 /profile.json
+
+.env
