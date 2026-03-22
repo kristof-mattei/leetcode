@@ -20,4 +20,3 @@ switch_case_indent = true # --case-indent
 space_redirects = true
 keep_padding = true
 
-# test
