@@ -1,6 +1,4 @@
 # only in root
-/coverage
-/dist
 /node_modules
 /reports
 /target

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 rustc --version
 
 rustup toolchain add nightly
