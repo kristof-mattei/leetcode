@@ -24,8 +24,9 @@
             "type": "lldb",
             "request": "launch",
             "cargo": {
-                "args": ["test", "--bin=leetcode"]
+                "args": ["test", "--no-run", "--bin=leetcode"]
             },
+            "args": [],
             "env": {
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,leetcode=TRACE"
@@ -38,8 +39,9 @@
             "type": "lldb",
             "request": "launch",
             "cargo": {
-                "args": ["test", "--test=integration_tests"]
+                "args": ["test", "--no-run", "--test=integration_tests"]
             },
+            "args": [],
             "env": {
                 "RUST_BACKTRACE": "1",
                 "RUST_LOG": "DEBUG,leetcode=TRACE"
