@@ -24,7 +24,7 @@ jobs:
     if: ${{ !startsWith(github.head_ref, 'release/') }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Check out code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           show-progress: false
@@ -109,6 +109,9 @@ jobs:
           rustup show
 
           cargo --version
+
+      - name: Set up sccache
+        uses: mozilla-actions/sccache-action@7d986dd989559c6ecdb630a3fd2557667be217ad # v0.0.9
 
       - name: Install libclang-dev should cargo-spellcheck be built from source
         shell: bash
