@@ -352,7 +352,7 @@ jobs:
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
         id: meta
         with:
-          labels: |
+          annotations: |
             org.opencontainers.image.description=${{ needs.docker-prepare-variables.outputs.description }} (${{ matrix.platform }})
             org.opencontainers.image.revision=${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
@@ -373,7 +373,7 @@ jobs:
             type=registry,ref=${{ steps.variables.outputs.buildcache_pr_ref }}
             type=registry,ref=${{ steps.variables.outputs.buildcache_main_ref }}
           cache-to: type=registry,ref=${{ steps.variables.outputs.buildcache_pr_ref }},mode=max
-          labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
           outputs: type=oci,dest=/tmp/${{ steps.variables.outputs.unique_tag_arch }}.tar
           platforms: linux/${{ matrix.platform }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -434,7 +434,7 @@ jobs:
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
         id: meta
         with:
-          labels: |
+          annotations: |
             org.opencontainers.image.description=${{ needs.docker-prepare-variables.outputs.description }}
             org.opencontainers.image.revision=${{ github.event.pull_request.base.sha }}-${{ github.event.pull_request.head.sha }}
             org.opencontainers.image.source=${{ github.event.pull_request.html_url }}
@@ -469,15 +469,18 @@ jobs:
             platforms+=("$full_name_with_platform")
           done <<< "${{ env.IMAGE_VARIANTS }}"
 
-          new_labels=()
-          while IFS= read -r label; do
-            new_labels+=(--annotation)
-            new_labels+=("index:${label}")
-          done <<< "${{ steps.meta.outputs.labels }}"
+          new_annotations=()
+          while IFS= read -r annotation; do
+            # manifest-level annotations are for individual platform containers only
+            # imagetools create builds an index (multiplatform) image and thus only supports index-level annotations
+            [[ "${annotation}" == manifest:* ]] && continue
+            new_annotations+=(--annotation)
+            new_annotations+=("${annotation}")
+          done <<< "${{ steps.meta.outputs.annotations }}"
 
           # merge the platform containers in a new multiplatform one
-          # with the new labels, and push it to our local registry
-          docker buildx imagetools create "${new_labels[@]}" --tag "${{ needs.docker-prepare-variables.outputs.full_image_name_local_registry }}:${{ needs.docker-prepare-variables.outputs.unique_tag }}" \
+          # with the new annotations, and push it to our local registry
+          docker buildx imagetools create "${new_annotations[@]}" --tag "${{ needs.docker-prepare-variables.outputs.full_image_name_local_registry }}:${{ needs.docker-prepare-variables.outputs.unique_tag }}" \
             "${platforms[@]}"
 
           echo "Inspecting ${{ needs.docker-prepare-variables.outputs.full_image_name_local_registry }}:${{ needs.docker-prepare-variables.outputs.unique_tag }}:"
