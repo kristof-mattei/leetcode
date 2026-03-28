@@ -471,9 +471,9 @@ jobs:
 
           new_annotations=()
           while IFS= read -r annotation; do
-            # manifest-level annotations are for individual platform containers only
-            # imagetools create builds an index (multiplatform) image and thus only supports index-level annotations
-            [[ "${annotation}" == manifest:* ]] && continue
+            [[ -z "${annotation}" ]] && continue
+            # imagetools create builds an index; convert manifest-level annotations to index-level
+            annotation="${annotation/manifest:/index:}"
             new_annotations+=(--annotation)
             new_annotations+=("${annotation}")
           done <<< "${{ steps.meta.outputs.annotations }}"
