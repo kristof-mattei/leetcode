@@ -130,10 +130,18 @@ jobs:
         shell: bash
         id: version
         run: |
-          version=$(git-cliff --bumped-version --unreleased --github-token ${{ secrets.GITHUB_TOKEN }})
+          latest_tag=$(git describe --tags --abbrev=0 || true)
+          bumped=$(git-cliff --bumped-version --unreleased --github-token ${{ secrets.GITHUB_TOKEN }})
+
+          # If git-cliff didn't bump (e.g. chore/ci only commits), force a patch increment
+          # so we never tag a Docker image with the same version as the last release.
+          if [ "${bumped}" = "${latest_tag}" ]; then
+            bumped=$(git-cliff --bumped-version --bump patch --unreleased --github-token ${{ secrets.GITHUB_TOKEN }})
+            echo "Force bumping to ${bumped}"
+          fi
 
           # remove v
-          version="${version//v/}"
+          version="${bumped//v/}"
 
           # store
           echo "version=${version}" >> "${GITHUB_OUTPUT}"
