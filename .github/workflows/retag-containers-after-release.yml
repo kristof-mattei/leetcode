@@ -21,7 +21,7 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-  DOCKER_IMAGE_NAME: ${{ vars.DOCKER_IMAGE_NAME }}
+  DOCKERHUB_IMAGE_NAME: ${{ vars.DOCKERHUB_IMAGE_NAME }}
 
 jobs:
   repo-has-container:
@@ -67,7 +67,7 @@ jobs:
           username: ${{ github.actor }}
 
       - name: Log into Docker Hub
-        if: env.DOCKER_IMAGE_NAME != ''
+        if: env.DOCKERHUB_IMAGE_NAME != ''
         uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
         with:
           registry: docker.io
@@ -78,7 +78,7 @@ jobs:
         shell: bash
         run: |
           echo "FULL_IMAGE_NAME=${REGISTRY,,}/${IMAGE_NAME,,}" >> "${GITHUB_ENV}"
-          echo "FULL_DOCKERHUB_IMAGE_NAME=docker.io/${DOCKER_IMAGE_NAME,,}" >> "${GITHUB_ENV}"
+          echo "FULL_DOCKERHUB_IMAGE_NAME=docker.io/${DOCKERHUB_IMAGE_NAME,,}" >> "${GITHUB_ENV}"
 
       - name: Find source tag using GitHub CLI
         shell: bash
@@ -109,11 +109,11 @@ jobs:
             type=semver,pattern={{version}},prefix=v
 
       - name: Set the new Docker Hub TAGs
-        if: env.DOCKER_IMAGE_NAME != ''
+        if: env.DOCKERHUB_IMAGE_NAME != ''
         id: meta-dockerhub
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
         with:
-          images: "docker.io/${{ env.DOCKER_IMAGE_NAME }}"
+          images: "docker.io/${{ env.DOCKERHUB_IMAGE_NAME }}"
           tags: |
             type=raw,value=latest,enable=${{ !github.event.release.prerelease }}
             type=semver,pattern={{version}},prefix=v
@@ -127,7 +127,7 @@ jobs:
           done
 
       - name: Copy the container to Docker Hub
-        if: env.DOCKER_IMAGE_NAME != ''
+        if: env.DOCKERHUB_IMAGE_NAME != ''
         shell: bash
         run: |
           echo "${{ steps.meta-dockerhub.outputs.tags }}" | while IFS= read -r new_tag
