@@ -119,7 +119,7 @@ link_parsers = []
 # Include only the tags that belong to the current branch.
 use_branch_tags = false
 # Order releases topologically instead of chronologically.
-topo_order = true
+topo_order = false
 # Order releases topologically instead of chronologically.
 topo_order_commits = true
 # Order of commits in each group/release within the changelog.
