@@ -192,7 +192,6 @@ jobs:
               docker buildx imagetools create --tag "${new_tag}" "${FULL_IMAGE_NAME}:${OLD_TAG}"
           done
 
-
       - name: Copy the container to Docker Hub
         if: env.DOCKERHUB_IMAGE_NAME != ''
         shell: bash
