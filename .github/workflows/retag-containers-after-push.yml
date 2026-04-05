@@ -111,7 +111,7 @@ jobs:
         uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
         with:
           registry: docker.io
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Set full image name
@@ -224,7 +224,7 @@ jobs:
           command: cves
           image: "${{ env.FULL_IMAGE_NAME }}@${{ steps.digest.outputs.digest }}"
           platform: linux/amd64
-          dockerhub-user: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-user: ${{ vars.DOCKERHUB_USERNAME }}
           dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Docker Scout (linux/arm64)
@@ -233,5 +233,5 @@ jobs:
           command: cves
           image: "${{ env.FULL_IMAGE_NAME }}@${{ steps.digest.outputs.digest }}"
           platform: linux/arm64
-          dockerhub-user: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-user: ${{ vars.DOCKERHUB_USERNAME }}
           dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
