@@ -502,6 +502,7 @@ jobs:
       attestations: write
       id-token: write
       packages: write
+      pull-requests: write
     needs:
       - docker-prepare-variables
       - docker-build
@@ -541,6 +542,28 @@ jobs:
           subject-name: ${{ needs.docker-prepare-variables.outputs.full_image_name_remote_registry }}
           subject-digest: ${{ needs.docker-publish.outputs.digest }}
           push-to-registry: true
+
+      - name: Docker Scout Compare (linux/amd64)
+        uses: docker/scout-action@8910519cee8ac046f3ee99686b0dc6654d5ba1a7 # v1.20.3
+        with:
+          command: compare
+          image: "${{ needs.docker-prepare-variables.outputs.full_image_name_remote_registry }}:pr-${{ github.event.pull_request.number }}-latest"
+          platform: linux/amd64
+          to: "${{ needs.docker-prepare-variables.outputs.full_image_name_remote_registry }}:edge"
+          dockerhub-user: ${{ vars.DOCKERHUB_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
+          organization: ${{ vars.DOCKERHUB_USERNAME }}
+
+      - name: Docker Scout Compare (linux/arm64)
+        uses: docker/scout-action@8910519cee8ac046f3ee99686b0dc6654d5ba1a7 # v1.20.3
+        with:
+          command: compare
+          image: "${{ needs.docker-prepare-variables.outputs.full_image_name_remote_registry }}:pr-${{ github.event.pull_request.number }}-latest"
+          platform: linux/arm64
+          to: "${{ needs.docker-prepare-variables.outputs.full_image_name_remote_registry }}:edge"
+          dockerhub-user: ${{ vars.DOCKERHUB_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
+          organization: ${{ vars.DOCKERHUB_USERNAME }}
 
   all-done:
     name: All done
