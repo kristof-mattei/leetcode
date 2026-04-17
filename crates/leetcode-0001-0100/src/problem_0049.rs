@@ -32,7 +32,6 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use std::string::ToString;
 
     use shared::sort_vec_of_vec;
 
@@ -41,12 +40,12 @@ mod tests {
     fn test_base(input: Vec<&str>, expected: Vec<Vec<&str>>) {
         let input = input
             .into_iter()
-            .map(ToString::to_string)
+            .map(str::to_owned)
             .collect::<Vec<String>>();
 
         let mut expected = expected
             .into_iter()
-            .map(|v| v.into_iter().map(ToString::to_string).collect::<Vec<_>>())
+            .map(|v| v.into_iter().map(str::to_owned).collect::<Vec<_>>())
             .collect::<Vec<_>>();
 
         let mut result = group_anagrams(input);

@@ -88,7 +88,7 @@ mod tests {
             remove_invalid_parentheses("()())()"),
             ["(())()", "()()()"]
                 .into_iter()
-                .map(ToString::to_string)
+                .map(str::to_owned)
                 .collect::<HashSet<_>>()
         );
     }
@@ -97,10 +97,7 @@ mod tests {
     fn test_2() {
         assert_eq!(
             remove_invalid_parentheses("n"),
-            ["n"]
-                .into_iter()
-                .map(ToString::to_string)
-                .collect::<HashSet<_>>()
+            ["n"].into_iter().map(str::to_owned).collect::<HashSet<_>>()
         );
     }
 
@@ -110,7 +107,7 @@ mod tests {
             remove_invalid_parentheses("()"),
             ["()"]
                 .into_iter()
-                .map(ToString::to_string)
+                .map(str::to_owned)
                 .collect::<HashSet<_>>()
         );
     }
