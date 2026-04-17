@@ -119,7 +119,6 @@ pub struct Solution;
 
 #[cfg(test)]
 mod tests {
-    use std::string::ToString;
 
     use shared::vec_eq;
 
@@ -132,7 +131,7 @@ mod tests {
             vec!["..Q.", "Q...", "...Q", ".Q.."],
         ]
         .into_iter()
-        .map(|v| v.into_iter().map(ToString::to_string).collect())
+        .map(|v| v.into_iter().map(str::to_owned).collect())
         .collect();
 
         let result = solve_n_queens(4);
@@ -161,7 +160,7 @@ mod tests {
             vec!["....Q", "..Q..", "Q....", "...Q.", ".Q..."],
         ]
         .into_iter()
-        .map(|v| v.into_iter().map(ToString::to_string).collect())
+        .map(|v| v.into_iter().map(str::to_owned).collect())
         .collect();
 
         let result = solve_n_queens(5);
