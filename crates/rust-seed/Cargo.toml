@@ -18,9 +18,9 @@ default = []
 [dependencies]
 color-eyre = "0.6.5"
 mimalloc = "0.1.49"
-pretty_assertions = "1.4.1"
 
 [dev-dependencies]
+pretty_assertions = "=1.4.1"
 
 [lints]
 workspace = true
