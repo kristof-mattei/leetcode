@@ -14,8 +14,6 @@ keywords = ["integrity", "seed", "starter", "docker", "release"]
 repository = "https://github.com/kristof-mattei/rust-seed"
 include = ["crates/**", "/LICENSE", "/LICENSE-*"]
 
-[workspace.dependencies]
-
 [workspace.metadata.spellcheck]
 config = "spellcheck.toml"
 
