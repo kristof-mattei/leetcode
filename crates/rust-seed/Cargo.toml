@@ -17,7 +17,7 @@ default = []
 
 [dependencies]
 color-eyre = "0.6.5"
-mimalloc = "0.1.49"
+mimalloc = "0.1.50"
 
 [dev-dependencies]
 pretty_assertions = "=1.4.1"
