@@ -54,7 +54,8 @@ allow_attributes = { level = "deny", priority = 127 }
 # arbitrary_source_item_ordering = { level = "deny", priority = 127 }
 # Debatable
 # arithmetic_side_effects = { level = "deny", priority = 127 }
-as_conversions = { level = "deny", priority = 127 }
+# No point in this kind of codebase
+# as_conversions = { level = "deny", priority = 127 }
 as_pointer_underscore = { level = "deny", priority = 127 }
 as_underscore = { level = "deny", priority = 127 }
 assertions_on_result_states = { level = "deny", priority = 127 }
