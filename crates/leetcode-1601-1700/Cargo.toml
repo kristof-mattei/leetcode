@@ -15,7 +15,15 @@ include.workspace = true
 default = []
 
 [dependencies]
+<<<<<<< HEAD:crates/leetcode-1601-1700/Cargo.toml
 shared = { path = "../shared" }
+||||||| 1cd12422:crates/rust-seed/Cargo.toml
+color-eyre = "0.6.5"
+mimalloc = "0.1.51"
+=======
+color-eyre = "0.6.5"
+mimalloc = "0.1.52"
+>>>>>>> upstream/main:crates/rust-seed/Cargo.toml
 
 [dev-dependencies]
 
