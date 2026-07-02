@@ -149,8 +149,6 @@ jobs:
     steps:
       - *checkout
 
-      - *cache_cargo
-
       - *set_up_toolchain
 
       - name: Install rustfmt
