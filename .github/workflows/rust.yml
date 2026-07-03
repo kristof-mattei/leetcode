@@ -9,6 +9,7 @@ permissions:
 
 env:
   CARGO_FEATURES: --all-features
+  CARGO_INCREMENTAL: "0"
   CARGO_TERM_COLOR: always
   RUSTFLAGS: --deny=warnings
   RUSTC_WRAPPER: "sccache"
@@ -118,20 +119,6 @@ jobs:
 
       - *set_up_toolchain
 
-      - &cache_target
-        name: Cache target
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        env:
-          CACHE_NAME: target
-        with:
-          path: |
-            ./target
-          key: ${{ runner.os }}-${{ runner.arch }}-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-${{ github.workflow }}-${{ github.job }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-${{ github.workflow }}-
-            ${{ runner.os }}-${{ runner.arch }}-${{ env.CACHE_NAME }}-${{ hashFiles('Cargo.lock') }}-
-            ${{ runner.os }}-${{ runner.arch }}-${{ env.CACHE_NAME }}-
-
       - *set_up_sccache
 
       - name: Build
@@ -184,8 +171,6 @@ jobs:
       - *set_up_mold
 
       - *set_up_toolchain
-
-      - *cache_target
 
       - *set_up_sccache
 
@@ -308,8 +293,6 @@ jobs:
       - *set_up_mold
 
       - *set_up_toolchain
-
-      - *cache_target
 
       - *set_up_sccache
 
