@@ -35,13 +35,13 @@ fn fraction_to_decimal(numerator: i32, denominator: i32) -> String {
             return format!(
                 "{}.{}({})",
                 answer,
-                &non_repeating.iter().collect::<String>(),
-                &repeating.iter().collect::<String>()
+                non_repeating.iter().collect::<String>(),
+                repeating.iter().collect::<String>()
             );
         }
     }
 
-    format!("{answer}.{}", &after_period.iter().collect::<String>())
+    format!("{answer}.{}", after_period.iter().collect::<String>())
 }
 
 impl Solution {
