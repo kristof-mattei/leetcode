@@ -57,10 +57,7 @@ fn get_skyline(raw_buildings: &[Vec<i32>]) -> Vec<Vec<i32>> {
             i += 1;
         }
 
-        while let Some(v) = heap
-            .peek_mut()
-            .and_then(|v| if v.x <= x { Some(v) } else { None })
-        {
+        while let Some(v) = heap.peek_mut().filter(|v| v.x <= x) {
             PeekMut::pop(v);
         }
 
