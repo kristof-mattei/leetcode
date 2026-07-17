@@ -122,7 +122,13 @@ jobs:
           fetch-depth: 0
 
       - name: Install git-cliff to generate changelog & next version number
+<<<<<<< HEAD
         uses: taiki-e/install-action@43aecc8d72668fbcfe75c31400bc4f890f1c5853 # v2.83.2
+||||||| 767c9c6f
+        uses: taiki-e/install-action@c7eb1735f09259a5035e8e5d44b1406b1cddc0fb # v2.83.0
+=======
+        uses: taiki-e/install-action@ed67fa35ac944f3a9b33f12c4dd43b6f31a47e20 # v2.83.3
+>>>>>>> upstream/main
         with:
           tool: git-cliff
 
@@ -165,7 +171,13 @@ jobs:
       - *checkout
 
       - name: Install cargo-edit to do set-version
+<<<<<<< HEAD
         uses: taiki-e/install-action@43aecc8d72668fbcfe75c31400bc4f890f1c5853 # v2.83.2
+||||||| 767c9c6f
+        uses: taiki-e/install-action@c7eb1735f09259a5035e8e5d44b1406b1cddc0fb # v2.83.0
+=======
+        uses: taiki-e/install-action@ed67fa35ac944f3a9b33f12c4dd43b6f31a47e20 # v2.83.3
+>>>>>>> upstream/main
         with:
           tool: cargo-edit
 
@@ -551,7 +563,7 @@ jobs:
       # since we deal with tags (mutable), and the way to get a digest is to use the tag, I prefer
       # sourcing the digest from the local registry we just spun up (trusted)
       - name: Generate artifact attestation
-        uses: actions/attest@a1948c3f048ba23858d222213b7c278aabede763 # v4.1.1
+        uses: actions/attest@f7c74d28b9d84cb8768d0b8ca14a4bac6ef463e6 # v4.2.0
         id: attestation
         with:
           subject-name: ${{ needs.docker-prepare-variables.outputs.full_image_name_remote_registry }}
