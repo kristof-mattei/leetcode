@@ -14,9 +14,6 @@ keywords = ["playground"]
 repository = "https://github.com/kristof-mattei/leetcode"
 include = ["crates/**", "/LICENSE", "/LICENSE-*"]
 
-[workspace.metadata.spellcheck]
-config = "spellcheck.toml"
-
 [workspace.metadata.cargo-machete]
 ignored = ["shared"]
 
