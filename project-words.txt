@@ -140,7 +140,6 @@ Retag
 Retagging
 rsplit
 rustflags
-sacrificies
 samply
 sccache
 sefg
