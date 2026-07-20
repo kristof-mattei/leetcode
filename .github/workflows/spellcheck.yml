@@ -41,10 +41,10 @@ jobs:
           # environments.
 
           (
-            LC_ALL=en_US.UTF8 sort -uc "$FILE"
+            LC_ALL=en_US.UTF8 sort --check --unique "$FILE"
           ) || {
             echo "Dictionary is not in sorted order. Correct order is:"
-            LC_ALL=en_US.UTF8 sort -u "$FILE"
+            LC_ALL=en_US.UTF8 sort --unique "$FILE"
             false
           }
 
