@@ -6,12 +6,12 @@ It supports:
 
 - Building multi-platform images
 - Reusing images when merging in PRs to preserve provenance
-    - Support for tags like `pr-${PR_NUMBER}-latest` (last build on PR), `edge` (last build on `main`), `pr-${SHA_MAIN_HEAD}-${SHA_PR_HEAD}` (uniquely identifying the merge result of a PR)
+  - Support for tags like `pr-${PR_NUMBER}-latest` (last build on PR), `edge` (last build on `main`), `pr-${SHA_MAIN_HEAD}-${SHA_PR_HEAD}` (uniquely identifying the merge result of a PR)
 - Container attestation
 - Crate publishing
 - Release publishing
-    - Crate publishing to crates.io
-    - Container re-tagging to `:latest`
+  - Crate publishing to crates.io
+  - Container re-tagging to `:latest`
 
 ## TODO
 
