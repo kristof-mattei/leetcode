@@ -20,7 +20,7 @@ on:
 
 concurrency:
   group: "${{ github.workflow }}-${{ inputs.prerelease }}"
-  cancel-in-progress: true # only last step is important, which runs or doesn't
+  cancel-in-progress: false # this job force-pushes branches and opens PRs, let it finish
 
 permissions:
   contents: write # to create branches
@@ -255,4 +255,19 @@ jobs:
 
           if [ "${{ inputs.auto_merge }}" = "true" ]; then
             gh pr merge "${branch}" --auto --merge
+          fi
+
+      - name: Clean up stranded branches
+        if: ${{ (failure() || cancelled()) && steps.release.outputs.branch != '' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="${{ steps.release.outputs.branch }}"
+
+          git push origin --delete "${branch}-staging" || true
+
+          # Deleting the release branch would close its PR, so keep it when one exists
+          if [ -z "$(gh pr list --head "${branch}" --state open --json number --jq '.[0].number // empty')" ]; then
+            git push origin --delete "${branch}" || true
           fi
