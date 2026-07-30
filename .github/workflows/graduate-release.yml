@@ -113,17 +113,19 @@ jobs:
             mv release-notes-truncated.md release-notes.md
           fi
 
-          prerelease_args=()
+          release_args=()
           if [ "${PRERELEASE}" == "true" ]; then
-            prerelease_args+=(--prerelease)
+            # prereleases cannot be set as latest
+            release_args+=(--prerelease)
+          else
+            release_args+=(--latest)
           fi
 
           gh release create "${TAG}" \
             --notes-file release-notes.md \
             --title "${TAG}" \
             --verify-tag \
-            --latest \
-            "${prerelease_args[@]}"
+            "${release_args[@]}"
 
       - name: Close stale release PRs
         if: steps.check_release.outputs.exists == 'false'
