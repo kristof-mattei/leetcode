@@ -62,6 +62,8 @@ jobs:
           # GITHUB_TOKEN attributes the API commit to github-actions[bot].
           # But we push the branch using the checkout PAT so workflows trigger.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # git-cliff reads GITHUB_TOKEN from the environment
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           latest_tag=$(git describe --tags --abbrev=0 || true)
 
@@ -98,13 +100,13 @@ jobs:
           fi
 
           bump_flag="auto"
-          bumped=$(git-cliff --bumped-version --bump ${bump_flag} --unreleased --github-token ${{ secrets.GITHUB_TOKEN }})
+          bumped=$(git-cliff --bumped-version --bump ${bump_flag} --unreleased)
 
           # If git-cliff didn't bump (e.g. chore/ci only commits), force a patch increment
           # so we never release the same version as the last tag.
           if [ "${bumped}" = "${latest_tag}" ]; then
             bump_flag="patch"
-            bumped=$(git-cliff --bumped-version --bump patch --unreleased --github-token ${{ secrets.GITHUB_TOKEN }})
+            bumped=$(git-cliff --bumped-version --bump patch --unreleased)
             echo "::notice::No conventional bump detected, forcing patch bump"
           fi
 
@@ -160,7 +162,7 @@ jobs:
 
           commit_message="chore(release): prepare for ${release_version}"
 
-          git-cliff --output CHANGELOG.md --tag "${release_version}" --github-token ${{ secrets.GITHUB_TOKEN }}
+          git-cliff --output CHANGELOG.md --tag "${release_version}"
 
           main_sha=$(git rev-parse HEAD)
 
@@ -213,7 +215,7 @@ jobs:
           # Build the PR-body changelog from a context whose compare-link target
           # is the release-branch head SHA, because the ${release_version} tag
           # doesn't exist until after this PR is merged.
-          git-cliff --context --unreleased --tag "${release_version}" --github-token ${{ secrets.GITHUB_TOKEN }} \
+          git-cliff --context --unreleased --tag "${release_version}" \
             | jq --arg sha "${release_sha}" '.[0].extra = {compare_to: $sha}' \
             > diff-context.json
 
