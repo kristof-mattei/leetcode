@@ -269,7 +269,10 @@ jobs:
 
           git push origin --delete "${branch}-staging" || true
 
-          # Deleting the release branch would close its PR, so keep it when one exists
-          if [ -z "$(gh pr list --head "${branch}" --state open --json number --jq '.[0].number // empty')" ]; then
+          # Deleting the release branch would close its PR, so keep it when one exists.
+          # A failing `gh pr list` fails the step (set -e) instead of counting as "no PR".
+          open_pr=$(gh pr list --head "${branch}" --state open --json number --jq '.[0].number // empty')
+
+          if [ -z "${open_pr}" ]; then
             git push origin --delete "${branch}" || true
           fi
