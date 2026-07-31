@@ -90,11 +90,27 @@ jobs:
           repo="${{ github.repository }}"
           repo_lower="${repo,,}"
 
-          OLD_TAG=$(gh api "/users/${{ github.repository_owner }}/packages/container/${repo_lower##*/}/versions" \
-            --paginate \
-            --jq '.[] | .metadata.container.tags[]' | grep "^sha-${{ github.sha }}-.*\$" | head --lines 1) # .* is actual or retag
+          # the source tag is pushed by the push-triggered retag workflow, which may still be running, so poll
+          OLD_TAG=""
 
-          if [ -z "${OLD_TAG}" ]; then
+          for attempt in $(seq 1 30)
+          do
+            # || true: no match yet, or a transient api error, both mean retry
+            OLD_TAG=$(gh api "/users/${{ github.repository_owner }}/packages/container/${repo_lower##*/}/versions" \
+              --paginate \
+              --jq '.[] | .metadata.container.tags[]' | grep "^sha-${{ github.sha }}-.*\$" | head --lines 1) || true # .* is actual or retag
+
+            if [ -n "${OLD_TAG}" ]
+            then
+              break
+            fi
+
+            echo "No source tag for SHA ${{ github.sha }} yet (attempt ${attempt}/30), retrying in 30 seconds"
+            sleep 30
+          done
+
+          if [ -z "${OLD_TAG}" ]
+          then
             echo "::error::No matching source tag found for SHA ${{ github.sha }}"
             exit 1
           fi
