@@ -440,7 +440,7 @@ jobs:
           platforms=()
           while IFS= read -r platform; do
             echo "Loading ${platform//\//-}:"
-            docker load --input ./${{ needs.docker-prepare-variables.outputs.unique_tag }}-${platform//\//-}.tar
+            docker load --input "./${{ needs.docker-prepare-variables.outputs.unique_tag }}-${platform//\//-}.tar"
 
             full_name_with_platform=${{ needs.docker-prepare-variables.outputs.full_image_name_local_registry }}:${{ needs.docker-prepare-variables.outputs.unique_tag }}-${platform//\//-}
 
