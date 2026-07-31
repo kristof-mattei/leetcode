@@ -2,25 +2,25 @@ fn max_profit(prices: &[i32]) -> i32 {
     // buy Price at First Day
     let mut buy = 0 - prices[0];
     // max Overall Profit till date
-    let mut max_overal_profit = 0;
+    let mut max_overall_profit = 0;
 
     // max profit if not sold on a give date
-    let mut max_overal_profit_not_sold = 0;
+    let mut max_overall_profit_not_sold = 0;
 
     #[expect(clippy::needless_range_loop)]
     for i in 1..prices.len() {
         // Total profit if bought today;
-        let current = max_overal_profit_not_sold - prices[i];
+        let current = max_overall_profit_not_sold - prices[i];
 
         // max Profit if not sold today
-        max_overal_profit_not_sold = i32::max(max_overal_profit_not_sold, max_overal_profit);
+        max_overall_profit_not_sold = i32::max(max_overall_profit_not_sold, max_overall_profit);
         // max Profit if selling today was an option
-        max_overal_profit = i32::max(max_overal_profit, buy + prices[i]);
+        max_overall_profit = i32::max(max_overall_profit, buy + prices[i]);
         // best buying position;
         buy = i32::max(current, buy);
     }
 
-    max_overal_profit
+    max_overall_profit
 }
 
 impl Solution {

@@ -23,11 +23,11 @@ fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
         if states[v] == State::NotVisited {
             stack.push(v);
 
-            // fetch the next cource
+            // fetch the next course
             while let Some(v) = stack.pop() {
                 match states[v] {
                     State::NotVisited => {
-                        // We put it back IN thet stack
+                        // We put it back IN the stack
                         states[v] = State::InStack;
                         stack.push(v);
 
@@ -71,8 +71,8 @@ fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
 
 impl Solution {
     #[must_use]
-    pub fn can_finish(num_courses: i32, prerequisits: Vec<Vec<i32>>) -> bool {
-        can_finish(num_courses, prerequisits)
+    pub fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
+        can_finish(num_courses, prerequisites)
     }
 }
 

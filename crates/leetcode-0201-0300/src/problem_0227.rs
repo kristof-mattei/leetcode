@@ -24,8 +24,8 @@ enum Token {
     Times,
     Plus,
     Minus,
-    LeftParenteses,
-    RightParenteses,
+    LeftParentheses,
+    RightParentheses,
 }
 
 impl std::fmt::Display for Token {
@@ -36,8 +36,8 @@ impl std::fmt::Display for Token {
             Token::Times => write!(f, "*"),
             Token::Plus => write!(f, "+"),
             Token::Minus => write!(f, "-"),
-            Token::LeftParenteses => write!(f, "("),
-            Token::RightParenteses => write!(f, ")"),
+            Token::LeftParentheses => write!(f, "("),
+            Token::RightParentheses => write!(f, ")"),
         }
     }
 }
@@ -85,8 +85,8 @@ fn tokenize(s: &str) -> Vec<Token> {
             '*' => Some(Token::Times),
             '+' => Some(Token::Plus),
             '-' => Some(Token::Minus),
-            '(' => Some(Token::LeftParenteses),
-            ')' => Some(Token::RightParenteses),
+            '(' => Some(Token::LeftParentheses),
+            ')' => Some(Token::RightParentheses),
             ' ' => None,
             _ => panic!("Invalid character"),
         };
@@ -102,11 +102,11 @@ fn tokenize(s: &str) -> Vec<Token> {
 fn parse_primary_expression(tokens: &mut Peekable<IntoIter<Token>>) -> Tree {
     match tokens.next() {
         Some(Token::Number(n)) => Tree::Number(n),
-        Some(Token::LeftParenteses) => {
+        Some(Token::LeftParentheses) => {
             let subtree = parse_expression(tokens);
 
             match tokens.next() {
-                Some(Token::RightParenteses) => (),
+                Some(Token::RightParentheses) => (),
                 _ => panic!("Expected right paren"),
             }
 
@@ -135,8 +135,8 @@ fn parse_multiply_expression(tokens: &mut Peekable<IntoIter<Token>>) -> Tree {
             Token::Number(_)
             | Token::Plus
             | Token::Minus
-            | Token::LeftParenteses
-            | Token::RightParenteses => panic!("Invalid token"),
+            | Token::LeftParentheses
+            | Token::RightParentheses => panic!("Invalid token"),
         };
     }
 
@@ -146,7 +146,7 @@ fn parse_multiply_expression(tokens: &mut Peekable<IntoIter<Token>>) -> Tree {
 fn parse_expression(tokens: &mut Peekable<IntoIter<Token>>) -> Tree {
     let mut left = parse_multiply_expression(tokens);
 
-    // make sure the parser is left associative by solving until we hit parenteses (in reality, this line should never hit a number)
+    // make sure the parser is left associative by solving until we hit parentheses (in reality, this line should never hit a number)
     while let Some(operation) = tokens.next_if(|t| matches!(*t, Token::Plus | Token::Minus)) {
         // index + 1 as we're skipping the current token
         let right = parse_multiply_expression(tokens);
@@ -157,8 +157,8 @@ fn parse_expression(tokens: &mut Peekable<IntoIter<Token>>) -> Tree {
             Token::Number(_)
             | Token::Divide
             | Token::Times
-            | Token::LeftParenteses
-            | Token::RightParenteses => panic!("Invalid token"),
+            | Token::LeftParentheses
+            | Token::RightParentheses => panic!("Invalid token"),
         };
     }
 

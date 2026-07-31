@@ -25,11 +25,11 @@ fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {
         if states[v] == State::NotVisited {
             stack.push(v);
 
-            // fetch the next cource
+            // fetch the next course
             while let Some(v) = stack.pop() {
                 match states[v] {
                     State::NotVisited => {
-                        // We put it back IN thet stack
+                        // We put it back IN the stack
                         states[v] = State::InStack;
                         stack.push(v);
 
@@ -76,8 +76,8 @@ fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {
 
 impl Solution {
     #[must_use]
-    pub fn find_order(num_courses: i32, prerequisits: Vec<Vec<i32>>) -> Vec<i32> {
-        find_order(num_courses, prerequisits)
+    pub fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {
+        find_order(num_courses, prerequisites)
     }
 }
 
