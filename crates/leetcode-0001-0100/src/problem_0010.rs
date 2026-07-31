@@ -81,7 +81,7 @@ fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
 
                         // optimization
                         if index != highest_continuation {
-                            // now we need to resume the remainer of the regex for each of the contunation points
+                            // now we need to resume the remainder of the regex for each of the continuation points
                             // starting from the last one to ensure we're as greedy as possible
 
                             // range is inclusive as we start from the index (i.e. no match for the current <char>* all the way until AFTER the last matching char)
@@ -103,11 +103,11 @@ fn is_match_r(remainder: &[char], remaining_regex: &[Token]) -> bool {
                         // we also can't just go to the last. For example:
                         // .*cabc with the string zzzzzzzczzzzcabc
                         // because then we would just walk to the last c, leaving no string anymore for abc...
-                        // so what we'll need to do is for each occurence of 'next_token' we need to check if we can match
-                        // the remainer of the regex against the remainder of the string, starting from the end
+                        // so what we'll need to do is for each occurrence of 'next_token' we need to check if we can match
+                        // the remainder of the regex against the remainder of the string, starting from the end
                         // as we want to be as greedy as possible
 
-                        // now we need to resume the remainer of the regex for each of the contunation points
+                        // now we need to resume the remainder of the regex for each of the continuation points
                         // starting from the last one to ensure we're as greedy as possible
 
                         // inclusive range because we also want to test an emtpy string

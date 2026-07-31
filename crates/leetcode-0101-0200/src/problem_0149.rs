@@ -45,7 +45,7 @@ fn max_points(points: &[Vec<i32>]) -> i32 {
         }
 
         for l in points.iter().skip(i + 1) {
-            // this shortcut doesnt't win anything
+            // this shortcut doesn't win anything
             // for (j, l) in points.iter().skip(i + 1).enumerate() {
             // if (points.len() - j) + frequency.values().max().unwrap_or(&0usize) <= max_points {
             //     break;

@@ -21,8 +21,8 @@ enum Token {
     Number(i32),
     Plus,
     Minus,
-    LeftParenteses,
-    RightParenteses,
+    LeftParentheses,
+    RightParentheses,
 }
 
 impl std::fmt::Display for Token {
@@ -31,8 +31,8 @@ impl std::fmt::Display for Token {
             Token::Number(n) => f.write_str(&n.to_string()),
             Token::Plus => f.write_char('+'),
             Token::Minus => f.write_char('-'),
-            Token::LeftParenteses => f.write_char('('),
-            Token::RightParenteses => f.write_char(')'),
+            Token::LeftParentheses => f.write_char('('),
+            Token::RightParentheses => f.write_char(')'),
         }
     }
 }
@@ -77,8 +77,8 @@ fn tokenize(s: &str) -> Vec<Token> {
             },
             '+' => Some(Token::Plus),
             '-' => Some(Token::Minus),
-            '(' => Some(Token::LeftParenteses),
-            ')' => Some(Token::RightParenteses),
+            '(' => Some(Token::LeftParentheses),
+            ')' => Some(Token::RightParentheses),
             ' ' => None,
             _ => panic!("Invalid character"),
         };
@@ -98,11 +98,11 @@ fn parse_term(tokens: &[Token]) -> (usize, Tree) {
 
     match next {
         Some(&Token::Number(n)) => (1, Tree::Number(n)),
-        Some(&Token::LeftParenteses) => {
+        Some(&Token::LeftParentheses) => {
             let (advanced, subtree) = parse_subtree(&tokens[1..]);
 
             match tokens.get(advanced + 1) {
-                Some(&Token::RightParenteses) => (),
+                Some(&Token::RightParentheses) => (),
                 _ => panic!("Expected right paren"),
             }
 
@@ -120,7 +120,7 @@ fn parse_term(tokens: &[Token]) -> (usize, Tree) {
 fn parse_subtree(tokens: &[Token]) -> (usize, Tree) {
     let (mut index, mut left) = parse_term(tokens);
 
-    // make sure the parser is left associative by solving until we hit parenteses (in reality, this line should never hit a number)
+    // make sure the parser is left associative by solving until we hit parentheses (in reality, this line should never hit a number)
     while let Some(operation @ &(Token::Plus | Token::Minus)) = tokens.get(index) {
         // index + 1 as we're skipping the current token
         let (advanced, right) = parse_term(&tokens[index + 1..]);
@@ -128,7 +128,7 @@ fn parse_subtree(tokens: &[Token]) -> (usize, Tree) {
         left = match *operation {
             Token::Plus => Tree::Add(left.into(), right.into()),
             Token::Minus => Tree::Subtract(left.into(), right.into()),
-            Token::Number(_) | Token::LeftParenteses | Token::RightParenteses => {
+            Token::Number(_) | Token::LeftParentheses | Token::RightParentheses => {
                 panic!("Invalid token")
             },
         };
