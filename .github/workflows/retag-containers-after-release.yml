@@ -148,7 +148,7 @@ jobs:
         run: |
           echo "${{ steps.meta-dockerhub.outputs.tags }}" | while IFS= read -r new_tag
             do
-              skopeo copy --all --preserve-digests "docker://${FULL_IMAGE_NAME}:${OLD_TAG}" "docker://${new_tag}"
+              skopeo copy --all --preserve-digests --command-timeout 70s --retry-times 5 "docker://${FULL_IMAGE_NAME}:${OLD_TAG}" "docker://${new_tag}"
           done
 
       - name: Attest Docker Hub image
