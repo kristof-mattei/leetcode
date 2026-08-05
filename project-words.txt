@@ -29,6 +29,7 @@ pathbuf
 postprocessors
 prereleased
 profraw
+pyflakes
 retag
 retagging
 rustflags
