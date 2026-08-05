@@ -1,4 +1,3 @@
-actionlint
 adduser
 appgroup
 appuser
