@@ -4,7 +4,6 @@ appuser
 bkeepers
 buildcache
 cinstrument
-cocogitto
 ctarget
 cttc
 cves
