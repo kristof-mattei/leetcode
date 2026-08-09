@@ -132,12 +132,12 @@ jobs:
         id: version
         run: |
           latest_tag=$(git describe --tags --abbrev=0 || true)
-          bumped=$(git-cliff --offline --bumped-version --unreleased)
+          bumped=$(git-cliff --bumped-version --unreleased --offline)
 
           # If git-cliff didn't bump (e.g. chore/ci only commits), force a patch increment
           # so we never tag a Docker image with the same version as the last release.
           if [ "${bumped}" = "${latest_tag}" ]; then
-            bumped=$(git-cliff --offline --bumped-version --bump patch --unreleased)
+            bumped=$(git-cliff --bumped-version --bump patch --unreleased --offline)
             echo "Force bumping to ${bumped}"
           fi
 
