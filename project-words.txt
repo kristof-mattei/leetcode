@@ -42,6 +42,7 @@ telem
 tera
 topo
 trixie
+TRUNC
 uninlined
 unseparated
 usernamehw
