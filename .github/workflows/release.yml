@@ -235,7 +235,7 @@ jobs:
 
           if [ "$file_length" -gt "$max_length" ]; then
             truncated_length=$(( max_length - ${#truncation_message} ))
-            head --bytes="$truncated_length" diff-CHANGELOG.md > diff-CHANGELOG-truncated.md
+            TRUNC="$truncated_length" perl -CSD -0777 -pe '$_ = substr($_, 0, $ENV{TRUNC})' diff-CHANGELOG.md > diff-CHANGELOG-truncated.md
             printf '%s' "$truncation_message" >> diff-CHANGELOG-truncated.md
             mv diff-CHANGELOG-truncated.md diff-CHANGELOG.md
           fi
