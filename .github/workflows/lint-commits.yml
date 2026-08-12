@@ -52,5 +52,5 @@ jobs:
         env:
           GIT_CLIFF__GIT__REQUIRE_CONVENTIONAL: "true"
         run: |
-          # --offline skips the GitHub metadata fetch, which linting does not need
-          git-cliff --offline > /dev/null
+          # The range limits linting to this PR's commits, matching the step above
+          git-cliff --offline "origin/${GITHUB_BASE_REF}..HEAD" > /dev/null
