@@ -37,6 +37,14 @@ jobs:
         with:
           show-progress: false
 
+      # The package is private, manifest inspection (skopeo/docker) needs registry credentials
+      - name: Log into registry ghcr.io
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run container cleanup
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

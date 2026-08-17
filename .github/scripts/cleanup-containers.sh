@@ -96,7 +96,8 @@ else
     api_path="/users/$user"
 fi
 
-registry_base="ghcr.io/$target/$package_name"
+# Docker references must be lowercase
+registry_base="ghcr.io/${target,,}/${package_name,,}"
 
 # Check if gh CLI is installed and authenticated
 if ! command -v gh &> /dev/null; then
@@ -124,15 +125,15 @@ if ! command -v jq &> /dev/null; then
 fi
 
 # Check if skopeo or docker is available for manifest inspection
+# Without manifest inspection every untagged platform-specific image looks orphaned, so refuse to run
 manifest_tool=""
 if command -v skopeo &> /dev/null; then
     manifest_tool="skopeo"
 elif command -v docker &> /dev/null; then
     manifest_tool="docker"
 else
-    echo "Warning: Neither 'skopeo' nor 'docker' found. Cannot inspect multi-platform manifests." >&2
-    echo "         Platform-specific images may be incorrectly deleted." >&2
-    echo "         Install 'skopeo' or 'docker' to fix this." >&2
+    echo "Error: Neither 'skopeo' nor 'docker' found. Cannot inspect multi-platform manifests, refusing to delete anything." >&2
+    exit 1
 fi
 
 # ========== UTILITY FUNCTIONS ==========
@@ -244,36 +245,46 @@ get_first_tag() {
 
 # Fetch manifest and extract referenced digests (for multi-platform images)
 # Returns newline-separated list of sha256 digests (without 'sha256:' prefix)
+# Fails when the manifest cannot be fetched, an empty result only means "not an index"
 get_referenced_digests() {
     local image_ref="$1"
 
-    if [[ -z "$manifest_tool" ]]; then
-        return 0
-    fi
-
     local manifest=""
     if [[ "$manifest_tool" == "skopeo" ]]; then
-        manifest=$(skopeo inspect --raw "docker://${image_ref}" 2> /dev/null) || return 0
+        manifest=$(skopeo inspect --raw "docker://${image_ref}") || return 1
     elif [[ "$manifest_tool" == "docker" ]]; then
-        manifest=$(docker buildx imagetools inspect --raw "$image_ref" 2> /dev/null) || return 0
+        manifest=$(docker buildx imagetools inspect --raw "$image_ref") || return 1
     fi
 
     if [[ -z "$manifest" ]]; then
+        return 1
+    fi
+
+    if echo "$manifest" | jq --exit-status '.manifests' > /dev/null 2>&1; then
+        echo "$manifest" | jq --raw-output '.manifests[].digest // empty' | sed 's/^sha256://'
+    fi
+}
+
+# Protect every digest referenced by the manifest of the version's first tag
+# An uninspectable manifest aborts the run: treating it as "no children" would delete live platform-specific images
+protect_referenced_digests() {
+    local tags_json="$1"
+    local first_tag ref_digest ref_digests
+
+    first_tag=$(get_first_tag "$tags_json")
+    if [[ -z "$first_tag" ]]; then
         return 0
     fi
 
-    # Check if this is a manifest list/index (multi-platform)
-    local media_type
-    media_type=$(echo "$manifest" | jq --raw-output '.mediaType // .schemaVersion // empty')
-
-    # Multi-platform manifest indicators:
-    # - application/vnd.oci.image.index.v1+json
-    # - application/vnd.docker.distribution.manifest.list.v2+json
-    # - Has .manifests array
-    if echo "$manifest" | jq --exit-status '.manifests' > /dev/null 2>&1; then
-        # Extract digests from manifests array
-        echo "$manifest" | jq --raw-output '.manifests[].digest // empty' | sed 's/^sha256://'
+    if ! ref_digests=$(get_referenced_digests "$registry_base:$first_tag"); then
+        echo "Error: Failed to inspect manifest for $registry_base:$first_tag, refusing to delete anything" >&2
+        exit 1
     fi
+
+    while IFS= read -r ref_digest; do
+        [[ -z "$ref_digest" ]] && continue
+        protected_digests["$ref_digest"]="referenced by $first_tag manifest"
+    done <<< "$ref_digests"
 }
 
 # ========== PHASE 1: COLLECT ALL VERSION DATA ==========
@@ -364,15 +375,7 @@ for version_id in "${all_version_ids[@]}"; do
         fi
 
         # Fetch manifest to protect referenced platform-specific images
-        first_tag=$(get_first_tag "$tags")
-        if [[ -n "$first_tag" ]]; then
-            echo "Inspecting manifest for protected image: $registry_base:$first_tag"
-            while IFS= read -r ref_digest; do
-                [[ -z "$ref_digest" ]] && continue
-                protected_digests["$ref_digest"]="referenced by $first_tag manifest"
-                echo "  Protected platform-specific digest: ${ref_digest:0:12}..."
-            done <<< "$(get_referenced_digests "$registry_base:$first_tag")"
-        fi
+        protect_referenced_digests "$tags"
         continue
     fi
 
@@ -410,19 +413,9 @@ for version_id in "${all_version_ids[@]}"; do
         fi
     fi
 
-    # Not a delete candidate, might reference other images
-    # Check if this is a multi-platform manifest we should inspect
-    first_tag=$(get_first_tag "$tags")
-    if [[ -n "$first_tag" ]]; then
-        while IFS= read -r ref_digest; do
-            [[ -z "$ref_digest" ]] && continue
-            # Only protect if not already marked for deletion
-            ref_version_id="${digest_to_version[$ref_digest]:-}"
-            if [[ -z "$ref_version_id" ]] || [[ -z "${delete_candidates[$ref_version_id]:-}" ]]; then
-                protected_digests["$ref_digest"]="referenced by $first_tag manifest"
-            fi
-        done <<< "$(get_referenced_digests "$registry_base:$first_tag")"
-    fi
+    # Not a delete candidate, protect everything its manifest references
+    # Unconditionally: gating on delete_candidates would make protection depend on API return order
+    protect_referenced_digests "$tags"
 done
 
 # ========== PHASE 3: FILTER DELETE CANDIDATES ==========
