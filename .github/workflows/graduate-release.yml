@@ -41,12 +41,13 @@ jobs:
             echo "prerelease=true" >> "${GITHUB_OUTPUT}"
           fi
 
+      # zizmor: ignore[artipacked] the tag steps below read from the remote, which needs the credential in .git/config
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: true
           show-progress: false
-          token: ${{ secrets.TOKEN_TO_TRIGGER_SUBSEQUENT_WORKFLOWS }}
 
       - name: Create tag
         shell: bash

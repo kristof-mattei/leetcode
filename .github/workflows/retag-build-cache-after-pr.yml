@@ -87,6 +87,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           show-progress: false
           fetch-depth: 2
 
@@ -101,9 +102,9 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PLATFORM: ${{ matrix.platform }}
         run: |
-          platform_no_slashes="${{ matrix.platform }}"
-          platform_no_slashes="${platform_no_slashes//\//-}"
+          platform_no_slashes="${PLATFORM//\//-}"
 
           image_name="${{ env.IMAGE_NAME }}"
           image_name="${image_name,,}"

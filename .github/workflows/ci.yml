@@ -52,7 +52,6 @@ jobs:
     name: Build Rust code
     if: ${{ !startsWith(github.head_ref, 'release/') }}
     uses: ./.github/workflows/rust.yml
-    secrets: inherit
     permissions:
       checks: write
       contents: read
@@ -89,6 +88,7 @@ jobs:
         name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           show-progress: false
 
       - name: Check if we actually made changes
@@ -119,6 +119,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           show-progress: false
           fetch-depth: 0
 
@@ -268,10 +269,11 @@ jobs:
       - name: Set variables
         shell: bash
         id: variables
+        env:
+          PLATFORM: ${{ matrix.platform }}
         run: |
           # remove slashes from platform (`amd64/v3` -> `amd64-v3`)
-          platform_no_slashes=${{ matrix.platform }}
-          platform_no_slashes=${platform_no_slashes//\//-}
+          platform_no_slashes="${PLATFORM//\//-}"
           echo "platform_no_slashes=${platform_no_slashes}" >> "${GITHUB_OUTPUT}"
 
           # but we're only building 1 arch here, so we need to identify that container (we'll merge them later)
@@ -306,10 +308,10 @@ jobs:
       - name: Should we set up QEMU?
         shell: bash
         id: setup_qemu
+        env:
+          PLATFORM: ${{ matrix.platform }}
         run: |
-          base_platform="${{ matrix.platform }}"
-
-          if ! dpkg-architecture --equal "${base_platform%/*}"; then
+          if ! dpkg-architecture --equal "${PLATFORM%/*}"; then
             echo "setup_qemu=true" >> "${GITHUB_OUTPUT}"
           else
             echo "setup_qemu=false" >> "${GITHUB_OUTPUT}"

@@ -1,6 +1,7 @@
 adduser
 appgroup
 appuser
+artipacked
 bkeepers
 buildcache
 cinstrument
@@ -48,3 +49,4 @@ uninspectable
 unseparated
 usernamehw
 vadimcn
+zizmor
