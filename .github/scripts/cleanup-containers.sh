@@ -319,10 +319,10 @@ protect_referenced_digests() {
 echo "Querying container versions for $target, package $package_name..."
 
 # Associative arrays for version data
-declare -A version_tags      # version_id -> tags JSON
-declare -A version_digest    # version_id -> sha256 digest (without prefix)
-declare -A version_created   # version_id -> created_at timestamp
-declare -A digest_to_version # sha256 digest -> version_id
+declare -A version_tags=()      # version_id -> tags JSON
+declare -A version_digest=()    # version_id -> sha256 digest (without prefix)
+declare -A version_created=()   # version_id -> created_at timestamp
+declare -A digest_to_version=() # sha256 digest -> version_id
 
 # Arrays for tracking
 all_version_ids=()
@@ -382,11 +382,11 @@ echo ""
 echo "=== PHASE 2: DETERMINING PROTECTED VERSIONS ==="
 
 # Protected digests: sha256 hashes that must not be deleted
-declare -A protected_digests # sha256 -> reason
+declare -A protected_digests=() # sha256 -> reason
 
 # Track versions by category
-declare -A protected_versions # version_id -> reason
-declare -A delete_candidates  # version_id -> reason
+declare -A protected_versions=() # version_id -> reason
+declare -A delete_candidates=()  # version_id -> reason
 
 for version_id in "${all_version_ids[@]}"; do
     tags="${version_tags[$version_id]}"
@@ -455,7 +455,11 @@ final_delete_versions=()
 final_delete_reasons=()
 
 # Sort delete candidate keys for consistent output
-sorted_candidates=($(printf '%s\n' "${!delete_candidates[@]}" | sort --numeric-sort))
+# printf emits one empty line for an empty array, which mapfile would turn into a bogus entry
+sorted_candidates=()
+if ((${#delete_candidates[@]} > 0)); then
+    mapfile -t sorted_candidates < <(printf '%s\n' "${!delete_candidates[@]}" | sort --numeric-sort)
+fi
 
 for version_id in "${sorted_candidates[@]}"; do
     digest="${version_digest[$version_id]:-}"
