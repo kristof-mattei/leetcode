@@ -22,11 +22,7 @@ concurrency:
   cancel-in-progress: false # no we need them
 
 permissions:
-  artifact-metadata: write
-  attestations: write
   contents: read
-  id-token: write
-  packages: write
 
 env:
   CARGO_TERM_COLOR: always
@@ -56,6 +52,12 @@ jobs:
   retag-containers:
     name: Retag the containers
     runs-on: ubuntu-26.04
+    permissions:
+      artifact-metadata: write # actions/attest
+      attestations: write # actions/attest
+      contents: read
+      id-token: write # actions/attest
+      packages: write # retag images in ghcr.io
     needs:
       - repo-has-container
     if: |

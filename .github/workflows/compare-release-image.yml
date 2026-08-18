@@ -8,8 +8,6 @@ on:
 
 permissions:
   contents: read
-  packages: read
-  pull-requests: write
 
 env:
   REGISTRY: ghcr.io
@@ -33,6 +31,10 @@ jobs:
   compare:
     name: Compare release image against latest
     runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      packages: read # pull the images being compared from ghcr.io
+      pull-requests: write # docker/scout-action posts the comparison as a PR comment
     needs:
       - repo-has-container
     if: fromJSON(needs.repo-has-container.outputs.has_container) == true
