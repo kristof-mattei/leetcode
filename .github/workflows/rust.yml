@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       contents: read
-      pull-requests: read
+      pull-requests: read # dorny/paths-filter reads the PR's changed files
     outputs:
       rust: ${{ steps.filter.outputs.rust }}
     steps:
@@ -29,6 +29,7 @@ jobs:
         name: Check out code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           show-progress: false
 
       - name: Check if we actually made changes
@@ -70,7 +71,8 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          cargo build ${{ env.CARGO_FEATURES }} --all-targets --locked --workspace
+          # shellcheck disable=SC2086 # CARGO_FEATURES can hold more than one flag
+          cargo build ${CARGO_FEATURES} --all-targets --locked --workspace
 
   cargo-fmt:
     name: Cargo fmt
@@ -102,11 +104,11 @@ jobs:
     name: Cargo test (and report)
     runs-on: ubuntu-26.04
     permissions:
-      checks: write
+      checks: write # publish-unit-test-result-action creates a check run
       contents: read
-      id-token: write
-      issues: read
-      pull-requests: write
+      id-token: write # codecov-action authenticates over OIDC
+      issues: read # publish-unit-test-result-action needs this in private repos
+      pull-requests: write # publish-unit-test-result-action comments the test summary
     steps:
       - *checkout
 
@@ -136,7 +138,8 @@ jobs:
           # build-* ones are not parsed by grcov
           LLVM_PROFILE_FILE: "profiling/build-%p-%m.profraw"
         run: |
-          cargo build ${{ env.CARGO_FEATURES }} --all-targets --locked --workspace
+          # shellcheck disable=SC2086 # CARGO_FEATURES can hold more than one flag
+          cargo build ${CARGO_FEATURES} --all-targets --locked --workspace
 
       - name: Run nextest
         shell: bash
@@ -145,10 +148,15 @@ jobs:
           RUSTFLAGS: "${{ env.RUSTFLAGS }} --allow=warnings -Cinstrument-coverage"
           LLVM_PROFILE_FILE: "profiling/profile-%p-%m.profraw"
         run: |
-          cargo nextest run --profile ci --no-fail-fast ${{ env.CARGO_FEATURES }} --all-targets --workspace
+          # shellcheck disable=SC2086 # CARGO_FEATURES can hold more than one flag
+          cargo nextest run --profile ci --no-fail-fast ${CARGO_FEATURES} --all-targets --workspace
         continue-on-error: true
 
       - name: Upload test results
+        # fork PRs run with a read-only token, which cannot create check runs or PR comments
+        if: |
+          github.event_name != 'pull_request' ||
+          github.event.pull_request.head.repo.full_name == github.repository
         uses: EnricoMi/publish-unit-test-result-action@d0a4676d0e0b938bc201470d88276b7c74c712b3 # v2.24.0
         with:
           check_name: Test results for Rust
@@ -181,6 +189,10 @@ jobs:
           echo "RUST=$(rustc --version)" >> "$GITHUB_ENV"
 
       - name: Upload coverage results (to Codecov.io)
+        # fork PRs run without id-token, so OIDC upload cannot work. Push runs must keep uploading to preserve base coverage
+        if: |
+          github.event_name != 'pull_request' ||
+          github.event.pull_request.head.repo.full_name == github.repository
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           disable_search: true
@@ -195,6 +207,9 @@ jobs:
           use_oidc: true
 
       - name: Upload test results (to Codecov.io)
+        if: |
+          github.event_name != 'pull_request' ||
+          github.event.pull_request.head.repo.full_name == github.repository
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           disable_search: true
