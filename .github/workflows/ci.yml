@@ -143,11 +143,8 @@ jobs:
             echo "Force bumping to ${bumped}"
           fi
 
-          # remove v
-          version="${bumped//v/}"
-
-          # store
-          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+          # tags are vX.Y.Z, cargo versions are not prefixed
+          echo "version=${bumped#v}" >> "${GITHUB_OUTPUT}"
 
   docker-prepare-variables:
     name: Prepare Docker variables and version bump patch
