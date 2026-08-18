@@ -52,7 +52,6 @@ jobs:
     name: Build Rust code
     if: ${{ !startsWith(github.head_ref, 'release/') }}
     uses: ./.github/workflows/rust.yml
-    secrets: inherit
     permissions:
       checks: write
       contents: read
