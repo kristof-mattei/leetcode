@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  packages: write
   contents: read
 
 jobs:
@@ -27,6 +26,9 @@ jobs:
   cleanup-containers:
     name: Cleanup containers
     runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      packages: write # delete container versions
     needs:
       - repo-has-container
     if: |
@@ -50,13 +52,16 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./.github/scripts/cleanup-containers.sh \
-            --user ${{ github.repository_owner }} \
-            --package ${{ github.event.repository.name }} \
+            --user "${GITHUB_REPOSITORY_OWNER}" \
+            --package "${GITHUB_REPOSITORY##*/}" \
             --yes
 
   cleanup-container-build-cache:
     name: Cleanup container build cache
     runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      packages: write # delete build cache versions
     needs:
       - repo-has-container
     if: |
@@ -72,6 +77,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./.github/scripts/cleanup-container-build-cache.sh \
-            --user ${{ github.repository_owner }} \
-            --package ${{ github.event.repository.name }}-cache \
+            --user "${GITHUB_REPOSITORY_OWNER}" \
+            --package "${GITHUB_REPOSITORY##*/}-cache" \
             --yes

@@ -24,8 +24,6 @@ concurrency:
 
 permissions:
   contents: read
-  packages: write
-  pull-requests: read
 
 env:
   IMAGE_NAME: ${{ github.repository }}
@@ -76,6 +74,10 @@ jobs:
           - "ubuntu-24.04-arm"
         platform: ${{ fromJSON(needs.architectures.outputs.architectures) }}
     runs-on: ${{ matrix.runs-on }}
+    permissions:
+      contents: read
+      packages: write # retag build cache images in ghcr.io
+      pull-requests: read # resolve the PR that produced the incoming merge commit
     needs:
       - architectures
       - repo-has-container
