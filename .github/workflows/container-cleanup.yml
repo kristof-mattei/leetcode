@@ -52,8 +52,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./.github/scripts/cleanup-containers.sh \
-            --user ${{ github.repository_owner }} \
-            --package ${{ github.event.repository.name }} \
+            --user "${GITHUB_REPOSITORY_OWNER}" \
+            --package "${GITHUB_REPOSITORY##*/}" \
             --yes
 
   cleanup-container-build-cache:
@@ -77,6 +77,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./.github/scripts/cleanup-container-build-cache.sh \
-            --user ${{ github.repository_owner }} \
-            --package ${{ github.event.repository.name }}-cache \
+            --user "${GITHUB_REPOSITORY_OWNER}" \
+            --package "${GITHUB_REPOSITORY##*/}-cache" \
             --yes
