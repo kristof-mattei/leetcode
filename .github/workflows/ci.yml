@@ -354,7 +354,8 @@ jobs:
           cache-from: |
             type=registry,ref=${{ steps.variables.outputs.buildcache_pr_ref }}
             type=registry,ref=${{ steps.variables.outputs.buildcache_main_ref }}
-          cache-to: type=registry,ref=${{ steps.variables.outputs.buildcache_pr_ref }},mode=max
+          # fork PRs run with a read-only token, which cannot push the build cache
+          cache-to: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && format('type=registry,ref={0},mode=max', steps.variables.outputs.buildcache_pr_ref) || '' }}
           annotations: ${{ steps.meta.outputs.annotations }}
           labels: ${{ steps.meta.outputs.labels }}
           outputs: type=oci,dest=/tmp/${{ steps.variables.outputs.unique_tag_arch }}.tar
