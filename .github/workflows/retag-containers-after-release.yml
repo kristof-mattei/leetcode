@@ -33,9 +33,10 @@ jobs:
       - name: Repo has docker container?
         id: determine
         shell: bash
+        env:
+          HAS_CONTAINER: ${{ vars.HAS_CONTAINER }}
         run: |
-          has_container="${{ vars.HAS_CONTAINER }}"
-          echo "has_container=${has_container:-false}" >> "${GITHUB_OUTPUT}"
+          echo "has_container=${HAS_CONTAINER:-false}" >> "${GITHUB_OUTPUT}"
 
   retag-containers:
     name: Retag the containers
@@ -148,8 +149,10 @@ jobs:
 
       - name: Actually re-tag the container
         shell: bash
+        env:
+          NEW_TAGS: ${{ steps.meta.outputs.tags }}
         run: |
-          echo "${{ steps.meta.outputs.tags }}" | while IFS= read -r new_tag
+          echo "${NEW_TAGS}" | while IFS= read -r new_tag
             do
               docker buildx imagetools create --tag "${new_tag}" "${FULL_IMAGE_NAME}:${OLD_TAG}"
           done
@@ -164,10 +167,13 @@ jobs:
       - name: Copy the container to Docker Hub
         if: env.DOCKERHUB_IMAGE_NAME != ''
         shell: bash
+        env:
+          DIGEST: ${{ steps.digest.outputs.digest }}
+          NEW_TAGS: ${{ steps.meta-dockerhub.outputs.tags }}
         run: |
-          echo "${{ steps.meta-dockerhub.outputs.tags }}" | while IFS= read -r new_tag
+          echo "${NEW_TAGS}" | while IFS= read -r new_tag
             do
-              if [ "$(skopeo inspect --format '{{ .Digest }}' --no-tags "docker://${new_tag}" 2>/dev/null)" = "${{ steps.digest.outputs.digest }}" ]; then
+              if [ "$(skopeo inspect --format '{{ .Digest }}' --no-tags "docker://${new_tag}" 2>/dev/null)" = "${DIGEST}" ]; then
                 echo "${new_tag} already exists, skipping"
                 continue
               fi
