@@ -37,6 +37,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           show-progress: false
 
       # The package is private, manifest inspection (skopeo/docker) needs registry credentials
@@ -70,6 +71,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           show-progress: false
 
       - name: Run container build cache cleanup
