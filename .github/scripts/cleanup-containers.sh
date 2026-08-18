@@ -7,7 +7,7 @@ org=""
 user=""
 package_name="package"
 per_page=100
-max_api_attempts=3
+max_attempts=3
 dry_run=false
 skip_confirmation=false
 cleanup_pr_images=true
@@ -142,14 +142,14 @@ fi
 # Only emits stdout of the last attempt, so partial output of failed attempts is discarded
 gh_api() {
     local attempt output
-    for ((attempt = 1; attempt <= max_api_attempts; attempt++)); do
+    for ((attempt = 1; attempt <= max_attempts; attempt++)); do
         if output=$(gh api "$@"); then
             printf '%s' "$output"
             return 0
         fi
 
-        if [[ "$attempt" -lt "$max_api_attempts" ]]; then
-            echo "Warning: gh api call failed (attempt $attempt of $max_api_attempts), retrying in $((attempt * 2))s..." >&2
+        if [[ "$attempt" -lt "$max_attempts" ]]; then
+            echo "Warning: gh api call failed (attempt $attempt of $max_attempts), retrying in $((attempt * 2))s..." >&2
             sleep $((attempt * 2))
         fi
     done
@@ -249,7 +249,7 @@ fetch_manifest() {
     local image_ref="$1"
     local attempt output rc
 
-    for ((attempt = 1; attempt <= max_api_attempts; attempt++)); do
+    for ((attempt = 1; attempt <= max_attempts; attempt++)); do
         rc=0
         if [[ "$manifest_tool" == "skopeo" ]]; then
             output=$(skopeo inspect --raw --command-timeout 70s --retry-times 5 "docker://${image_ref}") || rc=$?
@@ -262,8 +262,8 @@ fetch_manifest() {
             return 0
         fi
 
-        if [[ "$attempt" -lt "$max_api_attempts" ]]; then
-            echo "Warning: manifest inspection of $image_ref failed (attempt $attempt of $max_api_attempts), retrying in $((attempt * 2))s..." >&2
+        if [[ "$attempt" -lt "$max_attempts" ]]; then
+            echo "Warning: manifest inspection of $image_ref failed (attempt $attempt of $max_attempts), retrying in $((attempt * 2))s..." >&2
             sleep $((attempt * 2))
         fi
     done
