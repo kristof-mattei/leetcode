@@ -37,6 +37,7 @@ rustflags
 samply
 sccache
 skopeo
+skopeo's
 startswith
 striptags
 taiki
@@ -45,7 +46,7 @@ telem
 tera
 topo
 trixie
-TRUNC
+trunc
 uninlined
 uninspectable
 unseparated
