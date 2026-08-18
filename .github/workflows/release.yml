@@ -225,11 +225,10 @@ jobs:
       - name: Open or update pull request
         shell: bash
         env:
+          BRANCH: ${{ steps.release.outputs.branch }}
           GH_TOKEN: ${{ secrets.TOKEN_TO_TRIGGER_SUBSEQUENT_WORKFLOWS }}
+          RELEASE_VERSION: ${{ steps.release.outputs.release_version }}
         run: |
-          branch="${{ steps.release.outputs.branch }}"
-          release_version="${{ steps.release.outputs.release_version }}"
-
           # Truncate diff-CHANGELOG.md if it exceeds GitHub's PR character body limit
           max_length=65536
           truncation_message=$'\n\n---\n\n> **Note:** Changelog was truncated because it exceeded GitHub'"'"'s 65,536 character limit.'
@@ -243,7 +242,7 @@ jobs:
           fi
 
           # Check if a PR already exists for this branch
-          existing_pr=$(gh pr list --head "${branch}" --state open --json number --jq '.[0].number // empty')
+          existing_pr=$(gh pr list --head "${BRANCH}" --state open --json number --jq '.[0].number // empty')
 
           if [ -n "$existing_pr" ]; then
             # gh pr edit needs read:org, even for --body (cli/cli#13575).
@@ -253,29 +252,28 @@ jobs:
           else
             gh pr create \
               --base main \
-              --head "${branch}" \
-              --title "chore(release): Release ${release_version}" \
+              --head "${BRANCH}" \
+              --title "chore(release): Release ${RELEASE_VERSION}" \
               --body-file diff-CHANGELOG.md
           fi
 
           if [ "${{ inputs.auto_merge }}" = "true" ]; then
-            gh pr merge "${branch}" --auto --merge
+            gh pr merge "${BRANCH}" --auto --merge
           fi
 
       - name: Clean up stranded branches
         if: ${{ (failure() || cancelled()) && steps.release.outputs.branch != '' }}
         shell: bash
         env:
+          BRANCH: ${{ steps.release.outputs.branch }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          branch="${{ steps.release.outputs.branch }}"
-
-          git push origin --delete "${branch}-staging" || true
+          git push origin --delete "${BRANCH}-staging" || true
 
           # Deleting the release branch would close its PR, so keep it when one exists.
           # A failing `gh pr list` fails the step (set -e) instead of counting as "no PR".
-          open_pr=$(gh pr list --head "${branch}" --state open --json number --jq '.[0].number // empty')
+          open_pr=$(gh pr list --head "${BRANCH}" --state open --json number --jq '.[0].number // empty')
 
           if [ -z "${open_pr}" ]; then
-            git push origin --delete "${branch}" || true
+            git push origin --delete "${BRANCH}" || true
           fi

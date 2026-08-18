@@ -29,9 +29,10 @@ jobs:
       - name: Repo has crate?
         id: determine
         shell: bash
+        env:
+          HAS_CRATE: ${{ vars.HAS_CRATE }}
         run: |
-          has_crate="${{ vars.HAS_CRATE }}"
-          echo "has_crate=${has_crate:-false}" >> "${GITHUB_OUTPUT}"
+          echo "has_crate=${HAS_CRATE:-false}" >> "${GITHUB_OUTPUT}"
 
       - name: Determine version
         id: version
@@ -86,8 +87,10 @@ jobs:
 
       - name: Set version in Cargo.toml / Cargo.lock
         shell: bash
+        env:
+          VERSION: ${{ needs.repo-has-crate.outputs.version }}
         run: |
-          cargo set-version "${{ needs.repo-has-crate.outputs.version }}"
+          cargo set-version "${VERSION}"
 
           git diff
 

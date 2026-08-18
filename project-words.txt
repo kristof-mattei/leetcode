@@ -5,6 +5,7 @@ artipacked
 bkeepers
 buildcache
 cinstrument
+cliffignore
 ctarget
 cttc
 cves
@@ -24,6 +25,7 @@ multiplatform
 mypy
 nextest
 nvmrc
+oneline
 pathbuf
 postprocessors
 prereleased

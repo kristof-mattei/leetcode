@@ -45,9 +45,10 @@ jobs:
       - name: Repo has docker container?
         id: determine
         shell: bash
+        env:
+          HAS_CONTAINER: ${{ vars.HAS_CONTAINER }}
         run: |
-          has_container="${{ vars.HAS_CONTAINER }}"
-          echo "has_container=${has_container:-false}" >> "${GITHUB_OUTPUT}"
+          echo "has_container=${HAS_CONTAINER:-false}" >> "${GITHUB_OUTPUT}"
 
   retag-containers:
     name: Retag the containers
@@ -138,13 +139,13 @@ jobs:
             --jq '.[] | .metadata.container.tags[]')
 
           # search for the PR tag, there can only be zero or one match
-          pr_tag_found=$(echo "${all_tags}" | grep -c "^${{ env.PR_TAG }}\$") || true
+          pr_tag_found=$(echo "${all_tags}" | grep -c "^${PR_TAG}\$") || true
 
           if [ "${pr_tag_found}" -eq 1 ]
           then
             echo "Incoming PR produced a Docker image"
 
-            echo "OLD_TAG=${{ env.PR_TAG }}" >> "${GITHUB_ENV}"
+            echo "OLD_TAG=${PR_TAG}" >> "${GITHUB_ENV}"
             echo "SUFFIX=actual" >> "${GITHUB_ENV}"
           else
             # If we don't have an old tag, then the incoming PR didn't produce a container.
@@ -155,11 +156,11 @@ jobs:
             # so we find the last commit that github processed before this one
             # which will have gone through the same retagging process
             # and use that sha as our key to find the Docker container related to that commit
-            old_tag=$(echo "${all_tags}" | grep "^sha-${{ env.BASE_SHA }}-.*\$") || true # .* is actual or retag
+            old_tag=$(echo "${all_tags}" | grep "^sha-${BASE_SHA}-.*\$") || true # .* is actual or retag
 
             if [ -z "${old_tag}" ]
             then
-              echo "::error::No matching source tag found for base SHA ${{ env.BASE_SHA }}"
+              echo "::error::No matching source tag found for base SHA ${BASE_SHA}"
               exit 1
             fi
 
@@ -198,8 +199,10 @@ jobs:
 
       - name: Actually re-tag the container
         shell: bash
+        env:
+          NEW_TAGS: ${{ steps.meta.outputs.tags }}
         run: |
-          echo "${{ steps.meta.outputs.tags }}" | while IFS= read -r new_tag
+          echo "${NEW_TAGS}" | while IFS= read -r new_tag
             do
               docker buildx imagetools create --tag "${new_tag}" "${FULL_IMAGE_NAME}:${OLD_TAG}"
           done
@@ -214,8 +217,10 @@ jobs:
       - name: Copy the container to Docker Hub
         if: env.DOCKERHUB_IMAGE_NAME != ''
         shell: bash
+        env:
+          NEW_TAGS: ${{ steps.meta-dockerhub.outputs.tags }}
         run: |
-          echo "${{ steps.meta-dockerhub.outputs.tags }}" | while IFS= read -r new_tag
+          echo "${NEW_TAGS}" | while IFS= read -r new_tag
             do
               skopeo copy --all --preserve-digests --command-timeout 70s --retry-times 5 "docker://${FULL_IMAGE_NAME}:${OLD_TAG}" "docker://${new_tag}"
           done
