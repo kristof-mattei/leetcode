@@ -128,7 +128,7 @@ jobs:
 
               echo "Looking up the PR for ${parent2} (attempt ${attempt} of 5)"
 
-              if pr_number=$(gh api "/repos/${{ github.repository }}/commits/${parent2}/pulls" --jq '.[0].number'); then
+              if pr_number=$(gh api "/repos/${GITHUB_REPOSITORY}/commits/${parent2}/pulls" --jq '.[0].number'); then
                 pr_found=true
                 break
               fi

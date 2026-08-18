@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       contents: read
-      pull-requests: read
+      pull-requests: read # dorny/paths-filter reads the PR's changed files
     outputs:
       rust: ${{ steps.filter.outputs.rust }}
     steps:
@@ -71,7 +71,8 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          cargo build ${{ env.CARGO_FEATURES }} --all-targets --locked --workspace
+          # shellcheck disable=SC2086 # CARGO_FEATURES can hold more than one flag
+          cargo build ${CARGO_FEATURES} --all-targets --locked --workspace
 
   cargo-fmt:
     name: Cargo fmt
@@ -103,11 +104,11 @@ jobs:
     name: Cargo test (and report)
     runs-on: ubuntu-26.04
     permissions:
-      checks: write
+      checks: write # publish-unit-test-result-action creates a check run
       contents: read
-      id-token: write
-      issues: read
-      pull-requests: write
+      id-token: write # codecov-action authenticates over OIDC
+      issues: read # publish-unit-test-result-action needs this in private repos
+      pull-requests: write # publish-unit-test-result-action comments the test summary
     steps:
       - *checkout
 
@@ -137,7 +138,8 @@ jobs:
           # build-* ones are not parsed by grcov
           LLVM_PROFILE_FILE: "profiling/build-%p-%m.profraw"
         run: |
-          cargo build ${{ env.CARGO_FEATURES }} --all-targets --locked --workspace
+          # shellcheck disable=SC2086 # CARGO_FEATURES can hold more than one flag
+          cargo build ${CARGO_FEATURES} --all-targets --locked --workspace
 
       - name: Run nextest
         shell: bash
@@ -146,7 +148,8 @@ jobs:
           RUSTFLAGS: "${{ env.RUSTFLAGS }} --allow=warnings -Cinstrument-coverage"
           LLVM_PROFILE_FILE: "profiling/profile-%p-%m.profraw"
         run: |
-          cargo nextest run --profile ci --no-fail-fast ${{ env.CARGO_FEATURES }} --all-targets --workspace
+          # shellcheck disable=SC2086 # CARGO_FEATURES can hold more than one flag
+          cargo nextest run --profile ci --no-fail-fast ${CARGO_FEATURES} --all-targets --workspace
         continue-on-error: true
 
       - name: Upload test results

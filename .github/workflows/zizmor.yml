@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: "${{ github.workflow }} @ ${{ github.ref_name }}"
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -33,4 +37,4 @@ jobs:
           # query GitHub (known-vulnerable actions, ref resolution)
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          zizmor .github
+          zizmor --persona=pedantic .github
