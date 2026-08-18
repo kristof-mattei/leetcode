@@ -243,6 +243,34 @@ get_first_tag() {
     echo "$tags_json" | jq --raw-output '.[0] // empty'
 }
 
+# Fetch the raw manifest, retrying transient registry failures with backoff
+# skopeo's --retry-times does not retry a bare 500, so retry at the shell level too
+fetch_manifest() {
+    local image_ref="$1"
+    local attempt output rc
+
+    for ((attempt = 1; attempt <= max_api_attempts; attempt++)); do
+        rc=0
+        if [[ "$manifest_tool" == "skopeo" ]]; then
+            output=$(skopeo inspect --raw --command-timeout 70s --retry-times 5 "docker://${image_ref}") || rc=$?
+        else
+            output=$(docker buildx imagetools inspect --raw "$image_ref") || rc=$?
+        fi
+
+        if [[ "$rc" -eq 0 ]]; then
+            printf '%s' "$output"
+            return 0
+        fi
+
+        if [[ "$attempt" -lt "$max_api_attempts" ]]; then
+            echo "Warning: manifest inspection of $image_ref failed (attempt $attempt of $max_api_attempts), retrying in $((attempt * 2))s..." >&2
+            sleep $((attempt * 2))
+        fi
+    done
+
+    return 1
+}
+
 # Fetch manifest and extract referenced digests (for multi-platform images)
 # Returns newline-separated list of sha256 digests (without 'sha256:' prefix)
 # Fails when the manifest cannot be fetched, an empty result only means "not an index"
@@ -250,11 +278,7 @@ get_referenced_digests() {
     local image_ref="$1"
 
     local manifest=""
-    if [[ "$manifest_tool" == "skopeo" ]]; then
-        manifest=$(skopeo inspect --raw "docker://${image_ref}") || return 1
-    elif [[ "$manifest_tool" == "docker" ]]; then
-        manifest=$(docker buildx imagetools inspect --raw "$image_ref") || return 1
-    fi
+    manifest=$(fetch_manifest "$image_ref") || return 1
 
     if [[ -z "$manifest" ]]; then
         return 1
@@ -276,6 +300,8 @@ protect_referenced_digests() {
         return 0
     fi
 
+    echo "Inspecting manifest for protected image: $registry_base:$first_tag"
+
     if ! ref_digests=$(get_referenced_digests "$registry_base:$first_tag"); then
         echo "Error: Failed to inspect manifest for $registry_base:$first_tag, refusing to delete anything" >&2
         exit 1
@@ -283,6 +309,7 @@ protect_referenced_digests() {
 
     while IFS= read -r ref_digest; do
         [[ -z "$ref_digest" ]] && continue
+        echo "  Protected platform-specific digest: ${ref_digest:0:12}..."
         protected_digests["$ref_digest"]="referenced by $first_tag manifest"
     done <<< "$ref_digests"
 }

@@ -73,9 +73,11 @@ jobs:
 
       - name: Resolve base and PR head SHAs
         shell: bash
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
         run: |
           # push event, HEAD^2 is the tip of the incoming PR branch
-          echo "BASE_SHA=${{ github.event.before }}" >> "${GITHUB_ENV}"
+          echo "BASE_SHA=${BEFORE_SHA}" >> "${GITHUB_ENV}"
 
           exit_code=0
           # a commit always has a parent, but if it has 2, the commit is a merge
@@ -131,10 +133,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_TAG: "pr-${{ env.BASE_SHA }}-${{ env.INCOMING_PR_HEAD_COMMIT }}"
         run: |
-          repo="${{ github.repository }}"
-          repo_lower="${repo,,}"
+          repo_lower="${GITHUB_REPOSITORY,,}"
 
-          all_tags=$(gh api "/users/${{ github.repository_owner }}/packages/container/${repo_lower##*/}/versions" \
+          all_tags=$(gh api "/users/${GITHUB_REPOSITORY_OWNER}/packages/container/${repo_lower##*/}/versions" \
             --paginate \
             --jq '.[] | .metadata.container.tags[]')
 
