@@ -33,8 +33,9 @@ jobs:
     name: Release
     runs-on: ubuntu-26.04
     permissions:
+      actions: write # to dispatch this workflow again when main moved during the run
       contents: write # to create the release commit via createCommitOnBranch
-      pull-requests: read # to list open release PRs
+      pull-requests: write # to list open release PRs and close superseded ones
     steps:
       - name: Only on main
         if: |
@@ -169,6 +170,7 @@ jobs:
           git-cliff --output CHANGELOG.md --tag "${release_version}"
 
           main_sha=$(git rev-parse HEAD)
+          echo "main_sha=$main_sha" >> "${GITHUB_OUTPUT}"
 
           # Stage the commit on a scratch branch so the release branch moves
           # only once, straight to the finished commit
@@ -264,6 +266,59 @@ jobs:
           if [ "${AUTO_MERGE}" = "true" ]; then
             gh pr merge "${BRANCH}" --auto --merge
           fi
+
+      - name: Close superseded release PRs
+        shell: bash
+        env:
+          BRANCH: ${{ steps.release.outputs.branch }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          # A commit landing after a release PR was opened can bump the version, which renames the release branch and leaves the old PR open.
+          # Other pre-release types are independent releases and stay open.
+          new_pr=$(gh pr list --head "${BRANCH}" --state open --json number --jq '.[0].number')
+
+          gh pr list \
+            --state open \
+            --limit 100 \
+            --json number,headRefName \
+          | jq --raw-output \
+              --arg branch "${BRANCH}" \
+              --arg prerelease "${PRERELEASE}" \
+              --arg re '-(?<type>alpha|beta|rc)\.[0-9]+$' '
+              .[]
+              | select(.headRefName != $branch)
+              | select(.headRefName | startswith("release/v"))
+              | select((.headRefName | if test($re) then capture($re).type else "none" end) == $prerelease)
+              | .number
+            ' \
+          | while read -r pr_number; do
+            echo "::notice::Closing #${pr_number}, superseded by #${new_pr}"
+
+            gh pr close "${pr_number}" --delete-branch --comment "Superseded by #${new_pr}."
+          done
+
+      - name: Dispatch again if main moved
+        shell: bash
+        env:
+          AUTO_MERGE: ${{ inputs.auto_merge }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MAIN_SHA: ${{ steps.release.outputs.main_sha }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          # A push landing between the checkout and the PR creation had no open release PR for "Rebuild release after push" to dispatch for.
+          current_main=$(git ls-remote origin refs/heads/main | cut --fields 1)
+
+          if [ "${current_main}" = "${MAIN_SHA}" ]; then
+            exit 0
+          fi
+
+          echo "::notice::main moved from ${MAIN_SHA} to ${current_main}, dispatching again"
+
+          gh workflow run release.yml \
+            --ref main \
+            --raw-field prerelease="${PRERELEASE}" \
+            --raw-field auto_merge="${AUTO_MERGE}"
 
       - name: Clean up stranded branches
         if: ${{ (failure() || cancelled()) && steps.release.outputs.branch != '' }}
