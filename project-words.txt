@@ -1,4 +1,3 @@
-adduser
 appgroup
 appuser
 artipacked
@@ -24,7 +23,6 @@ monomorphization
 multiplatform
 mypy
 nextest
-nvmrc
 oneline
 pathbuf
 postprocessors
