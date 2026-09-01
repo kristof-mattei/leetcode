@@ -55,7 +55,7 @@ body = """
     | filter(attribute="scope")
     | sort(attribute="scope") %}
         {%- if commit.id not in dropped %}
-        {{ self::print_commit(commit=commit) }}
+            {{ self::print_commit(commit=commit) }}
         {%- endif %}
     {%- endfor %}
     {% for commit in commits %}
