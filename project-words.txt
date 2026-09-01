@@ -27,7 +27,6 @@ abcced
 abcdbdacbdac
 abcw
 acdb
-adduser
 adjecent
 adobecodebanc
 appgroup
@@ -111,7 +110,6 @@ mypy
 nagaram
 nextest
 nums
-nvmrc
 pahnaplsiigyir
 pathbuf
 paypalishiring
@@ -132,6 +130,7 @@ rabbbit
 racecar
 retag
 retagging
+rhysd
 rsplit
 rustflags
 samply
