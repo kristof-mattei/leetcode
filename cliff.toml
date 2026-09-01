@@ -39,11 +39,24 @@ body = """
 {% endif %}\
 
 {% for group, commits in commits | group_by(attribute="group") %}
+    {#- Renovate bumps the same crate multiple times per release. The version is the last word of the message, key on the rest and keep the newest. -#}
+    {%- set_global seen = [] -%}
+    {%- set_global dropped = [] -%}
+    {%- for commit in commits | filter(attribute="scope", value="deps") | filter(attribute="author.name", value="renovate[bot]") | reverse -%}
+        {%- set key = commit.message | split(pat=" ") | slice(end=-1) | join(sep=" ") -%}
+        {%- if key in seen -%}
+            {%- set_global dropped = dropped | concat(with=commit.id) -%}
+        {%- else -%}
+            {%- set_global seen = seen | concat(with=key) -%}
+        {%- endif -%}
+    {%- endfor %}
     ### {{ group | striptags | trim | upper_first }}
     {% for commit in commits
     | filter(attribute="scope")
     | sort(attribute="scope") %}
+        {%- if commit.id not in dropped %}
         {{ self::print_commit(commit=commit) }}
+        {%- endif %}
     {%- endfor %}
     {% for commit in commits %}
         {%- if not commit.scope -%}
