@@ -98,6 +98,9 @@ protect_breaking_commits = false
 commit_parsers = [
     # Exempt merge commits when require_conventional is enabled.
     { message = "^Merge", skip = true },
+    # CI changes (`ci` type or `ci` scope) are not user-facing.
+    { message = "^ci", skip = true },
+    { message = "^\\w+\\(ci\\)", skip = true },
     { message = "^feat", group = "<!-- 0 -->🚀 Features" },
     { message = "^fix", group = "<!-- 1 -->🐛 Bug Fixes" },
     { message = "^doc", group = "<!-- 3 -->📚 Documentation" },
@@ -109,7 +112,7 @@ commit_parsers = [
     { message = "^chore\\(deps.*\\)", skip = true },
     { message = "^chore\\(pr\\)", skip = true },
     { message = "^chore\\(pull\\)", skip = true },
-    { message = "^chore|^ci", group = "<!-- 7 -->⚙️ Miscellaneous Tasks" },
+    { message = "^chore", group = "<!-- 7 -->⚙️ Miscellaneous Tasks" },
     { body = ".*security", group = "<!-- 8 -->🛡️ Security" },
     { message = "^revert", group = "<!-- 9 -->◀️ Revert" },
     { message = ".*", group = "<!-- 10 -->💼 Other" },
