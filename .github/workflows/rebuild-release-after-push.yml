@@ -42,23 +42,18 @@ jobs:
           gh pr list \
             --state open \
             --limit 100 \
-            --json headRefName,autoMergeRequest \
+            --json headRefName \
           | jq --raw-output --arg re '-(?<type>alpha|beta|rc)\.[0-9]+$' '
               [ .[]
                 | select(.headRefName | startswith("release/v"))
-                | {
-                    prerelease: (.headRefName | if test($re) then capture($re).type else "none" end),
-                    auto_merge: (.autoMergeRequest != null)
-                  }
+                | (.headRefName | if test($re) then capture($re).type else "none" end)
               ]
-              | group_by(.prerelease)[]
-              | "\(.[0].prerelease) \(any(.auto_merge))"
+              | unique[]
             ' \
-          | while read -r prerelease auto_merge; do
-            echo "::notice::Dispatching Release with prerelease=${prerelease} auto_merge=${auto_merge}"
+          | while read -r prerelease; do
+            echo "::notice::Dispatching Release with prerelease=${prerelease}"
 
             gh workflow run release.yml \
               --ref main \
-              --raw-field prerelease="${prerelease}" \
-              --raw-field auto_merge="${auto_merge}"
+              --raw-field prerelease="${prerelease}"
           done
