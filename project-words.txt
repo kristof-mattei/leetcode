@@ -66,6 +66,7 @@ cdba
 cheries
 cila
 cinstrument
+cliffignore
 cpwo
 ctarget
 cttc
@@ -96,7 +97,6 @@ joyboy
 kpeo
 kristof
 leetcode
-lldb
 lnle
 luffy
 lviii
@@ -106,7 +106,6 @@ mimalloc
 modg
 monomorphization
 multiplatform
-mypy
 nagaram
 nextest
 nums
@@ -128,6 +127,7 @@ qeba
 qsibzxao
 rabbbit
 racecar
+rawfile
 retag
 retagging
 rhysd
@@ -139,6 +139,7 @@ sefg
 signum
 skopeo
 skopeo's
+slurpfile
 startswith
 striptags
 strs
