@@ -29,6 +29,7 @@ postprocessors
 prereleased
 profraw
 pyflakes
+rawfile
 retag
 retagging
 rhysd
@@ -37,6 +38,7 @@ samply
 sccache
 skopeo
 skopeo's
+slurpfile
 startswith
 striptags
 taiki
