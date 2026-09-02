@@ -13,10 +13,6 @@ on:
           - alpha
           - beta
           - rc
-      auto_merge:
-        description: "Enable auto-merge on the release PR"
-        type: boolean
-        default: false
 
 concurrency:
   group: "${{ github.workflow }}-${{ inputs.prerelease }}"
@@ -230,7 +226,6 @@ jobs:
       - name: Open or update pull request
         shell: bash
         env:
-          AUTO_MERGE: ${{ inputs.auto_merge }}
           BRANCH: ${{ steps.release.outputs.branch }}
           GH_TOKEN: ${{ secrets.TOKEN_TO_TRIGGER_SUBSEQUENT_WORKFLOWS }}
           RELEASE_VERSION: ${{ steps.release.outputs.release_version }}
@@ -261,10 +256,6 @@ jobs:
               --head "${BRANCH}" \
               --title "chore(release): Release ${RELEASE_VERSION}" \
               --body-file diff-CHANGELOG.md
-          fi
-
-          if [ "${AUTO_MERGE}" = "true" ]; then
-            gh pr merge "${BRANCH}" --auto --merge
           fi
 
       - name: Close superseded release PRs
@@ -301,7 +292,6 @@ jobs:
       - name: Dispatch again if main moved
         shell: bash
         env:
-          AUTO_MERGE: ${{ inputs.auto_merge }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAIN_SHA: ${{ steps.release.outputs.main_sha }}
           PRERELEASE: ${{ inputs.prerelease }}
@@ -317,8 +307,7 @@ jobs:
 
           gh workflow run release.yml \
             --ref main \
-            --raw-field prerelease="${PRERELEASE}" \
-            --raw-field auto_merge="${AUTO_MERGE}"
+            --raw-field prerelease="${PRERELEASE}"
 
       - name: Clean up stranded branches
         if: ${{ (failure() || cancelled()) && steps.release.outputs.branch != '' }}
