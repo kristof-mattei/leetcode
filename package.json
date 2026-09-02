@@ -1,5 +1,6 @@
 {
     "name": "rust-seed",
+    "private": true,
     "type": "module",
     "scripts": {
         "format": "oxfmt",
