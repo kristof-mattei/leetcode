@@ -10,6 +10,7 @@ It supports:
 - Container attestation
 - Crate publishing
 - Release publishing
+  - Changelog curation through checkboxes in the release PR
   - Crate publishing to crates.io
   - Container re-tagging to `:latest`
 
