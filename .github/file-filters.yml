@@ -5,10 +5,15 @@ docker:
   - *shared
   - ".dockerignore"
   - Dockerfile
-rust:
+rust: &rust
   - *shared
   - ".cargo/**"
   - "**/*.toml"
   - "src/**"
   - "tests/**"
   - Cargo.lock
+# the package installs both files, see `license-file` and `assets` in `[package.metadata.deb]`
+deb:
+  - *rust
+  - LICENSE
+  - README.md
