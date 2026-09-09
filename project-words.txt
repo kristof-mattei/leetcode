@@ -109,6 +109,7 @@ multiplatform
 nagaram
 nextest
 nums
+oras
 pahnaplsiigyir
 pathbuf
 paypalishiring
