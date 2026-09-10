@@ -29,6 +29,7 @@ abcw
 acdb
 adjecent
 adobecodebanc
+allgreen
 appgroup
 applepen
 applepenapple
@@ -86,9 +87,9 @@ fxshrxw
 gdcj
 grcov
 hbyorqdbo
+headgreen
 heqg
 hobobyrqd
-hubot
 idents
 inorder
 instrutions
