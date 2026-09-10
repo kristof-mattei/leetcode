@@ -766,7 +766,7 @@ jobs:
           organization: ${{ vars.DOCKERHUB_USERNAME }}
 
   deb-build:
-    name: Build Debian package (${{ matrix.arch }})
+    name: Build Debian package for ${{ matrix.arch }}
     strategy:
       matrix:
         include:
