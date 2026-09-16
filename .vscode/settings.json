@@ -33,6 +33,7 @@
         "RUST_LOG": "DEBUG,rust_seed=TRACE"
     },
     "lldb.launch.expressions": "simple",
+    "lldb.launch.gracefulShutdown": "SIGTERM",
     "lldb.launch.postRunCommands": [
         "process handle SIGTERM --stop false --pass true --notify false"
     ],
