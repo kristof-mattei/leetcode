@@ -71,7 +71,6 @@ cliffignore
 cpwo
 ctarget
 cttc
-cves
 dbbca
 dcbabcd
 deque
@@ -123,7 +122,6 @@ pkgs
 postorder
 postprocessors
 preorder
-prereleased
 profraw
 pwwkew
 pyflakes
