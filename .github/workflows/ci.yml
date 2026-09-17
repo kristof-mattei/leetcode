@@ -952,13 +952,21 @@ jobs:
         shell: bash
         working-directory: ${{ steps.artifact.outputs.download-path }}
         env:
+          AUTHORS: ${{ needs.prepare-variables.outputs.authors }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
           FULL_DEB_NAME: ${{ needs.prepare-variables.outputs.full_deb_name_remote_registry }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
           UNIQUE_TAG: ${{ needs.prepare-variables.outputs.unique_tag }}
           VERSION: ${{ needs.calculate-version.outputs.version }}
         run: |
           # the two debs go in one artifact, so the retag chain deals with a single reference
-          # the next PR's calculate-version reads this annotation
+          # the next PR's calculate-version reads the version annotation
           oras push \
+            --annotation "org.opencontainers.image.authors=${AUTHORS}" \
+            --annotation "org.opencontainers.image.revision=${BASE_SHA}-${HEAD_SHA}" \
+            --annotation "org.opencontainers.image.source=${PR_URL}" \
+            --annotation "org.opencontainers.image.vendor=${GITHUB_REPOSITORY_OWNER}" \
             --annotation "org.opencontainers.image.version=v${VERSION}" \
             --artifact-type application/vnd.debian.binary-package \
             "${FULL_DEB_NAME}:${UNIQUE_TAG}" \
