@@ -8,7 +8,6 @@ cinstrument
 cliffignore
 ctarget
 cttc
-cves
 dorny
 endfor
 endmacro
@@ -28,7 +27,6 @@ oras
 pathbuf
 pkgs
 postprocessors
-prereleased
 profraw
 pyflakes
 rawfile
