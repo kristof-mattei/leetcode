@@ -46,6 +46,10 @@ jobs:
           persist-credentials: false
           show-progress: false
 
+      - name: Set up mold
+        if: matrix.language == 'rust'
+        uses: rui314/setup-mold@7e4f20ad28a2e8ca6fd0892ccf72e2abb706b9c3 # v1
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4.38.0
         with:
