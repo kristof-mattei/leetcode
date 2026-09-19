@@ -1,9 +1,12 @@
 #!/bin/bash
 
-base_rustflags=""
 cargo_features="--all-features"
 
-export RUSTFLAGS="${base_rustflags} --allow=warnings -Cinstrument-coverage"
+host_tuple=$(rustc --print host-tuple)
+host_tuple=${host_tuple//-/_}
+
+# `RUSTFLAGS` would replace the rustflags in `.cargo/config.toml`, this is joined with them
+declare -x "CARGO_TARGET_${host_tuple^^}_RUSTFLAGS=--allow=warnings -Cinstrument-coverage"
 
 # build-* ones are not parsed by grcov
 export LLVM_PROFILE_FILE="profiling/build-%p-%m.profraw"
