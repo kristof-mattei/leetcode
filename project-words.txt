@@ -19,6 +19,7 @@ kristof
 lintian
 mattei
 mimalloc
+mkhl
 monomorphization
 multiplatform
 nextest
