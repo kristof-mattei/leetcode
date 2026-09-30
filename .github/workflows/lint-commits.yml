@@ -3,11 +3,6 @@ name: Lint commits
 
 on:
   pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - edited
     branches:
       - main
 
@@ -28,16 +23,6 @@ jobs:
     runs-on: ubuntu-26.04
     if: ${{ !startsWith(github.head_ref, 'release/') }}
     steps:
-      - name: Enforce a strict conventional title
-        shell: bash
-        env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: |
-          if ! grep --quiet --extended-regexp '^[a-z]+(\([a-z0-9-]+\))?!?: .+$' <<< "${PR_TITLE}"; then
-            echo "The title '${PR_TITLE}' does not match '<type>(<scope>)!: <description>' with a lowercase type and scope"
-            exit 1
-          fi
-
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

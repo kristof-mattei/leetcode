@@ -42,9 +42,9 @@ repository:
   squash_merge_commit_message: COMMIT_MESSAGES
   allow_merge_commit: true
   # Accepts `PR_TITLE` or `MERGE_MESSAGE`. When `merge_commit_message` is set, this key is required.
-  merge_commit_title: PR_TITLE
+  merge_commit_title: MERGE_MESSAGE
   # Accepts `PR_BODY`, `PR_TITLE`, or `BLANK`.
-  merge_commit_message: BLANK
+  merge_commit_message: PR_TITLE
   allow_rebase_merge: false
   allow_auto_merge: true
   delete_branch_on_merge: true
